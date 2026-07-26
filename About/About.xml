@@ -5,19 +5,24 @@
 	<author>AlenDio</author>
 	<description>Adds a customizable header overlay that displays at the start of the day.
 
-Features:
-- Customizable position offset, scale, line width, thickness and padding.
-- Adjustable display, fade-in, and fade-out durations.
-- Customizable text and outline of each day and date (Color, Font Size, Font Style, Outline Thickness).
-- Customazible text for "DAY" and "YEAR" allowing diverse lanugages or designs.
-- Can be shown every X days if wanted.
-- In-game settings preview button.
+&lt;color=orange&gt;&lt;b&gt;Features&lt;/b&gt;&lt;/color&gt;
+Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
+∼ In-game settings preview button.
+∼ Can be shown every X days if wanted.
+∼ Can start from DAY 0 or DAY 1. 
+∼ Can toggle the Highlight background. 
+∼ Customizable Offset and Scale mode.
+∼ Customizable Line width, thickness and padding.
+∼ Customizable Display, Fade-In, and Fade-Out durations.
+∼ Customizable colors of each text and outline.
+∼ Customizable font size, style and outline thickness of each text.
+∼ Customazible text for "DAY" and "YEAR".
 
-Can be safely added or removed from existing saves at any time.
+&lt;i&gt;Can be safely added or removed from existing saves at any time.&lt;/i&gt;
 	</description>
 	<supportedVersions>
 		<li>1.5</li>
 		<li>1.6</li>
 	</supportedVersions>
-	<modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">1.0.1</modVersion>
 </ModMetaData>

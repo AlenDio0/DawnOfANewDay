@@ -108,6 +108,10 @@ namespace DawnNewDay
 
         private string m_ShowEveryXDaysBuffer;
 
+        public int TriggerHour = 6;
+
+        private string m_TriggerHourBuffer;
+
         public void DoWindowContents(Rect canva)
         {
             canva.TakeHeight(0.05f);
@@ -146,7 +150,7 @@ namespace DawnNewDay
             listing.NewColumn();
             if (listing.ButtonText(DawnData.SettingsLabel_ShowExample))
             {
-                Messages.Message(DawnData.SettingsMessage_ShowExample, MessageTypeDefOf.PositiveEvent);
+                Messages.Message(DawnData.SettingsMessage_ShowExample, MessageTypeDefOf.PositiveEvent, false);
                 m_ShowExample = true;
             }
             listing.End();
@@ -318,6 +322,9 @@ namespace DawnNewDay
 
             listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f, 0.75f);
 
+            listing.NewColumn();
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_TriggerHour, ref TriggerHour, ref m_TriggerHourBuffer, 0f, 23f, 0.75f);
+
             listing.End();
         }
 
@@ -373,6 +380,9 @@ namespace DawnNewDay
 
             Scribe_Values.Look(ref m_DayOutlineColorBuffer, "DayOutlineColorBuffer", "Black");
             Scribe_Values.Look(ref m_DateOutlineColorBuffer, "DateOutlineColorBuffer", "Black");
+
+            Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", 1);
+            Scribe_Values.Look(ref TriggerHour, "TriggerHour", 6);
         }
 
         private T ScribeByValue<T>(T value, string label, T defaultValue)

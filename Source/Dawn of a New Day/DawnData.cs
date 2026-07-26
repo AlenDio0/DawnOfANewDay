@@ -7,7 +7,7 @@ namespace DawnNewDay
     {
         public static string ModName => "Dawn of a New Day";
 
-        private static string FormatLog(string message) => $"{ModName}: {message}.";
+        private static string FormatLog(string message) => $"[{ModName}] {message}.";
         public static void Warn(string message) => Log.Warning(FormatLog(message));
         public static void Info(string message) => Log.Message(FormatLog(message));
         public static void Error(string message) => Log.Error(FormatLog(message));
@@ -51,5 +51,6 @@ namespace DawnNewDay
         public static string SettingsLabel_DateOutlineColor => "Date Outline Color";
 
         public static string SettingsLabel_ShowEveryXDays => "Show Every X Days";
+        public static string SettingsLabel_TriggerHour => "Trigger Hour";
     }
 }

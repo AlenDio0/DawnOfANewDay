@@ -9,7 +9,9 @@ namespace DawnNewDay
     {
         private readonly Game m_Game;
 
-        private int m_LastDay = -1;
+        private int m_LastTriggeredYear = -1;
+        private int m_LastTriggeredDay = -1;
+
         private bool m_DisplayActive = false;
         private float m_DisplayTimer = 0f;
 
@@ -48,6 +50,9 @@ namespace DawnNewDay
         {
             base.GameComponentTick();
 
+            if (m_Game.tickManager.TicksGame % GenTicks.SecondsToTicks(1f) != 0)
+                return;
+
             if (m_Game.CurrentMap == null)
                 return;
 
@@ -61,13 +66,23 @@ namespace DawnNewDay
             if (!settings.Enabled)
                 return;
 
-            int currentDay = GenDate.DaysPassed;
-            if (currentDay > m_LastDay)
-            {
-                m_LastDay = currentDay;
-                if (settings.ShowEveryXDays <= 1 || m_LastDay % settings.ShowEveryXDays == 0)
-                    TriggerDawnOfANewDay();
-            }
+            long absTicks = m_Game.tickManager.TicksAbs;
+            float longitude = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile).x;
+
+            int currentYear = GenDate.Year(absTicks, longitude);
+            int currentDay = GenDate.DayOfYear(absTicks, longitude);
+            int currentHour = GenDate.HourOfDay(absTicks, longitude);
+
+            if (currentDay <= m_LastTriggeredDay && currentYear == m_LastTriggeredYear)
+                return;
+            if (currentHour < settings.TriggerHour)
+                return;
+
+            m_LastTriggeredYear = currentYear;
+            m_LastTriggeredDay = currentDay;
+
+            if (m_LastTriggeredDay % settings.ShowEveryXDays == 0)
+                TriggerDawnOfANewDay();
         }
 
         public override void GameComponentOnGUI()
@@ -98,8 +113,8 @@ namespace DawnNewDay
 
             float rectWidth = Mathf.Max(m_CachedDaySize.x, m_CachedDateSize.x) * 1.2f;
             float rectHeight = m_CachedDaySize.y + m_CachedDateSize.y + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
-            Vector2 rectSize = new Vector2(rectWidth, rectHeight);
 
+            Vector2 rectSize = new Vector2(rectWidth, rectHeight);
             Rect dawnLayoutRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
 
             if (settings.ShowHighlight)
@@ -110,7 +125,8 @@ namespace DawnNewDay
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDayText), settings.DayTextStyle);
+            GUILayoutOption dayTextWidth = GUILayout.Width(rectWidth);
+            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDayText), settings.DayTextStyle, dayTextWidth);
             DrawText(dayRect, m_CachedDayText, settings.DayTextStyle, settings.DayOutlineColor, settings.DayOutlineThickness, alpha);
 
             GUILayout.FlexibleSpace();
@@ -133,7 +149,8 @@ namespace DawnNewDay
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDateText), settings.DateTextStyle);
+            GUILayoutOption dateTextWidth = GUILayout.Width(rectWidth);
+            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDateText), settings.DateTextStyle, dateTextWidth);
             DrawText(dateRect, m_CachedDateText, settings.DateTextStyle, settings.DateOutlineColor, settings.DateOutlineThickness, alpha);
 
             GUILayout.FlexibleSpace();
@@ -175,7 +192,7 @@ namespace DawnNewDay
             switch (dayRelative)
             {
                 case DayRelative.None:
-                    return m_LastDay;
+                    return GenDate.DaysPassed + (GenDate.HourOfDay(absTicks, longitude) >= 6 ? 0 : 1);
                 case DayRelative.Quadrum:
                     return GenDate.DayOfQuadrum(absTicks, longitude);
                 case DayRelative.Season:
