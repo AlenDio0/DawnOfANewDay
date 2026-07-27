@@ -8,381 +8,435 @@ namespace DawnNewDay
 {
     public class DawnSettings : ModSettings
     {
-        private bool m_ShowExample = false;
-        public bool ConsumeShowExample()
-        {
-            if (m_ShowExample)
-            {
-                m_ShowExample = false;
-                return true;
-            }
-            return false;
-        }
-
         public bool Enabled = true;
-        public bool StartsAtZero = false;
-        public bool ShowHighlight = true;
+        public bool ScreenshotMode = false;
 
-        public enum DayRelative
+        private bool m_ShowExample = false;
+        public bool ConsumeShowExample
         {
-            None,
-            Quadrum,
-            Season,
-            Year
+            get
+            {
+                if (m_ShowExample)
+                {
+                    m_ShowExample = false;
+                    return true;
+                }
+                return false;
+            }
         }
-        public DayRelative DayRelativeTo = DayRelative.None;
 
-        private static readonly float[] ScaleModes = { 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.5f, 3f, 4f };
-        private static readonly (string Name, Vector2 Mode)[] OffsetModes = new[]
-        {
-            ("(Middle, Top)     ↑", new Vector2(0.5f, 0.2f)),
-            ("(Middle, Bottom)  ↓", new Vector2(0.5f, 0.8f)),
-            ("(Middle, Middle)  ▪", new Vector2(0.5f, 0.5f)),
-            ("(Left, Middle)    ←", new Vector2(0.2f, 0.5f)),
-            ("(Right, Middle)   →", new Vector2(0.8f, 0.5f)),
-            ("(Left, Top)       ↖", new Vector2(0.2f, 0.2f)),
-            ("(Right, Top)      ↗", new Vector2(0.8f, 0.2f)),
-            ("(Left, Bottom)    ↙", new Vector2(0.2f, 0.8f)),
-            ("(Right, Bottom)   ↘", new Vector2(0.8f, 0.8f)),
-        };
+        #region Appearance Section
+
+        public bool ShowHighlight = true;
 
         public float Scale = 4f;
         public Vector2 Offset = new Vector2(UI.screenWidth, UI.screenHeight) / 2f;
+
+        public float LineWidthPercentage = 80f;
+        public float LineThickness = 4f;
+        public float LinePadding = 8f;
+        public Color LineColor = Color.gray;
+
+        #endregion
+
+        #region Duration Section
 
         public float DisplayDurationSeconds = 7.5f;
         public float FadeInDurationSeconds = 1f;
         public float FadeOutDurationSeconds = 2f;
 
+        #endregion
+
+        #region Text Section
+
+        public GUIStyle UpperTextGUIStyle = new GUIStyle(Text.CurFontStyle);
+        private string m_UpperFontFamilyName = "";
+        private int m_UpperFontSize = 40;
+        private bool m_UpperTextBold = true;
+        private bool m_UpperTextItalic = false;
+        private Color m_UpperTextColor = Color.white;
+
+        public float UpperOutlineThickness = 1f;
+        public Color UpperOutlineColor = Color.black;
+
+        public GUIStyle BottomTextGUIStyle = new GUIStyle(Text.CurFontStyle);
+        private string m_BottomFontFamilyName = "";
+        private int m_BottomFontSize = 24;
+        private bool m_BottomTextBold = false;
+        private bool m_BottomTextItalic = false;
+        private Color m_BottomTextColor = Color.white;
+
+        public float BottomOutlineThickness = 1f;
+        public Color BottomOutlineColor = Color.black;
+
+        #endregion
+
+        #region Label Format Section
+
+        public string UpperTextFormat = "DAY {}";
+        public string BottomTextFormat = "YEAR {Y} | {Q} | {S}";
+
+        #endregion
+
+        #region Extra Section
+
+        public bool StartsAtZero = false;
+        public int ShowEveryXDays = 1;
+        public int TriggerHour = 6;
+        public DayRelative DayRelativeTo = DayRelative.Settle;
+
+        #endregion
+
+        #region Buffers
+
         private string m_DisplayDurationBuffer;
         private string m_FadeInDurationBuffer;
         private string m_FadeOutDurationBuffer;
 
-        public float LineWidthPercentage = 0.8f;
-        public float LineThickness = 4f;
-        public float LinePadding = 8f;
+        private string m_LineWidthPercentageBuffer;
+        private string m_LineThicknessBuffer;
+        private string m_LinePaddingBuffer;
 
-        public string m_LineWidthPercentageBuffer;
-        public string m_LineThicknessBuffer;
-        public string m_LinePaddingBuffer;
-
-        public string DayText = "DAY";
-        public string YearText = "YEAR";
-
-        public int DayFontSize = 40;
-        public int DateFontSize = 24;
-
-        public string m_DayFontSizeBuffer;
-        public string m_DateFontSizeBuffer;
-
-        private static readonly (string Name, Color Color)[] ColorPresets = new[]
-        {
-            ("White", Color.white),
-            ("Gray", Color.gray),
-            ("Black", Color.black),
-            ("Red", Color.red),
-            ("Green", Color.green),
-            ("Blue", Color.blue),
-            ("Yellow", Color.yellow),
-            ("Grey", Color.grey),
-            ("Magenta", Color.magenta),
-            ("Cyan", Color.cyan)
-        };
-
-        public GUIStyle DayTextStyle = new GUIStyle(Text.CurFontStyle);
-        public GUIStyle DateTextStyle = new GUIStyle(Text.CurFontStyle);
-
-        private string m_DayTextColorBuffer = "White";
-        private string m_DateTextColorBuffer = "White";
-
-        public float DayOutlineThickness = 1f;
-        public float DateOutlineThickness = 1f;
-        public Color DayOutlineColor = Color.black;
-        public Color DateOutlineColor = Color.black;
+        private string m_DayFontSizeBuffer;
+        private string m_DateFontSizeBuffer;
 
         private string m_DayOutlineThicknessBuffer;
         private string m_DateOutlineThicknessBuffer;
-        private string m_DayOutlineColorBuffer = "Black";
-        private string m_DateOutlineColorBuffer = "Black";
-
-        public int ShowEveryXDays = 1;
 
         private string m_ShowEveryXDaysBuffer;
 
-        public int TriggerHour = 6;
-
         private string m_TriggerHourBuffer;
+
+        #endregion
+
+        bool m_AppearanceSection = false;
+        bool m_DurationSection = false;
+        bool m_TextSection = false;
+        bool m_LabelFormatSection = false;
+        bool m_ExtraSection = false;
+
+        private Vector2 m_ScrollPosition = Vector2.zero;
+        private float m_CachedScrollViewHeight = 0f;
 
         public void DoWindowContents(Rect canva)
         {
-            canva.TakeHeight(0.05f);
+            try
+            {
+                canva = canva.LeftPart(0.95f);
+                canva = canva.MiddlePart(1f, 0.95f);
 
-            ShowBoolsButtonsProps(canva.TakeHeight(0.1f));
-            ShowScaleOffsetProps(canva.TakeHeight(0.2f));
-            ShowDurationProps(canva.TakeHeight(0.1f, 0.05f));
-            ShowLineProps(canva.TakeHeight(0.1f, 0.05f));
-            ShowTextStringProps(canva.TakeHeight(0.15f));
-            ShowTextStyleProps(canva.TakeHeight(0.2f, 0.05f));
-            ShowTextOutlineProps(canva.TakeHeight(0.2f, 0.05f));
-            ShowExtraProps(canva.TakeHeight(0.25f, 0.05f));
+                Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+                listing.Begin(canva);
+
+                ShowHeader(listing);
+                float headerHeight = listing.CurHeight;
+
+                listing.End();
+
+                Rect outRect = new Rect(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
+                Rect viewRect = new Rect(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
+                Widgets.BeginScrollView(outRect, ref m_ScrollPosition, viewRect);
+
+                listing.Begin(viewRect);
+
+                if (listing.SectionButton(DawnData.SettingsSection_Appearance, ref m_AppearanceSection))
+                    listing.Indented(() => ShowAppearanceSection(listing));
+
+                if (listing.SectionButton(DawnData.SettingsSection_Duration, ref m_DurationSection))
+                    listing.Indented(() => ShowDurationSection(listing));
+
+                if (listing.SectionButton(DawnData.SettingsSection_Text, ref m_TextSection))
+                    listing.Indented(() => ShowTextSection(listing));
+
+                if (listing.SectionButton(DawnData.SettingsSection_LabelFormat, ref m_LabelFormatSection))
+                    listing.Indented(() => ShowLabelFormatSection(listing));
+
+                if (listing.SectionButton(DawnData.SettingsSection_Extra, ref m_ExtraSection))
+                    listing.Indented(() => ShowExtraSection(listing));
+
+                m_CachedScrollViewHeight = listing.CurHeight;
+
+                listing.End();
+
+                Widgets.EndScrollView();
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into DawnSettings.DoWindowContents(canva: {canva})\nException: {exception}");
+            }
         }
 
-        private void ShowBoolsButtonsProps(Rect part)
+        private void ShowHeader(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 5.5f };
-            listing.Begin(part);
-
             listing.CheckboxLabeled(DawnData.SettingsLabel_Enabled, ref Enabled);
+            listing.CheckboxLabeled(DawnData.SettingsLabel_ScreenshotMode, ref ScreenshotMode);
 
-            listing.NewColumn();
-            listing.CheckboxLabeled(DawnData.SettingsLabel_StartsAtZero, ref StartsAtZero);
+            listing.Gap();
 
-            listing.NewColumn();
-            listing.CheckboxLabeled(DawnData.SettingsLabel_ShowHighlight, ref ShowHighlight);
-
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DayRelativeTo}: {DayRelativeTo}"))
-            {
-                var dayRelativeModes = Enum.GetValues(typeof(DayRelative)).Cast<DayRelative>();
-                var modes = SettingsHelper.CreateFloatMenu(dayRelativeModes, mode => new FloatMenuOption($"{mode}", () => DayRelativeTo = mode));
-                Find.WindowStack.Add(modes);
-            }
-
-            listing.NewColumn();
             if (listing.ButtonText(DawnData.SettingsLabel_ShowExample))
             {
                 Messages.Message(DawnData.SettingsMessage_ShowExample, MessageTypeDefOf.PositiveEvent, false);
                 m_ShowExample = true;
             }
-            listing.End();
+
+            listing.Gap();
         }
 
-        private void ShowScaleOffsetProps(Rect part)
+        private void ShowAppearanceSection(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 2.05f };
-            listing.Begin(part);
+            listing.CheckboxLabeled(DawnData.SettingsLabel_ShowHighlight, ref ShowHighlight);
+
+            listing.Gap();
 
             if (listing.ButtonText($"{DawnData.SettingsLabel_Scale}: {Scale}x"))
             {
-                var scaleModes = SettingsHelper.CreateFloatMenu(ScaleModes, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
+                var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScaleModes, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
                 Find.WindowStack.Add(scaleModes);
             }
 
-            listing.Gap();
-            Offset.x = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} X ({Offset.x} px)", Offset.x, 0f, UI.screenWidth));
-
-            listing.NewColumn();
-            if (listing.ButtonText(DawnData.SettingsLabel_SetOffsetCenter))
+            if (listing.ButtonText(DawnData.SettingsLabel_OffsetPresets))
             {
-                var offsetPresets = SettingsHelper.CreateFloatMenu(OffsetModes, item => new FloatMenuOption($"{item.Name}",
-                    () => Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Mode));
+                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnData.OffsetPresets, item => new FloatMenuOption($"{item.Name}", () =>
+                    Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Mode));
                 Find.WindowStack.Add(offsetPresets);
             }
 
+            Offset.x = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} X ({Offset.x} px)", Offset.x, 0f, UI.screenWidth, 0.25f));
+            Offset.y = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} Y ({Offset.y} px)", Offset.y, 0f, UI.screenHeight, 0.25f));
+
             listing.Gap();
-            Offset.y = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} Y ({Offset.y} px)", Offset.y, 0f, UI.screenHeight));
 
-            listing.End();
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineWidthPercentage} (%)", ref LineWidthPercentage, ref m_LineWidthPercentageBuffer, 0f, 100f);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f);
+            listing.LabeledRadioColorPresets(ref LineColor, DawnData.SettingsLabel_LineColor);
         }
 
-        private void ShowDurationProps(Rect part)
+        private void ShowDurationSection(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 3.125f };
-            listing.Begin(part);
-
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_DisplayDuration} (s)", ref DisplayDurationSeconds, ref m_DisplayDurationBuffer, 0f, 60f, 0.6f);
-
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeInDuration} (s)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, 60f, 0.6f);
-
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeOutDuration} (s)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, 60f, 0.6f);
-
-            listing.End();
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_DisplayDuration} (seconds)", ref DisplayDurationSeconds, ref m_DisplayDurationBuffer, 0f, 120f);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeInDuration} (seconds)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, 120f);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, 120f);
         }
 
-        private void ShowLineProps(Rect part)
+        private void ShowTextSection(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 3.125f };
-            listing.Begin(part);
+            GameFont defaultFont = Text.Font;
 
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineWidthPercentage} (%)", ref LineWidthPercentage, ref m_LineWidthPercentageBuffer, 0f, 1f, 0.5f);
+            Text.Font = GameFont.Medium;
 
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f, 0.5f);
+            listing.Label(DawnData.SettingsLabel_UpperTextProperties);
 
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f, 0.5f);
+            Text.Font = defaultFont;
 
-            listing.End();
-        }
-
-        private void ShowTextStringProps(Rect part)
-        {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 4.25f };
-            listing.Begin(part);
-
-            listing.LabeledTextEntry(DawnData.SettingsLabel_DayText, ref DayText, 0.5f);
-
-            listing.NewColumn();
-            listing.LabeledTextEntry(DawnData.SettingsLabel_YearText, ref YearText, 0.5f);
-
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_DayFontSize, ref DayFontSize, ref m_DayFontSizeBuffer, 0f, 256f, 0.5f);
-
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_DateFontSize, ref DateFontSize, ref m_DateFontSizeBuffer, 0f, 256f, 0.5f);
-
-            listing.End();
-        }
-
-        private void ShowTextStyleProps(Rect part)
-        {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 4.25f };
-            listing.Begin(part);
-
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DayFontStyle}: {DayTextStyle.fontStyle}"))
+            if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({m_UpperFontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
             {
-                var fontStyles = Enum.GetValues(typeof(FontStyle)).Cast<FontStyle>();
-                var styles = SettingsHelper.CreateFloatMenu(fontStyles, style => new FloatMenuOption($"{style}", () => DayTextStyle.fontStyle = style));
-                Find.WindowStack.Add(styles);
-            }
-
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DateFontStyle}: {DateTextStyle.fontStyle}"))
-            {
-                var fontStyles = Enum.GetValues(typeof(FontStyle)).Cast<FontStyle>();
-                var styles = SettingsHelper.CreateFloatMenu(fontStyles, style => new FloatMenuOption($"{style}", () => DateTextStyle.fontStyle = style));
-                Find.WindowStack.Add(styles);
-            }
-
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DayTextColor}: {m_DayTextColorBuffer}"))
-            {
-                var colors = SettingsHelper.CreateFloatMenu(ColorPresets, item => new FloatMenuOption(item.Name, delegate
+                Find.WindowStack.Add(new Dialog_ChooseFontFamily(m_UpperFontFamilyName, font =>
                 {
-                    m_DayTextColorBuffer = item.Name;
-                    DayTextStyle.normal.textColor = item.Color;
-                }, BaseContent.WhiteTex, item.Color));
-                Find.WindowStack.Add(colors);
+                    m_UpperFontFamilyName = font;
+                    if (!m_UpperFontFamilyName.NullOrEmpty())
+                        UpperTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_UpperFontFamilyName, 16);
+                }));
             }
 
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DateTextColor}: {m_DateTextColorBuffer}"))
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_FontSize, ref m_UpperFontSize, ref m_DayFontSizeBuffer, 0f, 256f);
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_OutlineThickness, ref UpperOutlineThickness, ref m_DayOutlineThicknessBuffer, 0f, 10f);
+
+            listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref m_UpperTextBold);
+            listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref m_UpperTextItalic);
+            UpperTextGUIStyle.fontStyle = SettingsHelper.MapFontStyle(m_UpperTextBold, m_UpperTextItalic);
+
+            UpperTextGUIStyle.normal.textColor = listing.LabeledRadioColorPresets(ref m_UpperTextColor, DawnData.SettingsLabel_TextColor);
+            listing.LabeledRadioColorPresets(ref UpperOutlineColor, DawnData.SettingsLabel_OutlineColor);
+
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+
+            listing.Label(DawnData.SettingsLabel_BottomTextProperties);
+
+            Text.Font = defaultFont;
+
+            if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({m_BottomFontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
             {
-                var colors = SettingsHelper.CreateFloatMenu(ColorPresets, item => new FloatMenuOption(item.Name, delegate
+                Find.WindowStack.Add(new Dialog_ChooseFontFamily(m_BottomFontFamilyName, font =>
                 {
-                    m_DateTextColorBuffer = item.Name;
-                    DateTextStyle.normal.textColor = item.Color;
-                }, BaseContent.WhiteTex, item.Color));
-                Find.WindowStack.Add(colors);
+                    m_BottomFontFamilyName = font;
+                    if (!m_BottomFontFamilyName.NullOrEmpty())
+                        BottomTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_BottomFontFamilyName, 16);
+                }));
             }
 
-            listing.End();
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_FontSize, ref m_BottomFontSize, ref m_DateFontSizeBuffer, 0f, 256f);
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_OutlineThickness, ref BottomOutlineThickness, ref m_DateOutlineThicknessBuffer, 0f, 10f);
+
+            listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref m_BottomTextBold);
+            listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref m_BottomTextItalic);
+            BottomTextGUIStyle.fontStyle = SettingsHelper.MapFontStyle(m_BottomTextBold, m_BottomTextItalic);
+
+            BottomTextGUIStyle.normal.textColor = listing.LabeledRadioColorPresets(ref m_BottomTextColor, DawnData.SettingsLabel_TextColor);
+            listing.LabeledRadioColorPresets(ref BottomOutlineColor, DawnData.SettingsLabel_OutlineColor);
         }
 
-        private void ShowTextOutlineProps(Rect part)
+        private void ShowLabelFormatSection(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 4.25f };
-            listing.Begin(part);
+            listing.LabeledTextEntry(DawnData.SettingsLabel_UpperTextFormat, ref UpperTextFormat, 0.5f);
 
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_DayOutlineThickness, ref DayOutlineThickness, ref m_DayOutlineThicknessBuffer, 0f, 10f, 0.75f);
+            listing.Gap();
 
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_DateOutlineThickness, ref DateOutlineThickness, ref m_DateOutlineThicknessBuffer, 0f, 10f, 0.75f);
+            listing.LabeledTextEntry(DawnData.SettingsLabel_BottomTextFormat, ref BottomTextFormat, 0.5f);
 
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DayOutlineColor}: {m_DayOutlineColorBuffer}"))
-            {
-                var colors = SettingsHelper.CreateFloatMenu(ColorPresets, item => new FloatMenuOption(item.Name, delegate
-                {
-                    m_DayOutlineColorBuffer = item.Name;
-                    DayOutlineColor = item.Color;
-                }, BaseContent.WhiteTex, item.Color));
-                Find.WindowStack.Add(colors);
-            }
+            listing.Gap();
 
-            listing.NewColumn();
-            if (listing.ButtonText($"{DawnData.SettingsLabel_DateOutlineColor}: {m_DateOutlineColorBuffer}"))
-            {
-                var colors = SettingsHelper.CreateFloatMenu(ColorPresets, item => new FloatMenuOption(item.Name, delegate
-                {
-                    m_DateOutlineColorBuffer = item.Name;
-                    DateOutlineColor = item.Color;
-                }, BaseContent.WhiteTex, item.Color));
-                Find.WindowStack.Add(colors);
-            }
+            Color defaultColor = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, 0.75f);
 
-            listing.End();
+            listing.Label(DawnData.SettingsHint_LabelFormat);
+
+            GUI.color = defaultColor;
         }
 
-        private void ShowExtraProps(Rect part)
+        private void ShowExtraSection(Listing_Standard listing)
         {
-            Listing_Standard listing = new Listing_Standard { ColumnWidth = part.width / 4.25f };
-            listing.Begin(part);
+            listing.CheckboxLabeled(DawnData.SettingsLabel_StartsAtZero, ref StartsAtZero);
 
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f, 0.75f);
+            listing.Gap();
 
-            listing.NewColumn();
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_TriggerHour, ref TriggerHour, ref m_TriggerHourBuffer, 0f, 23f, 0.75f);
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f);
+            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_TriggerHour, ref TriggerHour, ref m_TriggerHourBuffer, 0f, 23f);
 
-            listing.End();
+            listing.Gap();
+
+            GameFont defaultFont = Text.Font;
+            Text.Font = GameFont.Medium;
+
+            listing.Label(DawnData.SettingsLabel_DayRelativeTo);
+
+            Text.Font = defaultFont;
+
+            Rect radioRect = listing.GetRect(30f);
+
+            var dayRelativeModes = Enum.GetValues(typeof(DayRelative)).Cast<DayRelative>().ToArray();
+            float itemWidth = radioRect.width / dayRelativeModes.Length;
+
+            for (int i = 0; i < dayRelativeModes.Length; i++)
+            {
+                DayRelative mode = dayRelativeModes[i];
+
+                Rect buttonRect = new Rect(radioRect.x + (i * itemWidth), radioRect.y, itemWidth, radioRect.height).MiddlePart(0.5f, 1f);
+
+                TooltipHandler.TipRegion(buttonRect, DawnData.SettingsTooltip_DayRelativeTo.TryGetValue(mode, ""));
+                if (Widgets.RadioButtonLabeled(buttonRect, mode.ToStringSafe(), DayRelativeTo == mode))
+                    DayRelativeTo = mode;
+            }
         }
 
         public override void ExposeData()
         {
-            base.ExposeData();
+            try
+            {
+                base.ExposeData();
 
-            Scribe_Values.Look(ref Enabled, "Enabled", true);
-            Scribe_Values.Look(ref StartsAtZero, "StartsAtZero", false);
-            Scribe_Values.Look(ref ShowHighlight, "ShowHighlight", true);
+                Scribe_Values.Look(ref Enabled, "Enabled", true);
+                Scribe_Values.Look(ref ScreenshotMode, "ScreenshotMode", false);
 
-            Scribe_Values.Look(ref DayRelativeTo, "DayRelativeTo", DayRelative.None);
+                #region Appearance Section
 
-            Scribe_Values.Look(ref DisplayDurationSeconds, "DisplayDurationSeconds", 7.5f);
-            Scribe_Values.Look(ref FadeInDurationSeconds, "FadeInDurationSeconds", 1f);
-            Scribe_Values.Look(ref FadeOutDurationSeconds, "FadeOutDurationSeconds", 2f);
+                Scribe_Values.Look(ref ShowHighlight, "ShowHighlight", true);
 
-            Scribe_Values.Look(ref Scale, "Scale", 1.5f);
-            Scribe_Values.Look(ref Offset, "Offset", new Vector2(UI.screenWidth, UI.screenHeight) / 2f);
+                Scribe_Values.Look(ref Scale, "Scale", 1.5f);
+                Scribe_Values.Look(ref Offset, "Offset", new Vector2(UI.screenWidth, UI.screenHeight) / 2f);
 
-            Scribe_Values.Look(ref LineThickness, "LineThickness", 4f);
-            Scribe_Values.Look(ref LineWidthPercentage, "LineWidthPercentage", 0.8f);
-            Scribe_Values.Look(ref LinePadding, "LinePadding", 8f);
+                Scribe_Values.Look(ref LineThickness, "LineThickness", 4f);
+                Scribe_Values.Look(ref LineWidthPercentage, "LineWidthPercentage100", 80f);
+                Scribe_Values.Look(ref LinePadding, "LinePadding", 8f);
+                Scribe_Values.Look(ref LineColor, "LineColor", Color.gray);
 
-            Scribe_Values.Look(ref DayText, "DayText", "DAY");
-            Scribe_Values.Look(ref YearText, "YearText", "YEAR");
+                #endregion
 
-            if (DayTextStyle == null)
-                DayTextStyle = new GUIStyle(Text.CurFontStyle);
+                #region Duration Section
 
-            Scribe_Values.Look(ref DayFontSize, "DayFontSize", 40);
-            DayTextStyle.fontSize = Mathf.CeilToInt(DayFontSize * Scale);
-            DayTextStyle.fontStyle = ScribeByValue(DayTextStyle.fontStyle, "DayStyleFontStyle", FontStyle.Bold);
-            DayTextStyle.normal.textColor = ScribeByValue(DayTextStyle.normal.textColor.WithAlpha(1f), "DayStyleTextColor", Color.white);
-            DayTextStyle.alignment = TextAnchor.MiddleCenter;
+                Scribe_Values.Look(ref DisplayDurationSeconds, "DisplayDurationSeconds", 7.5f);
+                Scribe_Values.Look(ref FadeInDurationSeconds, "FadeInDurationSeconds", 1f);
+                Scribe_Values.Look(ref FadeOutDurationSeconds, "FadeOutDurationSeconds", 2f);
 
-            if (DateTextStyle == null)
-                DateTextStyle = new GUIStyle(Text.CurFontStyle);
+                #endregion
 
-            Scribe_Values.Look(ref DateFontSize, "DateFontSize", 24);
-            DateTextStyle.fontSize = Mathf.CeilToInt(DateFontSize * Scale);
-            DateTextStyle.fontStyle = ScribeByValue(DateTextStyle.fontStyle, "DateStyleFontStyle", FontStyle.Normal);
-            DateTextStyle.normal.textColor = ScribeByValue(DateTextStyle.normal.textColor.WithAlpha(1f), "DateStyleTextColor", new Color(0.9f, 0.9f, 0.9f));
-            DateTextStyle.alignment = TextAnchor.MiddleCenter;
+                #region Text Section
 
-            Scribe_Values.Look(ref m_DayTextColorBuffer, "DayTextColorBuffer", "White");
-            Scribe_Values.Look(ref m_DateTextColorBuffer, "DateTextColorBuffer", "White");
+                if (UpperTextGUIStyle == null)
+                    UpperTextGUIStyle = new GUIStyle(Text.CurFontStyle);
 
-            Scribe_Values.Look(ref DayOutlineThickness, "DayOutlineThickness", 1f);
-            Scribe_Values.Look(ref DateOutlineThickness, "DateOutlineThickness", 1f);
-            Scribe_Values.Look(ref DayOutlineColor, "DayOutlineColor", Color.black);
-            Scribe_Values.Look(ref DateOutlineColor, "DateOutlineColor", Color.black);
+                Scribe_Values.Look(ref m_UpperFontFamilyName, "UpperFontFamilyName", "");
+                Scribe_Values.Look(ref m_UpperFontSize, "UpperFontSize", 40);
+                Scribe_Values.Look(ref m_UpperTextColor, "UpperTextColor", Color.white);
 
-            Scribe_Values.Look(ref m_DayOutlineColorBuffer, "DayOutlineColorBuffer", "Black");
-            Scribe_Values.Look(ref m_DateOutlineColorBuffer, "DateOutlineColorBuffer", "Black");
+                Scribe_Values.Look(ref UpperOutlineThickness, "UpperOutlineThickness", 1f);
+                Scribe_Values.Look(ref UpperOutlineColor, "UpperOutlineColor", Color.black);
 
-            Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", 1);
-            Scribe_Values.Look(ref TriggerHour, "TriggerHour", 6);
+                UpperTextGUIStyle.fontSize = Mathf.CeilToInt(m_UpperFontSize * Scale);
+                UpperTextGUIStyle.fontStyle = ScribeByValue(UpperTextGUIStyle.fontStyle, "DayStyleFontStyle", FontStyle.Bold);
+                UpperTextGUIStyle.normal.textColor = m_UpperTextColor;
+                UpperTextGUIStyle.alignment = TextAnchor.MiddleCenter;
+
+                if (BottomTextGUIStyle == null)
+                    BottomTextGUIStyle = new GUIStyle(Text.CurFontStyle);
+
+                Scribe_Values.Look(ref m_BottomFontFamilyName, "BottomFontFamilyName", "");
+                Scribe_Values.Look(ref m_BottomFontSize, "BottomFontSize", 24);
+                Scribe_Values.Look(ref m_BottomTextColor, "BottomTextColor", Color.white);
+
+                Scribe_Values.Look(ref BottomOutlineThickness, "BottomOutlineThickness", 1f);
+                Scribe_Values.Look(ref BottomOutlineColor, "BottomOutlineColor", Color.black);
+
+                BottomTextGUIStyle.fontSize = Mathf.CeilToInt(m_BottomFontSize * Scale);
+                BottomTextGUIStyle.fontStyle = ScribeByValue(BottomTextGUIStyle.fontStyle, "DateStyleFontStyle", FontStyle.Normal);
+                BottomTextGUIStyle.normal.textColor = m_BottomTextColor;
+                BottomTextGUIStyle.alignment = TextAnchor.MiddleCenter;
+
+                #endregion
+
+                #region Label Format Section
+
+                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat", "DAY {}");
+                Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat", "YEAR {Y} | {Q} | {S}");
+
+                #endregion
+
+                #region Extra Section
+
+                Scribe_Values.Look(ref StartsAtZero, "StartsAtZero", false);
+                Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", 1);
+                Scribe_Values.Look(ref TriggerHour, "TriggerHour", 6);
+                Scribe_Values.Look(ref DayRelativeTo, "DayRelativeTo", DayRelative.Settle);
+
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into DawnSettings.ExposeData()\nException: {exception}");
+            }
+        }
+
+        public void UpdateTextFont()
+        {
+            try
+            {
+                if (!m_UpperFontFamilyName.NullOrEmpty())
+                    UpperTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_UpperFontFamilyName, 16);
+                else
+                    UpperTextGUIStyle.font = Text.CurFontStyle.font;
+
+
+                if (!m_BottomFontFamilyName.NullOrEmpty())
+                    BottomTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_BottomFontFamilyName, 16);
+                else
+                    BottomTextGUIStyle.font = Text.CurFontStyle.font;
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"DawnSettings.UpdateTextFont() Failed!\nUpperFontFamilyName: '{m_UpperFontFamilyName}', BottomFontFamilyName: '{m_BottomFontFamilyName}'\nException: {exception}");
+            }
         }
 
         private T ScribeByValue<T>(T value, string label, T defaultValue)

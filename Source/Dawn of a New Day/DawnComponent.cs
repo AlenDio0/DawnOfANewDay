@@ -1,7 +1,7 @@
 ﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
-using static DawnNewDay.DawnSettings;
 
 namespace DawnNewDay
 {
@@ -14,36 +14,62 @@ namespace DawnNewDay
 
         private bool m_DisplayActive = false;
         private float m_DisplayTimer = 0f;
+        private float m_CurrentAlpha = 1f;
 
-        private string m_CachedDayText;
-        private string m_CachedDateText;
+        private string m_CachedUpperText;
+        private string m_CachedBottomText;
 
-        private Vector2 m_CachedDaySize;
-        private Vector2 m_CachedDateSize;
+        private Vector2 m_CachedUpperSize;
+        private Vector2 m_CachedBottomSize;
 
         public DawnComponent(Game game)
             : base() => m_Game = game;
 
         private void TriggerDawnOfANewDay()
         {
-            var settings = DawnMod.s_Settings;
+            try
+            {
+                var settings = DawnMod.s_Settings;
 
-            long absTicks = m_Game.tickManager.TicksAbs;
-            Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
+                long absTicks = m_Game.tickManager.TicksAbs;
+                Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
 
-            int day = DaysRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1);
-            m_CachedDayText = $"{settings.DayText} {day}";
+                string day = (DaysRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe();
+                string year = GenDate.Year(absTicks, location.x).ToStringSafe();
+                string quadrum = GenDate.Quadrum(absTicks, location.x).ToStringSafe();
+                string season = GenDate.Season(absTicks, location).ToStringSafe();
+                string hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe();
 
-            int year = GenDate.Year(absTicks, location.x);
-            Quadrum quadrum = GenDate.Quadrum(absTicks, location.x);
-            Season season = GenDate.Season(absTicks, location);
-            m_CachedDateText = $"{settings.YearText} {year} | {quadrum.Label().ToUpper()} | {season.Label().ToUpper()}";
+                m_CachedUpperText = FormatLabel(settings.UpperTextFormat, day, year, quadrum, season, hour);
+                m_CachedBottomText = FormatLabel(settings.BottomTextFormat, day, year, quadrum, season, hour);
 
-            m_CachedDaySize = settings.DayTextStyle.CalcSize(new GUIContent(m_CachedDayText));
-            m_CachedDateSize = settings.DateTextStyle.CalcSize(new GUIContent(m_CachedDateText));
+                settings.UpdateTextFont();
 
-            m_DisplayTimer = settings.DisplayDurationSeconds;
-            m_DisplayActive = true;
+                m_CachedUpperSize = settings.UpperTextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
+                m_CachedBottomSize = settings.BottomTextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+
+                m_DisplayTimer = settings.DisplayDurationSeconds;
+                m_DisplayActive = true;
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOfANewDay()\nException: {exception}");
+            }
+        }
+
+        private string FormatLabel(string format, string day, string year, string quadrum, string season, string hour)
+        {
+            return format
+                .Replace("{D}", day)
+                .Replace("{d}", day)
+                .Replace("{Y}", year)
+                .Replace("{y}", year.Substring(year.Length - 2))
+                .Replace("{Q}", quadrum.ToUpper())
+                .Replace("{q}", quadrum)
+                .Replace("{S}", season.ToUpper())
+                .Replace("{s}", season)
+                .Replace("{H}", $"{hour:00}")
+                .Replace("{h}", hour);
         }
 
         public override void GameComponentTick()
@@ -57,7 +83,7 @@ namespace DawnNewDay
                 return;
 
             var settings = DawnMod.s_Settings;
-            if (settings.ConsumeShowExample())
+            if (settings.ConsumeShowExample && !m_DisplayActive)
             {
                 TriggerDawnOfANewDay();
                 return;
@@ -85,9 +111,9 @@ namespace DawnNewDay
                 TriggerDawnOfANewDay();
         }
 
-        public override void GameComponentOnGUI()
+        public override void GameComponentUpdate()
         {
-            var settings = DawnMod.s_Settings;
+            base.GameComponentUpdate();
 
             if (!m_DisplayActive)
                 return;
@@ -99,26 +125,41 @@ namespace DawnNewDay
                 return;
             }
 
-            Color defaultColor = GUI.color;
+            var settings = DawnMod.s_Settings;
 
             float elapsedTime = settings.DisplayDurationSeconds - m_DisplayTimer;
-            float alpha = 1f;
+            m_CurrentAlpha = 1f;
             if (elapsedTime < settings.FadeInDurationSeconds)
-                alpha = elapsedTime / settings.FadeInDurationSeconds;
+                m_CurrentAlpha = elapsedTime / settings.FadeInDurationSeconds;
             else if (m_DisplayTimer < settings.FadeOutDurationSeconds)
-                alpha = m_DisplayTimer / settings.FadeOutDurationSeconds;
+                m_CurrentAlpha = m_DisplayTimer / settings.FadeOutDurationSeconds;
 
-            alpha = Mathf.Clamp01(alpha);
-            GUI.color = new Color(1f, 1f, 1f, alpha);
+            m_CurrentAlpha = Mathf.Clamp01(m_CurrentAlpha);
+        }
 
-            float rectWidth = Mathf.Max(m_CachedDaySize.x, m_CachedDateSize.x) * 1.2f;
-            float rectHeight = m_CachedDaySize.y + m_CachedDateSize.y + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
+        public override void GameComponentOnGUI()
+        {
+            base.GameComponentOnGUI();
+
+            if (!m_DisplayActive)
+                return;
+
+            var settings = DawnMod.s_Settings;
+
+            if (settings.ScreenshotMode && Find.ScreenshotModeHandler.Active)
+                return;
+
+            Color defaultColor = GUI.color;
+            GUI.color = Color.white.WithAlpha(m_CurrentAlpha);
+
+            float rectWidth = Mathf.Max(m_CachedUpperSize.x, m_CachedBottomSize.x) * 1.2f;
+            float rectHeight = m_CachedUpperSize.y + m_CachedBottomSize.y + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
 
             Vector2 rectSize = new Vector2(rectWidth, rectHeight);
             Rect dawnLayoutRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
 
             if (settings.ShowHighlight)
-                Widgets.DrawHighlight(dawnLayoutRect, alpha);
+                Widgets.DrawHighlight(dawnLayoutRect, m_CurrentAlpha);
 
             GUILayout.BeginArea(dawnLayoutRect);
 
@@ -126,8 +167,8 @@ namespace DawnNewDay
             GUILayout.FlexibleSpace();
 
             GUILayoutOption dayTextWidth = GUILayout.Width(rectWidth);
-            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDayText), settings.DayTextStyle, dayTextWidth);
-            DrawText(dayRect, m_CachedDayText, settings.DayTextStyle, settings.DayOutlineColor, settings.DayOutlineThickness, alpha);
+            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextGUIStyle, dayTextWidth);
+            DrawText(dayRect, m_CachedUpperText, settings.UpperTextGUIStyle, settings.UpperOutlineColor, settings.UpperOutlineThickness, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -137,12 +178,12 @@ namespace DawnNewDay
             GUILayout.Space(scaledLinePadding);
 
             float scaledLineThickness = settings.LineThickness;
-            float lineWidth = rectSize.x * settings.LineWidthPercentage;
+            float lineWidth = rectSize.x * (settings.LineWidthPercentage / 100f);
             float lineX = (rectSize.x - lineWidth) / 2f;
 
             Rect lineSpace = GUILayoutUtility.GetRect(rectSize.x, scaledLineThickness);
             Rect lineRect = new Rect(lineSpace.x + lineX, lineSpace.y, lineWidth, scaledLineThickness);
-            Widgets.DrawBoxSolid(lineRect, new Color(0.6f, 0.6f, 0.6f, alpha));
+            Widgets.DrawBoxSolid(lineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
 
             GUILayout.Space(scaledLinePadding);
 
@@ -150,8 +191,8 @@ namespace DawnNewDay
             GUILayout.FlexibleSpace();
 
             GUILayoutOption dateTextWidth = GUILayout.Width(rectWidth);
-            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedDateText), settings.DateTextStyle, dateTextWidth);
-            DrawText(dateRect, m_CachedDateText, settings.DateTextStyle, settings.DateOutlineColor, settings.DateOutlineThickness, alpha);
+            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextGUIStyle, dateTextWidth);
+            DrawText(dateRect, m_CachedBottomText, settings.BottomTextGUIStyle, settings.BottomOutlineColor, settings.BottomOutlineThickness, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -191,7 +232,7 @@ namespace DawnNewDay
         {
             switch (dayRelative)
             {
-                case DayRelative.None:
+                case DayRelative.Settle:
                     return GenDate.DaysPassed + (GenDate.HourOfDay(absTicks, longitude) >= 6 ? 0 : 1);
                 case DayRelative.Quadrum:
                     return GenDate.DayOfQuadrum(absTicks, longitude);

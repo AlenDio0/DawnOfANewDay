@@ -1,22 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<packageId>AlenDio.DawnOfANewDay</packageId>
+	<packageId>alenDio.dawnofanewday</packageId>
 	<name>Dawn of a New Day</name>
 	<author>AlenDio</author>
 	<description>Adds a customizable header overlay that displays at the start of the day.
 
 &lt;color=orange&gt;&lt;b&gt;Features&lt;/b&gt;&lt;/color&gt;
 Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
-∼ In-game settings preview button.
-∼ Can be shown every X days if wanted.
-∼ Can start from DAY 0 or DAY 1. 
-∼ Can toggle the Highlight background. 
-∼ Customizable Offset and Scale mode.
-∼ Customizable Line width, thickness and padding.
-∼ Customizable Display, Fade-In, and Fade-Out durations.
-∼ Customizable colors of each text and outline.
-∼ Customizable font size, style and outline thickness of each text.
-∼ Customazible text for "DAY" and "YEAR".
+
+# Enabled => You can toggle the overlay anytime without restarting.
+# Screenshot Mode => When in Screenshot Mode (F11), if enabled the overlay won't be displayed.
+
+# Show Example => Shows your current overlay configuration in the next tick to ease and familarize with the settings.
+
+- &lt;color=cyan&gt;&lt;b&gt;Appearance Section&lt;/b&gt;&lt;/color&gt;
+  # Show Highlight => Adds a low-opacity light background behind the overlay.
+ 
+  # Scale => Scales the whole overlay to your like (From 0.5x to 4x).
+ 
+  # Offset Presets => Helps you to choose an offset of your liking without trial and error.
+  # Offset sliders (px) => Choose offsets on X and Y axis at pixel-precision (From 0 To Screen Resolution).
+ 
+  # Line Width (%) => Choose the width in percentage of the line that divides the Upper from Bottom (From 0 to 100).
+  # Line Thickness (px) => Choose the thickness in pixels of the line that divides the Upper from Bottom (From 0 to 100)
+  # Line Padding (px) => Choose the padding in pixels that divides the line from the Upper and Bottom (From 0 to 100)
+
+- &lt;color=cyan&gt;&lt;b&gt;Duration Section&lt;/b&gt;&lt;/color&gt;
+  # Total Display Duration => Choose the total duration of the overlay in seconds (From 0 to 120).
+  # Fade In Duration => Choose the duration of the overlay fading-in in seconds (From 0 to 120).
+  # Fade Out Duration => Choose the duration of the overlay fading-out in seconds (From 0 to 120).
+
+- &lt;color=cyan&gt;&lt;b&gt;Text Section&lt;/b&gt;&lt;/color&gt;
+  # Choose Font Family => Choose an custom OS font to replace the default game font of the text.
+  # Font Size => Choose the character size of the text (From 1 to 256).
+  # Outline Thickness => Choose the thickness of the outline of the text (From 0 to 10).
+  # Bold => Enable to add bold style to the text.
+  # Italic => Enable to add italic style to the text.
+  # Text Color => Choose from the color presets the color of the text.
+  # Outline Color => Choose from the color presets the color of the outline of the text.
+
+- &lt;color=cyan&gt;&lt;b&gt;Label Format Section&lt;/b&gt;&lt;/color&gt;
+  # Upper Text Format => Choose the format of the Upper text.
+  # Bottom Text Format => Choose the format of the Bottom text.
+ 
+  * {D/d} => Full Day           
+  * {Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]
+  * {Q/q} => CAPS Quadrum / Quadrum
+  * {S/s} => CAPS Season / Season
+  * {H/h} => Full Hour [eg. 06] / Hour [eg. 6]
+
+- &lt;color=cyan&gt;&lt;b&gt;Extra Section&lt;/b&gt;&lt;/color&gt;
+  # Starts at Zero => Enable to start the count of the days from 0 instead of 1.
+  # Show Every X Days => Choose how often the overlay displays (From 1 to 1200) [eg. X=10 => DAY 10, DAY 20, DAY 30, ...].
+  # Trigger Hour => Choose at what hour of the day the overlay displays (From 0 to 23).
+
+  # Day Relative => Choose what the value of day will be relative to.
+  * Settle => Day will be relative to the day the colonists settled.
+  * Quadrum => Day will be relative to the quadrum resetting itself after 15 days.
+  * Season => Day will be relative to the season resetting itself after it ends.
+  * Year => Day will be relative to the year resetting itself after 60 days.
 
 &lt;i&gt;Can be safely added or removed from existing saves at any time.&lt;/i&gt;
 	</description>
@@ -24,5 +66,5 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 		<li>1.5</li>
 		<li>1.6</li>
 	</supportedVersions>
-	<modVersion IgnoreIfNoMatchingField="True">1.0.1</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">1.1.0</modVersion>
 </ModMetaData>
