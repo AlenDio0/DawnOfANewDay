@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -111,6 +113,34 @@ namespace DawnNewDay
             "SettingsHint_QuadrumFormat".Translate() + "\n" +
             "SettingsHint_SeasonFormat".Translate() + "\n" +
             "SettingsHint_HourFormat".Translate();
+
+        public struct FormatContext
+        {
+            public string Day;
+            public string Year;
+            public string Quadrum;
+            public string Season;
+            public string Hour;
+        }
+
+        public static Dictionary<string, Func<FormatContext, string>> FormatTokens => new Dictionary<string, Func<FormatContext, string>>
+        {
+            { "{}",  context => context.Day },
+            { "{D}", context => context.Day },
+            { "{d}", context => context.Day },
+
+            { "{Y}", context => context.Year },
+            { "{y}", context => (context.Year.Length > 2 ? context.Year.Substring(context.Year.Length - 2) : context.Year) },
+
+            { "{Q}", context => context.Quadrum.ToUpper() },
+            { "{q}", context => context.Quadrum },
+
+            { "{S}", context => context.Season.ToUpper() },
+            { "{s}", context => context.Season },
+
+            { "{H}", context => $"{context.Hour:00}" },
+            { "{h}", context => context.Hour }
+        };
 
         #endregion
 

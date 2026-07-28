@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using Verse;
+using static DawnNewDay.DawnData;
 
 namespace DawnNewDay
 {
@@ -24,54 +25,6 @@ namespace DawnNewDay
 
         public DawnComponent(Game game)
             : base() => m_Game = game;
-
-        private void TriggerDawnOfANewDay()
-        {
-            try
-            {
-                var settings = DawnMod.s_Settings;
-
-                long absTicks = m_Game.tickManager.TicksAbs;
-                Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
-
-                string day = (DaysRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe();
-                string year = GenDate.Year(absTicks, location.x).ToStringSafe();
-                string quadrum = GenDate.Quadrum(absTicks, location.x).Label();
-                string season = GenDate.Season(absTicks, location).Label();
-                string hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe();
-
-                m_CachedUpperText = FormatLabel(settings.UpperTextFormat, day, year, quadrum, season, hour);
-                m_CachedBottomText = FormatLabel(settings.BottomTextFormat, day, year, quadrum, season, hour);
-
-                settings.UpdateText();
-
-                m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
-                m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
-
-                m_DisplayTimer = settings.DisplayDurationSeconds;
-                m_DisplayActive = true;
-            }
-            catch (Exception exception)
-            {
-                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOfANewDay()\nException: {exception}");
-            }
-        }
-
-        private string FormatLabel(string format, string day, string year, string quadrum, string season, string hour)
-        {
-            return format
-                .Replace("{}", day)
-                .Replace("{D}", day)
-                .Replace("{d}", day)
-                .Replace("{Y}", year)
-                .Replace("{y}", year.Substring(year.Length - 2))
-                .Replace("{Q}", quadrum.ToUpper())
-                .Replace("{q}", quadrum)
-                .Replace("{S}", season.ToUpper())
-                .Replace("{s}", season)
-                .Replace("{H}", $"{hour:00}")
-                .Replace("{h}", hour);
-        }
 
         public override void GameComponentTick()
         {
@@ -227,7 +180,62 @@ namespace DawnNewDay
             GUI.Label(rect, text, style.TextGUIStyle);
         }
 
-        private int DaysRelative(DayRelative dayRelative, long absTicks, float longitude)
+        private void TriggerDawnOfANewDay()
+        {
+            try
+            {
+                var settings = DawnMod.s_Settings;
+
+                FormatContext context = CreateFormatContext();
+                m_CachedUpperText = FormatLabel(settings.UpperTextFormat, context);
+                m_CachedBottomText = FormatLabel(settings.BottomTextFormat, context);
+
+                settings.UpdateText();
+
+                m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
+                m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+
+                m_DisplayTimer = settings.DisplayDurationSeconds;
+                m_DisplayActive = true;
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOfANewDay()\nException: {exception}");
+            }
+        }
+
+        private FormatContext CreateFormatContext()
+        {
+            var settings = DawnMod.s_Settings;
+
+            long absTicks = m_Game.tickManager.TicksAbs;
+            Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
+
+            return new FormatContext
+            {
+                Day = (MapDayRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe(),
+                Year = GenDate.Year(absTicks, location.x).ToStringSafe(),
+                Quadrum = GenDate.Quadrum(absTicks, location.x).Label(),
+                Season = GenDate.Season(absTicks, location).Label(),
+                Hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe()
+            };
+        }
+
+        private string FormatLabel(string format, FormatContext context)
+        {
+            if (format.NullOrEmpty())
+                return "";
+
+            foreach ((string token, var replacer) in DawnData.FormatTokens)
+            {
+                if (format.Contains(token))
+                    format = format.Replace(token, replacer?.Invoke(context));
+            }
+
+            return format;
+        }
+
+        private int MapDayRelative(DayRelative dayRelative, long absTicks, float longitude)
         {
             switch (dayRelative)
             {

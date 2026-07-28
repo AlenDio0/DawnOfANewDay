@@ -3,15 +3,18 @@
 
 Adds a customizable header overlay that displays at the start of the day.
 
-[h2]Features[/h2]
+[hr]
+[h1]FEATURES[/h1]
 Go to: Options > Mod options > "Dawn of a New Day";
+
 [list]
 [*][b]Enabled:[/b] You can toggle the overlay anytime without restarting.
 [*][b]Screenshot Mode:[/b] When in Screenshot Mode (F11), if enabled the overlay won't be displayed.
 
 [*][b]Show Example:[/b] Shows your current overlay configuration in the next tick to ease and familarize with the settings.
 [/list]
-[h3]Appearance Section[/h3]
+
+[h3]Appearance[/h3]
 [list]
 [*][b]Show Highlight:[/b] Adds a low-opacity light background behind the overlay.
 
@@ -24,13 +27,15 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom (From 0 to 100)
 [*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom (From 0 to 100)
 [/list]
-[h3]Duration Section[/h3]
+
+[h3]Duration[/h3]
 [list]
 [*][b]Total Display Duration:[/b] Choose the total duration of the overlay in seconds (From 0 to 120).
 [*][b]Fade In Duration:[/b] Choose the duration of the overlay fading-in in seconds (From 0 to 120).
 [*][b]Fade Out Duration:[/b] Choose the duration of the overlay fading-out in seconds (From 0 to 120).
 [/list]
-[h3]Text Section[/h3]
+
+[h3]Text[/h3]
 [list]
 [*][b]Choose Font Family:[/b] Choose an custom OS font to replace the default game font of the text.
 [*][b]Font Size:[/b] Choose the character size of the text (From 1 to 256).
@@ -40,7 +45,8 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*][b]Text Color:[/b] Choose from the color presets the color of the text.
 [*][b]Outline Color:[/b] Choose from the color presets the color of the outline of the text.
 [/list]
-[h3]Label Format Section[/h3]
+
+[h3]Label Format[/h3]
 [list]
 [*][b]Upper Text Format:[/b] Choose the format of the Upper text.
 [*][b]Bottom Text Format:[/b] Choose the format of the Bottom text.
@@ -71,7 +77,8 @@ Go to: Options > Mod options > "Dawn of a New Day";
 	[th]Full Hour [eg. 06] / Hour [eg. 6][/th]
 [/tr]
 [/table]
-[h3]Extra Section[/h3]
+
+[h3]Extra[/h3]
 [list]
 [*][b]Starts at Zero:[/b] Enable to start the count of the days from 0 instead of 1.
 [*][b]Show Every X Days:[/b] Choose how often the overlay displays (From 1 to 1200) [eg. X=10: DAY 10, DAY 20, DAY 30, ...].
@@ -101,22 +108,40 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [/tr]
 [/table]
 
-[h2]Compatibility[/h2]
+[hr]
+[h1]COMPATIBILITY[/h1]
 [list]
 [*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time.
 [*][b]Mods Conflicts:[/b] No known conflicts.
 [*][b]Mods:[/b] No compatibility yet added.
 [/list]
 
-[h2]TODO List[/h2]
+[hr]
+[h1]TRANSLATION[/h1]
+[list]
+[*][b]English:[/b] Made by myself.
+[*][b]Italian:[/b] Work in progress by myself.
+[/list]
+
+[b]If you want to translate the mod, follow these steps:[/b]
+[olist]
+[*]Go in the Mod Folder (SteamID: 3771580900).
+[*]Look for "Languages\English\Keyed\Misc.xml".
+[*]Copy the Misc.xml and translate it in your own language.
+[*]Contact me on discord (alendio) or by the workshop comment section to send me the files.
+[*]If it works correctly, I will add the translation to the mod and credit your work (unless you don't want to).
+[/olist]
+
+[hr]
+[h1]TODO LIST[/h1]
 [list]
 [*]Add Majora's Mask sound.
-[*]Add Translation compatibility.
 [*]Add compatibility with Modern Notifications.
 [*]Add compatibility with Explicit Timing.
 [*]Add additional special custom text subtitle.
 [*]Add renaming day section in mod options.
 [/list]
 
+[hr]
 [url=https://github.com/AlenDio0/DawnOfANewDay][img]https://i.imgur.com/7U9v8bp.png[/img][/url]
 [url=https://ko-fi.com/alendio][img]https://i.imgur.com/QGcents.png[/img][/url]
