@@ -49,31 +49,14 @@ namespace DawnNewDay
 
         #region Text Section
 
-        public GUIStyle UpperTextGUIStyle = new GUIStyle(Text.CurFontStyle);
-        private string m_UpperFontFamilyName = "";
-        private int m_UpperFontSize = 40;
-        private bool m_UpperTextBold = true;
-        private bool m_UpperTextItalic = false;
-        private Color m_UpperTextColor = Color.white;
-
-        public float UpperOutlineThickness = 1f;
-        public Color UpperOutlineColor = Color.black;
-
-        public GUIStyle BottomTextGUIStyle = new GUIStyle(Text.CurFontStyle);
-        private string m_BottomFontFamilyName = "";
-        private int m_BottomFontSize = 24;
-        private bool m_BottomTextBold = false;
-        private bool m_BottomTextItalic = false;
-        private Color m_BottomTextColor = Color.white;
-
-        public float BottomOutlineThickness = 1f;
-        public Color BottomOutlineColor = Color.black;
+        public DawnTextStyle UpperTextStyle = new DawnTextStyle(40, true);
+        public DawnTextStyle BottomTextStyle = new DawnTextStyle();
 
         #endregion
 
         #region Label Format Section
 
-        public string UpperTextFormat = "DAY {}";
+        public string UpperTextFormat = "DAY {d}";
         public string BottomTextFormat = "YEAR {Y} | {Q} | {S}";
 
         #endregion
@@ -97,14 +80,7 @@ namespace DawnNewDay
         private string m_LineThicknessBuffer;
         private string m_LinePaddingBuffer;
 
-        private string m_DayFontSizeBuffer;
-        private string m_DateFontSizeBuffer;
-
-        private string m_DayOutlineThicknessBuffer;
-        private string m_DateOutlineThicknessBuffer;
-
         private string m_ShowEveryXDaysBuffer;
-
         private string m_TriggerHourBuffer;
 
         #endregion
@@ -120,14 +96,14 @@ namespace DawnNewDay
 
         public void DoWindowContents(Rect canva)
         {
+            canva = canva.LeftPart(0.95f);
+            canva = canva.MiddlePart(1f, 0.95f);
+
+            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            listing.Begin(canva);
+
             try
             {
-                canva = canva.LeftPart(0.95f);
-                canva = canva.MiddlePart(1f, 0.95f);
-
-                Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
-                listing.Begin(canva);
-
                 ShowHeader(listing);
                 float headerHeight = listing.CurHeight;
 
@@ -154,15 +130,18 @@ namespace DawnNewDay
                 if (listing.SectionButton(DawnData.SettingsSection_Extra, ref m_ExtraSection))
                     listing.Indented(() => ShowExtraSection(listing));
 
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into DawnSettings.DoWindowContents(canva: {canva})\nException: {exception}");
+            }
+            finally
+            {
                 m_CachedScrollViewHeight = listing.CurHeight;
 
                 listing.End();
 
                 Widgets.EndScrollView();
-            }
-            catch (Exception exception)
-            {
-                DawnData.Error($"Exception catched into DawnSettings.DoWindowContents(canva: {canva})\nException: {exception}");
             }
         }
 
@@ -190,7 +169,7 @@ namespace DawnNewDay
 
             if (listing.ButtonText($"{DawnData.SettingsLabel_Scale}: {Scale}x"))
             {
-                var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScaleModes, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
+                var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScalePresets, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
                 Find.WindowStack.Add(scaleModes);
             }
 
@@ -229,25 +208,7 @@ namespace DawnNewDay
 
             Text.Font = defaultFont;
 
-            if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({m_UpperFontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
-            {
-                Find.WindowStack.Add(new Dialog_ChooseFontFamily(m_UpperFontFamilyName, font =>
-                {
-                    m_UpperFontFamilyName = font;
-                    if (!m_UpperFontFamilyName.NullOrEmpty())
-                        UpperTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_UpperFontFamilyName, 16);
-                }));
-            }
-
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_FontSize, ref m_UpperFontSize, ref m_DayFontSizeBuffer, 0f, 256f);
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_OutlineThickness, ref UpperOutlineThickness, ref m_DayOutlineThicknessBuffer, 0f, 10f);
-
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref m_UpperTextBold);
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref m_UpperTextItalic);
-            UpperTextGUIStyle.fontStyle = SettingsHelper.MapFontStyle(m_UpperTextBold, m_UpperTextItalic);
-
-            UpperTextGUIStyle.normal.textColor = listing.LabeledRadioColorPresets(ref m_UpperTextColor, DawnData.SettingsLabel_TextColor);
-            listing.LabeledRadioColorPresets(ref UpperOutlineColor, DawnData.SettingsLabel_OutlineColor);
+            UpperTextStyle.DoContents(listing, Scale);
 
             listing.Gap();
 
@@ -257,25 +218,7 @@ namespace DawnNewDay
 
             Text.Font = defaultFont;
 
-            if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({m_BottomFontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
-            {
-                Find.WindowStack.Add(new Dialog_ChooseFontFamily(m_BottomFontFamilyName, font =>
-                {
-                    m_BottomFontFamilyName = font;
-                    if (!m_BottomFontFamilyName.NullOrEmpty())
-                        BottomTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_BottomFontFamilyName, 16);
-                }));
-            }
-
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_FontSize, ref m_BottomFontSize, ref m_DateFontSizeBuffer, 0f, 256f);
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_OutlineThickness, ref BottomOutlineThickness, ref m_DateOutlineThicknessBuffer, 0f, 10f);
-
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref m_BottomTextBold);
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref m_BottomTextItalic);
-            BottomTextGUIStyle.fontStyle = SettingsHelper.MapFontStyle(m_BottomTextBold, m_BottomTextItalic);
-
-            BottomTextGUIStyle.normal.textColor = listing.LabeledRadioColorPresets(ref m_BottomTextColor, DawnData.SettingsLabel_TextColor);
-            listing.LabeledRadioColorPresets(ref BottomOutlineColor, DawnData.SettingsLabel_OutlineColor);
+            BottomTextStyle.DoContents(listing, Scale);
         }
 
         private void ShowLabelFormatSection(Listing_Standard listing)
@@ -316,19 +259,28 @@ namespace DawnNewDay
 
             Rect radioRect = listing.GetRect(30f);
 
-            var dayRelativeModes = Enum.GetValues(typeof(DayRelative)).Cast<DayRelative>().ToArray();
-            float itemWidth = radioRect.width / dayRelativeModes.Length;
+            var dayRelativeRadio = Enum.GetValues(typeof(DayRelative)).Cast<DayRelative>().ToArray();
+            float itemWidth = radioRect.width / dayRelativeRadio.Length;
 
-            for (int i = 0; i < dayRelativeModes.Length; i++)
+            for (int i = 0; i < dayRelativeRadio.Length; i++)
             {
-                DayRelative mode = dayRelativeModes[i];
+                DayRelative dayRelative = dayRelativeRadio[i];
 
                 Rect buttonRect = new Rect(radioRect.x + (i * itemWidth), radioRect.y, itemWidth, radioRect.height).MiddlePart(0.5f, 1f);
 
-                TooltipHandler.TipRegion(buttonRect, DawnData.SettingsTooltip_DayRelativeTo.TryGetValue(mode, ""));
-                if (Widgets.RadioButtonLabeled(buttonRect, mode.ToStringSafe(), DayRelativeTo == mode))
-                    DayRelativeTo = mode;
+                TooltipHandler.TipRegion(buttonRect, DawnData.SettingsTooltip_DayRelativeTo.TryGetValue(dayRelative, ""));
+                if (Widgets.RadioButtonLabeled(buttonRect, DawnData.SettingsLabel_DayRelative.TryGetValue(dayRelative, ""), DayRelativeTo == dayRelative))
+                    DayRelativeTo = dayRelative;
             }
+        }
+
+        public void UpdateText()
+        {
+            UpperTextStyle.ApplyToGUIStyle(Scale);
+            BottomTextStyle.ApplyToGUIStyle(Scale);
+
+            UpperTextStyle.UpdateFontFamily();
+            BottomTextStyle.UpdateFontFamily();
         }
 
         public override void ExposeData()
@@ -364,41 +316,23 @@ namespace DawnNewDay
 
                 #region Text Section
 
-                if (UpperTextGUIStyle == null)
-                    UpperTextGUIStyle = new GUIStyle(Text.CurFontStyle);
+                Scribe_Deep.Look(ref UpperTextStyle, "UpperTextStyle");
+                Scribe_Deep.Look(ref BottomTextStyle, "BottomTextStyle");
 
-                Scribe_Values.Look(ref m_UpperFontFamilyName, "UpperFontFamilyName", "");
-                Scribe_Values.Look(ref m_UpperFontSize, "UpperFontSize", 40);
-                Scribe_Values.Look(ref m_UpperTextColor, "UpperTextColor", Color.white);
+                if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
+                {
+                    if (UpperTextStyle == null)
+                        UpperTextStyle = new DawnTextStyle(40, true);
 
-                Scribe_Values.Look(ref UpperOutlineThickness, "UpperOutlineThickness", 1f);
-                Scribe_Values.Look(ref UpperOutlineColor, "UpperOutlineColor", Color.black);
-
-                UpperTextGUIStyle.fontSize = Mathf.CeilToInt(m_UpperFontSize * Scale);
-                UpperTextGUIStyle.fontStyle = ScribeByValue(UpperTextGUIStyle.fontStyle, "DayStyleFontStyle", FontStyle.Bold);
-                UpperTextGUIStyle.normal.textColor = m_UpperTextColor;
-                UpperTextGUIStyle.alignment = TextAnchor.MiddleCenter;
-
-                if (BottomTextGUIStyle == null)
-                    BottomTextGUIStyle = new GUIStyle(Text.CurFontStyle);
-
-                Scribe_Values.Look(ref m_BottomFontFamilyName, "BottomFontFamilyName", "");
-                Scribe_Values.Look(ref m_BottomFontSize, "BottomFontSize", 24);
-                Scribe_Values.Look(ref m_BottomTextColor, "BottomTextColor", Color.white);
-
-                Scribe_Values.Look(ref BottomOutlineThickness, "BottomOutlineThickness", 1f);
-                Scribe_Values.Look(ref BottomOutlineColor, "BottomOutlineColor", Color.black);
-
-                BottomTextGUIStyle.fontSize = Mathf.CeilToInt(m_BottomFontSize * Scale);
-                BottomTextGUIStyle.fontStyle = ScribeByValue(BottomTextGUIStyle.fontStyle, "DateStyleFontStyle", FontStyle.Normal);
-                BottomTextGUIStyle.normal.textColor = m_BottomTextColor;
-                BottomTextGUIStyle.alignment = TextAnchor.MiddleCenter;
+                    if (BottomTextStyle == null)
+                        BottomTextStyle = new DawnTextStyle();
+                }
 
                 #endregion
 
                 #region Label Format Section
 
-                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat", "DAY {}");
+                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat", "DAY {d}");
                 Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat", "YEAR {Y} | {Q} | {S}");
 
                 #endregion
@@ -416,33 +350,6 @@ namespace DawnNewDay
             {
                 DawnData.Error($"Exception catched into DawnSettings.ExposeData()\nException: {exception}");
             }
-        }
-
-        public void UpdateTextFont()
-        {
-            try
-            {
-                if (!m_UpperFontFamilyName.NullOrEmpty())
-                    UpperTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_UpperFontFamilyName, 16);
-                else
-                    UpperTextGUIStyle.font = Text.CurFontStyle.font;
-
-
-                if (!m_BottomFontFamilyName.NullOrEmpty())
-                    BottomTextGUIStyle.font = Font.CreateDynamicFontFromOSFont(m_BottomFontFamilyName, 16);
-                else
-                    BottomTextGUIStyle.font = Text.CurFontStyle.font;
-            }
-            catch (Exception exception)
-            {
-                DawnData.Error($"DawnSettings.UpdateTextFont() Failed!\nUpperFontFamilyName: '{m_UpperFontFamilyName}', BottomFontFamilyName: '{m_BottomFontFamilyName}'\nException: {exception}");
-            }
-        }
-
-        private T ScribeByValue<T>(T value, string label, T defaultValue)
-        {
-            Scribe_Values.Look<T>(ref value, label, defaultValue);
-            return value;
         }
     }
 }

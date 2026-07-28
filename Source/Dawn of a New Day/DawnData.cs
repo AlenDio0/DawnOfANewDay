@@ -28,118 +28,116 @@ namespace DawnNewDay
 
         #region Settings
 
-        public static string SettingsLabel_Enabled => "Enabled";
-        public static string SettingsLabel_ScreenshotMode => "Screenshot Mode";
+        public static string SettingsLabel_Enabled => "SettingsLabel_Enabled".Translate();
+        public static string SettingsLabel_ScreenshotMode => "SettingsLabel_ScreenshotMode".Translate();
 
-        public static string SettingsLabel_ShowExample => "Show Example";
-        public static string SettingsMessage_ShowExample => $"'{ModName}' Example will be triggered in the next tick.";
+        public static string SettingsLabel_ShowExample => "SettingsLabel_ShowExample".Translate();
+        public static string SettingsMessage_ShowExample => "SettingsMessage_ShowExample".Translate(ModName);
 
-        public static readonly (string Name, Color Color)[] ColorPresets = new[]
-        {
-            ("White", Color.white),
-            ("Gray", Color.gray),
-            ("Black", Color.black),
-            ("Red", Color.red),
-            ("Green", Color.green),
-            ("Blue", Color.blue),
-            ("Yellow", Color.yellow),
-            ("Magenta", Color.magenta),
-            ("Cyan", Color.cyan)
-        };
+        public static Color[] ColorPresets => new[] { Color.white, Color.gray, Color.black, Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.cyan };
 
         #region Appearance Section
 
-        public static string SettingsSection_Appearance = "Appearance";
+        public static string SettingsSection_Appearance => "SettingsSection_Appearance".Translate();
 
-        public static string SettingsLabel_ShowHighlight => "Show Highlight";
+        public static string SettingsLabel_ShowHighlight => "SettingsLabel_ShowHighlight".Translate();
 
-        public static string SettingsLabel_Scale => "Scale";
-        public static readonly float[] ScaleModes = { 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.5f, 3f, 4f };
+        public static string SettingsLabel_Scale => "SettingsLabel_Scale".Translate();
+        public static readonly float[] ScalePresets = { 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.5f, 3f, 4f };
 
-        public static string SettingsLabel_Offset => "Offset";
-        public static string SettingsLabel_OffsetPresets => "Offset Presets";
-        public static readonly (string Name, Vector2 Mode)[] OffsetPresets = new[]
+        public static string SettingsLabel_Offset => "SettingsLabel_Offset".Translate();
+        public static string SettingsLabel_OffsetPresets => "SettingsLabel_OffsetPresets".Translate();
+        public static (TaggedString Name, Vector2 Mode)[] OffsetPresets => new[]
         {
-            ("(Middle, Top)     ↑", new Vector2(0.5f, 0.2f)),
-            ("(Middle, Bottom)  ↓", new Vector2(0.5f, 0.8f)),
-            ("(Middle, Middle)  ▪", new Vector2(0.5f, 0.5f)),
-            ("(Left, Middle)    ←", new Vector2(0.2f, 0.5f)),
-            ("(Right, Middle)   →", new Vector2(0.8f, 0.5f)),
-            ("(Left, Top)       ↖", new Vector2(0.2f, 0.2f)),
-            ("(Right, Top)      ↗", new Vector2(0.8f, 0.2f)),
-            ("(Left, Bottom)    ↙", new Vector2(0.2f, 0.8f)),
-            ("(Right, Bottom)   ↘", new Vector2(0.8f, 0.8f)),
+            ("Offset_MiddleTop".Translate(), new Vector2(0.5f, 0.2f)),
+            ("Offset_MiddleBottom".Translate(), new Vector2(0.5f, 0.8f)),
+            ("Offset_MiddleMiddle".Translate(), new Vector2(0.5f, 0.5f)),
+            ("Offset_LeftMiddle".Translate(), new Vector2(0.2f, 0.5f)),
+            ("Offset_RightMiddle".Translate(), new Vector2(0.8f, 0.5f)),
+            ("Offset_LeftTop".Translate(), new Vector2(0.2f, 0.2f)),
+            ("Offset_RightTop".Translate(), new Vector2(0.8f, 0.2f)),
+            ("Offset_LeftBottom".Translate(), new Vector2(0.2f, 0.8f)),
+            ("Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
         };
 
-        public static string SettingsLabel_LineWidthPercentage => "Line Width";
-        public static string SettingsLabel_LineThickness => "Line Thickness";
-        public static string SettingsLabel_LinePadding => "Line Padding";
-        public static string SettingsLabel_LineColor => "Line Color";
+        public static string SettingsLabel_LineWidthPercentage => "SettingsLabel_LineWidthPercentage".Translate();
+        public static string SettingsLabel_LineThickness => "SettingsLabel_LineThickness".Translate();
+        public static string SettingsLabel_LinePadding => "SettingsLabel_LinePadding".Translate();
+        public static string SettingsLabel_LineColor => "SettingsLabel_LineColor".Translate();
 
         #endregion
 
         #region Duration Section
 
-        public static string SettingsSection_Duration = "Duration";
+        public static string SettingsSection_Duration => "SettingsSection_Duration".Translate();
 
-        public static string SettingsLabel_DisplayDuration => "Total Display Duration";
-        public static string SettingsLabel_FadeInDuration => "Fade In Duration";
-        public static string SettingsLabel_FadeOutDuration => "Fade Out Duration";
+        public static string SettingsLabel_DisplayDuration => "SettingsLabel_DisplayDuration".Translate();
+        public static string SettingsLabel_FadeInDuration => "SettingsLabel_FadeInDuration".Translate();
+        public static string SettingsLabel_FadeOutDuration => "SettingsLabel_FadeOutDuration".Translate();
 
         #endregion
 
         #region Text Section
 
-        public static string SettingsSection_Text = "Text";
+        public static string SettingsSection_Text => "SettingsSection_Text".Translate();
 
-        public static string SettingsLabel_UpperTextProperties => "Upper Text Properties";
-        public static string SettingsLabel_BottomTextProperties => "Bottom Text Properties";
+        public static string SettingsLabel_UpperTextProperties => "SettingsLabel_UpperTextProperties".Translate();
+        public static string SettingsLabel_BottomTextProperties => "SettingsLabel_BottomTextProperties".Translate();
 
-        public static string SettingsLabel_DefaultFont => "Default Game Font";
+        public static string SettingsLabel_DefaultFont => "SettingsLabel_DefaultFont".Translate();
 
-        public static string SettingsLabel_FontFamily => "Choose Font Family";
-        public static string SettingsLabel_FontSize => "Font Size";
-        public static string SettingsLabel_Bold => "Bold";
-        public static string SettingsLabel_Italic => "Italic";
-        public static string SettingsLabel_TextColor => "Text Color";
-        public static string SettingsLabel_OutlineThickness => "Outline Thickness";
-        public static string SettingsLabel_OutlineColor => "Outline Color";
+        public static string SettingsLabel_FontFamily => "SettingsLabel_FontFamily".Translate();
+        public static string SettingsLabel_FontSize => "SettingsLabel_FontSize".Translate();
+        public static string SettingsLabel_Bold => "SettingsLabel_Bold".Translate();
+        public static string SettingsLabel_Italic => "SettingsLabel_Italic".Translate();
+        public static string SettingsLabel_TextColor => "SettingsLabel_TextColor".Translate();
+        public static string SettingsLabel_OutlineThickness => "SettingsLabel_OutlineThickness".Translate();
+        public static string SettingsLabel_OutlineColor => "SettingsLabel_OutlineColor".Translate();
 
-        public static string SettingsLabel_Search => "Search";
+        public static string SettingsLabel_Search => "SettingsLabel_Search".Translate();
 
         #endregion
 
         #region Label Format Section
 
-        public static string SettingsSection_LabelFormat = "Label Format";
+        public static string SettingsSection_LabelFormat => "SettingsSection_LabelFormat".Translate();
 
-        public static string SettingsLabel_UpperTextFormat => "Upper Text Format";
-        public static string SettingsLabel_BottomTextFormat => "Bottom Text Format";
+        public static string SettingsLabel_UpperTextFormat => "SettingsLabel_UpperTextFormat".Translate();
+        public static string SettingsLabel_BottomTextFormat => "SettingsLabel_BottomTextFormat".Translate();
 
         public static string SettingsHint_LabelFormat =>
-@"{D/d} => Full Day           
-{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]
-{Q/q} => CAPS Quadrum / Quadrum
-{S/s} => CAPS Season / Season
-{H/h} => Full Hour [eg. 06] / Hour [eg. 6]";
+            "SettingsHint_DayFormat".Translate() + "\n" +
+            "SettingsHint_YearFormat".Translate() + "\n" +
+            "SettingsHint_QuadrumFormat".Translate() + "\n" +
+            "SettingsHint_SeasonFormat".Translate() + "\n" +
+            "SettingsHint_HourFormat".Translate();
 
         #endregion
 
         #region Extra Section
 
-        public static string SettingsSection_Extra = "Extra";
+        public static string SettingsSection_Extra => "SettingsSection_Extra".Translate();
 
-        public static string SettingsLabel_StartsAtZero => "Starts at Zero";
-        public static string SettingsLabel_ShowEveryXDays => "Show Every X Days";
-        public static string SettingsLabel_TriggerHour => "Trigger Hour";
+        public static string SettingsLabel_StartsAtZero => "SettingsLabel_StartsAtZero".Translate();
+        public static string SettingsLabel_ShowEveryXDays => "SettingsLabel_ShowEveryXDays".Translate();
+        public static string SettingsLabel_TriggerHour => "SettingsLabel_TriggerHour".Translate();
 
-        public static string SettingsLabel_DayRelativeTo => "Day Relative";
-        public static readonly Dictionary<DayRelative, string> SettingsTooltip_DayRelativeTo = new Dictionary<DayRelative, string>
+        public static string SettingsLabel_DayRelativeTo => "SettingsLabel_DayRelativeTo".Translate();
+
+        public static Dictionary<DayRelative, string> SettingsLabel_DayRelative => new Dictionary<DayRelative, string>
         {
-            { DayRelative.Settle, "Day will be relative to the day the colonists settled."},
-            { DayRelative.Quadrum, "Day will be relative to the quadrum resetting itself after 15 days."},
-            { DayRelative.Season, "Day will be relative to the season resetting itself after it ends."},
-            { DayRelative.Year, "Day will be relative to the year resetting itself after 60 days."}
+            { DayRelative.Settle, "SettingsLabel_DayRelativeSettle".Translate() },
+            { DayRelative.Quadrum, "SettingsLabel_DayRelativeQuadrum".Translate() },
+            { DayRelative.Season, "SettingsLabel_DayRelativeSeason".Translate() },
+            { DayRelative.Year, "SettingsLabel_DayRelativeYear".Translate() }
+        };
+
+        public static Dictionary<DayRelative, string> SettingsTooltip_DayRelativeTo => new Dictionary<DayRelative, string>
+        {
+            { DayRelative.Settle, "SettingsTooltip_Settle".Translate() },
+            { DayRelative.Quadrum, "SettingsTooltip_Quadrum".Translate() },
+            { DayRelative.Season, "SettingsTooltip_Season".Translate() },
+            { DayRelative.Year, "SettingsTooltip_Year".Translate() }
         };
 
         #endregion

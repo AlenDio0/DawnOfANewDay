@@ -40,7 +40,7 @@ namespace DawnNewDay
             const float cBoxSize = 24f;
             for (int i = 0; i < DawnData.ColorPresets.Length; i++)
             {
-                (string name, Color color) = DawnData.ColorPresets[i];
+                Color color = DawnData.ColorPresets[i];
 
                 Rect boxRect = new Rect(labelRect.xMax + (i * (cBoxSize * 1.5f)), rowRect.y, cBoxSize, cBoxSize);
                 Widgets.DrawBoxSolid(boxRect, color);

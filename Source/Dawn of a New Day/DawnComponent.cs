@@ -36,17 +36,17 @@ namespace DawnNewDay
 
                 string day = (DaysRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe();
                 string year = GenDate.Year(absTicks, location.x).ToStringSafe();
-                string quadrum = GenDate.Quadrum(absTicks, location.x).ToStringSafe();
-                string season = GenDate.Season(absTicks, location).ToStringSafe();
+                string quadrum = GenDate.Quadrum(absTicks, location.x).Label();
+                string season = GenDate.Season(absTicks, location).Label();
                 string hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe();
 
                 m_CachedUpperText = FormatLabel(settings.UpperTextFormat, day, year, quadrum, season, hour);
                 m_CachedBottomText = FormatLabel(settings.BottomTextFormat, day, year, quadrum, season, hour);
 
-                settings.UpdateTextFont();
+                settings.UpdateText();
 
-                m_CachedUpperSize = settings.UpperTextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
-                m_CachedBottomSize = settings.BottomTextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+                m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
+                m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
 
                 m_DisplayTimer = settings.DisplayDurationSeconds;
                 m_DisplayActive = true;
@@ -60,6 +60,7 @@ namespace DawnNewDay
         private string FormatLabel(string format, string day, string year, string quadrum, string season, string hour)
         {
             return format
+                .Replace("{}", day)
                 .Replace("{D}", day)
                 .Replace("{d}", day)
                 .Replace("{Y}", year)
@@ -83,7 +84,7 @@ namespace DawnNewDay
                 return;
 
             var settings = DawnMod.s_Settings;
-            if (settings.ConsumeShowExample && !m_DisplayActive)
+            if (settings.ConsumeShowExample)
             {
                 TriggerDawnOfANewDay();
                 return;
@@ -167,8 +168,8 @@ namespace DawnNewDay
             GUILayout.FlexibleSpace();
 
             GUILayoutOption dayTextWidth = GUILayout.Width(rectWidth);
-            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextGUIStyle, dayTextWidth);
-            DrawText(dayRect, m_CachedUpperText, settings.UpperTextGUIStyle, settings.UpperOutlineColor, settings.UpperOutlineThickness, m_CurrentAlpha);
+            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, dayTextWidth);
+            DrawText(dayRect, m_CachedUpperText, settings.UpperTextStyle, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -191,8 +192,8 @@ namespace DawnNewDay
             GUILayout.FlexibleSpace();
 
             GUILayoutOption dateTextWidth = GUILayout.Width(rectWidth);
-            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextGUIStyle, dateTextWidth);
-            DrawText(dateRect, m_CachedBottomText, settings.BottomTextGUIStyle, settings.BottomOutlineColor, settings.BottomOutlineThickness, m_CurrentAlpha);
+            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, dateTextWidth);
+            DrawText(dateRect, m_CachedBottomText, settings.BottomTextStyle, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -202,30 +203,28 @@ namespace DawnNewDay
             GUI.color = defaultColor;
         }
 
-        private void DrawText(Rect rect, string text, GUIStyle style, Color outlineColor, float outlineThickness, float alpha)
+        private void DrawText(Rect rect, string text, DawnTextStyle style, float alpha)
         {
-            Color originalColor = style.normal.textColor;
+            Color originalColor = style.TextColor.WithAlpha(alpha);
+            Color outlineColor = style.OutlineColor.WithAlpha(alpha);
 
-            originalColor.a = alpha;
-            outlineColor.a = alpha;
-
-            if (outlineThickness > 0)
+            if (style.OutlineThickness > 0)
             {
-                style.normal.textColor = outlineColor;
+                style.TextGUIStyle.normal.textColor = outlineColor;
 
-                float step = outlineThickness / 10f;
-                for (float x = -outlineThickness; x <= outlineThickness; x += step)
+                float step = style.OutlineThickness / 10f;
+                for (float x = -style.OutlineThickness; x <= style.OutlineThickness; x += step)
                 {
-                    for (float y = -outlineThickness; y <= outlineThickness; y += step)
+                    for (float y = -style.OutlineThickness; y <= style.OutlineThickness; y += step)
                     {
                         Vector2 offset = new Vector2(x, y);
-                        GUI.Label(new Rect(rect.position + offset, rect.size), text, style);
+                        GUI.Label(new Rect(rect.position + offset, rect.size), text, style.TextGUIStyle);
                     }
                 }
             }
 
-            style.normal.textColor = originalColor;
-            GUI.Label(rect, text, style);
+            style.TextGUIStyle.normal.textColor = originalColor;
+            GUI.Label(rect, text, style.TextGUIStyle);
         }
 
         private int DaysRelative(DayRelative dayRelative, long absTicks, float longitude)

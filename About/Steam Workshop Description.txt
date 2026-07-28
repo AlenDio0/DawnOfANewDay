@@ -1,0 +1,122 @@
+[i][b]Mod Version:[/b] v1.1.1[/i]
+[spoiler]Showcase video is outdated :\[/spoiler]
+
+Adds a customizable header overlay that displays at the start of the day.
+
+[h2]Features[/h2]
+Go to: Options > Mod options > "Dawn of a New Day";
+[list]
+[*][b]Enabled:[/b] You can toggle the overlay anytime without restarting.
+[*][b]Screenshot Mode:[/b] When in Screenshot Mode (F11), if enabled the overlay won't be displayed.
+
+[*][b]Show Example:[/b] Shows your current overlay configuration in the next tick to ease and familarize with the settings.
+[/list]
+[h3]Appearance Section[/h3]
+[list]
+[*][b]Show Highlight:[/b] Adds a low-opacity light background behind the overlay.
+
+[*][b]Scale:[/b] Scales the whole overlay to your like (From 0.5x to 4x).
+
+[*][b]Offset Presets:[/b] Helps you to choose an offset of your liking without trial and error.
+[*][b]Offset sliders (px):[/b] Choose offsets on X and Y axis at pixel-precision (From 0 To Screen Resolution).
+
+[*][b]Line Width (%):[/b] Choose the width in percentage of the line that divides the Upper from Bottom (From 0 to 100).
+[*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom (From 0 to 100)
+[*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom (From 0 to 100)
+[/list]
+[h3]Duration Section[/h3]
+[list]
+[*][b]Total Display Duration:[/b] Choose the total duration of the overlay in seconds (From 0 to 120).
+[*][b]Fade In Duration:[/b] Choose the duration of the overlay fading-in in seconds (From 0 to 120).
+[*][b]Fade Out Duration:[/b] Choose the duration of the overlay fading-out in seconds (From 0 to 120).
+[/list]
+[h3]Text Section[/h3]
+[list]
+[*][b]Choose Font Family:[/b] Choose an custom OS font to replace the default game font of the text.
+[*][b]Font Size:[/b] Choose the character size of the text (From 1 to 256).
+[*][b]Outline Thickness:[/b] Choose the thickness of the outline of the text (From 0 to 10).
+[*][b]Bold:[/b] Enable to add bold style to the text.
+[*][b]Italic:[/b] Enable to add italic style to the text.
+[*][b]Text Color:[/b] Choose from the color presets the color of the text.
+[*][b]Outline Color:[/b] Choose from the color presets the color of the outline of the text.
+[/list]
+[h3]Label Format Section[/h3]
+[list]
+[*][b]Upper Text Format:[/b] Choose the format of the Upper text.
+[*][b]Bottom Text Format:[/b] Choose the format of the Bottom text.
+[/list]
+[table]
+[tr]
+	[th][b]Format[/b][/th]
+	[th][b]Description[/b][/th]
+[/tr]
+[tr]
+	[th]{D/d}[/th]
+	[th]Full Day[/th]
+[/tr]
+[tr]
+	[th]{Y/y}[/th]
+	[th]Full Year [eg. 5500] / 2-Digit Year [eg. 00][/th]
+[/tr]
+[tr]
+	[th]{Q/q}[/th]
+	[th]CAPS Quadrum / Quadrum[/th]
+[/tr]
+[tr]
+	[th]{S/s}[/th]
+	[th]CAPS Season / Season[/th]
+[/tr]
+[tr]
+	[th]{H/h}[/th]
+	[th]Full Hour [eg. 06] / Hour [eg. 6][/th]
+[/tr]
+[/table]
+[h3]Extra Section[/h3]
+[list]
+[*][b]Starts at Zero:[/b] Enable to start the count of the days from 0 instead of 1.
+[*][b]Show Every X Days:[/b] Choose how often the overlay displays (From 1 to 1200) [eg. X=10: DAY 10, DAY 20, DAY 30, ...].
+[*][b]Trigger Hour:[/b] Choose at what hour of the day the overlay displays (From 0 to 23).
+[*][b]Day Relative:[/b] Choose what the value of day will be relative to.
+[/list]
+[table]
+[tr]
+	[th][b]Name[/b][/th]
+	[th][b]Description[/b][/th]
+[/tr]
+[tr]
+	[th]Settle[/th]
+	[th]Day will be relative to the day the colonists settled.[/th]
+[/tr]
+[tr]
+	[th]Quadrum[/th]
+	[th]Day will be relative to the quadrum resetting itself after 15 days.[/th]
+[/tr]
+[tr]
+	[th]Season[/th]
+	[th]Day will be relative to the season resetting itself after it ends.[/th]
+[/tr]
+[tr]
+	[th]Year[/th]
+	[th]Day will be relative to the year resetting itself after 60 days.[/th]
+[/tr]
+[/table]
+
+[h2]Compatibility[/h2]
+[list]
+[*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time.
+[*][b]Mods Conflicts:[/b] No known conflicts.
+[*][b]Mods:[/b] No compatibility yet added.
+[/list]
+
+[h2]TODO List[/h2]
+[list]
+[*]Add Majora's Mask sound.
+[*]Add Translation compatibility.
+[*]Add compatibility with Modern Notifications.
+[*]Add compatibility with Explicit Timing.
+[*]Add additional special custom text subtitle.
+[*]Add renaming day section in mod options.
+[/list]
+
+[url=https://github.com/AlenDio0/DawnOfANewDay][img]https://i.imgur.com/7U9v8bp.png[/img][/url]
+[url=https://ko-fi.com/alendio][img]https://i.imgur.com/QGcents.png[/img][/url]
