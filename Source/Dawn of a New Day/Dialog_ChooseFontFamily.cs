@@ -141,10 +141,10 @@ namespace DawnNewDay
 
         private IEnumerable<string> GetShowableFontNames()
         {
-            if (m_SearchBuffer.NullOrEmpty())
-                return m_FontNames;
-
-            return m_FontNames.Where(fontName => fontName.ToUpper().Contains(m_SearchBuffer.ToUpper()));
+            return m_FontNames
+                .Where(fontName => m_SearchBuffer.NullOrEmpty() || fontName.ToUpper().Contains(m_SearchBuffer.ToUpper()))
+                .Where(fontName => !fontName.ToUpper().Contains("BOLD"))
+                .Where(fontName => !fontName.ToUpper().Contains("ITALIC"));
         }
     }
 }
