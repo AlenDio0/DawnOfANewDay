@@ -49,7 +49,7 @@ namespace DawnNewDay
 
         public static string SettingsLabel_Offset => "SettingsLabel_Offset".Translate();
         public static string SettingsLabel_OffsetPresets => "SettingsLabel_OffsetPresets".Translate();
-        public static (TaggedString Name, Vector2 Mode)[] OffsetPresets => new[]
+        public static (TaggedString Name, Vector2 Preset)[] OffsetPresets => new[]
         {
             ("Offset_MiddleTop".Translate(), new Vector2(0.5f, 0.2f)),
             ("Offset_MiddleBottom".Translate(), new Vector2(0.5f, 0.8f)),

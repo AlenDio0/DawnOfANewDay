@@ -81,8 +81,9 @@ namespace DawnNewDay
 
             var settings = DawnMod.s_Settings;
 
-            float elapsedTime = settings.DisplayDurationSeconds - m_DisplayTimer;
             m_CurrentAlpha = 1f;
+
+            float elapsedTime = settings.DisplayDurationSeconds - m_DisplayTimer;
             if (elapsedTime < settings.FadeInDurationSeconds)
                 m_CurrentAlpha = elapsedTime / settings.FadeInDurationSeconds;
             else if (m_DisplayTimer < settings.FadeOutDurationSeconds)
@@ -109,47 +110,59 @@ namespace DawnNewDay
             float rectWidth = Mathf.Max(m_CachedUpperSize.x, m_CachedBottomSize.x) * 1.2f;
             float rectHeight = m_CachedUpperSize.y + m_CachedBottomSize.y + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
 
+            GUILayoutOption textWidth = GUILayout.Width(rectWidth);
+
             Vector2 rectSize = new Vector2(rectWidth, rectHeight);
-            Rect dawnLayoutRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
+            Rect overlaytRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
 
             if (settings.ShowHighlight)
-                Widgets.DrawHighlight(dawnLayoutRect, m_CurrentAlpha);
+                Widgets.DrawHighlight(overlaytRect, m_CurrentAlpha);
 
-            GUILayout.BeginArea(dawnLayoutRect);
+            GUILayout.BeginArea(overlaytRect);
+
+            #region UpperText
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            GUILayoutOption dayTextWidth = GUILayout.Width(rectWidth);
-            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, dayTextWidth);
+            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, textWidth);
             DrawText(dayRect, m_CachedUpperText, settings.UpperTextStyle, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+
+            #endregion
+
+            #region Line
 
             float scaledLinePadding = settings.LinePadding * settings.Scale;
 
             GUILayout.Space(scaledLinePadding);
 
             float scaledLineThickness = settings.LineThickness;
-            float lineWidth = rectSize.x * (settings.LineWidthPercentage / 100f);
-            float lineX = (rectSize.x - lineWidth) / 2f;
+            float lineWidth = rectWidth * (settings.LineWidthPercentage / 100f);
+            float lineX = (rectWidth - lineWidth) / 2f;
 
-            Rect lineSpace = GUILayoutUtility.GetRect(rectSize.x, scaledLineThickness);
+            Rect lineSpace = GUILayoutUtility.GetRect(rectWidth, scaledLineThickness);
             Rect lineRect = new Rect(lineSpace.x + lineX, lineSpace.y, lineWidth, scaledLineThickness);
             Widgets.DrawBoxSolid(lineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
 
             GUILayout.Space(scaledLinePadding);
 
+            #endregion
+
+            #region BottomText
+
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            GUILayoutOption dateTextWidth = GUILayout.Width(rectWidth);
-            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, dateTextWidth);
+            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, textWidth);
             DrawText(dateRect, m_CachedBottomText, settings.BottomTextStyle, m_CurrentAlpha);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+
+            #endregion
 
             GUILayout.EndArea();
 

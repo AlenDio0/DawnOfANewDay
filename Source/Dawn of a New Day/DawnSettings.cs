@@ -76,12 +76,10 @@ namespace DawnNewDay
         private string m_FadeInDurationBuffer;
         private string m_FadeOutDurationBuffer;
 
-        private string m_LineWidthPercentageBuffer;
         private string m_LineThicknessBuffer;
         private string m_LinePaddingBuffer;
 
         private string m_ShowEveryXDaysBuffer;
-        private string m_TriggerHourBuffer;
 
         #endregion
 
@@ -175,8 +173,8 @@ namespace DawnNewDay
 
             if (listing.ButtonText(DawnData.SettingsLabel_OffsetPresets))
             {
-                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnData.OffsetPresets, item => new FloatMenuOption($"{item.Name}", () =>
-                    Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Mode));
+                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnData.OffsetPresets, item => new FloatMenuOption(item.Name, () =>
+                    Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Preset));
                 Find.WindowStack.Add(offsetPresets);
             }
 
@@ -185,7 +183,7 @@ namespace DawnNewDay
 
             listing.Gap();
 
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineWidthPercentage} (%)", ref LineWidthPercentage, ref m_LineWidthPercentageBuffer, 0f, 100f);
+            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_LineWidthPercentage} ({LineWidthPercentage} %)", LineWidthPercentage, 0f, 100f, 0.25f));
             listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f);
             listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f);
             listing.LabeledRadioColorPresets(ref LineColor, DawnData.SettingsLabel_LineColor);
@@ -194,8 +192,8 @@ namespace DawnNewDay
         private void ShowDurationSection(Listing_Standard listing)
         {
             listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_DisplayDuration} (seconds)", ref DisplayDurationSeconds, ref m_DisplayDurationBuffer, 0f, 120f);
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeInDuration} (seconds)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, 120f);
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, 120f);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeInDuration} (seconds)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, DisplayDurationSeconds);
+            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, DisplayDurationSeconds);
         }
 
         private void ShowTextSection(Listing_Standard listing)
@@ -246,7 +244,7 @@ namespace DawnNewDay
             listing.Gap();
 
             listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f);
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_TriggerHour, ref TriggerHour, ref m_TriggerHourBuffer, 0f, 23f);
+            TriggerHour = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_TriggerHour} ({TriggerHour:00}h)", TriggerHour, 0f, 23f, 0.35f));
 
             listing.Gap();
 

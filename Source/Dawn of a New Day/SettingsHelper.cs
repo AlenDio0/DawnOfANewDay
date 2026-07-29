@@ -19,6 +19,8 @@ namespace DawnNewDay
 
         public static string Fallback(this string str, string fallback) => !str.NullOrEmpty() ? str : fallback;
 
+        public static float SnapToStep(float value, float step) => Mathf.Round(value / step) * step;
+
         public static FontStyle MapFontStyle(bool bold, bool italic)
         {
             return bold && italic ? FontStyle.BoldAndItalic :
@@ -26,7 +28,7 @@ namespace DawnNewDay
                 FontStyle.Normal;
         }
 
-        public static Color LabeledRadioColorPresets(this Listing_Standard listing, ref Color currentColor, string label, float labelWidthPct = 0.2f)
+        public static Color LabeledRadioColorPresets(this Listing_Standard listing, ref Color currentColor, string label, float labelWidthPct = 0.25f)
         {
             Rect rowRect = listing.GetRect(30f);
 

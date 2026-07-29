@@ -18,9 +18,6 @@ namespace DawnNewDay
         public float OutlineThickness = 1f;
         public Color OutlineColor = Color.black;
 
-        private string m_FontSizeBuffer;
-        private string m_OutlineThicknessBuffer;
-
         public DawnTextStyle()
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
@@ -47,8 +44,8 @@ namespace DawnNewDay
                     }));
                 }
 
-                listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_FontSize, ref FontSize, ref m_FontSizeBuffer, 0f, 256f);
-                listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_OutlineThickness, ref OutlineThickness, ref m_OutlineThicknessBuffer, 0f, 10f);
+                FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
+                OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 10f, 0.35f), 0.25f);
 
                 listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref Bold);
                 listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref Italic);
