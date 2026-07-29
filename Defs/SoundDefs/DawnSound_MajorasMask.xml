@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<SoundDef>
+		<defName>DawnSound_MajorasMask</defName>
+		<context>MapOnly</context>
+		<subSounds>
+			<li>
+				<onCamera>true</onCamera>
+				<grains>
+					<li Class="AudioGrain_Clip"><clipPath>DawnSound_MajorasMask</clipPath></li>
+				</grains>
+				<volumeRange>
+					<min>100</min>
+					<max>100</max>
+				</volumeRange>
+				<repeatMode>Any</repeatMode>
+				<sustainLoop>false</sustainLoop>
+			</li>
+		</subSounds>
+	</SoundDef>
+</Defs>

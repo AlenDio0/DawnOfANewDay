@@ -65,6 +65,13 @@
 	<SettingsHint_SeasonFormat>{S/s} => Stagione in CAPS / Stagione</SettingsHint_SeasonFormat>
 	<SettingsHint_HourFormat>{H/h} => Ore intere [eg. 06] / Ore [eg. 6]</SettingsHint_HourFormat>
 
+	<!-- Sound Section -->
+	<SettingsSection_Sound>Suono</SettingsSection_Sound>
+	
+	<SettingsLabel_Sound>Scegli il suono</SettingsLabel_Sound>
+	<SettingsLabel_SoundVolume>Volume Suono</SettingsLabel_SoundVolume>
+	<SettingsLabel_SoundPitch>Pitch Suono</SettingsLabel_SoundPitch>
+	
 	<!-- Extra Section -->
 	<SettingsSection_Extra>Extra</SettingsSection_Extra>
 	

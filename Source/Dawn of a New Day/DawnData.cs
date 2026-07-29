@@ -144,6 +144,19 @@ namespace DawnNewDay
 
         #endregion
 
+        #region Sound Section
+
+        public static string SettingsSection_Sound => "SettingsSection_Sound".Translate();
+
+        public static string SettingsLabel_Sound => "SettingsLabel_Sound".Translate();
+
+        public static string SettingsLabel_SoundVolume => "SettingsLabel_SoundVolume".Translate();
+        public static string SettingsLabel_SoundPitch => "SettingsLabel_SoundPitch".Translate();
+
+        public static string DefaultSoundDefName => "DawnSound_MajorasMask";
+
+        #endregion
+
         #region Extra Section
 
         public static string SettingsSection_Extra => "SettingsSection_Extra".Translate();

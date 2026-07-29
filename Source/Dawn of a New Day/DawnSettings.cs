@@ -1,4 +1,6 @@
-﻿using RimWorld;
+﻿using DawnNewDay.Dialogs;
+using DawnNewDay.Utils;
+using RimWorld;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -61,6 +63,20 @@ namespace DawnNewDay
 
         #endregion
 
+        #region Sound Section
+
+        public bool SoundEnabled = true;
+
+        private string m_SoundDefName = DawnData.DefaultSoundDefName;
+        private SoundDef m_Sound;
+
+        public SoundDef Sound => m_Sound = SoundDef.Named(m_SoundDefName);
+
+        public float SoundVolume = 0.25f;
+        public float SoundPitch = 1f;
+
+        #endregion
+
         #region Extra Section
 
         public bool StartsAtZero = false;
@@ -87,6 +103,7 @@ namespace DawnNewDay
         bool m_DurationSection = false;
         bool m_TextSection = false;
         bool m_LabelFormatSection = false;
+        bool m_SoundSection = false;
         bool m_ExtraSection = false;
 
         private Vector2 m_ScrollPosition = Vector2.zero;
@@ -124,6 +141,9 @@ namespace DawnNewDay
 
                 if (listing.SectionButton(DawnData.SettingsSection_LabelFormat, ref m_LabelFormatSection))
                     listing.Indented(() => ShowLabelFormatSection(listing));
+
+                if (listing.SectionButton(DawnData.SettingsSection_Sound, ref m_SoundSection))
+                    listing.Indented(() => ShowSoundSection(listing));
 
                 if (listing.SectionButton(DawnData.SettingsSection_Extra, ref m_ExtraSection))
                     listing.Indented(() => ShowExtraSection(listing));
@@ -237,6 +257,19 @@ namespace DawnNewDay
             GUI.color = defaultColor;
         }
 
+        private void ShowSoundSection(Listing_Standard listing)
+        {
+            listing.CheckboxLabeled(DawnData.SettingsLabel_Enabled, ref SoundEnabled);
+
+            listing.Gap();
+
+            if (listing.ButtonText($"{DawnData.SettingsLabel_Sound} ({m_SoundDefName})"))
+                Find.WindowStack.Add(new Dialog_ChooseSound(soundDefName => m_SoundDefName = soundDefName, m_SoundDefName));
+
+            SoundVolume = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_SoundVolume} ({SoundVolume.ToStringPercent()})", SoundVolume, 0.01f, 2f), 0.01f);
+            SoundPitch = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_SoundPitch} ({SoundPitch.ToStringPercent()})", SoundPitch, 0.01f, 2f), 0.01f);
+        }
+
         private void ShowExtraSection(Listing_Standard listing)
         {
             listing.CheckboxLabeled(DawnData.SettingsLabel_StartsAtZero, ref StartsAtZero);
@@ -332,6 +365,16 @@ namespace DawnNewDay
 
                 Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat", "DAY {d}");
                 Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat", "YEAR {Y} | {Q} | {S}");
+
+                #endregion
+
+                #region Sound Section
+
+                Scribe_Values.Look(ref SoundEnabled, "SoundEnabled", true);
+                Scribe_Values.Look(ref m_SoundDefName, "SoundDefName", DawnData.DefaultSoundDefName);
+
+                Scribe_Values.Look(ref SoundVolume, "SoundVolume", 0.25f);
+                Scribe_Values.Look(ref SoundPitch, "SoundPitch", 1f);
 
                 #endregion
 

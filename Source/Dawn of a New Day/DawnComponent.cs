@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 using static DawnNewDay.DawnData;
 
 namespace DawnNewDay
@@ -207,6 +208,15 @@ namespace DawnNewDay
 
                 m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
                 m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+
+                if (settings.SoundEnabled)
+                {
+                    SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo());
+                    soundInfo.volumeFactor = settings.SoundVolume;
+                    soundInfo.pitchFactor = settings.SoundPitch;
+                    soundInfo.forcedPlayOnCamera = true;
+                    settings.Sound?.PlayOneShot(soundInfo);
+                }
 
                 m_DisplayTimer = settings.DisplayDurationSeconds;
                 m_DisplayActive = true;
