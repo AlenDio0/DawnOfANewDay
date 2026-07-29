@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.1.1[/i]
+[i][b]Mod Version:[/b] v1.2.0[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -78,6 +78,14 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [/tr]
 [/table]
 
+[h3]Sound[/h3]
+[list]
+[*][b]Enabled:[/b] Toggle the sound that starts with the overlay.
+[*][b]Choose Sound:[/b] Choose a custom sound from the catalogue.
+[*][b]Sound Volume:[/b] Choose the volume of the sound (From 1 to 200).
+[*][b]Pitch Volume:[/b] Choose the pitch of the sound (From 1 to 200).
+[/list]
+
 [h3]Extra[/h3]
 [list]
 [*][b]Starts at Zero:[/b] Enable to start the count of the days from 0 instead of 1.
@@ -120,7 +128,7 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [h1]TRANSLATION[/h1]
 [list]
 [*][b]English:[/b] Made by myself.
-[*][b]Italian:[/b] Work in progress by myself.
+[*][b]Italian:[/b] Made by myself.
 [/list]
 
 [b]If you want to translate the mod, follow these steps:[/b]
@@ -128,14 +136,11 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Go in the Mod Folder (SteamID: 3771580900).
 [*]Look for "Languages\English\Keyed\Misc.xml".
 [*]Copy the Misc.xml and translate it in your own language.
-[*]Contact me on discord (alendio) or by the workshop comment section to send me the files.
-[*]If it works correctly, I will add the translation to the mod and credit your work (unless you don't want to).
 [/olist]
 
 [hr]
 [h1]TODO LIST[/h1]
 [list]
-[*]Add Majora's Mask sound.
 [*]Add compatibility with Modern Notifications.
 [*]Add compatibility with Explicit Timing.
 [*]Add additional special custom text subtitle.

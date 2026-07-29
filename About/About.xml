@@ -49,11 +49,11 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
   * {S/s} => CAPS Season / Season
   * {H/h} => Full Hour [eg. 06] / Hour [eg. 6]
 
-- &lt;color=cyan&gt;&lt;b&gt;Label Format Section&lt;/b&gt;&lt;/color&gt;
+- &lt;color=cyan&gt;&lt;b&gt;Sound Section&lt;/b&gt;&lt;/color&gt;
   # Enabled => Toggle the sound that starts with the overlay.
   # Choose Sound => Choose a custom sound from the catalogue.
-  # Sound Volume => Choose the volume of the sound (From 1 to 200)
-  # Pitch Volume => Choose the pitch of the sound (From 1 to 200)
+  # Sound Volume => Choose the volume of the sound (From 1 to 200).
+  # Pitch Volume => Choose the pitch of the sound (From 1 to 200).
 
 - &lt;color=cyan&gt;&lt;b&gt;Extra Section&lt;/b&gt;&lt;/color&gt;
   # Starts at Zero => Enable to start the count of the days from 0 instead of 1.
