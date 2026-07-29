@@ -4,54 +4,37 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace DawnNewDay
+namespace DawnNewDay.Utils
 {
-    public class Dialog_ChooseFontFamily : Window
+    public class Dialog_ChooseInterface : Window
     {
-        private readonly string m_CurrentFontName;
+        private readonly string m_Current = null;
         private readonly Action<string> m_OnChoose;
 
-        private static string[] m_CachedOSFontNames;
-        private static string[] OSFontNames
-        {
-            get
-            {
-                if (m_CachedOSFontNames == null)
-                {
-                    try
-                    {
-                        m_CachedOSFontNames = Font.GetOSInstalledFontNames();
-                    }
-                    finally
-                    {
-                        if (m_CachedOSFontNames == null)
-                            m_CachedOSFontNames = new string[0];
-                    }
-                }
-
-                return m_CachedOSFontNames;
-            }
-        }
-
-        private readonly List<string> m_FontNames;
+        private readonly List<string> m_Values;
 
         private string m_SearchBuffer = "";
 
         private Vector2 m_ScrollPosition = Vector2.zero;
         private float m_CachedScrollViewHeight = 0f;
 
-        public Dialog_ChooseFontFamily(string currentFontName, Action<string> onChoose)
+        public virtual List<string> InitalValues => new List<string>();
+        public virtual string HeaderLabel => null;
+        public virtual string DefaultValue => null;
+        public virtual IEnumerable<string> WhereShowable(IEnumerable<string> list) => list;
+
+        public Dialog_ChooseInterface(Action<string> onChoose, string current = null)
         {
             doCloseX = true;
             closeOnClickedOutside = true;
             absorbInputAroundWindow = true;
             draggable = true;
 
-            m_CurrentFontName = currentFontName;
+            m_Current = current;
             m_OnChoose = onChoose;
 
-            if (m_FontNames == null)
-                m_FontNames = new List<string>(OSFontNames);
+            if (m_Values == null)
+                m_Values = InitalValues;
         }
 
         public override Vector2 InitialSize => new Vector2(600f, 800f);
@@ -74,7 +57,7 @@ namespace DawnNewDay
 
                 listing.Begin(viewRect);
 
-                ShowFontList(listing);
+                ShowList(listing);
                 m_CachedScrollViewHeight = listing.CurHeight;
 
                 listing.End();
@@ -89,26 +72,31 @@ namespace DawnNewDay
 
         private void ShowHeader(Listing_Standard listing)
         {
-            GameFont defaultFont = Text.Font;
+            if (HeaderLabel != null)
+            {
+                GameFont defaultFont = Text.Font;
+                Text.Font = GameFont.Medium;
 
-            Text.Font = GameFont.Medium;
+                listing.Label($"{HeaderLabel} ({m_Current.Fallback(DefaultValue)})");
 
-            listing.Label($"{DawnData.SettingsLabel_FontFamily} ({m_CurrentFontName.Fallback(DawnData.SettingsLabel_DefaultFont)})");
-
-            Text.Font = defaultFont;
+                Text.Font = defaultFont;
+            }
 
             listing.LabeledTextEntry(DawnData.SettingsLabel_Search, ref m_SearchBuffer, 0.1f, 0.9f);
 
-            listing.Gap();
-
-            if (listing.ButtonText(DawnData.SettingsLabel_DefaultFont))
+            if (DefaultValue != null)
             {
-                m_OnChoose("");
-                Close();
+                listing.Gap();
+
+                if (listing.ButtonText(DefaultValue))
+                {
+                    m_OnChoose(DefaultValue);
+                    Close();
+                }
             }
         }
 
-        private void ShowFontList(Listing_Standard listing)
+        private void ShowList(Listing_Standard listing)
         {
             IEnumerable<string> showableFontNames = GetShowableFontNames();
             foreach (string fontName in showableFontNames)
@@ -123,7 +111,7 @@ namespace DawnNewDay
 
                 Text.Anchor = defaultAnchor;
 
-                if (!m_CurrentFontName.NullOrEmpty() && m_CurrentFontName == fontName)
+                if (!m_Current.NullOrEmpty() && m_Current == fontName)
                     Widgets.DrawBoxSolid(fontRect, Color.green.WithAlpha(0.25f));
 
                 if (Mouse.IsOver(fontRect))
@@ -141,10 +129,7 @@ namespace DawnNewDay
 
         private IEnumerable<string> GetShowableFontNames()
         {
-            return m_FontNames
-                .Where(fontName => m_SearchBuffer.NullOrEmpty() || fontName.ToUpper().Contains(m_SearchBuffer.ToUpper()))
-                .Where(fontName => !fontName.ToUpper().Contains("BOLD"))
-                .Where(fontName => !fontName.ToUpper().Contains("ITALIC"));
+            return WhereShowable(m_Values.Where(value => m_SearchBuffer.NullOrEmpty() || value.ToUpper().Contains(m_SearchBuffer.ToUpper())));
         }
     }
 }

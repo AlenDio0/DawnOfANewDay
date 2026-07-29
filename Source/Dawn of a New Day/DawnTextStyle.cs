@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DawnNewDay.Dialogs;
+using DawnNewDay.Utils;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -37,11 +39,11 @@ namespace DawnNewDay
             {
                 if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({FontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
                 {
-                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(FontFamilyName, font =>
+                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(font =>
                     {
-                        FontFamilyName = font;
+                        FontFamilyName = font != DawnData.SettingsLabel_DefaultFont ? font : "";
                         UpdateFontFamily();
-                    }));
+                    }, FontFamilyName));
                 }
 
                 FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));

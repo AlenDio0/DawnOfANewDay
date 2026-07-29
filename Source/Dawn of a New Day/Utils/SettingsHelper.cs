@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
-namespace DawnNewDay
+namespace DawnNewDay.Utils
 {
     public static class SettingsHelper
     {
