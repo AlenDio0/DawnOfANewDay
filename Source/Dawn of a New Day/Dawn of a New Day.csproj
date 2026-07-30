@@ -34,6 +34,11 @@
 	<ItemGroup Condition="'$(RWVersion)' == '1.5'">
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.*" PrivateAssets="All" />
 	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Lib.Harmony" Version="2.4.2">
+		  <ExcludeAssets>runtime</ExcludeAssets>
+	  </PackageReference>
+	</ItemGroup>
 	
 	<Target Name="PrintVersionMessage" BeforeTargets="Build">
 		<Message Text="&gt; $(AssemblyName) for RimWorld $(RWVersion)" Importance="high" />

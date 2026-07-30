@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.2.0[/i]
+[i][b]Mod Version:[/b] v1.2.1[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
