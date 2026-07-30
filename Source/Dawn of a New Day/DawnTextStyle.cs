@@ -23,11 +23,13 @@ namespace DawnNewDay
         public DawnTextStyle()
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
+            TextGUIStyle.font = null;
         }
 
         public DawnTextStyle(int fontSize, bool bold)
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
+            TextGUIStyle.font = null;
 
             FontSize = fontSize;
             Bold = bold;
@@ -96,12 +98,12 @@ namespace DawnNewDay
 
             try
             {
-                if (TextGUIStyle.font != null && TextGUIStyle.font != Text.CurFontStyle.font)
+                if (TextGUIStyle.font != null)
                     UnityEngine.Object.Destroy(TextGUIStyle.font);
 
                 if (FontFamilyName.NullOrEmpty())
                 {
-                    TextGUIStyle.font = Text.CurFontStyle.font;
+                    TextGUIStyle.font = null;
                     return;
                 }
 

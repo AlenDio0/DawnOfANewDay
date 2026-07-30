@@ -307,11 +307,11 @@ namespace DawnNewDay
 
         public void UpdateText()
         {
-            UpperTextStyle.ApplyToGUIStyle(Scale);
-            BottomTextStyle.ApplyToGUIStyle(Scale);
-
             UpperTextStyle.UpdateFontFamily();
             BottomTextStyle.UpdateFontFamily();
+
+            UpperTextStyle.ApplyToGUIStyle(Scale);
+            BottomTextStyle.ApplyToGUIStyle(Scale);
         }
 
         public override void ExposeData()
