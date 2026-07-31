@@ -30,25 +30,27 @@ namespace DawnNewDay
 
         #region Settings
 
-        public static string SettingsLabel_Enabled => "SettingsLabel_Enabled".Translate();
-        public static string SettingsLabel_ScreenshotMode => "SettingsLabel_ScreenshotMode".Translate();
+        #region General
 
-        public static string SettingsLabel_ShowExample => "SettingsLabel_ShowExample".Translate();
-        public static string SettingsMessage_ShowExample => "SettingsMessage_ShowExample".Translate(ModName);
+        public static string Label_Enabled => "Label_Enabled".Translate();
+        public static string Label_ScreenshotMode => "Label_ScreenshotMode".Translate();
 
-        public static Color[] ColorPresets => new[] { Color.white, Color.gray, Color.black, Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.cyan };
+        public static string Label_ShowExample => "Label_ShowExample".Translate();
+        public static string Message_ShowExample => "Message_ShowExample".Translate(ModName);
+
+        #endregion
 
         #region Appearance Section
 
-        public static string SettingsSection_Appearance => "SettingsSection_Appearance".Translate();
+        public static string Section_Appearance => "Section_Appearance".Translate();
 
-        public static string SettingsLabel_ShowHighlight => "SettingsLabel_ShowHighlight".Translate();
+        public static string Label_ShowHighlight => "Label_ShowHighlight".Translate();
 
-        public static string SettingsLabel_Scale => "SettingsLabel_Scale".Translate();
+        public static string Label_Scale => "Label_Scale".Translate();
         public static readonly float[] ScalePresets = { 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f, 2.5f, 3f, 4f };
 
-        public static string SettingsLabel_Offset => "SettingsLabel_Offset".Translate();
-        public static string SettingsLabel_OffsetPresets => "SettingsLabel_OffsetPresets".Translate();
+        public static string Label_Offset => "Label_Offset".Translate();
+        public static string Label_OffsetPresets => "Label_OffsetPresets".Translate();
         public static (TaggedString Name, Vector2 Preset)[] OffsetPresets => new[]
         {
             ("Offset_MiddleTop".Translate(), new Vector2(0.5f, 0.2f)),
@@ -62,57 +64,57 @@ namespace DawnNewDay
             ("Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
         };
 
-        public static string SettingsLabel_LineWidthPercentage => "SettingsLabel_LineWidthPercentage".Translate();
-        public static string SettingsLabel_LineThickness => "SettingsLabel_LineThickness".Translate();
-        public static string SettingsLabel_LinePadding => "SettingsLabel_LinePadding".Translate();
-        public static string SettingsLabel_LineColor => "SettingsLabel_LineColor".Translate();
+        public static string Label_LineWidthPercentage => "Label_LineWidthPercentage".Translate();
+        public static string Label_LineThickness => "Label_LineThickness".Translate();
+        public static string Label_LinePadding => "Label_LinePadding".Translate();
+        public static string Label_LineColor => "Label_LineColor".Translate();
 
         #endregion
 
         #region Duration Section
 
-        public static string SettingsSection_Duration => "SettingsSection_Duration".Translate();
+        public static string Section_Duration => "Section_Duration".Translate();
 
-        public static string SettingsLabel_DisplayDuration => "SettingsLabel_DisplayDuration".Translate();
-        public static string SettingsLabel_FadeInDuration => "SettingsLabel_FadeInDuration".Translate();
-        public static string SettingsLabel_FadeOutDuration => "SettingsLabel_FadeOutDuration".Translate();
+        public static string Label_DisplayDuration => "Label_DisplayDuration".Translate();
+        public static string Label_FadeInDuration => "Label_FadeInDuration".Translate();
+        public static string Label_FadeOutDuration => "Label_FadeOutDuration".Translate();
 
         #endregion
 
         #region Text Section
 
-        public static string SettingsSection_Text => "SettingsSection_Text".Translate();
+        public static string Section_Text => "Section_Text".Translate();
 
-        public static string SettingsLabel_UpperTextProperties => "SettingsLabel_UpperTextProperties".Translate();
-        public static string SettingsLabel_BottomTextProperties => "SettingsLabel_BottomTextProperties".Translate();
+        public static string Label_UpperTextProperties => "Label_UpperTextProperties".Translate();
+        public static string Label_BottomTextProperties => "Label_BottomTextProperties".Translate();
 
-        public static string SettingsLabel_DefaultFont => "SettingsLabel_DefaultFont".Translate();
+        public static string Label_DefaultFont => "Label_DefaultFont".Translate();
 
-        public static string SettingsLabel_FontFamily => "SettingsLabel_FontFamily".Translate();
-        public static string SettingsLabel_FontSize => "SettingsLabel_FontSize".Translate();
-        public static string SettingsLabel_Bold => "SettingsLabel_Bold".Translate();
-        public static string SettingsLabel_Italic => "SettingsLabel_Italic".Translate();
-        public static string SettingsLabel_TextColor => "SettingsLabel_TextColor".Translate();
-        public static string SettingsLabel_OutlineThickness => "SettingsLabel_OutlineThickness".Translate();
-        public static string SettingsLabel_OutlineColor => "SettingsLabel_OutlineColor".Translate();
+        public static string Label_FontFamily => "Label_FontFamily".Translate();
+        public static string Label_FontSize => "Label_FontSize".Translate();
+        public static string Label_Bold => "Label_Bold".Translate();
+        public static string Label_Italic => "Label_Italic".Translate();
+        public static string Label_TextColor => "Label_TextColor".Translate();
+        public static string Label_OutlineThickness => "Label_OutlineThickness".Translate();
+        public static string Label_OutlineColor => "Label_OutlineColor".Translate();
 
-        public static string SettingsLabel_Search => "SettingsLabel_Search".Translate();
+        public static string Label_Search => "Label_Search".Translate();
 
         #endregion
 
         #region Label Format Section
 
-        public static string SettingsSection_LabelFormat => "SettingsSection_LabelFormat".Translate();
+        public static string Section_LabelFormat => "Section_LabelFormat".Translate();
 
-        public static string SettingsLabel_UpperTextFormat => "SettingsLabel_UpperTextFormat".Translate();
-        public static string SettingsLabel_BottomTextFormat => "SettingsLabel_BottomTextFormat".Translate();
+        public static string Label_UpperTextFormat => "Label_UpperTextFormat".Translate();
+        public static string Label_BottomTextFormat => "Label_BottomTextFormat".Translate();
 
-        public static string SettingsHint_LabelFormat =>
-            "SettingsHint_DayFormat".Translate() + "\n" +
-            "SettingsHint_YearFormat".Translate() + "\n" +
-            "SettingsHint_QuadrumFormat".Translate() + "\n" +
-            "SettingsHint_SeasonFormat".Translate() + "\n" +
-            "SettingsHint_HourFormat".Translate();
+        public static string Hint_LabelFormat =>
+            "Hint_DayFormat".Translate() + "\n" +
+            "Hint_YearFormat".Translate() + "\n" +
+            "Hint_QuadrumFormat".Translate() + "\n" +
+            "Hint_SeasonFormat".Translate() + "\n" +
+            "Hint_HourFormat".Translate();
 
         public struct FormatContext
         {
@@ -146,12 +148,12 @@ namespace DawnNewDay
 
         #region Sound Section
 
-        public static string SettingsSection_Sound => "SettingsSection_Sound".Translate();
+        public static string Section_Sound => "Section_Sound".Translate();
 
-        public static string SettingsLabel_Sound => "SettingsLabel_Sound".Translate();
+        public static string Label_Sound => "Label_Sound".Translate();
 
-        public static string SettingsLabel_SoundVolume => "SettingsLabel_SoundVolume".Translate();
-        public static string SettingsLabel_SoundPitch => "SettingsLabel_SoundPitch".Translate();
+        public static string Label_SoundVolume => "Label_SoundVolume".Translate();
+        public static string Label_SoundPitch => "Label_SoundPitch".Translate();
 
         public static string DefaultSoundDefName => "DawnSound_MajorasMask";
 
@@ -159,28 +161,28 @@ namespace DawnNewDay
 
         #region Extra Section
 
-        public static string SettingsSection_Extra => "SettingsSection_Extra".Translate();
+        public static string Section_Extra => "Section_Extra".Translate();
 
-        public static string SettingsLabel_StartsAtZero => "SettingsLabel_StartsAtZero".Translate();
-        public static string SettingsLabel_ShowEveryXDays => "SettingsLabel_ShowEveryXDays".Translate();
-        public static string SettingsLabel_TriggerHour => "SettingsLabel_TriggerHour".Translate();
+        public static string Label_StartsAtZero => "Label_StartsAtZero".Translate();
+        public static string Label_ShowEveryXDays => "Label_ShowEveryXDays".Translate();
+        public static string Label_TriggerHour => "Label_TriggerHour".Translate();
 
-        public static string SettingsLabel_DayRelativeTo => "SettingsLabel_DayRelativeTo".Translate();
+        public static string Label_DayRelativeTo => "Label_DayRelativeTo".Translate();
 
-        public static Dictionary<DayRelative, string> SettingsLabel_DayRelative => new Dictionary<DayRelative, string>
+        public static Dictionary<DayRelative, string> Label_DayRelative => new Dictionary<DayRelative, string>
         {
-            { DayRelative.Settle, "SettingsLabel_DayRelativeSettle".Translate() },
-            { DayRelative.Quadrum, "SettingsLabel_DayRelativeQuadrum".Translate() },
-            { DayRelative.Season, "SettingsLabel_DayRelativeSeason".Translate() },
-            { DayRelative.Year, "SettingsLabel_DayRelativeYear".Translate() }
+            { DayRelative.Settle, "Label_DayRelativeSettle".Translate() },
+            { DayRelative.Quadrum, "Label_DayRelativeQuadrum".Translate() },
+            { DayRelative.Season, "Label_DayRelativeSeason".Translate() },
+            { DayRelative.Year, "Label_DayRelativeYear".Translate() }
         };
 
         public static Dictionary<DayRelative, string> SettingsTooltip_DayRelativeTo => new Dictionary<DayRelative, string>
         {
-            { DayRelative.Settle, "SettingsTooltip_Settle".Translate() },
-            { DayRelative.Quadrum, "SettingsTooltip_Quadrum".Translate() },
-            { DayRelative.Season, "SettingsTooltip_Season".Translate() },
-            { DayRelative.Year, "SettingsTooltip_Year".Translate() }
+            { DayRelative.Settle, "Tooltip_Settle".Translate() },
+            { DayRelative.Quadrum, "Tooltip_Quadrum".Translate() },
+            { DayRelative.Season, "Tooltip_Season".Translate() },
+            { DayRelative.Year, "Tooltip_Year".Translate() }
         };
 
         #endregion

@@ -130,22 +130,22 @@ namespace DawnNewDay
 
                 listing.Begin(viewRect);
 
-                if (listing.SectionButton(DawnData.SettingsSection_Appearance, ref m_AppearanceSection))
+                if (listing.SectionButton(DawnData.Section_Appearance, ref m_AppearanceSection))
                     listing.Indented(() => ShowAppearanceSection(listing));
 
-                if (listing.SectionButton(DawnData.SettingsSection_Duration, ref m_DurationSection))
+                if (listing.SectionButton(DawnData.Section_Duration, ref m_DurationSection))
                     listing.Indented(() => ShowDurationSection(listing));
 
-                if (listing.SectionButton(DawnData.SettingsSection_Text, ref m_TextSection))
+                if (listing.SectionButton(DawnData.Section_Text, ref m_TextSection))
                     listing.Indented(() => ShowTextSection(listing));
 
-                if (listing.SectionButton(DawnData.SettingsSection_LabelFormat, ref m_LabelFormatSection))
+                if (listing.SectionButton(DawnData.Section_LabelFormat, ref m_LabelFormatSection))
                     listing.Indented(() => ShowLabelFormatSection(listing));
 
-                if (listing.SectionButton(DawnData.SettingsSection_Sound, ref m_SoundSection))
+                if (listing.SectionButton(DawnData.Section_Sound, ref m_SoundSection))
                     listing.Indented(() => ShowSoundSection(listing));
 
-                if (listing.SectionButton(DawnData.SettingsSection_Extra, ref m_ExtraSection))
+                if (listing.SectionButton(DawnData.Section_Extra, ref m_ExtraSection))
                     listing.Indented(() => ShowExtraSection(listing));
 
             }
@@ -165,14 +165,14 @@ namespace DawnNewDay
 
         private void ShowHeader(Listing_Standard listing)
         {
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Enabled, ref Enabled);
-            listing.CheckboxLabeled(DawnData.SettingsLabel_ScreenshotMode, ref ScreenshotMode);
+            listing.CheckboxLabeled(DawnData.Label_Enabled, ref Enabled);
+            listing.CheckboxLabeled(DawnData.Label_ScreenshotMode, ref ScreenshotMode);
 
             listing.Gap();
 
-            if (listing.ButtonText(DawnData.SettingsLabel_ShowExample))
+            if (listing.ButtonText(DawnData.Label_ShowExample))
             {
-                Messages.Message(DawnData.SettingsMessage_ShowExample, MessageTypeDefOf.PositiveEvent, false);
+                Messages.Message(DawnData.Message_ShowExample, MessageTypeDefOf.PositiveEvent, false);
                 m_ShowExample = true;
             }
 
@@ -181,39 +181,39 @@ namespace DawnNewDay
 
         private void ShowAppearanceSection(Listing_Standard listing)
         {
-            listing.CheckboxLabeled(DawnData.SettingsLabel_ShowHighlight, ref ShowHighlight);
+            listing.CheckboxLabeled(DawnData.Label_ShowHighlight, ref ShowHighlight);
 
             listing.Gap();
 
-            if (listing.ButtonText($"{DawnData.SettingsLabel_Scale}: {Scale}x"))
+            if (listing.ButtonText($"{DawnData.Label_Scale}: {Scale}x"))
             {
                 var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScalePresets, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
                 Find.WindowStack.Add(scaleModes);
             }
 
-            if (listing.ButtonText(DawnData.SettingsLabel_OffsetPresets))
+            if (listing.ButtonText(DawnData.Label_OffsetPresets))
             {
                 var offsetPresets = SettingsHelper.CreateFloatMenu(DawnData.OffsetPresets, item => new FloatMenuOption(item.Name, () =>
                     Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Preset));
                 Find.WindowStack.Add(offsetPresets);
             }
 
-            Offset.x = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} X ({Offset.x} px)", Offset.x, 0f, UI.screenWidth, 0.25f));
-            Offset.y = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_Offset} Y ({Offset.y} px)", Offset.y, 0f, UI.screenHeight, 0.25f));
+            Offset.x = Mathf.Ceil(listing.SliderLabeled($"{DawnData.Label_Offset} X ({Offset.x} px)", Offset.x, 0f, UI.screenWidth, 0.25f));
+            Offset.y = Mathf.Ceil(listing.SliderLabeled($"{DawnData.Label_Offset} Y ({Offset.y} px)", Offset.y, 0f, UI.screenHeight, 0.25f));
 
             listing.Gap();
 
-            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnData.SettingsLabel_LineWidthPercentage} ({LineWidthPercentage} %)", LineWidthPercentage, 0f, 100f, 0.25f));
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f);
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f);
-            listing.LabeledRadioColorPresets(ref LineColor, DawnData.SettingsLabel_LineColor);
+            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnData.Label_LineWidthPercentage} ({LineWidthPercentage} %)", LineWidthPercentage, 0f, 100f, 0.25f));
+            listing.LabeledTextFieldNumeric($"{DawnData.Label_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f);
+            listing.LabeledTextFieldNumeric($"{DawnData.Label_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f);
+            listing.LabeledRadioColorPresets(ref LineColor, DawnData.Label_LineColor);
         }
 
         private void ShowDurationSection(Listing_Standard listing)
         {
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_DisplayDuration} (seconds)", ref DisplayDurationSeconds, ref m_DisplayDurationBuffer, 0f, 120f);
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeInDuration} (seconds)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, DisplayDurationSeconds);
-            listing.LabeledTextFieldNumeric($"{DawnData.SettingsLabel_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, DisplayDurationSeconds);
+            listing.LabeledTextFieldNumeric($"{DawnData.Label_DisplayDuration} (seconds)", ref DisplayDurationSeconds, ref m_DisplayDurationBuffer, 0f, 120f);
+            listing.LabeledTextFieldNumeric($"{DawnData.Label_FadeInDuration} (seconds)", ref FadeInDurationSeconds, ref m_FadeInDurationBuffer, 0f, DisplayDurationSeconds);
+            listing.LabeledTextFieldNumeric($"{DawnData.Label_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, DisplayDurationSeconds);
         }
 
         private void ShowTextSection(Listing_Standard listing)
@@ -222,7 +222,7 @@ namespace DawnNewDay
 
             Text.Font = GameFont.Medium;
 
-            listing.Label(DawnData.SettingsLabel_UpperTextProperties);
+            listing.Label(DawnData.Label_UpperTextProperties);
 
             Text.Font = defaultFont;
 
@@ -232,7 +232,7 @@ namespace DawnNewDay
 
             Text.Font = GameFont.Medium;
 
-            listing.Label(DawnData.SettingsLabel_BottomTextProperties);
+            listing.Label(DawnData.Label_BottomTextProperties);
 
             Text.Font = defaultFont;
 
@@ -241,50 +241,50 @@ namespace DawnNewDay
 
         private void ShowLabelFormatSection(Listing_Standard listing)
         {
-            listing.LabeledTextEntry(DawnData.SettingsLabel_UpperTextFormat, ref UpperTextFormat, 0.5f);
+            listing.LabeledTextEntry(DawnData.Label_UpperTextFormat, ref UpperTextFormat, 0.5f);
 
             listing.Gap();
 
-            listing.LabeledTextEntry(DawnData.SettingsLabel_BottomTextFormat, ref BottomTextFormat, 0.5f);
+            listing.LabeledTextEntry(DawnData.Label_BottomTextFormat, ref BottomTextFormat, 0.5f);
 
             listing.Gap();
 
             Color defaultColor = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, 0.75f);
 
-            listing.Label(DawnData.SettingsHint_LabelFormat);
+            listing.Label(DawnData.Hint_LabelFormat);
 
             GUI.color = defaultColor;
         }
 
         private void ShowSoundSection(Listing_Standard listing)
         {
-            listing.CheckboxLabeled(DawnData.SettingsLabel_Enabled, ref SoundEnabled);
+            listing.CheckboxLabeled(DawnData.Label_Enabled, ref SoundEnabled);
 
             listing.Gap();
 
-            if (listing.ButtonText($"{DawnData.SettingsLabel_Sound} ({m_SoundDefName})"))
+            if (listing.ButtonText($"{DawnData.Label_Sound} ({m_SoundDefName})"))
                 Find.WindowStack.Add(new Dialog_ChooseSound(soundDefName => m_SoundDefName = soundDefName, m_SoundDefName));
 
-            SoundVolume = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_SoundVolume} ({SoundVolume.ToStringPercent()})", SoundVolume, 0.01f, 2f), 0.01f);
-            SoundPitch = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_SoundPitch} ({SoundPitch.ToStringPercent()})", SoundPitch, 0.01f, 2f), 0.01f);
+            SoundVolume = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.Label_SoundVolume} ({SoundVolume.ToStringPercent()})", SoundVolume, 0.01f, 2f), 0.01f);
+            SoundPitch = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.Label_SoundPitch} ({SoundPitch.ToStringPercent()})", SoundPitch, 0.01f, 2f), 0.01f);
         }
 
         private void ShowExtraSection(Listing_Standard listing)
         {
-            listing.CheckboxLabeled(DawnData.SettingsLabel_StartsAtZero, ref StartsAtZero);
+            listing.CheckboxLabeled(DawnData.Label_StartsAtZero, ref StartsAtZero);
 
             listing.Gap();
 
-            listing.LabeledTextFieldNumeric(DawnData.SettingsLabel_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f);
-            TriggerHour = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_TriggerHour} ({TriggerHour:00}h)", TriggerHour, 0f, 23f, 0.35f));
+            listing.LabeledTextFieldNumeric(DawnData.Label_ShowEveryXDays, ref ShowEveryXDays, ref m_ShowEveryXDaysBuffer, 1f, 1200f);
+            TriggerHour = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.Label_TriggerHour} ({TriggerHour:00}h)", TriggerHour, 0f, 23f, 0.35f));
 
             listing.Gap();
 
             GameFont defaultFont = Text.Font;
             Text.Font = GameFont.Medium;
 
-            listing.Label(DawnData.SettingsLabel_DayRelativeTo);
+            listing.Label(DawnData.Label_DayRelativeTo);
 
             Text.Font = defaultFont;
 
@@ -300,7 +300,7 @@ namespace DawnNewDay
                 Rect buttonRect = new Rect(radioRect.x + (i * itemWidth), radioRect.y, itemWidth, radioRect.height).MiddlePart(0.5f, 1f);
 
                 TooltipHandler.TipRegion(buttonRect, DawnData.SettingsTooltip_DayRelativeTo.TryGetValue(dayRelative, ""));
-                if (Widgets.RadioButtonLabeled(buttonRect, DawnData.SettingsLabel_DayRelative.TryGetValue(dayRelative, ""), DayRelativeTo == dayRelative))
+                if (Widgets.RadioButtonLabeled(buttonRect, DawnData.Label_DayRelative.TryGetValue(dayRelative, ""), DayRelativeTo == dayRelative))
                     DayRelativeTo = dayRelative;
             }
         }

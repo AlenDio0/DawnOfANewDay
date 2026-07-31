@@ -239,7 +239,7 @@ namespace DawnNewDay
                 Day = (MapDayRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe(),
                 Year = GenDate.Year(absTicks, location.x).ToStringSafe(),
                 Quadrum = GenDate.Quadrum(absTicks, location.x).Label(),
-                Season = GenDate.Season(absTicks, location).Label(),
+                Season = GenDate.Season(absTicks, location).LabelCap(),
                 Hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe()
             };
         }

@@ -39,23 +39,23 @@ namespace DawnNewDay
         {
             try
             {
-                if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({FontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
+                if (listing.ButtonText($"{DawnData.Label_FontFamily} ({FontFamilyName.Fallback(DawnData.Label_DefaultFont)})"))
                 {
                     Find.WindowStack.Add(new Dialog_ChooseFontFamily(font =>
                     {
-                        FontFamilyName = font != DawnData.SettingsLabel_DefaultFont ? font : "";
+                        FontFamilyName = font != DawnData.Label_DefaultFont ? font : "";
                         UpdateFontFamily();
                     }, FontFamilyName));
                 }
 
-                FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
-                OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 10f, 0.35f), 0.25f);
+                FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.Label_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
+                OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.Label_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 10f, 0.35f), 0.25f);
 
-                listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref Bold);
-                listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref Italic);
+                listing.CheckboxLabeled(DawnData.Label_Bold, ref Bold);
+                listing.CheckboxLabeled(DawnData.Label_Italic, ref Italic);
 
-                listing.LabeledRadioColorPresets(ref TextColor, DawnData.SettingsLabel_TextColor);
-                listing.LabeledRadioColorPresets(ref OutlineColor, DawnData.SettingsLabel_OutlineColor);
+                listing.LabeledRadioColorPresets(ref TextColor, DawnData.Label_TextColor);
+                listing.LabeledRadioColorPresets(ref OutlineColor, DawnData.Label_OutlineColor);
 
                 ApplyToGUIStyle(scale);
             }

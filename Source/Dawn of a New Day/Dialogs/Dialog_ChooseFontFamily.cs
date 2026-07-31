@@ -32,9 +32,9 @@ namespace DawnNewDay.Dialogs
 
         public override List<string> InitalValues => new List<string>(OSFontNames);
 
-        public override string HeaderLabel => DawnData.SettingsLabel_FontFamily;
+        public override string HeaderLabel => DawnData.Label_FontFamily;
 
-        public override string DefaultValue => DawnData.SettingsLabel_DefaultFont;
+        public override string DefaultValue => DawnData.Label_DefaultFont;
 
         public override IEnumerable<string> WhereShowable(IEnumerable<string> list) =>
             list.Where(fontName => !fontName.ToUpper().Contains("BOLD"))

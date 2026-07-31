@@ -119,7 +119,7 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [hr]
 [h1]COMPATIBILITY[/h1]
 [list]
-[*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time.
+[*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time since it doesn't affect the game in any way.
 [*][b]Mods Conflicts:[/b] No known conflicts.
 [*][b]Mods:[/b] No compatibility yet added.
 [/list]

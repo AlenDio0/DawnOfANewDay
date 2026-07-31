@@ -2,19 +2,19 @@
 <LanguageData>
 
 	<!-- General Settings -->
-	<SettingsLabel_Enabled>Enabled</SettingsLabel_Enabled>
-	<SettingsLabel_ScreenshotMode>Screenshot Mode</SettingsLabel_ScreenshotMode>
+	<Label_Enabled>Enabled</Label_Enabled>
+	<Label_ScreenshotMode>Screenshot Mode</Label_ScreenshotMode>
 	
-	<SettingsLabel_ShowExample>Show Example</SettingsLabel_ShowExample>
-	<SettingsMessage_ShowExample>'{0}' Example will be triggered in the next possible tick.</SettingsMessage_ShowExample>
+	<Label_ShowExample>Show Example</Label_ShowExample>
+	<Message_ShowExample>'{0}' Example will be triggered in the next possible tick.</Message_ShowExample>
 
 	<!-- Appearance Section -->
-	<SettingsSection_Appearance>Appearance</SettingsSection_Appearance>
+	<Section_Appearance>Appearance</Section_Appearance>
 	
-	<SettingsLabel_ShowHighlight>Show Highlight</SettingsLabel_ShowHighlight>
-	<SettingsLabel_Scale>Scale</SettingsLabel_Scale>
-	<SettingsLabel_Offset>Offset</SettingsLabel_Offset>
-	<SettingsLabel_OffsetPresets>Offset Presets</SettingsLabel_OffsetPresets>
+	<Label_ShowHighlight>Show Highlight</Label_ShowHighlight>
+	<Label_Scale>Scale</Label_Scale>
+	<Label_Offset>Offset</Label_Offset>
+	<Label_OffsetPresets>Offset Presets</Label_OffsetPresets>
 
 	<Offset_MiddleTop>(Middle, Top) ↑</Offset_MiddleTop>
 	<Offset_MiddleBottom>(Middle, Bottom) ↓</Offset_MiddleBottom>
@@ -26,69 +26,69 @@
 	<Offset_LeftBottom>(Left, Bottom) ↙</Offset_LeftBottom>
 	<Offset_RightBottom>(Right, Bottom) ↘</Offset_RightBottom>
 
-	<SettingsLabel_LineWidthPercentage>Line Width</SettingsLabel_LineWidthPercentage>
-	<SettingsLabel_LineThickness>Line Thickness</SettingsLabel_LineThickness>
-	<SettingsLabel_LinePadding>Line Padding</SettingsLabel_LinePadding>
-	<SettingsLabel_LineColor>Line Color</SettingsLabel_LineColor>
+	<Label_LineWidthPercentage>Line Width</Label_LineWidthPercentage>
+	<Label_LineThickness>Line Thickness</Label_LineThickness>
+	<Label_LinePadding>Line Padding</Label_LinePadding>
+	<Label_LineColor>Line Color</Label_LineColor>
 
 	<!-- Duration Section -->
-	<SettingsSection_Duration>Duration</SettingsSection_Duration>
+	<Section_Duration>Duration</Section_Duration>
 	
-	<SettingsLabel_DisplayDuration>Total Display Duration</SettingsLabel_DisplayDuration>
-	<SettingsLabel_FadeInDuration>Fade In Duration</SettingsLabel_FadeInDuration>
-	<SettingsLabel_FadeOutDuration>Fade Out Duration</SettingsLabel_FadeOutDuration>
+	<Label_DisplayDuration>Total Display Duration</Label_DisplayDuration>
+	<Label_FadeInDuration>Fade In Duration</Label_FadeInDuration>
+	<Label_FadeOutDuration>Fade Out Duration</Label_FadeOutDuration>
 
 	<!-- Text Section -->
-	<SettingsSection_Text>Text</SettingsSection_Text>
+	<Section_Text>Text</Section_Text>
 	
-	<SettingsLabel_UpperTextProperties>Upper Text Properties</SettingsLabel_UpperTextProperties>
-	<SettingsLabel_BottomTextProperties>Bottom Text Properties</SettingsLabel_BottomTextProperties>
-	<SettingsLabel_DefaultFont>Default Game Font</SettingsLabel_DefaultFont>
-	<SettingsLabel_FontFamily>Choose Font Family</SettingsLabel_FontFamily>
-	<SettingsLabel_FontSize>Font Size</SettingsLabel_FontSize>
-	<SettingsLabel_Bold>Bold</SettingsLabel_Bold>
-	<SettingsLabel_Italic>Italic</SettingsLabel_Italic>
-	<SettingsLabel_TextColor>Text Color</SettingsLabel_TextColor>
-	<SettingsLabel_OutlineThickness>Outline Thickness</SettingsLabel_OutlineThickness>
-	<SettingsLabel_OutlineColor>Outline Color</SettingsLabel_OutlineColor>
-	<SettingsLabel_Search>Search</SettingsLabel_Search>
+	<Label_UpperTextProperties>Upper Text Properties</Label_UpperTextProperties>
+	<Label_BottomTextProperties>Bottom Text Properties</Label_BottomTextProperties>
+	<Label_DefaultFont>Default Game Font</Label_DefaultFont>
+	<Label_FontFamily>Choose Font Family</Label_FontFamily>
+	<Label_FontSize>Font Size</Label_FontSize>
+	<Label_Bold>Bold</Label_Bold>
+	<Label_Italic>Italic</Label_Italic>
+	<Label_TextColor>Text Color</Label_TextColor>
+	<Label_OutlineThickness>Outline Thickness</Label_OutlineThickness>
+	<Label_OutlineColor>Outline Color</Label_OutlineColor>
+	<Label_Search>Search</Label_Search>
 
 	<!-- Label Format Section -->
-	<SettingsSection_LabelFormat>Label Format</SettingsSection_LabelFormat>
+	<Section_LabelFormat>Label Format</Section_LabelFormat>
 	
-	<SettingsLabel_UpperTextFormat>Upper Text Format</SettingsLabel_UpperTextFormat>
-	<SettingsLabel_BottomTextFormat>Bottom Text Format</SettingsLabel_BottomTextFormat>
+	<Label_UpperTextFormat>Upper Text Format</Label_UpperTextFormat>
+	<Label_BottomTextFormat>Bottom Text Format</Label_BottomTextFormat>
 	
-	<SettingsHint_DayFormat>{D/d} => Full Day</SettingsHint_DayFormat>
-	<SettingsHint_YearFormat>{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]</SettingsHint_YearFormat>
-	<SettingsHint_QuadrumFormat>{Q/q} => CAPS Quadrum / Quadrum</SettingsHint_QuadrumFormat>
-	<SettingsHint_SeasonFormat>{S/s} => CAPS Season / Season</SettingsHint_SeasonFormat>
-	<SettingsHint_HourFormat>{H/h} => Full Hour [eg. 06] / Hour [eg. 6]</SettingsHint_HourFormat>
+	<Hint_DayFormat>{D/d} => Full Day</Hint_DayFormat>
+	<Hint_YearFormat>{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]</Hint_YearFormat>
+	<Hint_QuadrumFormat>{Q/q} => CAPS Quadrum / Quadrum</Hint_QuadrumFormat>
+	<Hint_SeasonFormat>{S/s} => CAPS Season / Season</Hint_SeasonFormat>
+	<Hint_HourFormat>{H/h} => Full Hour [eg. 06] / Hour [eg. 6]</Hint_HourFormat>
 
 	<!-- Sound Section -->
-	<SettingsSection_Sound>Sound</SettingsSection_Sound>
+	<Section_Sound>Sound</Section_Sound>
 	
-	<SettingsLabel_Sound>Choose Sound</SettingsLabel_Sound>
-	<SettingsLabel_SoundVolume>Sound Volume</SettingsLabel_SoundVolume>
-	<SettingsLabel_SoundPitch>Sound Pitch</SettingsLabel_SoundPitch>
+	<Label_Sound>Choose Sound</Label_Sound>
+	<Label_SoundVolume>Sound Volume</Label_SoundVolume>
+	<Label_SoundPitch>Sound Pitch</Label_SoundPitch>
 	
 	<!-- Extra Section -->
-	<SettingsSection_Extra>Extra</SettingsSection_Extra>
+	<Section_Extra>Extra</Section_Extra>
 	
-	<SettingsLabel_StartsAtZero>Starts at Zero</SettingsLabel_StartsAtZero>
-	<SettingsLabel_ShowEveryXDays>Show Every X Days</SettingsLabel_ShowEveryXDays>
-	<SettingsLabel_TriggerHour>Trigger Hour</SettingsLabel_TriggerHour>
+	<Label_StartsAtZero>Starts at Zero</Label_StartsAtZero>
+	<Label_ShowEveryXDays>Show Every X Days</Label_ShowEveryXDays>
+	<Label_TriggerHour>Trigger Hour</Label_TriggerHour>
 
-	<SettingsLabel_DayRelativeTo>Day Relative</SettingsLabel_DayRelativeTo>
+	<Label_DayRelativeTo>Day Relative</Label_DayRelativeTo>
 
-	<SettingsLabel_DayRelativeSettle>Settle</SettingsLabel_DayRelativeSettle>
-	<SettingsLabel_DayRelativeQuadrum>Quadrum</SettingsLabel_DayRelativeQuadrum>
-	<SettingsLabel_DayRelativeSeason>Season</SettingsLabel_DayRelativeSeason>
-	<SettingsLabel_DayRelativeYear>Year</SettingsLabel_DayRelativeYear>
+	<Label_DayRelativeSettle>Settle</Label_DayRelativeSettle>
+	<Label_DayRelativeQuadrum>Quadrum</Label_DayRelativeQuadrum>
+	<Label_DayRelativeSeason>Season</Label_DayRelativeSeason>
+	<Label_DayRelativeYear>Year</Label_DayRelativeYear>
 
-	<SettingsTooltip_Settle>Day will be relative to the day the colonists settled.</SettingsTooltip_Settle>
-	<SettingsTooltip_Quadrum>Day will be relative to the quadrum resetting itself after 15 days.</SettingsTooltip_Quadrum>
-	<SettingsTooltip_Season>Day will be relative to the season resetting itself after it ends.</SettingsTooltip_Season>
-	<SettingsTooltip_Year>Day will be relative to the year resetting itself after 60 days.</SettingsTooltip_Year>
+	<Tooltip_Settle>Day will be relative to the day the colonists settled.</Tooltip_Settle>
+	<Tooltip_Quadrum>Day will be relative to the quadrum resetting itself after 15 days.</Tooltip_Quadrum>
+	<Tooltip_Season>Day will be relative to the season resetting itself after it ends.</Tooltip_Season>
+	<Tooltip_Year>Day will be relative to the year resetting itself after 60 days.</Tooltip_Year>
 
 </LanguageData>
