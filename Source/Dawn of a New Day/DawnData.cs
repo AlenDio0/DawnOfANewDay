@@ -138,7 +138,7 @@ namespace DawnNewDay
             { "{S}", context => context.Season.ToUpper() },
             { "{s}", context => context.Season },
 
-            { "{H}", context => $"{context.Hour:00}" },
+            { "{H}", context => int.TryParse(context.Hour, out int h) ? h.ToString("D2") : context.Hour },
             { "{h}", context => context.Hour }
         };
 
