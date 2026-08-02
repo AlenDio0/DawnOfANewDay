@@ -18,7 +18,8 @@ namespace DawnNewDay.Dialogs
                     try
                     {
                         m_CachedSoundNames = DefDatabase<SoundDef>.AllDefsListForReading
-                            .Where(soundDef => soundDef.subSounds.All(subSoundDef => !subSoundDef.sustainLoop))
+                            .Where(soundDef => !soundDef.sustain)
+                            .Where(soundDef => !soundDef.subSounds.NullOrEmpty() && soundDef.subSounds.All(subSoundDef => !subSoundDef.sustainLoop))
                             .ToList().ConvertAll(soundDef => soundDef.defName);
                     }
                     finally
