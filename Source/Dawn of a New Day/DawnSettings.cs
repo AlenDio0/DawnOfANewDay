@@ -70,7 +70,7 @@ namespace DawnNewDay
         private string m_SoundDefName = DawnData.DefaultSoundDefName;
         private SoundDef m_Sound;
 
-        public SoundDef Sound => m_Sound = SoundDef.Named(m_SoundDefName);
+        public SoundDef Sound => SoundDef.NamedSilentFail(m_SoundDefName) ?? SoundDef.NamedSilentFail(DawnData.DefaultSoundDefName);
 
         public float SoundVolume = 0.25f;
         public float SoundPitch = 1f;
