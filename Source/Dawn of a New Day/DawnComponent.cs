@@ -184,13 +184,13 @@ namespace DawnNewDay
                 m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
                 m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
 
-                if (settings.SoundEnabled)
+                if (settings.SoundEnabled && settings.Sound != null)
                 {
                     SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo());
                     soundInfo.volumeFactor = settings.SoundVolume;
                     soundInfo.pitchFactor = settings.SoundPitch;
                     soundInfo.forcedPlayOnCamera = true;
-                    settings.Sound?.PlayOneShot(soundInfo);
+                    settings.Sound.PlayOneShot(soundInfo);
                 }
 
                 m_DisplayTimer = settings.DisplayDurationSeconds;

@@ -94,8 +94,7 @@ namespace DawnNewDay
 
         private string m_SoundDefName = DawnData.DefaultSoundDefName;
 
-        private SoundDef m_Sound;
-        public SoundDef Sound => m_Sound = SoundDef.Named(m_SoundDefName);
+        public SoundDef Sound => DefDatabase<SoundDef>.GetNamedSilentFail(m_SoundDefName) ?? DefDatabase<SoundDef>.GetNamedSilentFail(DawnData.DefaultSoundDefName);
 
         public float SoundVolume = DawnDefault.SoundVolume;
         public float SoundPitch = DawnDefault.SoundPitch;
