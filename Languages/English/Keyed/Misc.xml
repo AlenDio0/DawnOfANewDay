@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<!-- General Settings -->
-	<Label_Enabled>Enabled</Label_Enabled>
-	<Label_ScreenshotMode>Screenshot Mode</Label_ScreenshotMode>
+	<!-- Header -->
+	<DawnNewDay.Label_Enabled>Enabled</DawnNewDay.Label_Enabled>
+	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
 	
-	<Label_ShowExample>Show Example</Label_ShowExample>
-	<Message_ShowExample>'{0}' Example will be triggered in the next possible tick.</Message_ShowExample>
+	<DawnNewDay.Label_ShowExample>Show Example</DawnNewDay.Label_ShowExample>
+	<DawnNewDay.Message_ShowExample>'{0}' Example will be triggered in the next possible tick.</DawnNewDay.Message_ShowExample>
 
 	<!-- Appearance Section -->
-	<Section_Appearance>Appearance</Section_Appearance>
+	<DawnNewDay.Section_Appearance>Appearance</DawnNewDay.Section_Appearance>
 	
-	<Label_ShowHighlight>Show Highlight</Label_ShowHighlight>
-	<Label_Scale>Scale</Label_Scale>
-	<Label_Offset>Offset</Label_Offset>
-	<Label_OffsetPresets>Offset Presets</Label_OffsetPresets>
+	<DawnNewDay.Label_ShowHighlight>Show Highlight</DawnNewDay.Label_ShowHighlight>
+	<DawnNewDay.Label_Scale>Scale</DawnNewDay.Label_Scale>
+	<DawnNewDay.Label_Offset>Offset</DawnNewDay.Label_Offset>
+	<DawnNewDay.Label_OffsetPresets>Offset Presets</DawnNewDay.Label_OffsetPresets>
 
-	<Offset_MiddleTop>(Middle, Top) ↑</Offset_MiddleTop>
-	<Offset_MiddleBottom>(Middle, Bottom) ↓</Offset_MiddleBottom>
-	<Offset_MiddleMiddle>(Middle, Middle) ▪</Offset_MiddleMiddle>
-	<Offset_LeftMiddle>(Left, Middle) ←</Offset_LeftMiddle>
-	<Offset_RightMiddle>(Right, Middle) →</Offset_RightMiddle>
-	<Offset_LeftTop>(Left, Top) ↖</Offset_LeftTop>
-	<Offset_RightTop>(Right, Top) ↗</Offset_RightTop>
-	<Offset_LeftBottom>(Left, Bottom) ↙</Offset_LeftBottom>
-	<Offset_RightBottom>(Right, Bottom) ↘</Offset_RightBottom>
+	<DawnNewDay.Offset_MiddleTop>(Middle, Top) ↑</DawnNewDay.Offset_MiddleTop>
+	<DawnNewDay.Offset_MiddleBottom>(Middle, Bottom) ↓</DawnNewDay.Offset_MiddleBottom>
+	<DawnNewDay.Offset_MiddleMiddle>(Middle, Middle) ▪</DawnNewDay.Offset_MiddleMiddle>
+	<DawnNewDay.Offset_LeftMiddle>(Left, Middle) ←</DawnNewDay.Offset_LeftMiddle>
+	<DawnNewDay.Offset_RightMiddle>(Right, Middle) →</DawnNewDay.Offset_RightMiddle>
+	<DawnNewDay.Offset_LeftTop>(Left, Top) ↖</DawnNewDay.Offset_LeftTop>
+	<DawnNewDay.Offset_RightTop>(Right, Top) ↗</DawnNewDay.Offset_RightTop>
+	<DawnNewDay.Offset_LeftBottom>(Left, Bottom) ↙</DawnNewDay.Offset_LeftBottom>
+	<DawnNewDay.Offset_RightBottom>(Right, Bottom) ↘</DawnNewDay.Offset_RightBottom>
 
-	<Label_LineWidthPercentage>Line Width</Label_LineWidthPercentage>
-	<Label_LineThickness>Line Thickness</Label_LineThickness>
-	<Label_LinePadding>Line Padding</Label_LinePadding>
-	<Label_LineColor>Line Color</Label_LineColor>
+	<DawnNewDay.Label_LineWidthPercentage>Line Width</DawnNewDay.Label_LineWidthPercentage>
+	<DawnNewDay.Label_LineThickness>Line Thickness</DawnNewDay.Label_LineThickness>
+	<DawnNewDay.Label_LinePadding>Line Padding</DawnNewDay.Label_LinePadding>
+	<DawnNewDay.Label_LineColor>Line Color</DawnNewDay.Label_LineColor>
 
 	<!-- Duration Section -->
-	<Section_Duration>Duration</Section_Duration>
+	<DawnNewDay.Section_Duration>Duration</DawnNewDay.Section_Duration>
 	
-	<Label_DisplayDuration>Total Display Duration</Label_DisplayDuration>
-	<Label_FadeInDuration>Fade In Duration</Label_FadeInDuration>
-	<Label_FadeOutDuration>Fade Out Duration</Label_FadeOutDuration>
+	<DawnNewDay.Label_DisplayDuration>Total Display Duration</DawnNewDay.Label_DisplayDuration>
+	<DawnNewDay.Label_FadeInDuration>Fade In Duration</DawnNewDay.Label_FadeInDuration>
+	<DawnNewDay.Label_FadeOutDuration>Fade Out Duration</DawnNewDay.Label_FadeOutDuration>
 
 	<!-- Text Section -->
-	<Section_Text>Text</Section_Text>
+	<DawnNewDay.Section_Text>Text</DawnNewDay.Section_Text>
 	
-	<Label_UpperTextProperties>Upper Text Properties</Label_UpperTextProperties>
-	<Label_BottomTextProperties>Bottom Text Properties</Label_BottomTextProperties>
-	<Label_DefaultFont>Default Game Font</Label_DefaultFont>
-	<Label_FontFamily>Choose Font Family</Label_FontFamily>
-	<Label_FontSize>Font Size</Label_FontSize>
-	<Label_Bold>Bold</Label_Bold>
-	<Label_Italic>Italic</Label_Italic>
-	<Label_TextColor>Text Color</Label_TextColor>
-	<Label_OutlineThickness>Outline Thickness</Label_OutlineThickness>
-	<Label_OutlineColor>Outline Color</Label_OutlineColor>
-	<Label_Search>Search</Label_Search>
+	<DawnNewDay.Section_UpperText>Upper Text</DawnNewDay.Section_UpperText>
+	<DawnNewDay.Section_BottomText>Bottom Text</DawnNewDay.Section_BottomText>
+	
+	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
+	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
+	<DawnNewDay.Label_FontSize>Font Size</DawnNewDay.Label_FontSize>
+	<DawnNewDay.Label_Bold>Bold</DawnNewDay.Label_Bold>
+	<DawnNewDay.Label_Italic>Italic</DawnNewDay.Label_Italic>
+	<DawnNewDay.Label_TextColor>Text Color</DawnNewDay.Label_TextColor>
+	<DawnNewDay.Label_OutlineThickness>Outline Thickness</DawnNewDay.Label_OutlineThickness>
+	<DawnNewDay.Label_OutlineColor>Outline Color</DawnNewDay.Label_OutlineColor>
+	<DawnNewDay.Label_Search>Search</DawnNewDay.Label_Search>
 
 	<!-- Label Format Section -->
-	<Section_LabelFormat>Label Format</Section_LabelFormat>
+	<DawnNewDay.Section_LabelFormat>Label Format</DawnNewDay.Section_LabelFormat>
 	
-	<Label_UpperTextFormat>Upper Text Format</Label_UpperTextFormat>
-	<Label_BottomTextFormat>Bottom Text Format</Label_BottomTextFormat>
+	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
+	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
 	
-	<Hint_DayFormat>{D/d} => Full Day</Hint_DayFormat>
-	<Hint_YearFormat>{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]</Hint_YearFormat>
-	<Hint_QuadrumFormat>{Q/q} => CAPS Quadrum / Quadrum</Hint_QuadrumFormat>
-	<Hint_SeasonFormat>{S/s} => CAPS Season / Season</Hint_SeasonFormat>
-	<Hint_HourFormat>{H/h} => Full Hour [eg. 06] / Hour [eg. 6]</Hint_HourFormat>
+	<DawnNewDay.Hint_DayFormat>{D/d} => Full Day</DawnNewDay.Hint_DayFormat>
+	<DawnNewDay.Hint_YearFormat>{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]</DawnNewDay.Hint_YearFormat>
+	<DawnNewDay.Hint_QuadrumFormat>{Q/q} => CAPS Quadrum / Quadrum</DawnNewDay.Hint_QuadrumFormat>
+	<DawnNewDay.Hint_SeasonFormat>{S/s} => CAPS Season / Season</DawnNewDay.Hint_SeasonFormat>
+	<DawnNewDay.Hint_HourFormat>{H/h} => Full Hour [eg. 06] / Hour [eg. 6]</DawnNewDay.Hint_HourFormat>
 
 	<!-- Sound Section -->
-	<Section_Sound>Sound</Section_Sound>
+	<DawnNewDay.Section_Sound>Sound</DawnNewDay.Section_Sound>
 	
-	<Label_Sound>Choose Sound</Label_Sound>
-	<Label_SoundVolume>Sound Volume</Label_SoundVolume>
-	<Label_SoundPitch>Sound Pitch</Label_SoundPitch>
+	<DawnNewDay.Label_Sound>Choose Sound</DawnNewDay.Label_Sound>
+	<DawnNewDay.Label_SoundVolume>Sound Volume</DawnNewDay.Label_SoundVolume>
+	<DawnNewDay.Label_SoundPitch>Sound Pitch</DawnNewDay.Label_SoundPitch>
 	
 	<!-- Extra Section -->
-	<Section_Extra>Extra</Section_Extra>
+	<DawnNewDay.Section_Extra>Extra</DawnNewDay.Section_Extra>
 	
-	<Label_StartsAtZero>Starts at Zero</Label_StartsAtZero>
-	<Label_ShowEveryXDays>Show Every X Days</Label_ShowEveryXDays>
-	<Label_TriggerHour>Trigger Hour</Label_TriggerHour>
+	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
+	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
+	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
 
-	<Label_DayRelativeTo>Day Relative</Label_DayRelativeTo>
+	<DawnNewDay.Label_DayRelativeTo>Day Relative</DawnNewDay.Label_DayRelativeTo>
 
-	<Label_DayRelativeSettle>Settle</Label_DayRelativeSettle>
-	<Label_DayRelativeQuadrum>Quadrum</Label_DayRelativeQuadrum>
-	<Label_DayRelativeSeason>Season</Label_DayRelativeSeason>
-	<Label_DayRelativeYear>Year</Label_DayRelativeYear>
+	<DawnNewDay.Label_DayRelativeSettle>Settle</DawnNewDay.Label_DayRelativeSettle>
+	<DawnNewDay.Label_DayRelativeQuadrum>Quadrum</DawnNewDay.Label_DayRelativeQuadrum>
+	<DawnNewDay.Label_DayRelativeSeason>Season</DawnNewDay.Label_DayRelativeSeason>
+	<DawnNewDay.Label_DayRelativeYear>Year</DawnNewDay.Label_DayRelativeYear>
 
-	<Tooltip_Settle>Day will be relative to the day the colonists settled.</Tooltip_Settle>
-	<Tooltip_Quadrum>Day will be relative to the quadrum resetting itself after 15 days.</Tooltip_Quadrum>
-	<Tooltip_Season>Day will be relative to the season resetting itself after it ends.</Tooltip_Season>
-	<Tooltip_Year>Day will be relative to the year resetting itself after 60 days.</Tooltip_Year>
+	<DawnNewDay.Tooltip_Settle>Day will be relative to the day the colonists settled.</DawnNewDay.Tooltip_Settle>
+	<DawnNewDay.Tooltip_Quadrum>Day will be relative to the quadrum resetting itself after 15 days.</DawnNewDay.Tooltip_Quadrum>
+	<DawnNewDay.Tooltip_Season>Day will be relative to the season resetting itself after it ends.</DawnNewDay.Tooltip_Season>
+	<DawnNewDay.Tooltip_Year>Day will be relative to the year resetting itself after 60 days.</DawnNewDay.Tooltip_Year>
 
 </LanguageData>

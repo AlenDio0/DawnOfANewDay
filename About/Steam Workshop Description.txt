@@ -18,28 +18,28 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [list]
 [*][b]Show Highlight:[/b] Adds a low-opacity light background behind the overlay.
 
-[*][b]Scale:[/b] Scales the whole overlay to your like (From 0.5x to 4x).
+[*][b]Scale:[/b] Scales the whole overlay to your like.
 
 [*][b]Offset Presets:[/b] Helps you to choose an offset of your liking without trial and error.
-[*][b]Offset sliders (px):[/b] Choose offsets on X and Y axis at pixel-precision (From 0 To Screen Resolution).
+[*][b]Offset sliders (px):[/b] Choose offsets on X and Y axis at pixel-precision.
 
-[*][b]Line Width (%):[/b] Choose the width in percentage of the line that divides the Upper from Bottom (From 0 to 100).
-[*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom (From 0 to 100)
-[*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom (From 0 to 100)
+[*][b]Line Width (%):[/b] Choose the width in percentage of the line that divides the Upper from Bottom.
+[*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom.
+[*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom.
 [/list]
 
 [h3]Duration[/h3]
 [list]
-[*][b]Total Display Duration:[/b] Choose the total duration of the overlay in seconds (From 0 to 120).
-[*][b]Fade In Duration:[/b] Choose the duration of the overlay fading-in in seconds (From 0 to 120).
-[*][b]Fade Out Duration:[/b] Choose the duration of the overlay fading-out in seconds (From 0 to 120).
+[*][b]Total Display Duration:[/b] Choose the total duration of the overlay in seconds.
+[*][b]Fade In Duration:[/b] Choose the duration of the overlay fading-in in seconds.
+[*][b]Fade Out Duration:[/b] Choose the duration of the overlay fading-out in seconds.
 [/list]
 
 [h3]Text[/h3]
 [list]
 [*][b]Choose Font Family:[/b] Choose an custom OS font to replace the default game font of the text.
-[*][b]Font Size:[/b] Choose the character size of the text (From 1 to 256).
-[*][b]Outline Thickness:[/b] Choose the thickness of the outline of the text (From 0 to 10).
+[*][b]Font Size:[/b] Choose the character size of the text.
+[*][b]Outline Thickness:[/b] Choose the thickness of the outline of the text.
 [*][b]Bold:[/b] Enable to add bold style to the text.
 [*][b]Italic:[/b] Enable to add italic style to the text.
 [*][b]Text Color:[/b] Choose from the color presets the color of the text.
@@ -82,15 +82,15 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [list]
 [*][b]Enabled:[/b] Toggle the sound that starts with the overlay.
 [*][b]Choose Sound:[/b] Choose a custom sound from the catalogue.
-[*][b]Sound Volume:[/b] Choose the volume of the sound (From 1 to 200).
-[*][b]Pitch Volume:[/b] Choose the pitch of the sound (From 1 to 200).
+[*][b]Sound Volume:[/b] Choose the volume of the sound.
+[*][b]Pitch Volume:[/b] Choose the pitch of the sound.
 [/list]
 
 [h3]Extra[/h3]
 [list]
 [*][b]Starts at Zero:[/b] Enable to start the count of the days from 0 instead of 1.
-[*][b]Show Every X Days:[/b] Choose how often the overlay displays (From 1 to 1200) [eg. X=10: DAY 10, DAY 20, DAY 30, ...].
-[*][b]Trigger Hour:[/b] Choose at what hour of the day the overlay displays (From 0 to 23).
+[*][b]Show Every X Days:[/b] Choose how often the overlay displays [eg. X=10: DAY 10, DAY 20, DAY 30, ...].
+[*][b]Trigger Hour:[/b] Choose at what hour of the day the overlay displays.
 [*][b]Day Relative:[/b] Choose what the value of day will be relative to.
 [/list]
 [table]

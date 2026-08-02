@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<!-- General Settings -->
-	<Label_Enabled>Abilitato</Label_Enabled>
-	<Label_ScreenshotMode>Screenshot Mode</Label_ScreenshotMode>
+	<!-- Header -->
+	<DawnNewDay.Label_Enabled>Abilitato</DawnNewDay.Label_Enabled>
+	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
 	
-	<Label_ShowExample>Mostra esempio</Label_ShowExample>
-	<Message_ShowExample>L'esempio di '{0}' sarà eseguito nel prossimo tick possibile.</Message_ShowExample>
+	<DawnNewDay.Label_ShowExample>Mostra esempio</DawnNewDay.Label_ShowExample>
+	<DawnNewDay.Message_ShowExample>L'esempio di '{0}' sarà eseguito nel prossimo tick possibile.</DawnNewDay.Message_ShowExample>
 
 	<!-- Appearance Section -->
-	<Section_Appearance>Aspetto</Section_Appearance>
+	<DawnNewDay.Section_Appearance>Aspetto</DawnNewDay.Section_Appearance>
 	
-	<Label_ShowHighlight>Mostra in evidenza</Label_ShowHighlight>
-	<Label_Scale>Scala</Label_Scale>
-	<Label_Offset>Offset</Label_Offset>
-	<Label_OffsetPresets>Offset Presets</Label_OffsetPresets>
+	<DawnNewDay.Label_ShowHighlight>Mostra in evidenza</DawnNewDay.Label_ShowHighlight>
+	<DawnNewDay.Label_Scale>Scala</DawnNewDay.Label_Scale>
+	<DawnNewDay.Label_Offset>Offset</DawnNewDay.Label_Offset>
+	<DawnNewDay.Label_OffsetPresets>Offset Presets</DawnNewDay.Label_OffsetPresets>
 
-	<Offset_MiddleTop>(Centro, Sopra) ↑</Offset_MiddleTop>
-	<Offset_MiddleBottom>(Centro, Sotto) ↓</Offset_MiddleBottom>
-	<Offset_MiddleMiddle>(Centro, Centro) ▪</Offset_MiddleMiddle>
-	<Offset_LeftMiddle>(Sinsitra, Centro) ←</Offset_LeftMiddle>
-	<Offset_RightMiddle>(Destra, Centro) →</Offset_RightMiddle>
-	<Offset_LeftTop>(Sinsitra, Sopra) ↖</Offset_LeftTop>
-	<Offset_RightTop>(Destra, Sopra) ↗</Offset_RightTop>
-	<Offset_LeftBottom>(Sinsitra, Sotto) ↙</Offset_LeftBottom>
-	<Offset_RightBottom>(Destra, Sotto) ↘</Offset_RightBottom>
+	<DawnNewDay.Offset_MiddleTop>(Centro, Sopra) ↑</DawnNewDay.Offset_MiddleTop>
+	<DawnNewDay.Offset_MiddleBottom>(Centro, Sotto) ↓</DawnNewDay.Offset_MiddleBottom>
+	<DawnNewDay.Offset_MiddleMiddle>(Centro, Centro) ▪</DawnNewDay.Offset_MiddleMiddle>
+	<DawnNewDay.Offset_LeftMiddle>(Sinsitra, Centro) ←</DawnNewDay.Offset_LeftMiddle>
+	<DawnNewDay.Offset_RightMiddle>(Destra, Centro) →</DawnNewDay.Offset_RightMiddle>
+	<DawnNewDay.Offset_LeftTop>(Sinsitra, Sopra) ↖</DawnNewDay.Offset_LeftTop>
+	<DawnNewDay.Offset_RightTop>(Destra, Sopra) ↗</DawnNewDay.Offset_RightTop>
+	<DawnNewDay.Offset_LeftBottom>(Sinsitra, Sotto) ↙</DawnNewDay.Offset_LeftBottom>
+	<DawnNewDay.Offset_RightBottom>(Destra, Sotto) ↘</DawnNewDay.Offset_RightBottom>
 
-	<Label_LineWidthPercentage>Lunghezza Divisore</Label_LineWidthPercentage>
-	<Label_LineThickness>Spessore Divisore</Label_LineThickness>
-	<Label_LinePadding>Spaziatura Divisore</Label_LinePadding>
-	<Label_LineColor>Colore Divisore</Label_LineColor>
+	<DawnNewDay.Label_LineWidthPercentage>Lunghezza Divisore</DawnNewDay.Label_LineWidthPercentage>
+	<DawnNewDay.Label_LineThickness>Spessore Divisore</DawnNewDay.Label_LineThickness>
+	<DawnNewDay.Label_LinePadding>Spaziatura Divisore</DawnNewDay.Label_LinePadding>
+	<DawnNewDay.Label_LineColor>Colore Divisore</DawnNewDay.Label_LineColor>
 
 	<!-- Duration Section -->
-	<Section_Duration>Durata</Section_Duration>
+	<DawnNewDay.Section_Duration>Durata</DawnNewDay.Section_Duration>
 	
-	<Label_DisplayDuration>Durata Display Totale</Label_DisplayDuration>
-	<Label_FadeInDuration>Durata Fade In</Label_FadeInDuration>
-	<Label_FadeOutDuration>Durata Fade Out</Label_FadeOutDuration>
+	<DawnNewDay.Label_DisplayDuration>Durata Display Totale</DawnNewDay.Label_DisplayDuration>
+	<DawnNewDay.Label_FadeInDuration>Durata Fade In</DawnNewDay.Label_FadeInDuration>
+	<DawnNewDay.Label_FadeOutDuration>Durata Fade Out</DawnNewDay.Label_FadeOutDuration>
 
 	<!-- Text Section -->
-	<Section_Text>Testo</Section_Text>
+	<DawnNewDay.Section_Text>Testo</DawnNewDay.Section_Text>
 	
-	<Label_UpperTextProperties>Proprietà Testo Superiore</Label_UpperTextProperties>
-	<Label_BottomTextProperties>Proprietà Testo Inferiore</Label_BottomTextProperties>
-	<Label_DefaultFont>Font predefinito di gioco</Label_DefaultFont>
-	<Label_FontFamily>Scegli il font</Label_FontFamily>
-	<Label_FontSize>Dimensione carattere</Label_FontSize>
-	<Label_Bold>Grassetto</Label_Bold>
-	<Label_Italic>Corsivo</Label_Italic>
-	<Label_TextColor>Colore Testo</Label_TextColor>
-	<Label_OutlineThickness>Spessore Contorno</Label_OutlineThickness>
-	<Label_OutlineColor>Colore Contorno</Label_OutlineColor>
-	<Label_Search>Cerca</Label_Search>
+	<DawnNewDay.Section_UpperText>Testo Superiore</DawnNewDay.Section_UpperText>
+	<DawnNewDay.Section_BottomText>Testo Inferiore</DawnNewDay.Section_BottomTextSection>
+	
+	<DawnNewDay.Label_DefaultFont>Font predefinito di gioco</DawnNewDay.Label_DefaultFont>
+	<DawnNewDay.Label_FontFamily>Scegli il font</DawnNewDay.Label_FontFamily>
+	<DawnNewDay.Label_FontSize>Dimensione carattere</DawnNewDay.Label_FontSize>
+	<DawnNewDay.Label_Bold>Grassetto</DawnNewDay.Label_Bold>
+	<DawnNewDay.Label_Italic>Corsivo</DawnNewDay.Label_Italic>
+	<DawnNewDay.Label_TextColor>Colore Testo</DawnNewDay.Label_TextColor>
+	<DawnNewDay.Label_OutlineThickness>Spessore Contorno</DawnNewDay.Label_OutlineThickness>
+	<DawnNewDay.Label_OutlineColor>Colore Contorno</DawnNewDay.Label_OutlineColor>
+	<DawnNewDay.Label_Search>Cerca</DawnNewDay.Label_Search>
 
 	<!-- Label Format Section -->
-	<Section_LabelFormat>Formattazione</Section_LabelFormat>
+	<DawnNewDay.Section_LabelFormat>Formattazione</DawnNewDay.Section_LabelFormat>
 	
-	<Label_UpperTextFormat>Formattazione Testo Superiore</Label_UpperTextFormat>
-	<Label_BottomTextFormat>Formattazione Testo Inferiore</Label_BottomTextFormat>
+	<DawnNewDay.Label_UpperTextFormat>Formattazione Testo Superiore</DawnNewDay.Label_UpperTextFormat>
+	<DawnNewDay.Label_BottomTextFormat>Formattazione Testo Inferiore</DawnNewDay.Label_BottomTextFormat>
 	
-	<Hint_DayFormat>{D/d} => Giorno</Hint_DayFormat>
-	<Hint_YearFormat>{Y/y} => Anno intero [eg. 5500] / Anno a 2-cifre [eg. 00]</Hint_YearFormat>
-	<Hint_QuadrumFormat>{Q/q} => Quadrum in CAPS / Quadrum</Hint_QuadrumFormat>
-	<Hint_SeasonFormat>{S/s} => Stagione in CAPS / Stagione</Hint_SeasonFormat>
-	<Hint_HourFormat>{H/h} => Ore intere [eg. 06] / Ore [eg. 6]</Hint_HourFormat>
+	<DawnNewDay.Hint_DayFormat>{D/d} => Giorno</DawnNewDay.Hint_DayFormat>
+	<DawnNewDay.Hint_YearFormat>{Y/y} => Anno intero [eg. 5500] / Anno a 2-cifre [eg. 00]</DawnNewDay.Hint_YearFormat>
+	<DawnNewDay.Hint_QuadrumFormat>{Q/q} => Quadrum in CAPS / Quadrum</DawnNewDay.Hint_QuadrumFormat>
+	<DawnNewDay.Hint_SeasonFormat>{S/s} => Stagione in CAPS / Stagione</DawnNewDay.Hint_SeasonFormat>
+	<DawnNewDay.Hint_HourFormat>{H/h} => Ore intere [eg. 06] / Ore [eg. 6]</DawnNewDay.Hint_HourFormat>
 
 	<!-- Sound Section -->
-	<Section_Sound>Suono</Section_Sound>
+	<DawnNewDay.Section_Sound>Suono</DawnNewDay.Section_Sound>
 	
-	<Label_Sound>Scegli il suono</Label_Sound>
-	<Label_SoundVolume>Volume Suono</Label_SoundVolume>
-	<Label_SoundPitch>Pitch Suono</Label_SoundPitch>
+	<DawnNewDay.Label_Sound>Scegli il suono</DawnNewDay.Label_Sound>
+	<DawnNewDay.Label_SoundVolume>Volume Suono</DawnNewDay.Label_SoundVolume>
+	<DawnNewDay.Label_SoundPitch>Pitch Suono</DawnNewDay.Label_SoundPitch>
 	
 	<!-- Extra Section -->
-	<Section_Extra>Extra</Section_Extra>
+	<DawnNewDay.Section_Extra>Extra</DawnNewDay.Section_Extra>
 	
-	<Label_StartsAtZero>Inizia a Zero</Label_StartsAtZero>
-	<Label_ShowEveryXDays>Mostra ogni X giorni</Label_ShowEveryXDays>
-	<Label_TriggerHour>Orario di Attivazione</Label_TriggerHour>
+	<DawnNewDay.Label_StartsAtZero>Inizia a Zero</DawnNewDay.Label_StartsAtZero>
+	<DawnNewDay.Label_ShowEveryXDays>Mostra ogni X giorni</DawnNewDay.Label_ShowEveryXDays>
+	<DawnNewDay.Label_TriggerHour>Orario di Attivazione</DawnNewDay.Label_TriggerHour>
 
-	<Label_DayRelativeTo>Giorno Relativo</Label_DayRelativeTo>
+	<DawnNewDay.Label_DayRelativeTo>Giorno Relativo</DawnNewDay.Label_DayRelativeTo>
 
-	<Label_DayRelativeSettle>Arrivo</Label_DayRelativeSettle>
-	<Label_DayRelativeQuadrum>Quadrum</Label_DayRelativeQuadrum>
-	<Label_DayRelativeSeason>Stagione</Label_DayRelativeSeason>
-	<Label_DayRelativeYear>Anno</Label_DayRelativeYear>
+	<DawnNewDay.Label_DayRelativeSettle>Arrivo</DawnNewDay.Label_DayRelativeSettle>
+	<DawnNewDay.Label_DayRelativeQuadrum>Quadrum</DawnNewDay.Label_DayRelativeQuadrum>
+	<DawnNewDay.Label_DayRelativeSeason>Stagione</DawnNewDay.Label_DayRelativeSeason>
+	<DawnNewDay.Label_DayRelativeYear>Anno</DawnNewDay.Label_DayRelativeYear>
 
-	<Tooltip_Settle>Il giorno sarà relativo al giorno in cui sono arrivati i coloni.</Tooltip_Settle>
-	<Tooltip_Quadrum>Il giorno sarà relativo al quadrum ripristando il conto dopo 15 giorni.</Tooltip_Quadrum>
-	<Tooltip_Season>Il giorno sarà relativo alla stagione ripristando il conto appena finisce.</Tooltip_Season>
-	<Tooltip_Year>Il giorno sarà relativo all'anno ripristando il conto dopo 60 giorno.</Tooltip_Year>
+	<DawnNewDay.Tooltip_Settle>Il giorno sarà relativo al giorno in cui sono arrivati i coloni.</DawnNewDay.Tooltip_Settle>
+	<DawnNewDay.Tooltip_Quadrum>Il giorno sarà relativo al quadrum ripristando il conto dopo 15 giorni.</DawnNewDay.Tooltip_Quadrum>
+	<DawnNewDay.Tooltip_Season>Il giorno sarà relativo alla stagione ripristando il conto appena finisce.</DawnNewDay.Tooltip_Season>
+	<DawnNewDay.Tooltip_Year>Il giorno sarà relativo all'anno ripristando il conto dopo 60 giorno.</DawnNewDay.Tooltip_Year>
 
 </LanguageData>
