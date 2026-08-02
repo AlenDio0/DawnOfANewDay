@@ -61,7 +61,7 @@ namespace DawnNewDay
             m_LastTriggeredYear = currentYear;
             m_LastTriggeredDay = currentDay;
 
-            if (m_LastTriggeredDay % settings.ShowEveryXDays == 0)
+            if (settings.ShowEveryXDays > 0 && m_LastTriggeredDay % settings.ShowEveryXDays == 0)
                 TriggerDawnOfANewDay();
         }
 
