@@ -99,7 +99,7 @@ namespace DawnNewDay
             try
             {
                 if (TextGUIStyle.font != null)
-                    UnityEngine.Object.Destroy(TextGUIStyle.font);
+                    UnityEngine.Object.DestroyImmediate(TextGUIStyle.font);
 
                 if (FontFamilyName.NullOrEmpty())
                 {
