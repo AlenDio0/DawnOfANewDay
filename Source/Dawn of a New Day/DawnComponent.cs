@@ -62,8 +62,15 @@ namespace DawnNewDay
             m_LastTriggeredYear = currentYear;
             m_LastTriggeredDay = currentDay;
 
-            if (m_LastTriggeredDay % settings.ShowEveryXDays == 0)
+            if (settings.ShowEveryXDays > 0 && m_LastTriggeredDay % settings.ShowEveryXDays == 0)
                 TriggerDawnOfANewDay();
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref m_LastTriggeredYear, "m_LastTriggeredYear", -1);
+            Scribe_Values.Look(ref m_LastTriggeredDay, "m_LastTriggeredDay", -1);
         }
 
         public override void GameComponentUpdate()
