@@ -2,93 +2,93 @@
 <LanguageData>
 
 	<!-- General Settings -->
-	<SettingsLabel_Enabled>启用</SettingsLabel_Enabled>
-	<SettingsLabel_ScreenshotMode>截屏模式</SettingsLabel_ScreenshotMode>
+	<DawnNewDay.Label_Enabled>启用</DawnNewDay.Label_Enabled>
+	<DawnNewDay.Label_ScreenshotMode>截屏模式</DawnNewDay.Label_ScreenshotMode>
 	
-	<SettingsLabel_ShowExample>显示示例</SettingsLabel_ShowExample>
-	<SettingsMessage_ShowExample>将在下一个可能的时钟周期触发“{0}”示例。</SettingsMessage_ShowExample>
+	<DawnNewDay.Label_ShowExample>显示示例</DawnNewDay.Label_ShowExample>
+	<DawnNewDay.Message_ShowExample>将在下一个可能的时钟周期触发“{0}”示例。</DawnNewDay.Message_ShowExample>
 
 	<!-- Appearance Section -->
-	<SettingsSection_Appearance>外观</SettingsSection_Appearance>
+	<DawnNewDay.Section_Appearance>外观</DawnNewDay.Section_Appearance>
 	
-	<SettingsLabel_ShowHighlight>显示高亮</SettingsLabel_ShowHighlight>
-	<SettingsLabel_Scale>缩放</SettingsLabel_Scale>
-	<SettingsLabel_Offset>偏移</SettingsLabel_Offset>
-	<SettingsLabel_OffsetPresets>偏移预设</SettingsLabel_OffsetPresets>
+	<DawnNewDay.Label_ShowHighlight>显示高亮</DawnNewDay.Label_ShowHighlight>
+	<DawnNewDay.Label_Scale>缩放</DawnNewDay.Label_Scale>
+	<DawnNewDay.Label_Offset>偏移</DawnNewDay.Label_Offset>
+	<DawnNewDay.Label_OffsetPresets>偏移预设</DawnNewDay.Label_OffsetPresets>
 
-	<Offset_MiddleTop>（中间，顶部）↑</Offset_MiddleTop>
-	<Offset_MiddleBottom>（中间，底部）↓</Offset_MiddleBottom>
-	<Offset_MiddleMiddle>（中间，居中）▪</Offset_MiddleMiddle>
-	<Offset_LeftMiddle>（左侧，居中）←</Offset_LeftMiddle>
-	<Offset_RightMiddle>（右侧，居中）→</Offset_RightMiddle>
-	<Offset_LeftTop>（左侧，顶部）↖</Offset_LeftTop>
-	<Offset_RightTop>（右侧，顶部）↗</Offset_RightTop>
-	<Offset_LeftBottom>（左侧，底部）↙</Offset_LeftBottom>
-	<Offset_RightBottom>（右侧，底部）↘</Offset_RightBottom>
+	<DawnNewDay.Offset_MiddleTop>（中间，顶部）↑</DawnNewDay.Offset_MiddleTop>
+	<DawnNewDay.Offset_MiddleBottom>（中间，底部）↓</DawnNewDay.Offset_MiddleBottom>
+	<DawnNewDay.Offset_MiddleMiddle>（中间，居中）▪</DawnNewDay.Offset_MiddleMiddle>
+	<DawnNewDay.Offset_LeftMiddle>（左侧，居中）←</DawnNewDay.Offset_LeftMiddle>
+	<DawnNewDay.Offset_RightMiddle>（右侧，居中）→</DawnNewDay.Offset_RightMiddle>
+	<DawnNewDay.Offset_LeftTop>（左侧，顶部）↖</DawnNewDay.Offset_LeftTop>
+	<DawnNewDay.Offset_RightTop>（右侧，顶部）↗</DawnNewDay.Offset_RightTop>
+	<DawnNewDay.Offset_LeftBottom>（左侧，底部）↙</DawnNewDay.Offset_LeftBottom>
+	<DawnNewDay.Offset_RightBottom>（右侧，底部）↘</DawnNewDay.Offset_RightBottom>
 
-	<SettingsLabel_LineWidthPercentage>线条宽度百分比</SettingsLabel_LineWidthPercentage>
-	<SettingsLabel_LineThickness>线条粗细</SettingsLabel_LineThickness>
-	<SettingsLabel_LinePadding>线条内边距</SettingsLabel_LinePadding>
-	<SettingsLabel_LineColor>线条颜色</SettingsLabel_LineColor>
+	<DawnNewDay.Label_LineWidthPercentage>线条宽度百分比</DawnNewDay.Label_LineWidthPercentage>
+	<DawnNewDay.Label_LineThickness>线条粗细</DawnNewDay.Label_LineThickness>
+	<DawnNewDay.Label_LinePadding>线条内边距</DawnNewDay.Label_LinePadding>
+	<DawnNewDay.Label_LineColor>线条颜色</DawnNewDay.Label_LineColor>
 
 	<!-- Duration Section -->
-	<SettingsSection_Duration>持续时间</SettingsSection_Duration>
+	<DawnNewDay.Section_Duration>持续时间</DawnNewDay.Section_Duration>
 	
-	<SettingsLabel_DisplayDuration>总显示时长</SettingsLabel_DisplayDuration>
-	<SettingsLabel_FadeInDuration>淡入时长</SettingsLabel_FadeInDuration>
-	<SettingsLabel_FadeOutDuration>淡出时长</SettingsLabel_FadeOutDuration>
+	<DawnNewDay.Label_DisplayDuration>总显示时长</DawnNewDay.Label_DisplayDuration>
+	<DawnNewDay.Label_FadeInDuration>淡入时长</DawnNewDay.Label_FadeInDuration>
+	<DawnNewDay.Label_FadeOutDuration>淡出时长</DawnNewDay.Label_FadeOutDuration>
 
 	<!-- Text Section -->
-	<SettingsSection_Text>文本</SettingsSection_Text>
+	<DawnNewDay.Section_Text>文本</DawnNewDay.Section_Text>
 	
-	<SettingsLabel_UpperTextProperties>上方文本属性</SettingsLabel_UpperTextProperties>
-	<SettingsLabel_BottomTextProperties>下方文本属性</SettingsLabel_BottomTextProperties>
-	<SettingsLabel_DefaultFont>游戏默认字体</SettingsLabel_DefaultFont>
-	<SettingsLabel_FontFamily>选择字体族</SettingsLabel_FontFamily>
-	<SettingsLabel_FontSize>字号</SettingsLabel_FontSize>
-	<SettingsLabel_Bold>粗体</SettingsLabel_Bold>
-	<SettingsLabel_Italic>斜体</SettingsLabel_Italic>
-	<SettingsLabel_TextColor>文本颜色</SettingsLabel_TextColor>
-	<SettingsLabel_OutlineThickness>描边厚度</SettingsLabel_OutlineThickness>
-	<SettingsLabel_OutlineColor>描边颜色</SettingsLabel_OutlineColor>
-	<SettingsLabel_Search>搜索</SettingsLabel_Search>
+	<DawnNewDay.Section_UpperText>上方文本属性</DawnNewDay.Section_UpperText>
+	<DawnNewDay.Section_BottomText>下方文本属性</DawnNewDay.Section_BottomText>
+	<DawnNewDay.Label_DefaultFont>游戏默认字体</DawnNewDay.Label_DefaultFont>
+	<DawnNewDay.Label_FontFamily>选择字体族</DawnNewDay.Label_FontFamily>
+	<DawnNewDay.Label_FontSize>字号</DawnNewDay.Label_FontSize>
+	<DawnNewDay.Label_Bold>粗体</DawnNewDay.Label_Bold>
+	<DawnNewDay.Label_Italic>斜体</DawnNewDay.Label_Italic>
+	<DawnNewDay.Label_TextColor>文本颜色</DawnNewDay.Label_TextColor>
+	<DawnNewDay.Label_OutlineThickness>描边厚度</DawnNewDay.Label_OutlineThickness>
+	<DawnNewDay.Label_OutlineColor>描边颜色</DawnNewDay.Label_OutlineColor>
+	<DawnNewDay.Label_Search>搜索</DawnNewDay.Label_Search>
 
 	<!-- Label Format Section -->
-	<SettingsSection_LabelFormat>标签格式</SettingsSection_LabelFormat>
+	<DawnNewDay.Section_LabelFormat>标签格式</DawnNewDay.Section_LabelFormat>
 	
-	<SettingsLabel_UpperTextFormat>上方文本格式</SettingsLabel_UpperTextFormat>
-	<SettingsLabel_BottomTextFormat>下方文本格式</SettingsLabel_BottomTextFormat>
+	<DawnNewDay.Label_UpperTextFormat>上方文本格式</DawnNewDay.Label_UpperTextFormat>
+	<DawnNewDay.Label_BottomTextFormat>下方文本格式</DawnNewDay.Label_BottomTextFormat>
 	
-	<SettingsHint_DayFormat>{D/d} => 完整星期几 / 简写星期几</SettingsHint_DayFormat>
-	<SettingsHint_YearFormat>{Y/y} => 完整年份 [如 5500] / 两位年份 [如 00]</SettingsHint_YearFormat>
-	<SettingsHint_QuadrumFormat>{Q/q} => 大写四分之一年 / 小写四分之一年</SettingsHint_QuadrumFormat>
-	<SettingsHint_SeasonFormat>{S/s} => 大写季节 / 小写季节</SettingsHint_SeasonFormat>
-	<SettingsHint_HourFormat>{H/h} => 完整小时 [如 06] / 小时 [如 6]</SettingsHint_HourFormat>
+	<DawnNewDay.Hint_DayFormat>{D/d} => 完整星期几 / 简写星期几</DawnNewDay.Hint_DayFormat>
+	<DawnNewDay.Hint_YearFormat>{Y/y} => 完整年份 [如 5500] / 两位年份 [如 00]</DawnNewDay.Hint_YearFormat>
+	<DawnNewDay.Hint_QuadrumFormat>{Q/q} => 大写季度 / 小写季度</DawnNewDay.Hint_QuadrumFormat>
+	<DawnNewDay.Hint_SeasonFormat>{S/s} => 大写季节 / 小写季节</DawnNewDay.Hint_SeasonFormat>
+	<DawnNewDay.Hint_HourFormat>{H/h} => 完整小时 [如 06] / 小时 [如 6]</DawnNewDay.Hint_HourFormat>
 
 	<!-- Sound Section -->
-	<SettingsSection_Sound>音效</SettingsSection_Sound>
+	<DawnNewDay.Section_Sound>音效</DawnNewDay.Section_Sound>
 	
-	<SettingsLabel_Sound>选择音效</SettingsLabel_Sound>
-	<SettingsLabel_SoundVolume>音效音量</SettingsLabel_SoundVolume>
-	<SettingsLabel_SoundPitch>音效音调</SettingsLabel_SoundPitch>
+	<DawnNewDay.Label_Sound>选择音效</DawnNewDay.Label_Sound>
+	<DawnNewDay.Label_SoundVolume>音效音量</DawnNewDay.Label_SoundVolume>
+	<DawnNewDay.Label_SoundPitch>音效音调</DawnNewDay.Label_SoundPitch>
 	
 	<!-- Extra Section -->
-	<SettingsSection_Extra>附加</SettingsSection_Extra>
+	<DawnNewDay.Section_Extra>附加</DawnNewDay.Section_Extra>
 	
-	<SettingsLabel_StartsAtZero>从零开始</SettingsLabel_StartsAtZero>
-	<SettingsLabel_ShowEveryXDays>每 X 天显示</SettingsLabel_ShowEveryXDays>
-	<SettingsLabel_TriggerHour>触发小时</SettingsLabel_TriggerHour>
+	<DawnNewDay.Label_StartsAtZero>从零开始</DawnNewDay.Label_StartsAtZero>
+	<DawnNewDay.Label_ShowEveryXDays>每 X 天显示</DawnNewDay.Label_ShowEveryXDays>
+	<DawnNewDay.Label_TriggerHour>触发小时</DawnNewDay.Label_TriggerHour>
 
-	<SettingsLabel_DayRelativeTo>天数参照</SettingsLabel_DayRelativeTo>
+	<DawnNewDay.Label_DayRelativeTo>天数参照</DawnNewDay.Label_DayRelativeTo>
 
-	<SettingsLabel_DayRelativeSettle>定居日</SettingsLabel_DayRelativeSettle>
-	<SettingsLabel_DayRelativeQuadrum>四分之一年</SettingsLabel_DayRelativeQuadrum>
-	<SettingsLabel_DayRelativeSeason>季节</SettingsLabel_DayRelativeSeason>
-	<SettingsLabel_DayRelativeYear>年</SettingsLabel_DayRelativeYear>
+	<DawnNewDay.Label_DayRelativeSettle>定居日</DawnNewDay.Label_DayRelativeSettle>
+	<DawnNewDay.Label_DayRelativeQuadrum>季度</DawnNewDay.Label_DayRelativeQuadrum>
+	<DawnNewDay.Label_DayRelativeSeason>季节</DawnNewDay.Label_DayRelativeSeason>
+	<DawnNewDay.Label_DayRelativeYear>年</DawnNewDay.Label_DayRelativeYear>
 
-	<SettingsTooltip_Settle>天数将相对于殖民者定居之日计算。</SettingsTooltip_Settle>
-	<SettingsTooltip_Quadrum>天数将相对于每 15 天重置的四分之一年周期计算。</SettingsTooltip_Quadrum>
-	<SettingsTooltip_Season>天数将相对于季节结束后重置的季节周期计算。</SettingsTooltip_Season>
-	<SettingsTooltip_Year>天数将相对于每 60 天重置的年份周期计算。</SettingsTooltip_Year>
+	<DawnNewDay.Tooltip_Settle>天数将相对于殖民者定居之日计算。</DawnNewDay.Tooltip_Settle>
+	<DawnNewDay.Tooltip_Quadrum>天数将相对于每 15 天重置的季度周期计算。</DawnNewDay.Tooltip_Quadrum>
+	<DawnNewDay.Tooltip_Season>天数将相对于季节结束后重置的季节周期计算。</DawnNewDay.Tooltip_Season>
+	<DawnNewDay.Tooltip_Year>天数将相对于每 60 天重置的年份周期计算。</DawnNewDay.Tooltip_Year>
 
 </LanguageData>
