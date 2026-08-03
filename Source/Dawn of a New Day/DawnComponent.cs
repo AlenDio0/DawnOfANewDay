@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using static DawnNewDay.DawnData;
 
 namespace DawnNewDay
 {
@@ -37,7 +36,7 @@ namespace DawnNewDay
             if (m_Game.CurrentMap == null)
                 return;
 
-            var settings = DawnMod.s_Settings;
+            var settings = DawnMod.Settings;
             if (settings.ConsumeShowExample)
             {
                 TriggerDawnOfANewDay();
@@ -80,7 +79,7 @@ namespace DawnNewDay
                 return;
             }
 
-            var settings = DawnMod.s_Settings;
+            var settings = DawnMod.Settings;
 
             m_CurrentAlpha = 1f;
 
@@ -100,7 +99,7 @@ namespace DawnNewDay
             if (!m_DisplayActive)
                 return;
 
-            var settings = DawnMod.s_Settings;
+            var settings = DawnMod.Settings;
 
             if (settings.ScreenshotMode && Find.ScreenshotModeHandler.Active)
                 return;
@@ -117,7 +116,7 @@ namespace DawnNewDay
             Rect overlaytRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
 
             if (settings.ShowHighlight)
-                Widgets.DrawHighlight(overlaytRect, m_CurrentAlpha);
+                Widgets.DrawHighlight(overlaytRect);
 
             GUILayout.BeginArea(overlaytRect);
 
@@ -126,8 +125,8 @@ namespace DawnNewDay
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            Rect dayRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, textWidth);
-            DrawText(dayRect, m_CachedUpperText, settings.UpperTextStyle, m_CurrentAlpha);
+            Rect upperRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, textWidth);
+            settings.UpperTextStyle.Draw(upperRect, m_CachedUpperText, settings.Scale);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -157,8 +156,8 @@ namespace DawnNewDay
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
-            Rect dateRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, textWidth);
-            DrawText(dateRect, m_CachedBottomText, settings.BottomTextStyle, m_CurrentAlpha);
+            Rect bottomRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, textWidth);
+            settings.BottomTextStyle.Draw(bottomRect, m_CachedBottomText, settings.Scale);
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -170,35 +169,11 @@ namespace DawnNewDay
             GUI.color = defaultColor;
         }
 
-        private void DrawText(Rect rect, string text, DawnTextStyle style, float alpha)
-        {
-            Color originalColor = style.TextColor.WithAlpha(alpha);
-            Color outlineColor = style.OutlineColor.WithAlpha(alpha);
-
-            if (style.OutlineThickness > 0)
-            {
-                style.TextGUIStyle.normal.textColor = outlineColor;
-
-                float step = style.OutlineThickness / 10f;
-                for (float x = -style.OutlineThickness; x <= style.OutlineThickness; x += step)
-                {
-                    for (float y = -style.OutlineThickness; y <= style.OutlineThickness; y += step)
-                    {
-                        Vector2 offset = new Vector2(x, y);
-                        GUI.Label(new Rect(rect.position + offset, rect.size), text, style.TextGUIStyle);
-                    }
-                }
-            }
-
-            style.TextGUIStyle.normal.textColor = originalColor;
-            GUI.Label(rect, text, style.TextGUIStyle);
-        }
-
         private void TriggerDawnOfANewDay()
         {
             try
             {
-                var settings = DawnMod.s_Settings;
+                var settings = DawnMod.Settings;
 
                 FormatContext context = CreateFormatContext();
                 m_CachedUpperText = FormatLabel(settings.UpperTextFormat, context);
@@ -229,7 +204,7 @@ namespace DawnNewDay
 
         private FormatContext CreateFormatContext()
         {
-            var settings = DawnMod.s_Settings;
+            var settings = DawnMod.Settings;
 
             long absTicks = m_Game.tickManager.TicksAbs;
             Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
@@ -239,7 +214,7 @@ namespace DawnNewDay
                 Day = (MapDayRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe(),
                 Year = GenDate.Year(absTicks, location.x).ToStringSafe(),
                 Quadrum = GenDate.Quadrum(absTicks, location.x).Label(),
-                Season = GenDate.Season(absTicks, location).Label(),
+                Season = GenDate.Season(absTicks, location).LabelCap(),
                 Hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe()
             };
         }

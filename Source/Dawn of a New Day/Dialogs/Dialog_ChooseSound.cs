@@ -34,7 +34,7 @@ namespace DawnNewDay.Dialogs
 
         public override List<string> InitalValues => new List<string>(SoundNames);
 
-        public override string HeaderLabel => DawnData.SettingsLabel_Sound;
+        public override string HeaderLabel => DawnTranslation.Label_Sound;
 
         public override string DefaultValue => DawnData.DefaultSoundDefName;
 

@@ -39,23 +39,23 @@ namespace DawnNewDay
         {
             try
             {
-                if (listing.ButtonText($"{DawnData.SettingsLabel_FontFamily} ({FontFamilyName.Fallback(DawnData.SettingsLabel_DefaultFont)})"))
+                if (listing.ButtonText($"{DawnTranslation.Label_FontFamily} ({FontFamilyName.Fallback(DawnTranslation.Label_DefaultFont)})"))
                 {
                     Find.WindowStack.Add(new Dialog_ChooseFontFamily(font =>
                     {
-                        FontFamilyName = font != DawnData.SettingsLabel_DefaultFont ? font : "";
+                        FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "";
                         UpdateFontFamily();
                     }, FontFamilyName));
                 }
 
-                FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnData.SettingsLabel_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
-                OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnData.SettingsLabel_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 10f, 0.35f), 0.25f);
+                FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
+                OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnTranslation.Label_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 3f, 0.35f), 0.25f);
 
-                listing.CheckboxLabeled(DawnData.SettingsLabel_Bold, ref Bold);
-                listing.CheckboxLabeled(DawnData.SettingsLabel_Italic, ref Italic);
+                listing.CheckboxLabeled(DawnTranslation.Label_Bold, ref Bold);
+                listing.CheckboxLabeled(DawnTranslation.Label_Italic, ref Italic);
 
-                listing.LabeledRadioColorPresets(ref TextColor, DawnData.SettingsLabel_TextColor);
-                listing.LabeledRadioColorPresets(ref OutlineColor, DawnData.SettingsLabel_OutlineColor);
+                listing.LabeledRadioColorPresets(ref TextColor, DawnTranslation.Label_TextColor);
+                listing.LabeledRadioColorPresets(ref OutlineColor, DawnTranslation.Label_OutlineColor);
 
                 ApplyToGUIStyle(scale);
             }
@@ -79,6 +79,32 @@ namespace DawnNewDay
 
             Scribe_Values.Look(ref OutlineThickness, "OutlineThickness", 1f);
             Scribe_Values.Look(ref OutlineColor, "OutlineColor", Color.black);
+        }
+
+        public void Draw(Rect rect, string text, float scale)
+        {
+            if (OutlineThickness > 0f)
+                DrawOutline(rect, text, scale);
+
+            TextGUIStyle.normal.textColor = TextColor;
+            GUI.Label(rect, text, TextGUIStyle);
+        }
+
+        private void DrawOutline(Rect rect, string text, float scale)
+        {
+            float scaledOutlineThickness = OutlineThickness * scale;
+
+            TextGUIStyle.normal.textColor = OutlineColor;
+
+            float step = scaledOutlineThickness / 20f;
+            for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
+            {
+                for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
+                {
+                    Vector2 offset = new Vector2(x, y);
+                    GUI.Label(new Rect(rect.position + offset, rect.size), text, TextGUIStyle);
+                }
+            }
         }
 
         public void ApplyToGUIStyle(float scale)

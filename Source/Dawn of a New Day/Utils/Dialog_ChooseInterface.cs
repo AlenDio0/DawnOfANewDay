@@ -82,7 +82,7 @@ namespace DawnNewDay.Utils
                 Text.Font = defaultFont;
             }
 
-            listing.LabeledTextEntry(DawnData.SettingsLabel_Search, ref m_SearchBuffer, 0.1f, 0.9f);
+            listing.LabeledTextEntry(DawnTranslation.Label_Search, ref m_SearchBuffer, 0.1f, 0.9f);
 
             if (DefaultValue != null)
             {

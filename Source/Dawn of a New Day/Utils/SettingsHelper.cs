@@ -28,6 +28,8 @@ namespace DawnNewDay.Utils
                 FontStyle.Normal;
         }
 
+        public readonly static Color[] ColorPresets = new[] { Color.white, Color.gray, Color.black, Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.cyan };
+
         public static Color LabeledRadioColorPresets(this Listing_Standard listing, ref Color currentColor, string label, float labelWidthPct = 0.25f)
         {
             Rect rowRect = listing.GetRect(30f);
@@ -40,9 +42,9 @@ namespace DawnNewDay.Utils
             Text.Anchor = defaultAnchor;
 
             const float cBoxSize = 24f;
-            for (int i = 0; i < DawnData.ColorPresets.Length; i++)
+            for (int i = 0; i < ColorPresets.Length; i++)
             {
-                Color color = DawnData.ColorPresets[i];
+                Color color = ColorPresets[i];
 
                 Rect boxRect = new Rect(labelRect.xMax + (i * (cBoxSize * 1.5f)), rowRect.y, cBoxSize, cBoxSize);
                 Widgets.DrawBoxSolid(boxRect, color);

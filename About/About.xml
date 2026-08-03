@@ -16,24 +16,24 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 - &lt;color=cyan&gt;&lt;b&gt;Appearance Section&lt;/b&gt;&lt;/color&gt;
   # Show Highlight => Adds a low-opacity light background behind the overlay.
  
-  # Scale => Scales the whole overlay to your like (From 0.5x to 4x).
+  # Scale => Scales the whole overlay to your like.
  
   # Offset Presets => Helps you to choose an offset of your liking without trial and error.
-  # Offset sliders (px) => Choose offsets on X and Y axis at pixel-precision (From 0 To {Screen Resolution}).
+  # Offset sliders (px) => Choose offsets on X and Y axis at pixel-precision.
  
-  # Line Width (%) => Choose the width in percentage of the line that divides the Upper from Bottom (From 0 to 100).
-  # Line Thickness (px) => Choose the thickness in pixels of the line that divides the Upper from Bottom (From 0 to 100)
-  # Line Padding (px) => Choose the padding in pixels that divides the line from the Upper and Bottom (From 0 to 100)
+  # Line Width (%) => Choose the width in percentage of the line that divides the Upper from Bottom.
+  # Line Thickness (px) => Choose the thickness in pixels of the line that divides the Upper from Bottom.
+  # Line Padding (px) => Choose the padding in pixels that divides the line from the Upper and Bottom.
 
 - &lt;color=cyan&gt;&lt;b&gt;Duration Section&lt;/b&gt;&lt;/color&gt;
-  # Total Display Duration => Choose the total duration of the overlay in seconds (From 0 to 120).
-  # Fade In Duration => Choose the duration of the overlay fading-in in seconds (From 0 to {Total Display}).
-  # Fade Out Duration => Choose the duration of the overlay fading-out in seconds (From 0 to {Total Display}).
+  # Total Display Duration => Choose the total duration of the overlay in seconds.
+  # Fade In Duration => Choose the duration of the overlay fading-in in seconds.
+  # Fade Out Duration => Choose the duration of the overlay fading-out in seconds.
 
 - &lt;color=cyan&gt;&lt;b&gt;Text Section&lt;/b&gt;&lt;/color&gt;
   # Choose Font Family => Choose an custom OS font to replace the default game font of the text.
-  # Font Size => Choose the character size of the text (From 1 to 256).
-  # Outline Thickness => Choose the thickness of the outline of the text (From 0 to 10).
+  # Font Size => Choose the character size of the text.
+  # Outline Thickness => Choose the thickness of the outline of the text.
   # Bold => Enable to add bold style to the text.
   # Italic => Enable to add italic style to the text.
   # Text Color => Choose from the color presets the color of the text.
@@ -52,13 +52,13 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 - &lt;color=cyan&gt;&lt;b&gt;Sound Section&lt;/b&gt;&lt;/color&gt;
   # Enabled => Toggle the sound that starts with the overlay.
   # Choose Sound => Choose a custom sound from the catalogue.
-  # Sound Volume => Choose the volume of the sound (From 1 to 200).
-  # Pitch Volume => Choose the pitch of the sound (From 1 to 200).
+  # Sound Volume => Choose the volume of the sound.
+  # Pitch Volume => Choose the pitch of the sound.
 
 - &lt;color=cyan&gt;&lt;b&gt;Extra Section&lt;/b&gt;&lt;/color&gt;
   # Starts at Zero => Enable to start the count of the days from 0 instead of 1.
-  # Show Every X Days => Choose how often the overlay displays (From 1 to 1200) [eg. X=10 => DAY 10, DAY 20, DAY 30, ...].
-  # Trigger Hour => Choose at what hour of the day the overlay displays (From 0 to 23).
+  # Show Every X Days => Choose how often the overlay displays [eg. X=10 => DAY 10, DAY 20, DAY 30, ...].
+  # Trigger Hour => Choose at what hour of the day the overlay displays.
 
   # Day Relative => Choose what the value of day will be relative to.
   * Settle => Day will be relative to the day the colonists settled.
