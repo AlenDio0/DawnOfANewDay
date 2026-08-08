@@ -30,7 +30,7 @@ namespace DawnNewDay.Dialogs
             }
         }
 
-        public override List<string> InitalValues => new List<string>(OSFontNames);
+        public override List<string> InitialValues => new List<string>(OSFontNames);
 
         public override string HeaderLabel => DawnTranslation.Label_FontFamily;
 

@@ -33,7 +33,7 @@ namespace DawnNewDay.Dialogs
             }
         }
 
-        public override List<string> InitalValues => new List<string>(SoundNames);
+        public override List<string> InitialValues => new List<string>(SoundNames);
 
         public override string HeaderLabel => DawnTranslation.Label_Sound;
 

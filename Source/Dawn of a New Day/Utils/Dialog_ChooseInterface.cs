@@ -8,17 +8,15 @@ namespace DawnNewDay.Utils
 {
     public class Dialog_ChooseInterface : Window
     {
-        private readonly string m_Current = null;
-        private readonly Action<string> m_OnChoose;
-
-        private readonly List<string> m_Values;
+        public string Current { get; }
+        public Action<string> OnChoose { get; }
 
         private string m_SearchBuffer = "";
 
         private Vector2 m_ScrollPosition = Vector2.zero;
         private float m_CachedScrollViewHeight = 0f;
 
-        public virtual List<string> InitalValues => new List<string>();
+        public virtual List<string> InitialValues => new List<string>();
         public virtual string HeaderLabel => null;
         public virtual string DefaultValue => null;
         public virtual IEnumerable<string> WhereShowable(IEnumerable<string> list) => list;
@@ -30,22 +28,19 @@ namespace DawnNewDay.Utils
             absorbInputAroundWindow = true;
             draggable = true;
 
-            m_Current = current;
-            m_OnChoose = onChoose;
-
-            if (m_Values == null)
-                m_Values = InitalValues;
+            Current = current;
+            OnChoose = onChoose;
         }
 
         public override Vector2 InitialSize => new Vector2(600f, 800f);
 
         public override void DoWindowContents(Rect canva)
         {
+            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            listing.Begin(canva);
+
             try
             {
-                Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
-                listing.Begin(canva);
-
                 ShowHeader(listing);
                 float headerHeight = listing.CurHeight;
 
@@ -58,15 +53,18 @@ namespace DawnNewDay.Utils
                 listing.Begin(viewRect);
 
                 ShowList(listing);
+            }
+            catch (Exception exception)
+            {
+                DawnData.Error($"Exception catched into Dialog_ChooseInterface.DoWindowContents(canva: {canva})\nException: {exception}");
+            }
+            finally
+            {
                 m_CachedScrollViewHeight = listing.CurHeight;
 
                 listing.End();
 
                 Widgets.EndScrollView();
-            }
-            catch (Exception exception)
-            {
-                DawnData.Error($"Exception catched into Dialog_ChooseFontFamily.DoWindowContents(canva: {canva})\nException: {exception}");
             }
         }
 
@@ -77,7 +75,7 @@ namespace DawnNewDay.Utils
                 GameFont defaultFont = Text.Font;
                 Text.Font = GameFont.Medium;
 
-                listing.Label($"{HeaderLabel} ({m_Current.Fallback(DefaultValue)})");
+                listing.Label($"{HeaderLabel} ({Current.Fallback(DefaultValue)})");
 
                 Text.Font = defaultFont;
             }
@@ -90,7 +88,7 @@ namespace DawnNewDay.Utils
 
                 if (listing.ButtonText(DefaultValue))
                 {
-                    m_OnChoose(DefaultValue);
+                    OnChoose(DefaultValue);
                     Close();
                 }
             }
@@ -98,28 +96,28 @@ namespace DawnNewDay.Utils
 
         private void ShowList(Listing_Standard listing)
         {
-            IEnumerable<string> showableFontNames = GetShowableFontNames();
-            foreach (string fontName in showableFontNames)
+            IEnumerable<string> showableValues = ShowableValues;
+            foreach (string value in showableValues)
             {
                 listing.GapLine();
-                Rect fontRect = listing.GetRect(30f);
+                Rect rowRect = listing.GetRect(30f);
 
                 TextAnchor defaultAnchor = Text.Anchor;
                 Text.Anchor = TextAnchor.MiddleLeft;
 
-                Widgets.Label(new Rect(0f, fontRect.y, fontRect.width - 0f, fontRect.height), fontName);
+                Widgets.Label(rowRect, value);
 
                 Text.Anchor = defaultAnchor;
 
-                if (!m_Current.NullOrEmpty() && m_Current == fontName)
-                    Widgets.DrawBoxSolid(fontRect, Color.green.WithAlpha(0.25f));
+                if (!Current.NullOrEmpty() && Current == value)
+                    Widgets.DrawBoxSolid(rowRect, Color.green.WithAlpha(0.25f));
 
-                if (Mouse.IsOver(fontRect))
-                    Widgets.DrawHighlight(fontRect);
+                if (Mouse.IsOver(rowRect))
+                    Widgets.DrawHighlight(rowRect);
 
-                if (Widgets.ButtonInvisible(fontRect, true))
+                if (Widgets.ButtonInvisible(rowRect, true))
                 {
-                    m_OnChoose?.Invoke(fontName);
+                    OnChoose?.Invoke(value);
 
                     Close();
                     break;
@@ -127,9 +125,6 @@ namespace DawnNewDay.Utils
             }
         }
 
-        private IEnumerable<string> GetShowableFontNames()
-        {
-            return WhereShowable(m_Values.Where(value => m_SearchBuffer.NullOrEmpty() || value.ToUpper().Contains(m_SearchBuffer.ToUpper())));
-        }
+        private IEnumerable<string> ShowableValues => WhereShowable(InitialValues.Where(value => m_SearchBuffer.NullOrEmpty() || value.ToUpper().Contains(m_SearchBuffer.ToUpper())));
     }
 }

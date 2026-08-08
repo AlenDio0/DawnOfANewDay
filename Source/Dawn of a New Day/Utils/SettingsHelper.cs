@@ -89,15 +89,16 @@ namespace DawnNewDay.Utils
             listing.GapLine();
             Rect headerRect = listing.GetRect(30f);
 
-            const float cSymbolSize = 20f;
-            Rect symbolRect = new Rect(headerRect.x, headerRect.y + (headerRect.height - cSymbolSize) / 2f, cSymbolSize, cSymbolSize);
-            GUI.DrawTexture(symbolRect, open ? TexButton.Minus : TexButton.Plus);
+            const float cIconSize = 20f;
+            const float cSpaceX = 15f;
+
+            Rect iconRect = new Rect(headerRect.x, headerRect.y + (headerRect.height - cIconSize) / 2f, cIconSize, cIconSize);
+            GUI.DrawTexture(iconRect, open ? TexButton.Minus : TexButton.Plus);
 
             TextAnchor defaultAnchor = Text.Anchor;
             Text.Anchor = TextAnchor.MiddleLeft;
 
-            const float cSpaceX = 15f;
-            Widgets.Label(new Rect(symbolRect.xMax + cSpaceX, headerRect.y, headerRect.width - symbolRect.width, headerRect.height), label);
+            Widgets.Label(new Rect(iconRect.xMax + cSpaceX, headerRect.y, headerRect.width - iconRect.width, headerRect.height), label);
 
             Text.Anchor = defaultAnchor;
 
@@ -113,19 +114,19 @@ namespace DawnNewDay.Utils
             return open;
         }
 
-        public static void BeginIndentation(this Listing_Standard listing, float gap = 64f)
+        public static void BeginIndentation(this Listing_Standard listing, float gap = 48f)
         {
             listing.Indent(gap);
             listing.ColumnWidth -= gap;
         }
 
-        public static void EndIndentation(this Listing_Standard listing, float gap = 64f)
+        public static void EndIndentation(this Listing_Standard listing, float gap = 48f)
         {
             listing.Outdent(gap);
             listing.ColumnWidth += gap;
         }
 
-        public static Listing_Standard Indented(this Listing_Standard listing, Action action, float gap = 64f)
+        public static Listing_Standard Indented(this Listing_Standard listing, Action action, float gap = 48f)
         {
             BeginIndentation(listing, gap);
 
