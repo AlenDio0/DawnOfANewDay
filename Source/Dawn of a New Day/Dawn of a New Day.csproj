@@ -12,20 +12,28 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		
 		<RWVersion Condition="'$(RWVersion)' == ''">1.6</RWVersion>
+		<RWVersion Condition="'$(Configuration)' == 'Debug-1.5'">1.5</RWVersion>
+		<Configurations>Release;Debug-1.5;Debug-1.6</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(RWVersion)' == '1.6'">
 		<OutputPath>..\..\1.6\Assemblies\</OutputPath>
+		<DefineConstants>RW_16</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(RWVersion)' == '1.5'">
 		<OutputPath>..\..\1.5\Assemblies\</OutputPath>
+		<DefineConstants>RW_15</DefineConstants>
 	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-1.6|AnyCPU'">
+	  <DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-1.5|AnyCPU'">
 	  <DebugType>none</DebugType>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DebugType>none</DebugType>
+		<DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(RWVersion)' == '1.6'">
@@ -34,6 +42,7 @@
 	<ItemGroup Condition="'$(RWVersion)' == '1.5'">
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.*" PrivateAssets="All" />
 	</ItemGroup>
+	
 	<ItemGroup>
 	  <PackageReference Include="Lib.Harmony" Version="2.4.2">
 		  <ExcludeAssets>runtime</ExcludeAssets>

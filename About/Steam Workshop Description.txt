@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.3.0[/i]
+[i][b]Mod Version:[/b] v1.3.1[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -36,6 +36,10 @@ Adds a customizable header overlay that displays at the start of the day.
 [*]Fixed Full Hour format (by Spagles).
 [*]Various error prevention fixes (by Spagles).
 [*]Added integrated Chinese Simplified translation (by ylc395)
+[/list]
+[h3]Mod Update v1.3.1[/h3]
+[list]
+[*]Fixed compatibility for RimWorld 1.5
 [/list]
 
 [hr]

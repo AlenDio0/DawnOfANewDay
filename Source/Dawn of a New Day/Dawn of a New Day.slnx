@@ -1,3 +1,8 @@
 <Solution>
+  <Configurations>
+    <BuildType Name="Debug-1.5" />
+    <BuildType Name="Debug-1.6" />
+    <BuildType Name="Release" />
+  </Configurations>
   <Project Path="Dawn of a New Day.csproj" />
 </Solution>
