@@ -96,7 +96,7 @@ namespace DawnNewDay
 
             TextGUIStyle.normal.textColor = OutlineColor;
 
-            float step = scaledOutlineThickness / 20f;
+            float step = scaledOutlineThickness / 5f;
             for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
             {
                 for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)

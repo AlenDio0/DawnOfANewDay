@@ -20,8 +20,10 @@ namespace DawnNewDay
         private string m_CachedUpperText;
         private string m_CachedBottomText;
 
-        private Vector2 m_CachedUpperSize;
-        private Vector2 m_CachedBottomSize;
+        private Rect m_CachedOverlayRect = Rect.zero;
+        private Rect m_CachedUpperRect = Rect.zero;
+        private Rect m_CachedLineRect = Rect.zero;
+        private Rect m_CachedBottomRect = Rect.zero;
 
         public DawnComponent(Game game)
             : base() => m_Game = game;
@@ -107,64 +109,18 @@ namespace DawnNewDay
             Color defaultColor = GUI.color;
             GUI.color = Color.white.WithAlpha(m_CurrentAlpha);
 
-            float rectWidth = Mathf.Max(m_CachedUpperSize.x, m_CachedBottomSize.x) * 1.2f;
-            float rectHeight = m_CachedUpperSize.y + m_CachedBottomSize.y + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
-
-            GUILayoutOption textWidth = GUILayout.Width(rectWidth);
-
-            Vector2 rectSize = new Vector2(rectWidth, rectHeight);
-            Rect overlaytRect = new Rect(settings.Offset - (rectSize / 2f), rectSize);
-
             if (settings.ShowHighlight)
-                Widgets.DrawHighlight(overlaytRect);
+                Widgets.DrawHighlight(m_CachedOverlayRect);
 
-            GUILayout.BeginArea(overlaytRect);
+            GUI.BeginGroup(m_CachedOverlayRect);
 
-            #region UpperText
+            settings.UpperTextStyle.Draw(m_CachedUpperRect, m_CachedUpperText, settings.Scale);
 
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
+            Widgets.DrawBoxSolid(m_CachedLineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
 
-            Rect upperRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedUpperText), settings.UpperTextStyle.TextGUIStyle, textWidth);
-            settings.UpperTextStyle.Draw(upperRect, m_CachedUpperText, settings.Scale);
+            settings.BottomTextStyle.Draw(m_CachedBottomRect, m_CachedBottomText, settings.Scale);
 
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
-            #endregion
-
-            #region Line
-
-            float scaledLinePadding = settings.LinePadding * settings.Scale;
-
-            GUILayout.Space(scaledLinePadding);
-
-            float scaledLineThickness = settings.LineThickness;
-            float lineWidth = rectWidth * (settings.LineWidthPercentage / 100f);
-            float lineX = (rectWidth - lineWidth) / 2f;
-
-            Rect lineSpace = GUILayoutUtility.GetRect(rectWidth, scaledLineThickness);
-            Rect lineRect = new Rect(lineSpace.x + lineX, lineSpace.y, lineWidth, scaledLineThickness);
-            Widgets.DrawBoxSolid(lineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
-
-            GUILayout.Space(scaledLinePadding);
-
-            #endregion
-
-            #region BottomText
-
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-            Rect bottomRect = GUILayoutUtility.GetRect(new GUIContent(m_CachedBottomText), settings.BottomTextStyle.TextGUIStyle, textWidth);
-            settings.BottomTextStyle.Draw(bottomRect, m_CachedBottomText, settings.Scale);
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
-            #endregion
-
-            GUILayout.EndArea();
+            GUI.EndGroup();
 
             GUI.color = defaultColor;
         }
@@ -181,8 +137,28 @@ namespace DawnNewDay
 
                 settings.UpdateText();
 
-                m_CachedUpperSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
-                m_CachedBottomSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+                #region Cached Rects
+
+                m_CachedUpperRect.size = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
+                m_CachedBottomRect.size = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+
+                m_CachedOverlayRect.width = Mathf.Max(m_CachedUpperRect.width, m_CachedBottomRect.width) * 1.2f;
+                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
+                m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
+
+                m_CachedUpperRect.x = (m_CachedOverlayRect.width - m_CachedUpperRect.size.x) / 2f;
+                m_CachedUpperRect.y = 0f;
+
+                float scaledLinePadding = settings.LinePadding * settings.Scale;
+                m_CachedLineRect.width = m_CachedOverlayRect.width * (settings.LineWidthPercentage / 100f);
+                m_CachedLineRect.height = settings.LineThickness;
+                m_CachedLineRect.x = (m_CachedOverlayRect.width - m_CachedLineRect.width) / 2f;
+                m_CachedLineRect.y = m_CachedUpperRect.size.y + scaledLinePadding;
+
+                m_CachedBottomRect.x = (m_CachedOverlayRect.width - m_CachedBottomRect.size.x) / 2f;
+                m_CachedBottomRect.y = m_CachedLineRect.yMax + scaledLinePadding;
+
+                #endregion
 
                 if (settings.SoundEnabled && settings.Sound != null)
                 {
