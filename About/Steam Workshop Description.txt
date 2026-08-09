@@ -41,6 +41,10 @@ Adds a customizable header overlay that displays at the start of the day.
 [list]
 [*]Fixed compatibility for RimWorld 1.5
 [/list]
+[h3]Mod Update v1.3.2[/h3]
+[list]
+[*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame)
+[/list]
 
 [hr]
 [h1]FEATURES[/h1]
