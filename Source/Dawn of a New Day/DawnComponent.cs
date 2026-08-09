@@ -127,6 +127,9 @@ namespace DawnNewDay
 
         private void TriggerDawnOfANewDay()
         {
+            if (m_Game.CurrentMap == null)
+                return;
+
             try
             {
                 var settings = DawnMod.Settings;
