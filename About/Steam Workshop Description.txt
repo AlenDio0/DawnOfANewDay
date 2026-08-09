@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.3.1[/i]
+[i][b]Mod Version:[/b] v1.3.3[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -39,11 +39,15 @@ Adds a customizable header overlay that displays at the start of the day.
 [/list]
 [h3]Mod Update v1.3.1[/h3]
 [list]
-[*]Fixed compatibility for RimWorld 1.5
+[*]Fixed compatibility for RimWorld 1.5 .
 [/list]
 [h3]Mod Update v1.3.2[/h3]
 [list]
-[*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame)
+[*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
+[/list]
+[h3]Mod Update v1.3.2[/h3]
+[list]
+[*]Fixed compatibility for Readable Numbers.
 [/list]
 
 [hr]
@@ -171,7 +175,7 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Clone the repository in your device.
 [*]Look for "Languages" folder.
 [*]Copy the path from "English" and rename it into your language.
-[*]Go into "<YourLanguage>\Keyed.Misc.xml" and translate the file in your own language.
+[*]Go into "<YourLanguage>\Keyed\Misc.xml" and translate the file in your own language.
 [*]Finally, commit your changes and create a Pull Request into the main branch of the repository.
 [/olist]
 

@@ -139,10 +139,10 @@ namespace DawnNewDay
 
                 #region Cached Rects
 
-                m_CachedUpperRect.size = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
-                m_CachedBottomRect.size = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+                m_CachedUpperRect.size = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText)) * 1.2f;
+                m_CachedBottomRect.size = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText)) * 1.2f;
 
-                m_CachedOverlayRect.width = Mathf.Max(m_CachedUpperRect.width, m_CachedBottomRect.width) * 1.2f;
+                m_CachedOverlayRect.width = Mathf.Max(m_CachedUpperRect.width, m_CachedBottomRect.width);
                 m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
                 m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
