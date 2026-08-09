@@ -35,7 +35,7 @@ Adds a customizable header overlay that displays at the start of the day.
 [*]Updated Translations IDs (any outdated translation needs a fix!).
 [*]Fixed Full Hour format (by Spagles).
 [*]Various error prevention fixes (by Spagles).
-[*]Added integrated Chinese Simplified translation (by ylc395)
+[*]Added integrated Chinese Simplified translation (by ylc395).
 [/list]
 [h3]Mod Update v1.3.1[/h3]
 [list]
@@ -45,7 +45,15 @@ Adds a customizable header overlay that displays at the start of the day.
 [list]
 [*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
 [/list]
+[h3]Mod Update v1.3.1[/h3]
+[list]
+[*]Fixed compatibility for RimWorld 1.5 .
+[/list]
 [h3]Mod Update v1.3.2[/h3]
+[list]
+[*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
+[/list]
+[h3]Mod Update v1.3.3[/h3]
 [list]
 [*]Fixed compatibility for Readable Numbers.
 [/list]

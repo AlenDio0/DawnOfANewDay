@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -9,6 +10,7 @@ namespace DawnNewDay
     public class DawnComponent : GameComponent
     {
         private readonly Game m_Game;
+        private readonly DawnFormatter m_FormatManager;
 
         private int m_LastTriggeredYear = -1;
         private int m_LastTriggeredDay = -1;
@@ -25,8 +27,14 @@ namespace DawnNewDay
         private Rect m_CachedLineRect = Rect.zero;
         private Rect m_CachedBottomRect = Rect.zero;
 
+        private static readonly Regex FirstColorTagRegex = new Regex(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         public DawnComponent(Game game)
-            : base() => m_Game = game;
+            : base()
+        {
+            m_Game = game;
+            m_FormatManager = new DawnFormatter(m_Game);
+        }
 
         public override void GameComponentTick()
         {
@@ -114,11 +122,13 @@ namespace DawnNewDay
 
             GUI.BeginGroup(m_CachedOverlayRect);
 
-            settings.UpperTextStyle.Draw(m_CachedUpperRect, m_CachedUpperText, settings.Scale);
+            string upperText = WithAlphaToRichText(m_CachedUpperText);
+            settings.UpperTextStyle.Draw(m_CachedUpperRect, upperText, settings.Scale);
 
             Widgets.DrawBoxSolid(m_CachedLineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
 
-            settings.BottomTextStyle.Draw(m_CachedBottomRect, m_CachedBottomText, settings.Scale);
+            string bottomText = WithAlphaToRichText(m_CachedBottomText);
+            settings.BottomTextStyle.Draw(m_CachedBottomRect, bottomText, settings.Scale);
 
             GUI.EndGroup();
 
@@ -134,9 +144,9 @@ namespace DawnNewDay
             {
                 var settings = DawnMod.Settings;
 
-                FormatContext context = CreateFormatContext();
-                m_CachedUpperText = FormatLabel(settings.UpperTextFormat, context);
-                m_CachedBottomText = FormatLabel(settings.BottomTextFormat, context);
+                FormatContext context = m_FormatManager.CreateFormatContext(settings.StartsAtZero);
+                m_CachedUpperText = context.FormatText(settings.UpperTextFormat);
+                m_CachedBottomText = context.FormatText(settings.BottomTextFormat);
 
                 settings.UpdateText();
 
@@ -181,55 +191,23 @@ namespace DawnNewDay
             }
         }
 
-        private FormatContext CreateFormatContext()
+        private string WithAlphaToRichText(string text)
         {
-            var settings = DawnMod.Settings;
+            if (text.NullOrEmpty())
+                return text;
 
-            long absTicks = m_Game.tickManager.TicksAbs;
-            Vector2 location = m_Game.World.grid.LongLatOf(m_Game.CurrentMap.Tile);
-
-            return new FormatContext
+            return FirstColorTagRegex.Replace(text, match =>
             {
-                Day = (MapDayRelative(settings.DayRelativeTo, absTicks, location.x) + (settings.StartsAtZero ? 0 : 1)).ToStringSafe(),
-                Year = GenDate.Year(absTicks, location.x).ToStringSafe(),
-                Quadrum = GenDate.Quadrum(absTicks, location.x).Label(),
-                Season = GenDate.Season(absTicks, location).LabelCap(),
-                Hour = GenDate.HourOfDay(absTicks, location.x).ToStringSafe()
-            };
-        }
+                string colorString = match.Groups["color"].Value.Trim();
 
-        private string FormatLabel(string format, FormatContext context)
-        {
-            if (format.NullOrEmpty())
-                return "";
+                if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+                {
+                    color.a *= m_CurrentAlpha;
+                    return $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>";
+                }
 
-            foreach ((string token, var replacer) in DawnData.FormatTokens)
-            {
-                if (format.Contains(token))
-                    format = format.Replace(token, replacer?.Invoke(context));
-            }
-
-            return format;
-        }
-
-        private int MapDayRelative(DayRelative dayRelative, long absTicks, float longitude)
-        {
-            switch (dayRelative)
-            {
-                case DayRelative.Settle:
-                    return GenDate.DaysPassed + (GenDate.HourOfDay(absTicks, longitude) >= 6 ? 0 : 1);
-                case DayRelative.Quadrum:
-                    return GenDate.DayOfQuadrum(absTicks, longitude);
-                case DayRelative.Season:
-                    return GenDate.DayOfSeason(absTicks, longitude);
-                case DayRelative.Year:
-                    return GenDate.DayOfYear(absTicks, longitude);
-
-                default:
-                    break;
-            }
-
-            return 0;
+                return match.Value;
+            });
         }
     }
 }

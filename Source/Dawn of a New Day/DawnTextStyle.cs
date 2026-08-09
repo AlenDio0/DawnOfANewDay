@@ -1,6 +1,7 @@
 ﻿using DawnNewDay.Dialogs;
 using DawnNewDay.Utils;
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 
@@ -20,16 +21,22 @@ namespace DawnNewDay
         public float OutlineThickness = 1f;
         public Color OutlineColor = Color.black;
 
+        private static readonly Regex WholeColorTagRegex = new Regex(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         public DawnTextStyle()
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
             TextGUIStyle.font = null;
+
+            TextGUIStyle.richText = true;
         }
 
         public DawnTextStyle(int fontSize, bool bold)
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
             TextGUIStyle.font = null;
+
+            TextGUIStyle.richText = true;
 
             FontSize = fontSize;
             Bold = bold;
@@ -96,13 +103,15 @@ namespace DawnNewDay
 
             TextGUIStyle.normal.textColor = OutlineColor;
 
+            string outlineText = WholeColorTagRegex.Replace(text, "");
+
             float step = scaledOutlineThickness / 5f;
             for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
             {
                 for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
                 {
                     Vector2 offset = new Vector2(x, y);
-                    GUI.Label(new Rect(rect.position + offset, rect.size), text, TextGUIStyle);
+                    GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
                 }
             }
         }

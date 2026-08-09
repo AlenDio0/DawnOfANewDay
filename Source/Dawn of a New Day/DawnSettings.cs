@@ -2,20 +2,11 @@
 using DawnNewDay.Utils;
 using RimWorld;
 using System;
-using System.Linq;
 using UnityEngine;
 using Verse;
 
 namespace DawnNewDay
 {
-    public enum DayRelative
-    {
-        Settle,
-        Quadrum,
-        Season,
-        Year
-    }
-
     public class DawnSettings : ModSettings
     {
         #region Header
@@ -69,10 +60,10 @@ namespace DawnNewDay
 
         bool m_TextSection = false;
 
-        bool m_TextUpperSection = true;
+        bool m_TextUpperSection = false;
         public DawnTextStyle UpperTextStyle = new DawnTextStyle(40, true);
 
-        bool m_TextBottomSection = true;
+        bool m_TextBottomSection = false;
         public DawnTextStyle BottomTextStyle = new DawnTextStyle();
 
         #endregion
@@ -108,7 +99,6 @@ namespace DawnNewDay
         public bool StartsAtZero = DawnDefault.StartsAtZero;
         public int ShowEveryXDays = DawnDefault.ShowEveryXDays;
         public int TriggerHour = DawnDefault.TriggerHour;
-        public DayRelative DayRelativeTo = DawnDefault.DayRelativeTo;
 
         #endregion
 
@@ -212,7 +202,7 @@ namespace DawnNewDay
 
             if (listing.ButtonText(DawnTranslation.Label_OffsetPresets))
             {
-                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnData.OffsetPresets, item => new FloatMenuOption(item.Name, () =>
+                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnTranslation.OffsetPresets, item => new FloatMenuOption(item.Name, () =>
                     Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Preset));
                 Find.WindowStack.Add(offsetPresets);
             }
@@ -246,20 +236,28 @@ namespace DawnNewDay
 
         private void ShowLabelFormatSection(Listing_Standard listing)
         {
-            listing.LabeledTextEntry(DawnTranslation.Label_UpperTextFormat, ref UpperTextFormat, 0.5f);
+            listing.Label(DawnTranslation.Label_UpperTextFormat);
+            UpperTextFormat = listing.TextEntry(UpperTextFormat, 2);
 
             listing.Gap();
 
-            listing.LabeledTextEntry(DawnTranslation.Label_BottomTextFormat, ref BottomTextFormat, 0.5f);
+            listing.Label(DawnTranslation.Label_BottomTextFormat);
+            BottomTextFormat = listing.TextEntry(BottomTextFormat, 2);
 
             listing.Gap();
 
-            Color defaultColor = GUI.color;
-            GUI.color = new Color(1f, 1f, 1f, 0.75f);
+            if (listing.ButtonText(DawnTranslation.Label_LabelFormatPresets))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, DawnTranslation.Hints_LabelFormatPreset));
 
-            listing.Label(DawnTranslation.Hint_LabelFormat);
+            listing.Gap();
 
-            GUI.color = defaultColor;
+            Rect hintsRect = listing.GetRect(30f);
+
+            if (Widgets.ButtonText(hintsRect.LeftHalf(), DawnTranslation.Label_LabelFormatHints))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, DawnTranslation.Hints_LabelFormat));
+
+            if (Widgets.ButtonText(hintsRect.RightHalf(), DawnTranslation.Label_RichTextHints))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
         }
 
         private void ShowSoundSection(Listing_Standard listing)
@@ -285,29 +283,6 @@ namespace DawnNewDay
             TriggerHour = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_TriggerHour} ({TriggerHour:00}h)", TriggerHour, 0f, 23f, 0.35f));
 
             listing.Gap();
-
-            GameFont defaultFont = Text.Font;
-            Text.Font = GameFont.Medium;
-
-            listing.Label(DawnTranslation.Label_DayRelativeTo);
-
-            Text.Font = defaultFont;
-
-            Rect radioRect = listing.GetRect(30f);
-
-            var dayRelativeRadio = Enum.GetValues(typeof(DayRelative)).Cast<DayRelative>().ToArray();
-            float itemWidth = radioRect.width / dayRelativeRadio.Length;
-
-            for (int i = 0; i < dayRelativeRadio.Length; i++)
-            {
-                DayRelative dayRelative = dayRelativeRadio[i];
-
-                Rect buttonRect = new Rect(radioRect.x + (i * itemWidth), radioRect.y, itemWidth, radioRect.height).MiddlePart(0.5f, 1f);
-
-                TooltipHandler.TipRegion(buttonRect, DawnTranslation.SettingsTooltip_DayRelativeTo.TryGetValue(dayRelative, ""));
-                if (Widgets.RadioButtonLabeled(buttonRect, DawnTranslation.Label_DayRelative.TryGetValue(dayRelative, ""), DayRelativeTo == dayRelative))
-                    DayRelativeTo = dayRelative;
-            }
         }
 
         public void UpdateText()
@@ -372,8 +347,8 @@ namespace DawnNewDay
 
                 #region Label Format Section
 
-                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat", "DAY {d}");
-                Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat", "YEAR {Y} | {Q} | {S}");
+                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat1", DawnDefault.UpperTextFormat);
+                Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat1", DawnDefault.BottomTextFormat);
 
                 #endregion
 
@@ -392,7 +367,6 @@ namespace DawnNewDay
                 Scribe_Values.Look(ref StartsAtZero, "StartsAtZero", DawnDefault.StartsAtZero);
                 Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", DawnDefault.ShowEveryXDays);
                 Scribe_Values.Look(ref TriggerHour, "TriggerHour", DawnDefault.TriggerHour);
-                Scribe_Values.Look(ref DayRelativeTo, "DayRelativeTo", DawnDefault.DayRelativeTo);
 
                 #endregion
             }

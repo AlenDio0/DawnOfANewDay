@@ -59,12 +59,66 @@
 	
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
+
+	<DawnNewDay.Label_LabelFormatPresets>Label Format Presets</DawnNewDay.Label_LabelFormatPresets>
+	<DawnNewDay.Label_LabelFormatHints>Label Format Hints</DawnNewDay.Label_LabelFormatHints>
+	<DawnNewDay.Label_RichTextHints>Rich Text Hints</DawnNewDay.Label_RichTextHints>
+
+	<DawnNewDay.Hint_Preset_DayAndHour>Day and Hour [eg. DAY 5 06:00]</DawnNewDay.Hint_Preset_DayAndHour>
+	<DawnNewDay.Hint_Preset_Date>Date [eg. 2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
+	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperature with color [eg. -10C -> Ice, 50C -> Orange]</DawnNewDay.Hint_Preset_TemperatureWithColor>
+	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the desert]</DawnNewDay.Hint_Preset_SomewherePlace>
 	
-	<DawnNewDay.Hint_DayFormat>{D/d} => Full Day</DawnNewDay.Hint_DayFormat>
-	<DawnNewDay.Hint_YearFormat>{Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]</DawnNewDay.Hint_YearFormat>
-	<DawnNewDay.Hint_QuadrumFormat>{Q/q} => CAPS Quadrum / Quadrum</DawnNewDay.Hint_QuadrumFormat>
-	<DawnNewDay.Hint_SeasonFormat>{S/s} => CAPS Season / Season</DawnNewDay.Hint_SeasonFormat>
-	<DawnNewDay.Hint_HourFormat>{H/h} => Full Hour [eg. 06] / Hour [eg. 6]</DawnNewDay.Hint_HourFormat>
+	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
+	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
+	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
+	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
+	
+	<DawnNewDay.Hint_Format_DAY_SETTLE>Day relative to the day the colonist settled</DawnNewDay.Hint_Format_DAY_SETTLE>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM>Day relative to the quadrum (From DAY 1 to DAY 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>Day relative to the quadrum (From DAY 1 to DAY 15) [eg. 3rd, 12th]</DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>
+	<DawnNewDay.Hint_Format_DAY_SEASON>Day relative to the season</DawnNewDay.Hint_Format_DAY_SEASON>
+	<DawnNewDay.Hint_Format_DAY_YEAR>Day relative to the year (From DAY 1 to DAY 60)</DawnNewDay.Hint_Format_DAY_YEAR>
+	
+	<DawnNewDay.Hint_Format_YEAR>Full Year [eg. 5500]</DawnNewDay.Hint_Format_YEAR>
+	<DawnNewDay.Hint_Format_YEAR_D2>2-Digit Year [eg. 00]</DawnNewDay.Hint_Format_YEAR_D2>
+	
+	<DawnNewDay.Hint_Format_QUADRUM>Quadrum [eg. Aprimay]</DawnNewDay.Hint_Format_QUADRUM>
+	<DawnNewDay.Hint_Format_SEASON>Season [eg. Spring]</DawnNewDay.Hint_Format_SEASON>
+
+	<DawnNewDay.Hint_Format_HOUR>Hour [eg. 6, 12]</DawnNewDay.Hint_Format_HOUR>
+	<DawnNewDay.Hint_Format_HOUR_D2>2-Digit Hour [eg. 06, 12]</DawnNewDay.Hint_Format_HOUR_D2>
+
+	<DawnNewDay.Hint_Format_WEATHER>Weather [eg. Clear]</DawnNewDay.Hint_Format_WEATHER>
+
+	<DawnNewDay.Hint_Format_TEMPERATURE>Temperature [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Intended use for Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+
+	<DawnNewDay.Hint_Format_WORLD>World Name [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
+	<DawnNewDay.Hint_Format_BIOME>Biome Type [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
+	<DawnNewDay.Hint_Format_TERRAIN>Terrain Type [eg. Small Hills]</DawnNewDay.Hint_Format_TERRAIN>
+
+	<DawnNewDay.Hint_Format_ELEVATION>Terrain Elevation [eg. 467m]</DawnNewDay.Hint_Format_ELEVATION>
+	<DawnNewDay.Hint_Format_ELEVATION_KM>Terrain Elevation in km [eg. 1.21km]</DawnNewDay.Hint_Format_ELEVATION_KM>
+	
+	<DawnNewDay.Hint_Format_POLLUTION>Pollution Percentage [eg. 69.1%]</DawnNewDay.Hint_Format_POLLUTION>
+
+	<DawnNewDay.Hint_Format_FACTION>Faction Name [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
+	<DawnNewDay.Hint_Format_SETTLEMENT>Settlement Name [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
+
+	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>General Font Size of Upper Text</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
+	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>General Font Size of Bottom Text</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
+	
+	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
+	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
+
+	<DawnNewDay.Hint_RichText_Bold>Adds bold style to the text</DawnNewDay.Hint_RichText_Bold>
+	<DawnNewDay.Hint_RichText_Italic>Adds italic style to the text</DawnNewDay.Hint_RichText_Italic>
+	<DawnNewDay.Hint_RichText_FontSize>Changes the font size of the text</DawnNewDay.Hint_RichText_FontSize>
+
+	<DawnNewDay.Hint_RichText_Title>Capitalizes the first letter of every word [eg. fORt zaNCudo -> Fort Zancudo]</DawnNewDay.Hint_RichText_Title>
+	<DawnNewDay.Hint_RichText_Upper>Converts all text to uppercase [eg. Aprimay -> APRIMAY]</DawnNewDay.Hint_RichText_Upper>
+	<DawnNewDay.Hint_RichText_Lower>Converts all text to lowercase [eg. Spring -> spring]</DawnNewDay.Hint_RichText_Lower>
 
 	<!-- Sound Section -->
 	<DawnNewDay.Section_Sound>Sound</DawnNewDay.Section_Sound>
@@ -79,17 +133,5 @@
 	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
-
-	<DawnNewDay.Label_DayRelativeTo>Day Relative</DawnNewDay.Label_DayRelativeTo>
-
-	<DawnNewDay.Label_DayRelativeSettle>Settle</DawnNewDay.Label_DayRelativeSettle>
-	<DawnNewDay.Label_DayRelativeQuadrum>Quadrum</DawnNewDay.Label_DayRelativeQuadrum>
-	<DawnNewDay.Label_DayRelativeSeason>Season</DawnNewDay.Label_DayRelativeSeason>
-	<DawnNewDay.Label_DayRelativeYear>Year</DawnNewDay.Label_DayRelativeYear>
-
-	<DawnNewDay.Tooltip_Settle>Day will be relative to the day the colonists settled.</DawnNewDay.Tooltip_Settle>
-	<DawnNewDay.Tooltip_Quadrum>Day will be relative to the quadrum resetting itself after 15 days.</DawnNewDay.Tooltip_Quadrum>
-	<DawnNewDay.Tooltip_Season>Day will be relative to the season resetting itself after it ends.</DawnNewDay.Tooltip_Season>
-	<DawnNewDay.Tooltip_Year>Day will be relative to the year resetting itself after 60 days.</DawnNewDay.Tooltip_Year>
 
 </LanguageData>

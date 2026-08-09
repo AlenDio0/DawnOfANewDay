@@ -42,7 +42,7 @@
 	<DawnNewDay.Section_Text>Testo</DawnNewDay.Section_Text>
 	
 	<DawnNewDay.Section_UpperText>Testo Superiore</DawnNewDay.Section_UpperText>
-	<DawnNewDay.Section_BottomText>Testo Inferiore</DawnNewDay.Section_BottomTextSection>
+	<DawnNewDay.Section_BottomText>Testo Inferiore</DawnNewDay.Section_BottomText>
 	
 	<DawnNewDay.Label_DefaultFont>Font predefinito di gioco</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Scegli il font</DawnNewDay.Label_FontFamily>

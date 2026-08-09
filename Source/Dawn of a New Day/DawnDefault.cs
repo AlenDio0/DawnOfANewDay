@@ -17,7 +17,7 @@ namespace DawnNewDay
 
         public static bool ShowHighlight => true;
 
-        public static float Scale => 4f;
+        public static float Scale => 2f;
         public static Vector2 Offset => new Vector2(UI.screenWidth, UI.screenHeight) / 2f;
 
         public static float LineWidthPercentage => 80f;
@@ -37,8 +37,8 @@ namespace DawnNewDay
 
         #region Label Format Section
 
-        public static string UpperTextFormat => "DAY {d}";
-        public static string BottomTextFormat => "YEAR {Y} | {Q} | {S}";
+        public static string UpperTextFormat => "DAY {DAY_SETTLE} <size={UPPER_FONTSIZE / 1.5}>{HOUR_D2}:00 | <color={TEMPERATURE_COLOR}>{TEMPERATURE}</color></size>";
+        public static string BottomTextFormat => "YEAR {YEAR} | <upper>{QUADRUM}</upper> | <upper>{SEASON}</upper>";
 
         #endregion
 

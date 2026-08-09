@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 
 namespace DawnNewDay
@@ -27,6 +28,19 @@ namespace DawnNewDay
 
         public static string Label_Offset => "DawnNewDay.Label_Offset".Translate();
         public static string Label_OffsetPresets => "DawnNewDay.Label_OffsetPresets".Translate();
+
+        public static (TaggedString Name, Vector2 Preset)[] OffsetPresets => new[]
+        {
+            ("DawnNewDay.Offset_MiddleTop".Translate(), new Vector2(0.5f, 0.2f)),
+            ("DawnNewDay.Offset_MiddleBottom".Translate(), new Vector2(0.5f, 0.8f)),
+            ("DawnNewDay.Offset_MiddleMiddle".Translate(), new Vector2(0.5f, 0.5f)),
+            ("DawnNewDay.Offset_LeftMiddle".Translate(), new Vector2(0.2f, 0.5f)),
+            ("DawnNewDay.Offset_RightMiddle".Translate(), new Vector2(0.8f, 0.5f)),
+            ("DawnNewDay.Offset_LeftTop".Translate(), new Vector2(0.2f, 0.2f)),
+            ("DawnNewDay.Offset_RightTop".Translate(), new Vector2(0.8f, 0.2f)),
+            ("DawnNewDay.Offset_LeftBottom".Translate(), new Vector2(0.2f, 0.8f)),
+            ("DawnNewDay.Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
+        };
 
         public static string Label_LineWidthPercentage => "DawnNewDay.Label_LineWidthPercentage".Translate();
         public static string Label_LineThickness => "DawnNewDay.Label_LineThickness".Translate();
@@ -73,12 +87,75 @@ namespace DawnNewDay
         public static string Label_UpperTextFormat => "DawnNewDay.Label_UpperTextFormat".Translate();
         public static string Label_BottomTextFormat => "DawnNewDay.Label_BottomTextFormat".Translate();
 
-        public static string Hint_LabelFormat =>
-            "DawnNewDay.Hint_DayFormat".Translate() + "\n" +
-            "DawnNewDay.Hint_YearFormat".Translate() + "\n" +
-            "DawnNewDay.Hint_QuadrumFormat".Translate() + "\n" +
-            "DawnNewDay.Hint_SeasonFormat".Translate() + "\n" +
-            "DawnNewDay.Hint_HourFormat".Translate();
+        public static string Label_LabelFormatPresets => "DawnNewDay.Label_LabelFormatPresets".Translate();
+        public static string Label_LabelFormatHints => "DawnNewDay.Label_LabelFormatHints".Translate();
+        public static string Label_RichTextHints => "DawnNewDay.Label_RichTextHints".Translate();
+
+        public static Dictionary<string, string> Hints_LabelFormatPreset => new Dictionary<string, string>
+        {
+            { "DAY {DAY_SETTLE} <size=30>{HOUR_D2}:00</size>", "DawnNewDay.Hint_Preset_DayAndHour".Translate() },
+            { "{DAY_QUADRUM_ORDINAL} of {QUADRUM}, {YEAR}", "DawnNewDay.Hint_Preset_Date".Translate() },
+            { "<color={TEMPERATURE_COLOR}>{TEMPERATURE}</color>", "DawnNewDay.Hint_Preset_TemperatureWithColor".Translate() },
+            { "{SETTLEMENT} Y{YEAR}, somewhere in the <lower>{BIOME}</lower>", "DawnNewDay.Hint_Preset_SomewherePlace".Translate() },
+        };
+
+        public static Dictionary<string, string> Hints_LabelFormat => new Dictionary<string, string>
+        {
+            { "{VALUE1 + VALUE2}", "DawnNewDay.Hint_Format_Addition".Translate() },
+            { "{VALUE1 - VALUE2}", "DawnNewDay.Hint_Format_Subtraction".Translate() },
+            { "{VALUE1 * VALUE2}", "DawnNewDay.Hint_Format_Multiplication".Translate() },
+            { "{VALUE1 / VALUE2}", "DawnNewDay.Hint_Format_Division".Translate() },
+
+            { "{DAY_SETTLE}", "DawnNewDay.Hint_Format_DAY_SETTLE".Translate() },
+            { "{DAY_QUADRUM}", "DawnNewDay.Hint_Format_DAY_QUADRUM".Translate() },
+            { "{DAY_SEASON}", "DawnNewDay.Hint_Format_DAY_SEASON".Translate() },
+            { "{DAY_YEAR}", "DawnNewDay.Hint_Format_DAY_YEAR".Translate() },
+
+            { "{DAY_QUADRUM_ORDINAL}", "DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL".Translate() },
+
+            { "{YEAR}", "DawnNewDay.Hint_Format_YEAR".Translate() },
+            { "{YEAR_D2}", "DawnNewDay.Hint_Format_YEAR_D2".Translate() },
+
+            { "{QUADRUM}", "DawnNewDay.Hint_Format_QUADRUM".Translate() },
+            { "{SEASON}", "DawnNewDay.Hint_Format_SEASON".Translate() },
+
+            { "{HOUR}", "DawnNewDay.Hint_Format_HOUR".Translate() },
+            { "{HOUR_D2}", "DawnNewDay.Hint_Format_HOUR_D2".Translate() },
+
+            { "{WEATHER}", "DawnNewDay.Hint_Format_WEATHER".Translate() },
+
+            { "{TEMPERATURE}", "DawnNewDay.Hint_Format_TEMPERATURE".Translate() },
+            { "{TEMPERATURE_COLOR}", "DawnNewDay.Hint_Format_TEMPERATURE_COLOR".Translate() },
+
+            { "{WORLD}", "DawnNewDay.Hint_Format_WORLD".Translate() },
+            { "{BIOME}", "DawnNewDay.Hint_Format_BIOME".Translate() },
+            { "{TERRAIN}", "DawnNewDay.Hint_Format_TERRAIN".Translate() },
+
+            { "{ELEVATION}", "DawnNewDay.Hint_Format_ELEVATION".Translate() },
+            { "{ELEVATION_KM}", "DawnNewDay.Hint_Format_ELEVATION_KM".Translate() },
+
+            { "{POLLUTION}", "DawnNewDay.Hint_Format_POLLUTION".Translate() },
+
+            { "{FACTION}", "DawnNewDay.Hint_Format_FACTION".Translate() },
+            { "{SETTLEMENT}", "DawnNewDay.Hint_Format_SETTLEMENT".Translate() },
+
+            { "UPPER_FONTSIZE", "DawnNewDay.Hint_Format_UPPER_FONTSIZE".Translate() },
+            { "BOTTOM_FONTSIZE", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
+        };
+
+        public static Dictionary<string, string> Hints_RichText => new Dictionary<string, string>
+        {
+            { "<color=COLOR_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_Color".Translate() },
+            { "<color=#RRGGBB_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_ColorRGB".Translate() },
+
+            { "<b>TEXT_HERE</b>", "DawnNewDay.Hint_RichText_Bold".Translate() },
+            { "<i>TEXT_HERE</i>", "DawnNewDay.Hint_RichText_Italic".Translate() },
+            { "<size=FONTSIZE_HERE>TEXT_HERE</size>", "DawnNewDay.Hint_RichText_FontSize".Translate() },
+
+            { "<title>TEXT_HERE</title>", "DawnNewDay.Hint_RichText_Title".Translate() },
+            { "<upper>TEXT_HERE</upper>", "DawnNewDay.Hint_RichText_Upper".Translate() },
+            { "<lower>TEXT_HERE</lower>", "DawnNewDay.Hint_RichText_Lower".Translate() },
+        };
 
         #endregion
 
@@ -100,24 +177,6 @@ namespace DawnNewDay
         public static string Label_StartsAtZero => "DawnNewDay.Label_StartsAtZero".Translate();
         public static string Label_ShowEveryXDays => "DawnNewDay.Label_ShowEveryXDays".Translate();
         public static string Label_TriggerHour => "DawnNewDay.Label_TriggerHour".Translate();
-
-        public static string Label_DayRelativeTo => "DawnNewDay.Label_DayRelativeTo".Translate();
-
-        public static Dictionary<DayRelative, string> Label_DayRelative => new Dictionary<DayRelative, string>
-        {
-            { DayRelative.Settle, "DawnNewDay.Label_DayRelativeSettle".Translate() },
-            { DayRelative.Quadrum, "DawnNewDay.Label_DayRelativeQuadrum".Translate() },
-            { DayRelative.Season, "DawnNewDay.Label_DayRelativeSeason".Translate() },
-            { DayRelative.Year, "DawnNewDay.Label_DayRelativeYear".Translate() }
-        };
-
-        public static Dictionary<DayRelative, string> SettingsTooltip_DayRelativeTo => new Dictionary<DayRelative, string>
-        {
-            { DayRelative.Settle, "DawnNewDay.Tooltip_Settle".Translate() },
-            { DayRelative.Quadrum, "DawnNewDay.Tooltip_Quadrum".Translate() },
-            { DayRelative.Season, "DawnNewDay.Tooltip_Season".Translate() },
-            { DayRelative.Year, "DawnNewDay.Tooltip_Year".Translate() }
-        };
 
         #endregion
     }
