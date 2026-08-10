@@ -37,7 +37,7 @@ namespace DawnNewDay
 
         #region Label Format Section
 
-        public static string UpperTextFormat => "DAY {DAY_SETTLE} <size={UPPER_FONTSIZE / 1.5}>{HOUR_D2}:00 | <color={TEMPERATURE_COLOR}>{TEMPERATURE}</color></size>";
+        public static string UpperTextFormat => "DAY {DAY_SETTLE} <size={UPPER_FONTSIZE / 2}>{HOUR_D2}:00 | <color={TEMPERATURE_COLOR}>{TEMPERATURE}</color></size>";
         public static string BottomTextFormat => "YEAR {YEAR} | <upper>{QUADRUM}</upper> | <upper>{SEASON}</upper>";
 
         #endregion

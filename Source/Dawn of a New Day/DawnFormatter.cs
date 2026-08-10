@@ -63,7 +63,7 @@ namespace DawnNewDay
             return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
         }
 
-        public string Terrain => Map.TileInfo.HillinessLabel.GetLabel();
+        public string Terrain => Map.TileInfo.hilliness.GetLabel();
         public float Elevation => Map.TileInfo.elevation;
         public float Pollution => Map.TileInfo.pollution;
 
@@ -154,8 +154,8 @@ namespace DawnNewDay
             { "FACTION", context => context.FactionName },
             { "SETTLEMENT", context => context.SettlementName },
 
-            { "UPPER_FONTSIZE", _ => Settings.UpperTextStyle.FontSize.ToString() },
-            { "BOTTOM_FONTSIZE", _ => Settings.BottomTextStyle.FontSize.ToString() },
+            { "UPPER_FONTSIZE", _ => (Settings.UpperTextStyle.FontSize * Settings.Scale).ToString() },
+            { "BOTTOM_FONTSIZE", _ => (Settings.BottomTextStyle.FontSize * Settings.Scale).ToString() },
         };
 
         private static readonly Regex ExtraRichTextTagRegex = new Regex(@"<(?<tag>\w+)>(?<content>.*?)</\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);

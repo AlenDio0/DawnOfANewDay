@@ -60,11 +60,65 @@
 	<DawnNewDay.Label_UpperTextFormat>Formattazione Testo Superiore</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Formattazione Testo Inferiore</DawnNewDay.Label_BottomTextFormat>
 	
-	<DawnNewDay.Hint_DayFormat>{D/d} => Giorno</DawnNewDay.Hint_DayFormat>
-	<DawnNewDay.Hint_YearFormat>{Y/y} => Anno intero [eg. 5500] / Anno a 2-cifre [eg. 00]</DawnNewDay.Hint_YearFormat>
-	<DawnNewDay.Hint_QuadrumFormat>{Q/q} => Quadrum in CAPS / Quadrum</DawnNewDay.Hint_QuadrumFormat>
-	<DawnNewDay.Hint_SeasonFormat>{S/s} => Stagione in CAPS / Stagione</DawnNewDay.Hint_SeasonFormat>
-	<DawnNewDay.Hint_HourFormat>{H/h} => Ore intere [eg. 06] / Ore [eg. 6]</DawnNewDay.Hint_HourFormat>
+	<DawnNewDay.Label_LabelFormatPresets>Presets di Formattazione</DawnNewDay.Label_LabelFormatPresets>
+	<DawnNewDay.Label_LabelFormatHints>Consigli per Formattazione</DawnNewDay.Label_LabelFormatHints>
+	<DawnNewDay.Label_RichTextHints>Consigli per Rich Text</DawnNewDay.Label_RichTextHints>
+
+	<DawnNewDay.Hint_Preset_DayAndHour>Giorno e Ora [eg. GIORNO 5 06:00]</DawnNewDay.Hint_Preset_DayAndHour>
+	<DawnNewDay.Hint_Preset_Date>Data [eg. 2° of Giugosto, 5500]</DawnNewDay.Hint_Preset_Date>
+	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperatura con colore [eg. -10C -> Ghiaccio, 50C -> Arancione]</DawnNewDay.Hint_Preset_TemperatureWithColor>
+	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the deserto]</DawnNewDay.Hint_Preset_SomewherePlace>
+
+	<DawnNewDay.Hint_Format_Addition>Addizione per formati/valori [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
+	<DawnNewDay.Hint_Format_Subtraction>Sottrazione per formati/valori [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
+	<DawnNewDay.Hint_Format_Multiplication>Moltiplicazione per formati/valori [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
+	<DawnNewDay.Hint_Format_Division>Divisione per formati/valori [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
+
+	<DawnNewDay.Hint_Format_DAY_SETTLE>Giorno relativo a quando sono arrivati i coloni</DawnNewDay.Hint_Format_DAY_SETTLE>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM>Giorno relativo al quadrum (Dal GIORNO 1 al GIORNO 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>Giorno relativo al quadrum (Dal GIORNO 1 al GIORNO 15) [eg. 3°, 12°]</DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>
+	<DawnNewDay.Hint_Format_DAY_SEASON>Giorno relativo alla stagione</DawnNewDay.Hint_Format_DAY_SEASON>
+	<DawnNewDay.Hint_Format_DAY_YEAR>Giorno relativo all'anno (Dal GIORNO 1 al GIORNO 60)</DawnNewDay.Hint_Format_DAY_YEAR>
+
+	<DawnNewDay.Hint_Format_YEAR>Anno intero [eg. 5500]</DawnNewDay.Hint_Format_YEAR>
+	<DawnNewDay.Hint_Format_YEAR_D2>Anno a 2-cifre [eg. 00]</DawnNewDay.Hint_Format_YEAR_D2>
+
+	<DawnNewDay.Hint_Format_QUADRUM>Quadrum [eg. Aprimaggio]</DawnNewDay.Hint_Format_QUADRUM>
+	<DawnNewDay.Hint_Format_SEASON>Stagione [eg. Primavera]</DawnNewDay.Hint_Format_SEASON>
+
+	<DawnNewDay.Hint_Format_HOUR>Ora [eg. 6, 12]</DawnNewDay.Hint_Format_HOUR>
+	<DawnNewDay.Hint_Format_HOUR_D2>Ora a 2-cifre [eg. 06, 12]</DawnNewDay.Hint_Format_HOUR_D2>
+
+	<DawnNewDay.Hint_Format_WEATHER>Meteo [eg. Sereno]</DawnNewDay.Hint_Format_WEATHER>
+
+	<DawnNewDay.Hint_Format_TEMPERATURE>Temperatura [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Colore della temperatura in HEX [eg. #RRGGBB] - Inteso per essere usato con Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+
+	<DawnNewDay.Hint_Format_WORLD>Nome del pianeta [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
+	<DawnNewDay.Hint_Format_BIOME>Bioma [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
+	<DawnNewDay.Hint_Format_TERRAIN>Terreno [eg. Piccole colline]</DawnNewDay.Hint_Format_TERRAIN>
+
+	<DawnNewDay.Hint_Format_ELEVATION>Altitudine [eg. 467m]</DawnNewDay.Hint_Format_ELEVATION>
+	<DawnNewDay.Hint_Format_ELEVATION_KM>Altitudine in km [eg. 1.21km]</DawnNewDay.Hint_Format_ELEVATION_KM>
+
+	<DawnNewDay.Hint_Format_POLLUTION>Inquinamento in percentuale [eg. 69.1%]</DawnNewDay.Hint_Format_POLLUTION>
+
+	<DawnNewDay.Hint_Format_FACTION>Nome della fazione [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
+	<DawnNewDay.Hint_Format_SETTLEMENT>Nome della colonia [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
+
+	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>Grandezza del carattere generale del Testo Superiore</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
+	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>Grandezza del carattere generale del Testo Inferiore</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
+
+	<DawnNewDay.Hint_RichText_Color>Cambia il colore del testo {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
+	<DawnNewDay.Hint_RichText_ColorRGB>Cambia il colore del testo {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
+
+	<DawnNewDay.Hint_RichText_Bold>Aggiunge lo stile grasseto al testo</DawnNewDay.Hint_RichText_Bold>
+	<DawnNewDay.Hint_RichText_Italic>Aggiunge lo stile corsivo al testo</DawnNewDay.Hint_RichText_Italic>
+	<DawnNewDay.Hint_RichText_FontSize>Cambia la grandezza del carattere al testo</DawnNewDay.Hint_RichText_FontSize>
+
+	<DawnNewDay.Hint_RichText_Title>Rende maiuscola la prima lettera di ogni parola [eg. fORt zaNCudo -> Fort Zancudo]</DawnNewDay.Hint_RichText_Title>
+	<DawnNewDay.Hint_RichText_Upper>Rende tutto il testo in maiuscolo [eg. Aprimaggio -> APRIMAGGIO]</DawnNewDay.Hint_RichText_Upper>
+	<DawnNewDay.Hint_RichText_Lower>Rende tutto il testo in minuscolo [eg. Primavera -> primavera]</DawnNewDay.Hint_RichText_Lower>
 
 	<!-- Sound Section -->
 	<DawnNewDay.Section_Sound>Suono</DawnNewDay.Section_Sound>
@@ -79,17 +133,5 @@
 	<DawnNewDay.Label_StartsAtZero>Inizia a Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Mostra ogni X giorni</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Orario di Attivazione</DawnNewDay.Label_TriggerHour>
-
-	<DawnNewDay.Label_DayRelativeTo>Giorno Relativo</DawnNewDay.Label_DayRelativeTo>
-
-	<DawnNewDay.Label_DayRelativeSettle>Arrivo</DawnNewDay.Label_DayRelativeSettle>
-	<DawnNewDay.Label_DayRelativeQuadrum>Quadrum</DawnNewDay.Label_DayRelativeQuadrum>
-	<DawnNewDay.Label_DayRelativeSeason>Stagione</DawnNewDay.Label_DayRelativeSeason>
-	<DawnNewDay.Label_DayRelativeYear>Anno</DawnNewDay.Label_DayRelativeYear>
-
-	<DawnNewDay.Tooltip_Settle>Il giorno sarà relativo al giorno in cui sono arrivati i coloni.</DawnNewDay.Tooltip_Settle>
-	<DawnNewDay.Tooltip_Quadrum>Il giorno sarà relativo al quadrum ripristando il conto dopo 15 giorni.</DawnNewDay.Tooltip_Quadrum>
-	<DawnNewDay.Tooltip_Season>Il giorno sarà relativo alla stagione ripristando il conto appena finisce.</DawnNewDay.Tooltip_Season>
-	<DawnNewDay.Tooltip_Year>Il giorno sarà relativo all'anno ripristando il conto dopo 60 giorno.</DawnNewDay.Tooltip_Year>
 
 </LanguageData>
