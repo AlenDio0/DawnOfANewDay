@@ -136,6 +136,8 @@ namespace DawnNewDay
 
             { "{POLLUTION}", "DawnNewDay.Hint_Format_POLLUTION".Translate() },
 
+            { "{CONDITION}", "DawnNewDay.Hint_Format_CONDITION".Translate() },
+
             { "{FACTION}", "DawnNewDay.Hint_Format_FACTION".Translate() },
             { "{SETTLEMENT}", "DawnNewDay.Hint_Format_SETTLEMENT".Translate() },
 

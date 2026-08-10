@@ -67,6 +67,8 @@ namespace DawnNewDay
         public float Elevation => Map.TileInfo.elevation;
         public float Pollution => Map.TileInfo.pollution;
 
+        public GameCondition ActiveCondition => Map.GameConditionManager.ActiveConditions.FirstOrFallback(null);
+
         public string FactionName => Map.ParentFaction.Name;
         public string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
     }
@@ -147,6 +149,8 @@ namespace DawnNewDay
 
             { "POLLUTION", context => context.Pollution.ToStringPercent() },
 
+            { "CONDITION", context => context.ActiveCondition?.LabelCap },
+
             { "FACTION", context => context.FactionName },
             { "SETTLEMENT", context => context.SettlementName },
 
@@ -221,9 +225,9 @@ namespace DawnNewDay
                 string token = match.Groups["token"].Value.Trim();
 
                 int operatorIndex = token.IndexOfAny(new char[] { '+', '-', '*', '/' });
-                bool isMath = operatorIndex >= 0;
+                bool isOperation = operatorIndex >= 0;
 
-                if (!isMath)
+                if (!isOperation)
                 {
                     if (FormatTokens.TryGetValue(token, out var replacer))
                         return replacer?.Invoke(context);
