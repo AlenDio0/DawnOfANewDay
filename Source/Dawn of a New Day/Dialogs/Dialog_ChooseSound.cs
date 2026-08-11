@@ -6,7 +6,7 @@ using Verse;
 
 namespace DawnNewDay.Dialogs
 {
-    public class Dialog_ChooseSound : Dialog_ChooseInterface
+    public class Dialog_ChooseSound(Action<string> onChoose, string current = null) : Dialog_ChooseInterface(onChoose, current)
     {
         private static List<string> m_CachedSoundNames;
         private static List<string> SoundNames
@@ -24,8 +24,7 @@ namespace DawnNewDay.Dialogs
                     }
                     finally
                     {
-                        if (m_CachedSoundNames == null)
-                            m_CachedSoundNames = new List<string>();
+                        m_CachedSoundNames ??= [];
                     }
                 }
 
@@ -33,15 +32,10 @@ namespace DawnNewDay.Dialogs
             }
         }
 
-        public override List<string> InitialValues => new List<string>(SoundNames);
+        public override List<string> InitialValues => [.. SoundNames];
 
         public override string HeaderLabel => DawnTranslation.Label_Sound;
 
         public override string DefaultValue => DawnData.DefaultSoundDefName;
-
-        public Dialog_ChooseSound(Action<string> onChoose, string current = null)
-            : base(onChoose, current)
-        {
-        }
     }
 }

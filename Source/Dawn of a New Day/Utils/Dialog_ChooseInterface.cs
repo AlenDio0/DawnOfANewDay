@@ -16,7 +16,7 @@ namespace DawnNewDay.Utils
         private Vector2 m_ScrollPosition = Vector2.zero;
         private float m_CachedScrollViewHeight = 0f;
 
-        public virtual List<string> InitialValues => new List<string>();
+        public virtual List<string> InitialValues => [];
         public virtual string HeaderLabel => null;
         public virtual string DefaultValue => null;
         public virtual IEnumerable<string> WhereShowable(IEnumerable<string> list) => list;
@@ -32,11 +32,11 @@ namespace DawnNewDay.Utils
             OnChoose = onChoose;
         }
 
-        public override Vector2 InitialSize => new Vector2(600f, 800f);
+        public override Vector2 InitialSize => new(600f, 800f);
 
         public override void DoWindowContents(Rect canva)
         {
-            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            Listing_Standard listing = new() { maxOneColumn = true };
             listing.Begin(canva);
 
             try
@@ -46,8 +46,8 @@ namespace DawnNewDay.Utils
 
                 listing.End();
 
-                Rect outRect = new Rect(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
-                Rect viewRect = new Rect(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
+                Rect outRect = new(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
+                Rect viewRect = new(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
                 Widgets.BeginScrollView(outRect, ref m_ScrollPosition, viewRect);
 
                 listing.Begin(viewRect);

@@ -25,11 +25,11 @@ namespace DawnNewDay.Dialogs
             Hints = hints;
         }
 
-        public override Vector2 InitialSize => new Vector2(700f, 600f);
+        public override Vector2 InitialSize => new(700f, 600f);
 
         public override void DoWindowContents(Rect canva)
         {
-            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            Listing_Standard listing = new() { maxOneColumn = true };
             listing.Begin(canva);
 
             try
@@ -39,8 +39,8 @@ namespace DawnNewDay.Dialogs
 
                 listing.End();
 
-                Rect outRect = new Rect(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
-                Rect viewRect = new Rect(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
+                Rect outRect = new(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
+                Rect viewRect = new(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
                 Widgets.BeginScrollView(outRect, ref m_ScrollPosition, viewRect);
 
                 listing.Begin(viewRect);
@@ -63,15 +63,15 @@ namespace DawnNewDay.Dialogs
 
         private void ShowHeader(Listing_Standard listing)
         {
-            if (HeaderLabel != null)
-            {
-                GameFont defaultFont = Text.Font;
-                Text.Font = GameFont.Medium;
+            if (HeaderLabel == null)
+                return;
 
-                listing.Label(HeaderLabel);
+            GameFont defaultFont = Text.Font;
+            Text.Font = GameFont.Medium;
 
-                Text.Font = defaultFont;
-            }
+            listing.Label(HeaderLabel);
+
+            Text.Font = defaultFont;
         }
 
         private void ShowHints(Listing_Standard listing)
@@ -84,8 +84,8 @@ namespace DawnNewDay.Dialogs
 
                 float iconSize = rowRect.height;
 
-                Rect copyRect = new Rect(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
-                Rect hintRect = new Rect(rowRect.x, rowRect.y, rowRect.xMax - iconSize, rowRect.height);
+                Rect copyRect = new(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
+                Rect hintRect = new(rowRect.x, rowRect.y, rowRect.xMax - iconSize, rowRect.height);
 
                 TextAnchor defaultAnchor = Text.Anchor;
                 Text.Anchor = TextAnchor.MiddleLeft;

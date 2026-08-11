@@ -28,7 +28,7 @@ namespace DawnNewDay.Utils
                 FontStyle.Normal;
         }
 
-        public readonly static Color[] ColorPresets = new[] { Color.white, Color.gray, Color.black, Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.cyan };
+        public readonly static Color[] ColorPresets = [Color.white, Color.gray, Color.black, Color.red, Color.green, Color.blue, Color.yellow, Color.magenta, Color.cyan];
 
         public static Color LabeledRadioColorPresets(this Listing_Standard listing, ref Color currentColor, string label, float labelWidthPct = 0.25f)
         {
@@ -46,7 +46,7 @@ namespace DawnNewDay.Utils
             {
                 Color color = ColorPresets[i];
 
-                Rect boxRect = new Rect(labelRect.xMax + (i * (cBoxSize * 1.5f)), rowRect.y, cBoxSize, cBoxSize);
+                Rect boxRect = new(labelRect.xMax + (i * (cBoxSize * 1.5f)), rowRect.y, cBoxSize, cBoxSize);
                 Widgets.DrawBoxSolid(boxRect, color);
 
                 if (currentColor == color)
@@ -92,7 +92,7 @@ namespace DawnNewDay.Utils
             const float cIconSize = 20f;
             const float cSpaceX = 15f;
 
-            Rect iconRect = new Rect(headerRect.x, headerRect.y + (headerRect.height - cIconSize) / 2f, cIconSize, cIconSize);
+            Rect iconRect = new(headerRect.x, headerRect.y + (headerRect.height - cIconSize) / 2f, cIconSize, cIconSize);
             GUI.DrawTexture(iconRect, open ? TexButton.Minus : TexButton.Plus);
 
             TextAnchor defaultAnchor = Text.Anchor;

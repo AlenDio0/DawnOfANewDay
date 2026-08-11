@@ -29,8 +29,8 @@ namespace DawnNewDay
         public static string Label_Offset => "DawnNewDay.Label_Offset".Translate();
         public static string Label_OffsetPresets => "DawnNewDay.Label_OffsetPresets".Translate();
 
-        public static (TaggedString Name, Vector2 Preset)[] OffsetPresets => new[]
-        {
+        public static (TaggedString Name, Vector2 Preset)[] OffsetPresets =>
+        [
             ("DawnNewDay.Offset_MiddleTop".Translate(), new Vector2(0.5f, 0.2f)),
             ("DawnNewDay.Offset_MiddleBottom".Translate(), new Vector2(0.5f, 0.8f)),
             ("DawnNewDay.Offset_MiddleMiddle".Translate(), new Vector2(0.5f, 0.5f)),
@@ -40,7 +40,7 @@ namespace DawnNewDay
             ("DawnNewDay.Offset_RightTop".Translate(), new Vector2(0.8f, 0.2f)),
             ("DawnNewDay.Offset_LeftBottom".Translate(), new Vector2(0.2f, 0.8f)),
             ("DawnNewDay.Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
-        };
+        ];
 
         public static string Label_LineWidthPercentage => "DawnNewDay.Label_LineWidthPercentage".Translate();
         public static string Label_LineThickness => "DawnNewDay.Label_LineThickness".Translate();
@@ -91,7 +91,7 @@ namespace DawnNewDay
         public static string Label_LabelFormatHints => "DawnNewDay.Label_LabelFormatHints".Translate();
         public static string Label_RichTextHints => "DawnNewDay.Label_RichTextHints".Translate();
 
-        public static Dictionary<string, string> Hints_LabelFormatPreset => new Dictionary<string, string>
+        public static Dictionary<string, string> Hints_LabelFormatPreset => new()
         {
             { "DAY {DAY_SETTLE} <size=30>{HOUR_D2}:00</size>", "DawnNewDay.Hint_Preset_DayAndHour".Translate() },
             { "{DAY_QUADRUM_ORDINAL} of {QUADRUM}, {YEAR}", "DawnNewDay.Hint_Preset_Date".Translate() },
@@ -99,7 +99,7 @@ namespace DawnNewDay
             { "{SETTLEMENT} Y{YEAR}, somewhere in the <lower>{BIOME}</lower>", "DawnNewDay.Hint_Preset_SomewherePlace".Translate() },
         };
 
-        public static Dictionary<string, string> Hints_LabelFormat => new Dictionary<string, string>
+        public static Dictionary<string, string> Hints_LabelFormat => new()
         {
             { "{VALUE1 + VALUE2}", "DawnNewDay.Hint_Format_Addition".Translate() },
             { "{VALUE1 - VALUE2}", "DawnNewDay.Hint_Format_Subtraction".Translate() },
@@ -145,7 +145,7 @@ namespace DawnNewDay
             { "BOTTOM_FONTSIZE", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
         };
 
-        public static Dictionary<string, string> Hints_RichText => new Dictionary<string, string>
+        public static Dictionary<string, string> Hints_RichText => new()
         {
             { "<color=COLOR_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_Color".Translate() },
             { "<color=#RRGGBB_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_ColorRGB".Translate() },

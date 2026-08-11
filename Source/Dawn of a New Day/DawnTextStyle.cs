@@ -9,7 +9,7 @@ namespace DawnNewDay
 {
     public class DawnTextStyle : IExposable
     {
-        public GUIStyle TextGUIStyle = new GUIStyle(Text.CurFontStyle);
+        public GUIStyle TextGUIStyle = new(Text.CurFontStyle);
 
         public string FontFamilyName = "";
         public int FontSize = 24;
@@ -21,7 +21,7 @@ namespace DawnNewDay
         public float OutlineThickness = 1f;
         public Color OutlineColor = Color.black;
 
-        private static readonly Regex WholeColorTagRegex = new Regex(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex WholeColorTagRegex = new(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public DawnTextStyle()
         {
@@ -72,22 +72,6 @@ namespace DawnNewDay
             }
         }
 
-        public void ExposeData()
-        {
-            if (TextGUIStyle == null)
-                TextGUIStyle = new GUIStyle(Text.CurFontStyle);
-
-            Scribe_Values.Look(ref FontFamilyName, "FontFamilyName", "");
-            Scribe_Values.Look(ref FontSize, "FontSize", 24);
-            Scribe_Values.Look(ref TextColor, "TextColor", Color.white);
-
-            Scribe_Values.Look(ref Bold, "Bold", false);
-            Scribe_Values.Look(ref Italic, "Italic", false);
-
-            Scribe_Values.Look(ref OutlineThickness, "OutlineThickness", 1f);
-            Scribe_Values.Look(ref OutlineColor, "OutlineColor", Color.black);
-        }
-
         public void Draw(Rect rect, string text, float scale)
         {
             if (OutlineThickness > 0f)
@@ -110,7 +94,7 @@ namespace DawnNewDay
             {
                 for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
                 {
-                    Vector2 offset = new Vector2(x, y);
+                    Vector2 offset = new(x, y);
                     GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
                 }
             }
@@ -148,6 +132,21 @@ namespace DawnNewDay
             {
                 DawnData.Error($"DawnTextStyle.UpdateFontFamily() Failed!\nFontFamilyName: '{FontFamilyName}'\nException: {exception}");
             }
+        }
+
+        public void ExposeData()
+        {
+            TextGUIStyle ??= new GUIStyle(Text.CurFontStyle);
+
+            Scribe_Values.Look(ref FontFamilyName, "FontFamilyName", "");
+            Scribe_Values.Look(ref FontSize, "FontSize", 24);
+            Scribe_Values.Look(ref TextColor, "TextColor", Color.white);
+
+            Scribe_Values.Look(ref Bold, "Bold", false);
+            Scribe_Values.Look(ref Italic, "Italic", false);
+
+            Scribe_Values.Look(ref OutlineThickness, "OutlineThickness", 1f);
+            Scribe_Values.Look(ref OutlineColor, "OutlineColor", Color.black);
         }
     }
 }

@@ -20,42 +20,29 @@ namespace DawnNewDay
         public Map Map;
         public Vector2 Location;
 
-        public int GenDay(DayRelative dayRelative)
+        public readonly int GenDay(DayRelative dayRelative)
         {
             int startsAtZero = (StartAtZero ? 0 : 1);
-
-            int day = 0;
-            switch (dayRelative)
+            return dayRelative switch
             {
-                case DayRelative.Settle:
-                    day = GenDate.DaysPassed + (GenDate.HourOfDay(AbsTicks, Location.x) >= 6 ? 0 : 1) + startsAtZero;
-                    break;
-                case DayRelative.Quadrum:
-                    day = GenDate.DayOfQuadrum(AbsTicks, Location.x) + 1;
-                    break;
-                case DayRelative.Season:
-                    day = GenDate.DayOfSeason(AbsTicks, Location.x) + startsAtZero;
-                    break;
-                case DayRelative.Year:
-                    day = GenDate.DayOfYear(AbsTicks, Location.x) + startsAtZero;
-                    break;
+                DayRelative.Settle => GenDate.DaysPassed + (GenDate.HourOfDay(AbsTicks, Location.x) >= 6 ? 0 : 1) + startsAtZero,
+                DayRelative.Quadrum => GenDate.DayOfQuadrum(AbsTicks, Location.x) + 1,
+                DayRelative.Season => GenDate.DayOfSeason(AbsTicks, Location.x) + startsAtZero,
+                DayRelative.Year => GenDate.DayOfYear(AbsTicks, Location.x) + startsAtZero,
 
-                default:
-                    break;
-            }
-
-            return day;
+                _ => -1,
+            };
         }
-        public int GenYear() => GenDate.Year(AbsTicks, Location.x);
-        public string GenQuadrum() => GenDate.Quadrum(AbsTicks, Location.x).Label();
-        public string GenSeason() => GenDate.Season(AbsTicks, Location).LabelCap();
-        public int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
+        public readonly int GenYear() => GenDate.Year(AbsTicks, Location.x);
+        public readonly string GenQuadrum() => GenDate.Quadrum(AbsTicks, Location.x).Label();
+        public readonly string GenSeason() => GenDate.Season(AbsTicks, Location).LabelCap();
+        public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
-        public float Temperature => Map.mapTemperature.OutdoorTemp;
-        public string CalcTemperatureHex()
+        public readonly float Temperature => Map.mapTemperature.OutdoorTemp;
+        public readonly string CalcTemperatureHex()
         {
-            Color coldColor = new Color(0.2f, 0.7f, 1f);
-            Color hotColor = new Color(1f, 0.3f, 0f);
+            Color coldColor = new(0.2f, 0.7f, 1f);
+            Color hotColor = new(1f, 0.3f, 0f);
 
             float t = Mathf.InverseLerp(-10f, 50f, Temperature);
             Color temperatureColor = Color.Lerp(coldColor, hotColor, t);
@@ -63,16 +50,16 @@ namespace DawnNewDay
             return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
         }
 
-        public Tile Tile => World.grid[Map.Tile];
+        public readonly Tile Tile => World.grid[Map.Tile];
 
-        public string Terrain => Tile.hilliness.GetLabel();
-        public float Elevation => Tile.elevation;
-        public float Pollution => Tile.pollution;
+        public readonly string Terrain => Tile.hilliness.GetLabel();
+        public readonly float Elevation => Tile.elevation;
+        public readonly float Pollution => Tile.pollution;
 
-        public GameCondition ActiveCondition => Map.GameConditionManager.ActiveConditions.FirstOrFallback(null);
+        public readonly GameCondition ActiveCondition => Map.GameConditionManager.ActiveConditions.FirstOrFallback(null);
 
-        public string FactionName => Map.ParentFaction.Name;
-        public string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
+        public readonly string FactionName => Map.ParentFaction.Name;
+        public readonly string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
     }
 
     public enum DayRelative
@@ -83,18 +70,11 @@ namespace DawnNewDay
         Year,
     }
 
-    public class DawnFormatter
+    public class DawnFormatter(Game game)
     {
-        public Game Game { get; }
-
-        public int CurrentAbsTicks => Game.tickManager.TicksAbs;
+        public Game Game { get; } = game;
 
         public Vector2 CurrentLocation => Game.World.grid.LongLatOf(Game.CurrentMap.Tile);
-
-        public DawnFormatter(Game game)
-        {
-            Game = game;
-        }
 
         public FormatContext CreateFormatContext(bool startsAtZero)
         {
@@ -103,7 +83,7 @@ namespace DawnNewDay
 
             return new FormatContext
             {
-                AbsTicks = CurrentAbsTicks,
+                AbsTicks = Game.tickManager.TicksAbs,
 
                 World = Game.World,
                 Map = Game.CurrentMap,
@@ -118,8 +98,8 @@ namespace DawnNewDay
     {
         private static DawnSettings Settings => DawnMod.Settings;
 
-        private static readonly Regex TokenFormatRegex = new Regex(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new Dictionary<string, Func<FormatContext, string>>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Regex TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
             { "DAY",  context => context.GenDay(DayRelative.Settle).ToString() },
             { "DAY_SETTLE",  context => context.GenDay(DayRelative.Settle).ToString() },
@@ -160,8 +140,8 @@ namespace DawnNewDay
             { "BOTTOM_FONTSIZE", _ => (Settings.BottomTextStyle.FontSize * Settings.Scale).ToString() },
         };
 
-        private static readonly Regex ExtraRichTextTagRegex = new Regex(@"<(?<tag>\w+)>(?<content>.*?)</\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Dictionary<string, Func<string, string>> ExtraRichTextTags = new Dictionary<string, Func<string, string>>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Regex ExtraRichTextTagRegex = new(@"<(?<tag>\w+)>(?<content>.*?)</\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Dictionary<string, Func<string, string>> ExtraRichTextTags = new(StringComparer.OrdinalIgnoreCase)
         {
             { "title", text => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower())},
             { "upper", text => text.ToUpper() },
@@ -175,7 +155,7 @@ namespace DawnNewDay
             public string Suffix { get; }
             public bool IsValid { get; }
 
-            private static readonly Regex OperandValueRegex = new Regex(@"[-+]?\d+(?:[.,]\d+)?", RegexOptions.Compiled);
+            private static readonly Regex OperandValueRegex = new(@"[-+]?\d+(?:[.,]\d+)?", RegexOptions.Compiled);
 
             private ParsedOperand(bool isValid)
             {
@@ -226,7 +206,7 @@ namespace DawnNewDay
             {
                 string token = match.Groups["token"].Value.Trim();
 
-                int operatorIndex = token.IndexOfAny(new char[] { '+', '-', '*', '/' });
+                int operatorIndex = token.IndexOfAny(['+', '-', '*', '/']);
                 bool isOperation = operatorIndex >= 0;
 
                 if (!isOperation)
@@ -261,25 +241,15 @@ namespace DawnNewDay
             });
         }
 
-        private static float CalcStringMath(float left, float right, char operation)
+        private static float CalcStringMath(float left, float right, char operation) => operation switch
         {
-            switch (operation)
-            {
-                case '+':
-                    return left + right;
-                case '-':
-                    return left - right;
-                case '*':
-                    return left * right;
-                case '/':
-                    return right != 0f ? left / right : 0f;
+            '+' => left + right,
+            '-' => left - right,
+            '*' => left * right,
+            '/' => right != 0f ? left / right : 0f,
 
-                default:
-                    break;
-            }
-
-            return 0f;
-        }
+            _ => 0,
+        };
 
         private static string ExtraRichTextTagText(string text)
         {

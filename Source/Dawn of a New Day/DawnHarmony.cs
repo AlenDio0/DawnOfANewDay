@@ -8,7 +8,7 @@ namespace DawnNewDay
     {
         static DawnHarmony()
         {
-            Harmony harmony = new Harmony("com.alendio.dawnofanewday");
+            Harmony harmony = new("com.alendio.dawnofanewday");
             harmony.PatchAll();
         }
     }

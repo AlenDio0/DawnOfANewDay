@@ -3,7 +3,6 @@
 
 Adds a customizable header overlay that displays at the start of the day.
 
-[hr]
 [h1]FEATURES[/h1]
 Go to: Options > Mod options > "Dawn of a New Day";
 [h3]Header/General[/h3]
@@ -60,7 +59,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*][b]Trigger Hour:[/b] Choose at what hour of the day the overlay displays.
 [/list]
 
-[hr]
 [h1]PATCH NOTES[/h1]
 [h3]v1.1.0[/h3]
 [list]
@@ -114,7 +112,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Removed Day Relative (replaced directly with the formats).
 [/list]
 
-[hr]
 [h1]COMPATIBILITY[/h1]
 [list]
 [*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time since it doesn't affect the game in any way.
@@ -122,7 +119,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*][b]Mods:[/b] No compatibility yet added.
 [/list]
 
-[hr]
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
 [*][b]English:[/b] Made by myself.
@@ -140,7 +136,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Finally, commit your changes and create a Pull Request into the main branch of the repository.
 [/olist]
 
-[hr]
 [h1]TODO LIST[/h1]
 [list]
 [*]Add compatibility with Modern Notifications.
@@ -149,6 +144,5 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Add renaming day section in mod options.
 [/list]
 
-[hr]
 [url=https://github.com/AlenDio0/DawnOfANewDay][img]https://i.imgur.com/7U9v8bp.png[/img][/url]
 [url=https://ko-fi.com/alendio][img]https://i.imgur.com/QGcents.png[/img][/url]

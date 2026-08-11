@@ -27,7 +27,7 @@ namespace DawnNewDay
         private Rect m_CachedLineRect = Rect.zero;
         private Rect m_CachedBottomRect = Rect.zero;
 
-        private static readonly Regex FirstColorTagRegex = new Regex(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex FirstColorTagRegex = new(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public DawnComponent(Game game)
             : base()

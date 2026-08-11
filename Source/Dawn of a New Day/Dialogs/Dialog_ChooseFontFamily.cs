@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DawnNewDay.Dialogs
 {
-    public class Dialog_ChooseFontFamily : Dialog_ChooseInterface
+    public class Dialog_ChooseFontFamily(Action<string> onChoose, string current = null) : Dialog_ChooseInterface(onChoose, current)
     {
         private static string[] m_CachedOSFontNames;
         private static string[] OSFontNames
@@ -21,8 +21,7 @@ namespace DawnNewDay.Dialogs
                     }
                     finally
                     {
-                        if (m_CachedOSFontNames == null)
-                            m_CachedOSFontNames = new string[0];
+                        m_CachedOSFontNames ??= [];
                     }
                 }
 
@@ -30,7 +29,7 @@ namespace DawnNewDay.Dialogs
             }
         }
 
-        public override List<string> InitialValues => new List<string>(OSFontNames);
+        public override List<string> InitialValues => [.. OSFontNames];
 
         public override string HeaderLabel => DawnTranslation.Label_FontFamily;
 
@@ -39,10 +38,5 @@ namespace DawnNewDay.Dialogs
         public override IEnumerable<string> WhereShowable(IEnumerable<string> list) =>
             list.Where(fontName => !fontName.ToUpper().Contains("BOLD"))
                 .Where(fontName => !fontName.ToUpper().Contains("ITALIC"));
-
-        public Dialog_ChooseFontFamily(Action<string> onChoose, string current = null)
-            : base(onChoose, current)
-        {
-        }
     }
 }

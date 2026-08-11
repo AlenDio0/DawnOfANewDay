@@ -61,10 +61,10 @@ namespace DawnNewDay
         bool m_TextSection = false;
 
         bool m_TextUpperSection = false;
-        public DawnTextStyle UpperTextStyle = new DawnTextStyle(40, true);
+        public DawnTextStyle UpperTextStyle = new(40, true);
 
         bool m_TextBottomSection = false;
-        public DawnTextStyle BottomTextStyle = new DawnTextStyle();
+        public DawnTextStyle BottomTextStyle = new();
 
         #endregion
 
@@ -123,7 +123,7 @@ namespace DawnNewDay
             canva = canva.LeftPart(0.95f);
             canva = canva.MiddlePart(1f, 0.95f);
 
-            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            Listing_Standard listing = new() { maxOneColumn = true };
             listing.Begin(canva);
 
             try
@@ -133,8 +133,8 @@ namespace DawnNewDay
 
                 listing.End();
 
-                Rect outRect = new Rect(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
-                Rect viewRect = new Rect(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
+                Rect outRect = new(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
+                Rect viewRect = new(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
                 Widgets.BeginScrollView(outRect, ref m_ScrollPosition, viewRect);
 
                 listing.Begin(viewRect);
@@ -336,11 +336,8 @@ namespace DawnNewDay
 
                 if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
                 {
-                    if (UpperTextStyle == null)
-                        UpperTextStyle = new DawnTextStyle(40, true);
-
-                    if (BottomTextStyle == null)
-                        BottomTextStyle = new DawnTextStyle();
+                    UpperTextStyle ??= new DawnTextStyle(40, true);
+                    BottomTextStyle ??= new DawnTextStyle();
                 }
 
                 #endregion
