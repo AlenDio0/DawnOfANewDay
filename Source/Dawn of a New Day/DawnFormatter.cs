@@ -63,9 +63,11 @@ namespace DawnNewDay
             return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
         }
 
-        public string Terrain => Map.TileInfo.hilliness.GetLabel();
-        public float Elevation => Map.TileInfo.elevation;
-        public float Pollution => Map.TileInfo.pollution;
+        public Tile Tile => World.grid[Map.Tile];
+
+        public string Terrain => Tile.hilliness.GetLabel();
+        public float Elevation => Tile.elevation;
+        public float Pollution => Tile.pollution;
 
         public GameCondition ActiveCondition => Map.GameConditionManager.ActiveConditions.FirstOrFallback(null);
 

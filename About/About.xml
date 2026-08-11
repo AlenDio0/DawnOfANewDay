@@ -42,13 +42,10 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 - &lt;color=cyan&gt;&lt;b&gt;Label Format Section&lt;/b&gt;&lt;/color&gt;
   # Upper Text Format => Choose the format of the Upper text.
   # Bottom Text Format => Choose the format of the Bottom text.
- 
-  * {D/d} => Full Day           
-  * {Y/y} => Full Year [eg. 5500] / 2-Digit Year [eg. 00]
-  * {Q/q} => CAPS Quadrum / Quadrum
-  * {S/s} => CAPS Season / Season
-  * {H/h} => Full Hour [eg. 06] / Hour [eg. 6]
 
+  # Label Format Presets => Copy a format preset to paste into any Format Text.
+  # Label Format Hints => Copy any format available that you can paste into any Format Text.
+  # Rich Text Hints => Copy any rich text body that you can paste into any Format Text and edit it to your liking.
 - &lt;color=cyan&gt;&lt;b&gt;Sound Section&lt;/b&gt;&lt;/color&gt;
   # Enabled => Toggle the sound that starts with the overlay.
   # Choose Sound => Choose a custom sound from the catalogue.
@@ -59,12 +56,6 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
   # Starts at Zero => Enable to start the count of the days from 0 instead of 1.
   # Show Every X Days => Choose how often the overlay displays [eg. X=10 => DAY 10, DAY 20, DAY 30, ...].
   # Trigger Hour => Choose at what hour of the day the overlay displays.
-
-  # Day Relative => Choose what the value of day will be relative to.
-  * Settle => Day will be relative to the day the colonists settled.
-  * Quadrum => Day will be relative to the quadrum resetting itself after 15 days.
-  * Season => Day will be relative to the season resetting itself after it ends.
-  * Year => Day will be relative to the year resetting itself after 60 days.
 
 &lt;i&gt;Can be safely added or removed from existing saves at any time.&lt;/i&gt;
 	</description>
@@ -79,5 +70,5 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 		</li>
 	</modDependencies>
-	<modVersion IgnoreIfNoMatchingField="True">1.3.3</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">1.4.0</modVersion>
 </ModMetaData>
