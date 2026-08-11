@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
 		<OutputType>Library</OutputType>
+		<LangVersion>latest</LangVersion>
 		
 		<AssemblyName>DawnOfANewDay</AssemblyName>
 		<RootNamespace>DawnNewDay</RootNamespace>
@@ -10,11 +11,11 @@
 		
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+		<Configurations>1.6;1.5</Configurations>
 		
 		<RWVersion Condition="'$(RWVersion)' == ''">1.6</RWVersion>
 		<RWVersion Condition="'$(Configuration)' == '1.5'">1.5</RWVersion>
-		
-		<Configurations>1.5;1.6</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(RWVersion)' == '1.6'">
@@ -39,11 +40,9 @@
 	<ItemGroup Condition="'$(RWVersion)' == '1.5'">
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.*" PrivateAssets="All" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <PackageReference Include="Lib.Harmony" Version="2.4.2">
-		  <ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
+	  <PackageReference Include="Lib.Harmony" Version="2.4.2" ExcludeAssets="runtime" />
 	</ItemGroup>
 	
 	<Target Name="PrintVersionMessage" BeforeTargets="Build">
