@@ -49,7 +49,7 @@ namespace DawnNewDay
             var settings = DawnMod.Settings;
             if (settings.ConsumeShowExample)
             {
-                TriggerDawnOfANewDay();
+                TriggerDawnOverlay();
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace DawnNewDay
             m_LastTriggeredDay = currentDay;
 
             if (settings.ShowEveryXDays > 0 && m_LastTriggeredDay % settings.ShowEveryXDays == 0)
-                TriggerDawnOfANewDay();
+                TriggerDawnOverlay();
         }
 
         public override void GameComponentUpdate()
@@ -135,7 +135,7 @@ namespace DawnNewDay
             GUI.color = defaultColor;
         }
 
-        private void TriggerDawnOfANewDay()
+        private void TriggerDawnOverlay()
         {
             if (m_Game.CurrentMap == null)
                 return;
@@ -152,23 +152,29 @@ namespace DawnNewDay
 
                 #region Cached Rects
 
-                m_CachedUpperRect.size = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText)) * 1.2f;
-                m_CachedBottomRect.size = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText)) * 1.2f;
+                float scaledLinePadding = settings.LinePadding * settings.Scale;
 
-                m_CachedOverlayRect.width = Mathf.Max(m_CachedUpperRect.width, m_CachedBottomRect.width);
-                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + settings.LineThickness + (settings.LinePadding * settings.Scale * 3f);
+                Vector2 upperTextSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
+                Vector2 bottomTextSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+
+                float textWidth = Mathf.Max(upperTextSize.x, bottomTextSize.x) * 1.2f;
+
+                m_CachedUpperRect.size = new Vector2(textWidth, upperTextSize.y);
+                m_CachedBottomRect.size = new Vector2(textWidth, bottomTextSize.y);
+
+                m_CachedOverlayRect.width = textWidth;
+                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + settings.LineThickness + (scaledLinePadding * 2f);
                 m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
-                m_CachedUpperRect.x = (m_CachedOverlayRect.width - m_CachedUpperRect.size.x) / 2f;
+                m_CachedUpperRect.x = (m_CachedOverlayRect.width - m_CachedUpperRect.width) / 2f;
                 m_CachedUpperRect.y = 0f;
 
-                float scaledLinePadding = settings.LinePadding * settings.Scale;
                 m_CachedLineRect.width = m_CachedOverlayRect.width * (settings.LineWidthPercentage / 100f);
                 m_CachedLineRect.height = settings.LineThickness;
                 m_CachedLineRect.x = (m_CachedOverlayRect.width - m_CachedLineRect.width) / 2f;
-                m_CachedLineRect.y = m_CachedUpperRect.size.y + scaledLinePadding;
+                m_CachedLineRect.y = m_CachedUpperRect.yMax + scaledLinePadding;
 
-                m_CachedBottomRect.x = (m_CachedOverlayRect.width - m_CachedBottomRect.size.x) / 2f;
+                m_CachedBottomRect.x = (m_CachedOverlayRect.width - m_CachedBottomRect.width) / 2f;
                 m_CachedBottomRect.y = m_CachedLineRect.yMax + scaledLinePadding;
 
                 #endregion
@@ -187,7 +193,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOfANewDay()\nException: {exception}");
+                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOverlay()\nException: {exception}");
             }
         }
 
@@ -201,10 +207,7 @@ namespace DawnNewDay
                 string colorString = match.Groups["color"].Value.Trim();
 
                 if (ColorUtility.TryParseHtmlString(colorString, out Color color))
-                {
-                    color.a *= m_CurrentAlpha;
-                    return $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>";
-                }
+                    return $"<color=#{ColorUtility.ToHtmlStringRGBA(color.WithAlpha(color.a * m_CurrentAlpha))}>";
 
                 return match.Value;
             });

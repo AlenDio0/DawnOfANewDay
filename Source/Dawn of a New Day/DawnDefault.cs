@@ -22,7 +22,7 @@ namespace DawnNewDay
 
         public readonly static float LineWidthPercentage = 80f;
         public readonly static float LineThickness = 4f;
-        public readonly static float LinePadding = 8f;
+        public readonly static float LinePadding = 6f;
         public readonly static Color LineColor = Color.gray;
 
         #endregion

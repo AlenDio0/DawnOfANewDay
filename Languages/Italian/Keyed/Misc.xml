@@ -4,13 +4,13 @@
 	<!-- Header -->
 	<DawnNewDay.Label_Enabled>Abilitato</DawnNewDay.Label_Enabled>
 	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
-	
+
 	<DawnNewDay.Label_ShowExample>Mostra esempio</DawnNewDay.Label_ShowExample>
 	<DawnNewDay.Message_ShowExample>L'esempio di '{0}' sarà eseguito nel prossimo tick possibile.</DawnNewDay.Message_ShowExample>
 
 	<!-- Appearance Section -->
 	<DawnNewDay.Section_Appearance>Aspetto</DawnNewDay.Section_Appearance>
-	
+
 	<DawnNewDay.Label_ShowHighlight>Mostra in evidenza</DawnNewDay.Label_ShowHighlight>
 	<DawnNewDay.Label_Scale>Scala</DawnNewDay.Label_Scale>
 	<DawnNewDay.Label_Offset>Offset</DawnNewDay.Label_Offset>
@@ -33,17 +33,17 @@
 
 	<!-- Duration Section -->
 	<DawnNewDay.Section_Duration>Durata</DawnNewDay.Section_Duration>
-	
+
 	<DawnNewDay.Label_DisplayDuration>Durata Display Totale</DawnNewDay.Label_DisplayDuration>
 	<DawnNewDay.Label_FadeInDuration>Durata Fade In</DawnNewDay.Label_FadeInDuration>
 	<DawnNewDay.Label_FadeOutDuration>Durata Fade Out</DawnNewDay.Label_FadeOutDuration>
 
 	<!-- Text Section -->
 	<DawnNewDay.Section_Text>Testo</DawnNewDay.Section_Text>
-	
+
 	<DawnNewDay.Section_UpperText>Testo Superiore</DawnNewDay.Section_UpperText>
 	<DawnNewDay.Section_BottomText>Testo Inferiore</DawnNewDay.Section_BottomText>
-	
+
 	<DawnNewDay.Label_DefaultFont>Font predefinito di gioco</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Scegli il font</DawnNewDay.Label_FontFamily>
 	<DawnNewDay.Label_FontSize>Dimensione carattere</DawnNewDay.Label_FontSize>
@@ -56,10 +56,10 @@
 
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>Formattazione</DawnNewDay.Section_LabelFormat>
-	
+
 	<DawnNewDay.Label_UpperTextFormat>Formattazione Testo Superiore</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Formattazione Testo Inferiore</DawnNewDay.Label_BottomTextFormat>
-	
+
 	<DawnNewDay.Label_LabelFormatPresets>Presets di Formattazione</DawnNewDay.Label_LabelFormatPresets>
 	<DawnNewDay.Label_LabelFormatHints>Consigli per Formattazione</DawnNewDay.Label_LabelFormatHints>
 	<DawnNewDay.Label_RichTextHints>Consigli per Rich Text</DawnNewDay.Label_RichTextHints>
@@ -103,6 +103,8 @@
 
 	<DawnNewDay.Hint_Format_POLLUTION>Inquinamento in percentuale [eg. 69.1%]</DawnNewDay.Hint_Format_POLLUTION>
 
+	<DawnNewDay.Hint_Format_CONDITION>Condizione di gioco [eg. Eruzione solare, Ricaduta tossica]</DawnNewDay.Hint_Format_CONDITION>
+
 	<DawnNewDay.Hint_Format_FACTION>Nome della fazione [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
 	<DawnNewDay.Hint_Format_SETTLEMENT>Nome della colonia [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
 
@@ -111,6 +113,7 @@
 
 	<DawnNewDay.Hint_RichText_Color>Cambia il colore del testo {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Cambia il colore del testo {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
+	<DawnNewDay.Hint_RichText_ColorRGBA>Cambia il colore del testo {RRGGBBAA_HERE: [eg. FF00FFA0, a0a0a0ff]}</DawnNewDay.Hint_RichText_ColorRGBA>
 
 	<DawnNewDay.Hint_RichText_Bold>Aggiunge lo stile grasseto al testo</DawnNewDay.Hint_RichText_Bold>
 	<DawnNewDay.Hint_RichText_Italic>Aggiunge lo stile corsivo al testo</DawnNewDay.Hint_RichText_Italic>
@@ -126,10 +129,10 @@
 	<DawnNewDay.Label_Sound>Scegli il suono</DawnNewDay.Label_Sound>
 	<DawnNewDay.Label_SoundVolume>Volume Suono</DawnNewDay.Label_SoundVolume>
 	<DawnNewDay.Label_SoundPitch>Pitch Suono</DawnNewDay.Label_SoundPitch>
-	
+
 	<!-- Extra Section -->
 	<DawnNewDay.Section_Extra>Extra</DawnNewDay.Section_Extra>
-	
+
 	<DawnNewDay.Label_StartsAtZero>Inizia a Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Mostra ogni X giorni</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Orario di Attivazione</DawnNewDay.Label_TriggerHour>

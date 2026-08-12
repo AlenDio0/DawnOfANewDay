@@ -149,6 +149,7 @@ namespace DawnNewDay
         {
             { "<color=COLOR_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_Color".Translate() },
             { "<color=#RRGGBB_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_ColorRGB".Translate() },
+            { "<color=#RRGGBBAA_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_ColorRGBA".Translate() },
 
             { "<b>TEXT_HERE</b>", "DawnNewDay.Hint_RichText_Bold".Translate() },
             { "<i>TEXT_HERE</i>", "DawnNewDay.Hint_RichText_Italic".Translate() },

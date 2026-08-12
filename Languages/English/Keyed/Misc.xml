@@ -4,13 +4,13 @@
 	<!-- Header -->
 	<DawnNewDay.Label_Enabled>Enabled</DawnNewDay.Label_Enabled>
 	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
-	
+
 	<DawnNewDay.Label_ShowExample>Show Example</DawnNewDay.Label_ShowExample>
 	<DawnNewDay.Message_ShowExample>'{0}' Example will be triggered in the next possible tick.</DawnNewDay.Message_ShowExample>
 
 	<!-- Appearance Section -->
 	<DawnNewDay.Section_Appearance>Appearance</DawnNewDay.Section_Appearance>
-	
+
 	<DawnNewDay.Label_ShowHighlight>Show Highlight</DawnNewDay.Label_ShowHighlight>
 	<DawnNewDay.Label_Scale>Scale</DawnNewDay.Label_Scale>
 	<DawnNewDay.Label_Offset>Offset</DawnNewDay.Label_Offset>
@@ -33,17 +33,17 @@
 
 	<!-- Duration Section -->
 	<DawnNewDay.Section_Duration>Duration</DawnNewDay.Section_Duration>
-	
+
 	<DawnNewDay.Label_DisplayDuration>Total Display Duration</DawnNewDay.Label_DisplayDuration>
 	<DawnNewDay.Label_FadeInDuration>Fade In Duration</DawnNewDay.Label_FadeInDuration>
 	<DawnNewDay.Label_FadeOutDuration>Fade Out Duration</DawnNewDay.Label_FadeOutDuration>
 
 	<!-- Text Section -->
 	<DawnNewDay.Section_Text>Text</DawnNewDay.Section_Text>
-	
+
 	<DawnNewDay.Section_UpperText>Upper Text</DawnNewDay.Section_UpperText>
 	<DawnNewDay.Section_BottomText>Bottom Text</DawnNewDay.Section_BottomText>
-	
+
 	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
 	<DawnNewDay.Label_FontSize>Font Size</DawnNewDay.Label_FontSize>
@@ -56,7 +56,7 @@
 
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>Label Format</DawnNewDay.Section_LabelFormat>
-	
+
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
 
@@ -68,21 +68,21 @@
 	<DawnNewDay.Hint_Preset_Date>Date [eg. 2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
 	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperature with color [eg. -10C -> Ice, 50C -> Orange]</DawnNewDay.Hint_Preset_TemperatureWithColor>
 	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the desert]</DawnNewDay.Hint_Preset_SomewherePlace>
-	
+
 	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
 	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
 	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
-	
+
 	<DawnNewDay.Hint_Format_DAY_SETTLE>Day relative to the day the colonist settled</DawnNewDay.Hint_Format_DAY_SETTLE>
 	<DawnNewDay.Hint_Format_DAY_QUADRUM>Day relative to the quadrum (From DAY 1 to DAY 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
 	<DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>Day relative to the quadrum (From DAY 1 to DAY 15) [eg. 3rd, 12th]</DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>
 	<DawnNewDay.Hint_Format_DAY_SEASON>Day relative to the season</DawnNewDay.Hint_Format_DAY_SEASON>
 	<DawnNewDay.Hint_Format_DAY_YEAR>Day relative to the year (From DAY 1 to DAY 60)</DawnNewDay.Hint_Format_DAY_YEAR>
-	
+
 	<DawnNewDay.Hint_Format_YEAR>Full Year [eg. 5500]</DawnNewDay.Hint_Format_YEAR>
 	<DawnNewDay.Hint_Format_YEAR_D2>2-Digit Year [eg. 00]</DawnNewDay.Hint_Format_YEAR_D2>
-	
+
 	<DawnNewDay.Hint_Format_QUADRUM>Quadrum [eg. Aprimay]</DawnNewDay.Hint_Format_QUADRUM>
 	<DawnNewDay.Hint_Format_SEASON>Season [eg. Spring]</DawnNewDay.Hint_Format_SEASON>
 
@@ -100,17 +100,20 @@
 
 	<DawnNewDay.Hint_Format_ELEVATION>Terrain Elevation [eg. 467m]</DawnNewDay.Hint_Format_ELEVATION>
 	<DawnNewDay.Hint_Format_ELEVATION_KM>Terrain Elevation in km [eg. 1.21km]</DawnNewDay.Hint_Format_ELEVATION_KM>
-	
+
 	<DawnNewDay.Hint_Format_POLLUTION>Pollution Percentage [eg. 69.1%]</DawnNewDay.Hint_Format_POLLUTION>
+	
+	<DawnNewDay.Hint_Format_CONDITION>Game Condition [eg. Solar Flare, Toxic Fallout]</DawnNewDay.Hint_Format_CONDITION>
 
 	<DawnNewDay.Hint_Format_FACTION>Faction Name [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
 	<DawnNewDay.Hint_Format_SETTLEMENT>Settlement Name [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
 
 	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>General Font Size of Upper Text</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>General Font Size of Bottom Text</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
-	
+
 	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
+	<DawnNewDay.Hint_RichText_ColorRGBA>Changes the text color {RRGGBBAA_HERE: [eg. FF00FFA0, a0a0a0ff]}</DawnNewDay.Hint_RichText_ColorRGBA>
 
 	<DawnNewDay.Hint_RichText_Bold>Adds bold style to the text</DawnNewDay.Hint_RichText_Bold>
 	<DawnNewDay.Hint_RichText_Italic>Adds italic style to the text</DawnNewDay.Hint_RichText_Italic>
@@ -122,14 +125,14 @@
 
 	<!-- Sound Section -->
 	<DawnNewDay.Section_Sound>Sound</DawnNewDay.Section_Sound>
-	
+
 	<DawnNewDay.Label_Sound>Choose Sound</DawnNewDay.Label_Sound>
 	<DawnNewDay.Label_SoundVolume>Sound Volume</DawnNewDay.Label_SoundVolume>
 	<DawnNewDay.Label_SoundPitch>Sound Pitch</DawnNewDay.Label_SoundPitch>
-	
+
 	<!-- Extra Section -->
 	<DawnNewDay.Section_Extra>Extra</DawnNewDay.Section_Extra>
-	
+
 	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
