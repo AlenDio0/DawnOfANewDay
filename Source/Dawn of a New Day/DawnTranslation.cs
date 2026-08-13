@@ -42,6 +42,8 @@ namespace DawnNewDay
             ("DawnNewDay.Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
         ];
 
+        public static string Label_SubtitleGap => "DawnNewDay.Label_SubtitleGap".Translate();
+
         public static string Label_LineWidthPercentage => "DawnNewDay.Label_LineWidthPercentage".Translate();
         public static string Label_LineThickness => "DawnNewDay.Label_LineThickness".Translate();
         public static string Label_LinePadding => "DawnNewDay.Label_LinePadding".Translate();
@@ -65,6 +67,7 @@ namespace DawnNewDay
 
         public static string Section_UpperText => "DawnNewDay.Section_UpperText".Translate();
         public static string Section_BottomText => "DawnNewDay.Section_BottomText".Translate();
+        public static string Section_SubtitleText => "DawnNewDay.Section_SubtitleText".Translate();
 
         public static string Label_DefaultFont => "DawnNewDay.Label_DefaultFont".Translate();
 
@@ -86,6 +89,7 @@ namespace DawnNewDay
 
         public static string Label_UpperTextFormat => "DawnNewDay.Label_UpperTextFormat".Translate();
         public static string Label_BottomTextFormat => "DawnNewDay.Label_BottomTextFormat".Translate();
+        public static string Label_SubtitleTextFormat => "DawnNewDay.Label_SubtitleTextFormat".Translate();
 
         public static string Label_LabelFormatPresets => "DawnNewDay.Label_LabelFormatPresets".Translate();
         public static string Label_LabelFormatHints => "DawnNewDay.Label_LabelFormatHints".Translate();
@@ -141,8 +145,9 @@ namespace DawnNewDay
             { "{FACTION}", "DawnNewDay.Hint_Format_FACTION".Translate() },
             { "{SETTLEMENT}", "DawnNewDay.Hint_Format_SETTLEMENT".Translate() },
 
-            { "UPPER_FONTSIZE", "DawnNewDay.Hint_Format_UPPER_FONTSIZE".Translate() },
-            { "BOTTOM_FONTSIZE", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
+            { "{UPPER_FONTSIZE}", "DawnNewDay.Hint_Format_UPPER_FONTSIZE".Translate() },
+            { "{BOTTOM_FONTSIZE}", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
+            { "{SUBTITLE_FONTSIZE}", "DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE".Translate() },
         };
 
         public static Dictionary<string, string> Hints_RichText => new()

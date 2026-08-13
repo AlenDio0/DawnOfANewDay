@@ -26,6 +26,8 @@
 	<DawnNewDay.Offset_LeftBottom>(Left, Bottom) ↙</DawnNewDay.Offset_LeftBottom>
 	<DawnNewDay.Offset_RightBottom>(Right, Bottom) ↘</DawnNewDay.Offset_RightBottom>
 
+	<DawnNewDay.Label_SubtitleGap>Subtitle Gap</DawnNewDay.Label_SubtitleGap>
+	
 	<DawnNewDay.Label_LineWidthPercentage>Line Width</DawnNewDay.Label_LineWidthPercentage>
 	<DawnNewDay.Label_LineThickness>Line Thickness</DawnNewDay.Label_LineThickness>
 	<DawnNewDay.Label_LinePadding>Line Padding</DawnNewDay.Label_LinePadding>
@@ -43,6 +45,7 @@
 
 	<DawnNewDay.Section_UpperText>Upper Text</DawnNewDay.Section_UpperText>
 	<DawnNewDay.Section_BottomText>Bottom Text</DawnNewDay.Section_BottomText>
+	<DawnNewDay.Section_SubtitleText>Subtitle Text</DawnNewDay.Section_SubtitleText>
 
 	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
@@ -59,6 +62,7 @@
 
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
+	<DawnNewDay.Label_SubtitleTextFormat>Subtitle Text Format</DawnNewDay.Label_SubtitleTextFormat>
 
 	<DawnNewDay.Label_LabelFormatPresets>Label Format Presets</DawnNewDay.Label_LabelFormatPresets>
 	<DawnNewDay.Label_LabelFormatHints>Label Format Hints</DawnNewDay.Label_LabelFormatHints>
@@ -110,6 +114,7 @@
 
 	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>General Font Size of Upper Text</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>General Font Size of Bottom Text</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
+	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>General Font Size of Subtitle Text</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
 
 	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>

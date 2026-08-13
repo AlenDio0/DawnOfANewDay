@@ -21,11 +21,13 @@ namespace DawnNewDay
 
         private string m_CachedUpperText;
         private string m_CachedBottomText;
+        private string m_CachedSubtitleText;
 
         private Rect m_CachedOverlayRect = Rect.zero;
         private Rect m_CachedUpperRect = Rect.zero;
         private Rect m_CachedLineRect = Rect.zero;
         private Rect m_CachedBottomRect = Rect.zero;
+        private Rect m_CachedSubtitleRect = Rect.zero;
 
         private static readonly Regex FirstColorTagRegex = new(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -130,6 +132,9 @@ namespace DawnNewDay
             string bottomText = WithAlphaToRichText(m_CachedBottomText);
             settings.BottomTextStyle.Draw(m_CachedBottomRect, bottomText, settings.Scale);
 
+            string subtitleText = WithAlphaToRichText(m_CachedSubtitleText);
+            settings.SubtitleTextStyle.Draw(m_CachedSubtitleRect, subtitleText, settings.Scale);
+
             GUI.EndGroup();
 
             GUI.color = defaultColor;
@@ -147,35 +152,42 @@ namespace DawnNewDay
                 FormatContext context = m_FormatManager.CreateFormatContext(settings.StartsAtZero);
                 m_CachedUpperText = context.FormatText(settings.UpperTextFormat);
                 m_CachedBottomText = context.FormatText(settings.BottomTextFormat);
+                m_CachedSubtitleText = context.FormatText(settings.SubtitleTextFormat);
 
                 settings.UpdateText();
 
                 #region Cached Rects
 
+                float scaledSubtitleGap = !m_CachedSubtitleText.NullOrEmpty() ? settings.SubtitleGap * settings.Scale : 0f;
                 float scaledLinePadding = settings.LinePadding * settings.Scale;
 
-                Vector2 upperTextSize = settings.UpperTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedUpperText));
-                Vector2 bottomTextSize = settings.BottomTextStyle.TextGUIStyle.CalcSize(new GUIContent(m_CachedBottomText));
+                Vector2 upperTextSize = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
+                Vector2 bottomTextSize = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
+                Vector2 subtitleTextSize = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
 
-                float textWidth = Mathf.Max(upperTextSize.x, bottomTextSize.x) * 1.2f;
+                float textWidth = Mathf.Max(upperTextSize.x, bottomTextSize.x, subtitleTextSize.x) * 1.2f;
 
                 m_CachedUpperRect.size = new Vector2(textWidth, upperTextSize.y);
                 m_CachedBottomRect.size = new Vector2(textWidth, bottomTextSize.y);
+                m_CachedSubtitleRect.size = new Vector2(textWidth, subtitleTextSize.y);
 
                 m_CachedOverlayRect.width = textWidth;
-                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + settings.LineThickness + (scaledLinePadding * 2f);
+                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + m_CachedSubtitleRect.height + settings.LineThickness + (scaledLinePadding * 2f) + scaledSubtitleGap;
                 m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
-                m_CachedUpperRect.x = (m_CachedOverlayRect.width - m_CachedUpperRect.width) / 2f;
+                m_CachedUpperRect.x = CenteredX(m_CachedUpperRect, m_CachedOverlayRect);
                 m_CachedUpperRect.y = 0f;
 
                 m_CachedLineRect.width = m_CachedOverlayRect.width * (settings.LineWidthPercentage / 100f);
                 m_CachedLineRect.height = settings.LineThickness;
-                m_CachedLineRect.x = (m_CachedOverlayRect.width - m_CachedLineRect.width) / 2f;
+                m_CachedLineRect.x = CenteredX(m_CachedLineRect, m_CachedOverlayRect);
                 m_CachedLineRect.y = m_CachedUpperRect.yMax + scaledLinePadding;
 
                 m_CachedBottomRect.x = (m_CachedOverlayRect.width - m_CachedBottomRect.width) / 2f;
                 m_CachedBottomRect.y = m_CachedLineRect.yMax + scaledLinePadding;
+
+                m_CachedSubtitleRect.x = CenteredX(m_CachedSubtitleRect, m_CachedOverlayRect);
+                m_CachedSubtitleRect.y = m_CachedBottomRect.yMax + scaledSubtitleGap;
 
                 #endregion
 
@@ -195,6 +207,19 @@ namespace DawnNewDay
             {
                 DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOverlay()\nException: {exception}");
             }
+        }
+
+        private Vector2 CalcTextSize(DawnTextStyle style, string text)
+        {
+            if (text.NullOrEmpty())
+                return Vector2.zero;
+
+            return style.TextGUIStyle.CalcSize(new GUIContent(text));
+        }
+
+        private float CenteredX(Rect baseRect, Rect onRect)
+        {
+            return (onRect.width - baseRect.width) / 2f;
         }
 
         private string WithAlphaToRichText(string text)

@@ -3,7 +3,6 @@ using Verse;
 
 namespace DawnNewDay
 {
-    [StaticConstructorOnStartup]
     public static class DawnDefault
     {
         #region Header
@@ -20,6 +19,8 @@ namespace DawnNewDay
         public readonly static float Scale = 2f;
         public readonly static Vector2 Offset = new Vector2(UI.screenWidth, UI.screenHeight) / 2f;
 
+        public readonly static float SubtitleGap = 8f;
+
         public readonly static float LineWidthPercentage = 80f;
         public readonly static float LineThickness = 4f;
         public readonly static float LinePadding = 6f;
@@ -35,10 +36,19 @@ namespace DawnNewDay
 
         #endregion
 
+        #region Text Section
+
+        public static DawnTextStyle UpperTextStyle => new(40, true, false);
+        public static DawnTextStyle BottomTextStyle => new(24, false, false);
+        public static DawnTextStyle SubtitleTextStyle => new(12, false, true, 0.25f);
+
+        #endregion
+
         #region Label Format Section
 
         public readonly static string UpperTextFormat = "DAY {DAY_SETTLE} <size={UPPER_FONTSIZE / 2}>{HOUR_D2}:00 | <color={TEMPERATURE_COLOR}>{TEMPERATURE}</color></size>";
         public readonly static string BottomTextFormat = "YEAR {YEAR} | <upper>{QUADRUM}</upper> | <upper>{SEASON}</upper>";
+        public readonly static string SubtitleTextFormat = "{FACTION} ~ {SETTLEMENT}";
 
         #endregion
 

@@ -32,12 +32,14 @@ namespace DawnNewDay
 
         #region Appearance Section
 
-        bool m_AppearanceSection = false;
+        private bool m_AppearanceSection = false;
 
         public bool ShowHighlight = DawnDefault.ShowHighlight;
 
         public float Scale = DawnDefault.Scale;
         public Vector2 Offset = DawnDefault.Offset;
+
+        public float SubtitleGap = DawnDefault.SubtitleGap;
 
         public float LineWidthPercentage = DawnDefault.LineWidthPercentage;
         public float LineThickness = DawnDefault.LineThickness;
@@ -48,7 +50,7 @@ namespace DawnNewDay
 
         #region Duration Section
 
-        bool m_DurationSection = false;
+        private bool m_DurationSection = false;
 
         public float DisplayDurationSeconds = DawnDefault.DisplayDurationSeconds;
         public float FadeInDurationSeconds = DawnDefault.FadeInDurationSeconds;
@@ -58,28 +60,32 @@ namespace DawnNewDay
 
         #region Text Section
 
-        bool m_TextSection = false;
+        private bool m_TextSection = false;
 
-        bool m_TextUpperSection = false;
-        public DawnTextStyle UpperTextStyle = new(40, true);
+        private bool m_UpperTextSection = false;
+        public DawnTextStyle UpperTextStyle = DawnDefault.UpperTextStyle;
 
-        bool m_TextBottomSection = false;
-        public DawnTextStyle BottomTextStyle = new();
+        private bool m_BottomTextSection = false;
+        public DawnTextStyle BottomTextStyle = DawnDefault.BottomTextStyle;
+
+        private bool m_SubtitleTextSection = false;
+        public DawnTextStyle SubtitleTextStyle = DawnDefault.SubtitleTextStyle;
 
         #endregion
 
         #region Label Format Section
 
-        bool m_LabelFormatSection = false;
+        private bool m_LabelFormatSection = false;
 
         public string UpperTextFormat = DawnDefault.UpperTextFormat;
         public string BottomTextFormat = DawnDefault.BottomTextFormat;
+        public string SubtitleTextFormat = DawnDefault.SubtitleTextFormat;
 
         #endregion
 
         #region Sound Section
 
-        bool m_SoundSection = false;
+        private bool m_SoundSection = false;
 
         public bool SoundEnabled = DawnDefault.SoundEnabled;
 
@@ -94,7 +100,7 @@ namespace DawnNewDay
 
         #region Extra Section
 
-        bool m_ExtraSection = false;
+        private bool m_ExtraSection = false;
 
         public bool StartsAtZero = DawnDefault.StartsAtZero;
         public int ShowEveryXDays = DawnDefault.ShowEveryXDays;
@@ -107,9 +113,6 @@ namespace DawnNewDay
         private string m_DisplayDurationBuffer;
         private string m_FadeInDurationBuffer;
         private string m_FadeOutDurationBuffer;
-
-        private string m_LineThicknessBuffer;
-        private string m_LinePaddingBuffer;
 
         private string m_ShowEveryXDaysBuffer;
 
@@ -212,9 +215,13 @@ namespace DawnNewDay
 
             listing.Gap();
 
-            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineWidthPercentage} ({LineWidthPercentage} %)", LineWidthPercentage, 0f, 100f, 0.25f));
-            listing.LabeledTextFieldNumeric($"{DawnTranslation.Label_LineThickness} (px)", ref LineThickness, ref m_LineThicknessBuffer, 0f, 100f);
-            listing.LabeledTextFieldNumeric($"{DawnTranslation.Label_LinePadding} (px)", ref LinePadding, ref m_LinePaddingBuffer, 0f, 100f);
+            SubtitleGap = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_SubtitleGap} ({SubtitleGap} px)", SubtitleGap, 0f, 100f, 0.25f));
+
+            listing.Gap();
+
+            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineWidthPercentage} ({LineWidthPercentage}%)", LineWidthPercentage, 0f, 100f, 0.25f));
+            LineThickness = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineThickness} ({LineThickness} px)", LineThickness, 0f, 100f, 0.25f));
+            LinePadding = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LinePadding} ({LinePadding} px)", LinePadding, 0f, 100f, 0.25f));
             listing.LabeledRadioColorPresets(ref LineColor, DawnTranslation.Label_LineColor);
         }
 
@@ -227,11 +234,14 @@ namespace DawnNewDay
 
         private void ShowTextSection(Listing_Standard listing)
         {
-            if (listing.SectionButton(DawnTranslation.Section_UpperText, ref m_TextUpperSection))
+            if (listing.SectionButton(DawnTranslation.Section_UpperText, ref m_UpperTextSection))
                 listing.Indented(() => UpperTextStyle.DoContents(listing, Scale), 32f);
 
-            if (listing.SectionButton(DawnTranslation.Section_BottomText, ref m_TextBottomSection))
+            if (listing.SectionButton(DawnTranslation.Section_BottomText, ref m_BottomTextSection))
                 listing.Indented(() => BottomTextStyle.DoContents(listing, Scale), 32f);
+
+            if (listing.SectionButton(DawnTranslation.Section_SubtitleText, ref m_SubtitleTextSection))
+                listing.Indented(() => SubtitleTextStyle.DoContents(listing, Scale), 32f);
         }
 
         private void ShowLabelFormatSection(Listing_Standard listing)
@@ -243,6 +253,11 @@ namespace DawnNewDay
 
             listing.Label(DawnTranslation.Label_BottomTextFormat);
             BottomTextFormat = listing.TextEntry(BottomTextFormat, 2);
+
+            listing.Gap();
+
+            listing.Label(DawnTranslation.Label_SubtitleTextFormat);
+            SubtitleTextFormat = listing.TextEntry(SubtitleTextFormat, 2);
 
             listing.Gap();
 
@@ -289,9 +304,11 @@ namespace DawnNewDay
         {
             UpperTextStyle.UpdateFontFamily();
             BottomTextStyle.UpdateFontFamily();
+            SubtitleTextStyle.UpdateFontFamily();
 
             UpperTextStyle.ApplyToGUIStyle(Scale);
             BottomTextStyle.ApplyToGUIStyle(Scale);
+            SubtitleTextStyle.ApplyToGUIStyle(Scale);
         }
 
         public override void ExposeData()
@@ -333,11 +350,13 @@ namespace DawnNewDay
 
                 Scribe_Deep.Look(ref UpperTextStyle, "UpperTextStyle");
                 Scribe_Deep.Look(ref BottomTextStyle, "BottomTextStyle");
+                Scribe_Deep.Look(ref SubtitleTextStyle, "SubtitleTextStyle");
 
                 if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
                 {
-                    UpperTextStyle ??= new DawnTextStyle(40, true);
-                    BottomTextStyle ??= new DawnTextStyle();
+                    UpperTextStyle ??= DawnDefault.UpperTextStyle;
+                    BottomTextStyle ??= DawnDefault.BottomTextStyle;
+                    SubtitleTextStyle ??= DawnDefault.SubtitleTextStyle;
                 }
 
                 #endregion
@@ -346,6 +365,7 @@ namespace DawnNewDay
 
                 Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat1", DawnDefault.UpperTextFormat);
                 Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat1", DawnDefault.BottomTextFormat);
+                Scribe_Values.Look(ref SubtitleTextFormat, "SubtitleTextFormat", DawnDefault.SubtitleTextFormat);
 
                 #endregion
 

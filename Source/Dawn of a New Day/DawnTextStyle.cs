@@ -12,7 +12,7 @@ namespace DawnNewDay
         public GUIStyle TextGUIStyle = new(Text.CurFontStyle);
 
         public string FontFamilyName = "";
-        public int FontSize = 24;
+        public int FontSize = 20;
         public Color TextColor = Color.white;
 
         public bool Bold = false;
@@ -31,7 +31,7 @@ namespace DawnNewDay
             TextGUIStyle.richText = true;
         }
 
-        public DawnTextStyle(int fontSize, bool bold)
+        public DawnTextStyle(int fontSize, bool bold, bool italic, float outlineThickness = 1f)
         {
             TextGUIStyle.alignment = TextAnchor.MiddleCenter;
             TextGUIStyle.font = null;
@@ -40,6 +40,9 @@ namespace DawnNewDay
 
             FontSize = fontSize;
             Bold = bold;
+            Italic = italic;
+
+            OutlineThickness = outlineThickness;
         }
 
         public void DoContents(Listing_Standard listing, float scale)
@@ -139,7 +142,7 @@ namespace DawnNewDay
             TextGUIStyle ??= new GUIStyle(Text.CurFontStyle);
 
             Scribe_Values.Look(ref FontFamilyName, "FontFamilyName", "");
-            Scribe_Values.Look(ref FontSize, "FontSize", 24);
+            Scribe_Values.Look(ref FontSize, "FontSize", 20);
             Scribe_Values.Look(ref TextColor, "TextColor", Color.white);
 
             Scribe_Values.Look(ref Bold, "Bold", false);

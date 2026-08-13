@@ -10,6 +10,14 @@ using Verse;
 
 namespace DawnNewDay
 {
+    public enum DayRelative
+    {
+        Settle,
+        Quadrum,
+        Season,
+        Year,
+    }
+
     public struct FormatContext
     {
         public int AbsTicks;
@@ -60,14 +68,6 @@ namespace DawnNewDay
 
         public readonly string FactionName => Map.ParentFaction.Name;
         public readonly string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
-    }
-
-    public enum DayRelative
-    {
-        Settle,
-        Quadrum,
-        Season,
-        Year,
     }
 
     public class DawnFormatter(Game game)
@@ -138,6 +138,7 @@ namespace DawnNewDay
 
             { "UPPER_FONTSIZE", _ => (Settings.UpperTextStyle.FontSize * Settings.Scale).ToString() },
             { "BOTTOM_FONTSIZE", _ => (Settings.BottomTextStyle.FontSize * Settings.Scale).ToString() },
+            { "SUBTITLE_FONTSIZE", _ => (Settings.SubtitleTextStyle.FontSize * Settings.Scale).ToString() },
         };
 
         private static readonly Regex ExtraRichTextTagRegex = new(@"<(?<tag>\w+)>(?<content>.*?)</\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);

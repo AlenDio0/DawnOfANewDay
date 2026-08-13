@@ -26,6 +26,8 @@
 	<DawnNewDay.Offset_LeftBottom>(Sinsitra, Sotto) ↙</DawnNewDay.Offset_LeftBottom>
 	<DawnNewDay.Offset_RightBottom>(Destra, Sotto) ↘</DawnNewDay.Offset_RightBottom>
 
+	<DawnNewDay.Label_SubtitleGap>Spaziatura sottotitolo</DawnNewDay.Label_SubtitleGap>
+
 	<DawnNewDay.Label_LineWidthPercentage>Lunghezza Divisore</DawnNewDay.Label_LineWidthPercentage>
 	<DawnNewDay.Label_LineThickness>Spessore Divisore</DawnNewDay.Label_LineThickness>
 	<DawnNewDay.Label_LinePadding>Spaziatura Divisore</DawnNewDay.Label_LinePadding>
@@ -43,6 +45,7 @@
 
 	<DawnNewDay.Section_UpperText>Testo Superiore</DawnNewDay.Section_UpperText>
 	<DawnNewDay.Section_BottomText>Testo Inferiore</DawnNewDay.Section_BottomText>
+	<DawnNewDay.Section_SubtitleText>Testo Sottotitolo</DawnNewDay.Section_SubtitleText>
 
 	<DawnNewDay.Label_DefaultFont>Font predefinito di gioco</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Scegli il font</DawnNewDay.Label_FontFamily>
@@ -59,6 +62,7 @@
 
 	<DawnNewDay.Label_UpperTextFormat>Formattazione Testo Superiore</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Formattazione Testo Inferiore</DawnNewDay.Label_BottomTextFormat>
+	<DawnNewDay.Label_SubtitleTextFormat>Formattazione Testo Sottotitolo</DawnNewDay.Label_SubtitleTextFormat>
 
 	<DawnNewDay.Label_LabelFormatPresets>Presets di Formattazione</DawnNewDay.Label_LabelFormatPresets>
 	<DawnNewDay.Label_LabelFormatHints>Consigli per Formattazione</DawnNewDay.Label_LabelFormatHints>
@@ -110,6 +114,7 @@
 
 	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>Grandezza del carattere generale del Testo Superiore</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>Grandezza del carattere generale del Testo Inferiore</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
+	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>Grandezza del carattere generale del Testo Sottotitolo</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
 
 	<DawnNewDay.Hint_RichText_Color>Cambia il colore del testo {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Cambia il colore del testo {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
