@@ -155,6 +155,26 @@ namespace DawnNewDay
             { "{VALUE1 / VALUE2}", "DawnNewDay.Hint_Format_Division".Translate() },
         };
 
+        #region Compatibility
+
+        #region Modern Notifications
+
+        public static readonly string MN_ModName = "Modern Notifications";
+
+        public static Dictionary<string, string> Hints_MN_LabelFormat => new()
+        {
+            { "{MN_REMINDER_TITLE}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_TITLE".Translate()}" },
+            { "{MN_REMINDER_DAY_YEAR}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_DAY_YEAR".Translate()}" },
+
+            { "{MN_REMINDER_REMAINING}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING".Translate()}" },
+            { "{MN_REMINDER_REMAINING_DAY}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY".Translate()}" },
+            { "{MN_REMINDER_REMAINING_HOUR}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR".Translate()}" },
+        };
+
+        #endregion 
+
+        #endregion
+
         public static Dictionary<string, string> Hints_RichText => new()
         {
             { "<color=COLOR_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_Color".Translate() },

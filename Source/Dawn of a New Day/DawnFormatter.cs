@@ -1,4 +1,6 @@
-﻿using RimWorld;
+﻿using DawnNewDay.Compatibility;
+using DawnNewDay.Utils;
+using RimWorld;
 using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,8 @@ namespace DawnNewDay
         public Map Map;
         public Vector2 Location;
 
+        #region Date
+
         public readonly int GenDay(DayRelative dayRelative)
         {
             int startsAtZero = (StartAtZero ? 0 : 1);
@@ -46,16 +50,23 @@ namespace DawnNewDay
         public readonly string GenSeason() => GenDate.Season(AbsTicks, Location).LabelCap();
         public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
+        #endregion
+
+        #region Tile Info
+
         public readonly float Temperature => Map.mapTemperature.OutdoorTemp;
-        public readonly string CalcTemperatureHex()
+        public readonly string TemperatureHex
         {
-            Color coldColor = new(0.2f, 0.7f, 1f);
-            Color hotColor = new(1f, 0.3f, 0f);
+            get
+            {
+                Color coldColor = new(0.2f, 0.7f, 1f);
+                Color hotColor = new(1f, 0.3f, 0f);
 
-            float t = Mathf.InverseLerp(-10f, 50f, Temperature);
-            Color temperatureColor = Color.Lerp(coldColor, hotColor, t);
+                float t = Mathf.InverseLerp(-10f, 50f, Temperature);
+                Color temperatureColor = Color.Lerp(coldColor, hotColor, t);
 
-            return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
+                return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
+            }
         }
 
         public readonly Tile Tile => World.grid[Map.Tile];
@@ -68,6 +79,93 @@ namespace DawnNewDay
 
         public readonly string FactionName => Map.ParentFaction.Name;
         public readonly string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
+
+        #endregion
+
+        #region Settings
+
+        public readonly DawnSettings Settings => DawnMod.Settings;
+
+        public readonly int UpperFontSize => Mathf.CeilToInt(Settings.UpperTextStyle.FontSize * Settings.Scale);
+        public readonly int BottomFontSize => Mathf.CeilToInt(Settings.BottomTextStyle.FontSize * Settings.Scale);
+        public readonly int SubtitleFontSize => Mathf.CeilToInt(Settings.SubtitleTextStyle.FontSize * Settings.Scale);
+
+        #endregion
+
+        #region Compatibility
+
+        #region Modern Notifications
+
+        public readonly ModernNotificationUtility.Reminder NextReminder
+        {
+            get
+            {
+                if (!ModernNotifications.Present)
+                    return new();
+
+                var reminders = ModernNotificationUtility.GetReminders();
+
+                ModernNotificationUtility.Reminder nextReminder = new();
+                foreach (ModernNotificationUtility.Reminder reminder in reminders)
+                {
+                    if (!reminder.IsValid || reminder.Fired)
+                        continue;
+
+                    if (!nextReminder.IsValid)
+                    {
+                        nextReminder = reminder;
+                        continue;
+                    }
+
+                    if (nextReminder.Year > reminder.Year)
+                        nextReminder = reminder;
+                    else if (nextReminder.DayOfYear > reminder.DayOfYear)
+                        nextReminder = reminder;
+                }
+
+                return nextReminder;
+            }
+        }
+
+        public readonly string ReminderRemaining
+        {
+            get
+            {
+                const int cToleranceHour = 72;
+
+                int remainingHour = ReminderRemainingHour;
+                int remainingTicks = remainingHour * GenDate.TicksPerHour;
+
+                return remainingHour > cToleranceHour ? remainingTicks.ToStringTicksToPeriod(true, false, false) : $"{remainingHour}h";
+            }
+        }
+        public readonly float ReminderRemainingDay(int remainingHour)
+        {
+            float remainingDay = remainingHour / 24f;
+            return remainingDay >= 2f ? Mathf.Ceil(remainingDay) : SettingsHelper.SnapToStep(remainingDay, 0.1f);
+        }
+        public readonly int ReminderRemainingHour
+        {
+            get
+            {
+                const int cYearLengthDay = 60;
+                const int cDayLengthHour = 24;
+
+                var reminder = NextReminder;
+                int currentDayOfYear = ModernNotifications.Today();
+                int currentYear = ModernNotifications.Year();
+                int currentHour = GenHour();
+
+                int yearsInDays = (reminder.Year - currentYear) * cYearLengthDay;
+                int remainingHours = (reminder.DayOfYear - currentDayOfYear + yearsInDays) * cDayLengthHour - currentHour;
+
+                return Mathf.Max(remainingHours, 0);
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 
     public class DawnFormatter(Game game)
@@ -96,8 +194,6 @@ namespace DawnNewDay
 
     public static class DawnFormatterUtility
     {
-        private static DawnSettings Settings => DawnMod.Settings;
-
         private static readonly Regex TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -120,7 +216,7 @@ namespace DawnNewDay
             { "WEATHER", context => context.Map.weatherManager.curWeather.LabelCap },
 
             { "TEMPERATURE", context => context.Temperature.ToStringTemperature() },
-            { "TEMPERATURE_COLOR", context => context.CalcTemperatureHex() },
+            { "TEMPERATURE_COLOR", context => context.TemperatureHex },
 
             { "WORLD", context => context.World.info.name },
             { "BIOME", context => context.Map.Biome.LabelCap },
@@ -138,15 +234,33 @@ namespace DawnNewDay
 
             { "ENDLINE", _ => "\n" },
 
-            { "UPPER_FONTSIZE", _ => (Settings.UpperTextStyle.FontSize * Settings.Scale).ToString() },
-            { "BOTTOM_FONTSIZE", _ => (Settings.BottomTextStyle.FontSize * Settings.Scale).ToString() },
-            { "SUBTITLE_FONTSIZE", _ => (Settings.SubtitleTextStyle.FontSize * Settings.Scale).ToString() },
+            { "UPPER_FONTSIZE", context => context.UpperFontSize.ToString() },
+            { "BOTTOM_FONTSIZE", context => context.BottomFontSize.ToString() },
+            { "SUBTITLE_FONTSIZE", context => context.SubtitleFontSize.ToString() },
         };
+
+        #region Compatibility
+
+        #region Modern Notifications
+
+        private static readonly Dictionary<string, Func<FormatContext, string>> MN_FormatTokens = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { "MN_REMINDER_TITLE", context => context.NextReminder.Title },
+            { "MN_REMINDER_DAY_YEAR", context => context.NextReminder.DayOfYear.ToString() },
+
+            { "MN_REMINDER_REMAINING", context => context.ReminderRemaining.ToString() },
+            { "MN_REMINDER_REMAINING_DAY", context => context.ReminderRemainingDay(context.ReminderRemainingHour).ToString() },
+            { "MN_REMINDER_REMAINING_HOUR", context => context.ReminderRemainingHour.ToString() },
+        };
+
+        #endregion
+
+        #endregion
 
         private static readonly Regex ExtraRichTextTagRegex = new(@"<(?<tag>\w+)>(?<content>.*?)</\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Dictionary<string, Func<string, string>> ExtraRichTextTags = new(StringComparer.OrdinalIgnoreCase)
         {
-            { "title", text => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower())},
+            { "title", text => Find.ActiveLanguageWorker.ToTitleCase(text.ToLower())},
             { "upper", text => text.ToUpper() },
             { "lower", text => text.ToLower() },
         };
@@ -203,6 +317,15 @@ namespace DawnNewDay
             public string Format(float newValue) => $"{Prefix}{Mathf.RoundToInt(newValue)}{Suffix}";
         }
 
+        public static string FormatText(this FormatContext context, string text)
+        {
+            if (text.NullOrEmpty())
+                return text;
+
+            string format = TokenFormatText(context, text);
+            return ExtraRichTextTagText(format);
+        }
+
         private static string TokenFormatText(FormatContext context, string text)
         {
             return TokenFormatRegex.Replace(text, match =>
@@ -214,8 +337,8 @@ namespace DawnNewDay
 
                 if (!isOperation)
                 {
-                    if (FormatTokens.TryGetValue(token, out var replacer))
-                        return replacer?.Invoke(context);
+                    if (TryReplaceToken(context, token, out string value))
+                        return value;
 
                     return match.Value;
                 }
@@ -235,13 +358,31 @@ namespace DawnNewDay
                     return targetOperand.Format(result);
                 }
 
-                if (FormatTokens.TryGetValue(leftPart, out var leftReplacer))
-                    return leftReplacer?.Invoke(context);
-                if (FormatTokens.TryGetValue(rightPart, out var rightReplacer))
-                    return rightReplacer?.Invoke(context);
+                if (TryReplaceToken(context, token, out string leftValue))
+                    return leftValue;
+                if (TryReplaceToken(context, token, out string rightValue))
+                    return rightValue;
 
                 return match.Value;
             });
+        }
+
+        private static bool TryReplaceToken(FormatContext context, string token, out string value)
+        {
+            if (FormatTokens.TryGetValue(token, out var replacer))
+            {
+                value = replacer?.Invoke(context);
+                return true;
+            }
+
+            if (ModernNotifications.Present && MN_FormatTokens.TryGetValue(token, out var mnReplacer))
+            {
+                value = mnReplacer?.Invoke(context);
+                return true;
+            }
+
+            value = "";
+            return false;
         }
 
         private static float CalcStringMath(float left, float right, char operation) => operation switch
@@ -266,15 +407,6 @@ namespace DawnNewDay
 
                 return match.Value;
             });
-        }
-
-        public static string FormatText(this FormatContext context, string text)
-        {
-            if (text.NullOrEmpty())
-                return text;
-
-            string format = TokenFormatText(context, text);
-            return ExtraRichTextTagText(format);
         }
     }
 }
