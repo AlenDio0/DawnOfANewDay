@@ -1,4 +1,5 @@
-﻿using DawnNewDay.Dialogs;
+﻿using DawnNewDay.Compatibility;
+using DawnNewDay.Dialogs;
 using DawnNewDay.Utils;
 using RimWorld;
 using System;
@@ -269,7 +270,13 @@ namespace DawnNewDay
             Rect hintsRect = listing.GetRect(30f);
 
             if (Widgets.ButtonText(hintsRect.LeftHalf(), DawnTranslation.Label_LabelFormatHints))
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, DawnTranslation.Hints_LabelFormat));
+            {
+                var hints = DawnTranslation.Hints_LabelFormat;
+                if (ModernNotifications.Present)
+                    hints.AddRange(DawnTranslation.Hints_MN_LabelFormat);
+
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
+            }
 
             if (Widgets.ButtonText(hintsRect.RightHalf(), DawnTranslation.Label_RichTextHints))
                 Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
