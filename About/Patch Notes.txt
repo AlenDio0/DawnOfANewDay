@@ -1,0 +1,46 @@
+v1.1.0
+- Re-haul of the Mod options.
+- Added Text font family customization.
+- Added Hour Trigger.
+- Fixed mod conflict with Readable Numbers.
+
+v1.1.1
+- Added Translation compatibility.
+- Fixed Label Format defaults.
+- Fixed Quadrum and Season Label auto-translation.
+
+v1.2.0
+- Added Sound (Majora's Mask sound effect as default obviously).
+- Turned some text fields into sliders for users comfort.
+- Added Italian Translation.
+- Removed duplicate fonts in the dialog (variants for Bold and Italic, because it's already in the mod options and I don't like the redundancy).
+
+v1.2.2
+- Added Harmony 2.4.2 dependency (for future compatibilities).
+- Fixed default Font Family bug.
+
+v1.3.0
+- Updated Translations IDs (any outdated translation needs a fix!).
+- Fixed Full Hour format (by Spagles).
+- Various error prevention fixes (by Spagles).
+- Added integrated Chinese Simplified translation (by ylc395).
+
+v1.3.1
+- Fixed compatibility for RimWorld 1.5 .
+
+v1.3.2
+- Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
+
+v1.3.3
+- Fixed compatibility for Readable Numbers.
+
+v1.4.0
+- Re-hauled Label Format Section.
+- Added new formats.
+- Added rich text.
+- Removed Day Relative (replaced directly with the formats).
+
+v1.5.0
+- Added Subtitle Text.
+- Added endline format.
+- Added default format presets.
