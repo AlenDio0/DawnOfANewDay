@@ -101,6 +101,9 @@ namespace DawnNewDay
             { "{DAY_QUADRUM_ORDINAL} of {QUADRUM}, {YEAR}", "DawnNewDay.Hint_Preset_Date".Translate() },
             { "<color={TEMPERATURE_COLOR}>{TEMPERATURE}</color>", "DawnNewDay.Hint_Preset_TemperatureWithColor".Translate() },
             { "{SETTLEMENT} Y{YEAR}, somewhere in the <lower>{BIOME}</lower>", "DawnNewDay.Hint_Preset_SomewherePlace".Translate() },
+            { DawnDefault.UpperTextFormat, "DawnNewDay.Hint_Preset_UpperFormatDefault".Translate() },
+            { DawnDefault.BottomTextFormat, "DawnNewDay.Hint_Preset_BottomFormatDefault".Translate() },
+            { DawnDefault.SubtitleTextFormat, "DawnNewDay.Hint_Preset_SubtitleFormatDefault".Translate() },
         };
 
         public static Dictionary<string, string> Hints_LabelFormat => new()

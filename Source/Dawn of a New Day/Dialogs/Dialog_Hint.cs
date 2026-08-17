@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using static RimWorld.PsychicRitualRoleDef;
 
 namespace DawnNewDay.Dialogs
 {
@@ -78,7 +79,6 @@ namespace DawnNewDay.Dialogs
         {
             foreach ((string format, string description) in Hints)
             {
-
                 listing.GapLine();
                 Rect rowRect = listing.GetRect(40f);
 
@@ -91,6 +91,11 @@ namespace DawnNewDay.Dialogs
                 Text.Anchor = TextAnchor.MiddleLeft;
 
                 string displayFormat = format.Replace("<", "<\u200B");
+
+                const int cMaxLengthTrim = 72;
+                if (displayFormat.Length > cMaxLengthTrim)
+                    displayFormat = $"{displayFormat.TrimmedToLength(cMaxLengthTrim)}...";
+
                 Widgets.Label(hintRect, $"<b>{displayFormat}</b>\n~ {description}");
 
                 Text.Anchor = defaultAnchor;
