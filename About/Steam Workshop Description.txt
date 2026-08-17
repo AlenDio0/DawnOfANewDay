@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.4.0[/i]
+[i][b]Mod Version:[/b] v1.5.0[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -16,7 +16,8 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*][b]Show Highlight:[/b] Adds a low-opacity light background behind the overlay.
 [*][b]Scale:[/b] Scales the whole overlay to your like.
 [*][b]Offset Presets:[/b] Helps you to choose an offset of your liking without trial and error.
-[*][b]Offset sliders (px):[/b] Choose offsets on X and Y axis at pixel-precision.
+[*][b]Offset (px):[/b] Choose offsets on X and Y axis at pixel-precision.
+[*][b]Subtitle Gap (px):[/b] Choose the gap value between Bottom and Subtitle.
 [*][b]Line Width (%):[/b] Choose the width in percentage of the line that divides the Upper from Bottom.
 [*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom.
 [*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom.
@@ -41,6 +42,7 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [list]
 [*][b]Upper Text Format:[/b] Choose the format of the Upper text.
 [*][b]Bottom Text Format:[/b] Choose the format of the Bottom text.
+[*][b]Subtitle Text Format:[/b] Choose the format of the Subtitle text.
 [*][b]Label Format Presets:[/b] Copy a format preset to paste into any Format Text.
 [*][b]Label Format Hints:[/b] Copy any format available that you can paste into any Format Text.
 [*][b]Rich Text Hints:[/b] Copy any rich text body that you can paste into any Format Text and edit it to your liking.
@@ -60,56 +62,22 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [/list]
 
 [h1]PATCH NOTES[/h1]
-[h3]v1.1.0[/h3]
-[list]
-[*]Re-haul of the Mod options.
-[*]Added Text font family customization.
-[*]Added Hour Trigger.
-[*]Fixed mod conflict with Readable Numbers.
-[/list]
-[b]v1.1.1[/b]
-[list]
-[*]Added Translation compatibility.
-[*]Fixed Label Format defaults.
-[*]Fixed Quadrum and Season Label auto-translation.
-[/list]
-[h3]v1.2.0[/h3]
-[list]
-[*]Added Sound (Majora's Mask sound effect as default obviously).
-[*]Turned some text fields into sliders for users comfort.
-[*]Added Italian Translation.
-[*]Removed duplicate fonts in the dialog (variants for Bold and Italic, because it's already in the mod options and I don't like the redundancy).
-[/list]
-[b]v1.2.2[/b]
-[list]
-[*]Added Harmony 2.4.2 dependency (for future compatibilities).
-[*]Fixed default Font Family bug.
-[/list]
-[h3]v1.3.0[/h3]
-[list]
-[*]Updated Translations IDs (any outdated translation needs a fix!).
-[*]Fixed Full Hour format (by Spagles).
-[*]Various error prevention fixes (by Spagles).
-[*]Added integrated Chinese Simplified translation (by ylc395).
-[/list]
-[b]v1.3.1[/b]
-[list]
-[*]Fixed compatibility for RimWorld 1.5 .
-[/list]
-[b]v1.3.2[/b]
-[list]
-[*]Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
-[/list]
-[b]v1.3.3[/b]
-[list]
-[*]Fixed compatibility for Readable Numbers.
-[/list]
+[i]Only last two major patches will be showed to avoid wall text.[/i]
+[i]Go into About\Patch Notes.txt to see every patch note.[/i]
+[spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
+[h3]...[/h3]
 [h3]v1.4.0[/h3]
 [list]
 [*]Re-hauled Label Format Section.
 [*]Added new formats.
 [*]Added rich text.
 [*]Removed Day Relative (replaced directly with the formats).
+[/list]
+[h3]v1.5.0[/h3]
+[list]
+[*]Added Subtitle Text.
+[*]Added endline format.
+[*]Added default format presets.
 [/list]
 
 [h1]COMPATIBILITY[/h1]
@@ -140,7 +108,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [list]
 [*]Add compatibility with Modern Notifications.
 [*]Add compatibility with Explicit Timing.
-[*]Add additional special custom text subtitle.
 [*]Add renaming day section in mod options.
 [/list]
 

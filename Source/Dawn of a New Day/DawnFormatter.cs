@@ -136,6 +136,8 @@ namespace DawnNewDay
             { "FACTION", context => context.FactionName },
             { "SETTLEMENT", context => context.SettlementName },
 
+            { "ENDLINE", _ => "\n" },
+
             { "UPPER_FONTSIZE", _ => (Settings.UpperTextStyle.FontSize * Settings.Scale).ToString() },
             { "BOTTOM_FONTSIZE", _ => (Settings.BottomTextStyle.FontSize * Settings.Scale).ToString() },
             { "SUBTITLE_FONTSIZE", _ => (Settings.SubtitleTextStyle.FontSize * Settings.Scale).ToString() },

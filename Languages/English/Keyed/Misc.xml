@@ -72,11 +72,9 @@
 	<DawnNewDay.Hint_Preset_Date>Date [eg. 2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
 	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperature with color [eg. -10C -> Ice, 50C -> Orange]</DawnNewDay.Hint_Preset_TemperatureWithColor>
 	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the desert]</DawnNewDay.Hint_Preset_SomewherePlace>
-
-	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
-	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
-	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
-	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
+	<DawnNewDay.Hint_Preset_UpperFormatDefault>Upper Text Format Default</DawnNewDay.Hint_Preset_UpperFormatDefault>
+	<DawnNewDay.Hint_Preset_BottomFormatDefault>Bottom Text Format Default</DawnNewDay.Hint_Preset_BottomFormatDefault>
+	<DawnNewDay.Hint_Preset_SubtitleFormatDefault>Subtitle Text Format Default</DawnNewDay.Hint_Preset_SubtitleFormatDefault>
 
 	<DawnNewDay.Hint_Format_DAY_SETTLE>Day relative to the day the colonist settled</DawnNewDay.Hint_Format_DAY_SETTLE>
 	<DawnNewDay.Hint_Format_DAY_QUADRUM>Day relative to the quadrum (From DAY 1 to DAY 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
@@ -112,9 +110,16 @@
 	<DawnNewDay.Hint_Format_FACTION>Faction Name [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
 	<DawnNewDay.Hint_Format_SETTLEMENT>Settlement Name [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
 
+	<DawnNewDay.Hint_Format_ENDLINE>Ends the text line and starts a new one [eg. Line 1{ENDLINE}Line 2]</DawnNewDay.Hint_Format_ENDLINE>
+
 	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>General Font Size of Upper Text</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>General Font Size of Bottom Text</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
 	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>General Font Size of Subtitle Text</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
+
+	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
+	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
+	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
+	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
 
 	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>

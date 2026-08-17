@@ -72,11 +72,9 @@
 	<DawnNewDay.Hint_Preset_Date>Data [eg. 2° of Giugosto, 5500]</DawnNewDay.Hint_Preset_Date>
 	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperatura con colore [eg. -10C -> Ghiaccio, 50C -> Arancione]</DawnNewDay.Hint_Preset_TemperatureWithColor>
 	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the deserto]</DawnNewDay.Hint_Preset_SomewherePlace>
-
-	<DawnNewDay.Hint_Format_Addition>Addizione per formati/valori [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
-	<DawnNewDay.Hint_Format_Subtraction>Sottrazione per formati/valori [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
-	<DawnNewDay.Hint_Format_Multiplication>Moltiplicazione per formati/valori [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
-	<DawnNewDay.Hint_Format_Division>Divisione per formati/valori [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
+	<DawnNewDay.Hint_Preset_UpperFormatDefault>Formattazione Testo Superiore Predefinito</DawnNewDay.Hint_Preset_UpperFormatDefault>
+	<DawnNewDay.Hint_Preset_BottomFormatDefault>Formattazione Testo Inferiore Predefinito</DawnNewDay.Hint_Preset_BottomFormatDefault>
+	<DawnNewDay.Hint_Preset_SubtitleFormatDefault>Formattazione Testo Sottotitolo Predefinito</DawnNewDay.Hint_Preset_SubtitleFormatDefault>
 
 	<DawnNewDay.Hint_Format_DAY_SETTLE>Giorno relativo a quando sono arrivati i coloni</DawnNewDay.Hint_Format_DAY_SETTLE>
 	<DawnNewDay.Hint_Format_DAY_QUADRUM>Giorno relativo al quadrum (Dal GIORNO 1 al GIORNO 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
@@ -112,9 +110,16 @@
 	<DawnNewDay.Hint_Format_FACTION>Nome della fazione [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
 	<DawnNewDay.Hint_Format_SETTLEMENT>Nome della colonia [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
 
+	<DawnNewDay.Hint_Format_ENDLINE>Finisce la riga del testo e inizia un'altra [eg. Riga 1{ENDLINE}Riga 2]</DawnNewDay.Hint_Format_ENDLINE>
+
 	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>Grandezza del carattere generale del Testo Superiore</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>Grandezza del carattere generale del Testo Inferiore</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
 	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>Grandezza del carattere generale del Testo Sottotitolo</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
+
+	<DawnNewDay.Hint_Format_Addition>Addizione per formati/valori [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
+	<DawnNewDay.Hint_Format_Subtraction>Sottrazione per formati/valori [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
+	<DawnNewDay.Hint_Format_Multiplication>Moltiplicazione per formati/valori [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
+	<DawnNewDay.Hint_Format_Division>Divisione per formati/valori [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
 
 	<DawnNewDay.Hint_RichText_Color>Cambia il colore del testo {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Cambia il colore del testo {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
