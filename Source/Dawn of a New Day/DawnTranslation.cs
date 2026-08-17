@@ -105,11 +105,6 @@ namespace DawnNewDay
 
         public static Dictionary<string, string> Hints_LabelFormat => new()
         {
-            { "{VALUE1 + VALUE2}", "DawnNewDay.Hint_Format_Addition".Translate() },
-            { "{VALUE1 - VALUE2}", "DawnNewDay.Hint_Format_Subtraction".Translate() },
-            { "{VALUE1 * VALUE2}", "DawnNewDay.Hint_Format_Multiplication".Translate() },
-            { "{VALUE1 / VALUE2}", "DawnNewDay.Hint_Format_Division".Translate() },
-
             { "{DAY_SETTLE}", "DawnNewDay.Hint_Format_DAY_SETTLE".Translate() },
             { "{DAY_QUADRUM}", "DawnNewDay.Hint_Format_DAY_QUADRUM".Translate() },
             { "{DAY_SEASON}", "DawnNewDay.Hint_Format_DAY_SEASON".Translate() },
@@ -145,9 +140,16 @@ namespace DawnNewDay
             { "{FACTION}", "DawnNewDay.Hint_Format_FACTION".Translate() },
             { "{SETTLEMENT}", "DawnNewDay.Hint_Format_SETTLEMENT".Translate() },
 
+            { "{ENDLINE}", "DawnNewDay.Hint_Format_ENDLINE".Translate() },
+
             { "{UPPER_FONTSIZE}", "DawnNewDay.Hint_Format_UPPER_FONTSIZE".Translate() },
             { "{BOTTOM_FONTSIZE}", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
             { "{SUBTITLE_FONTSIZE}", "DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE".Translate() },
+
+            { "{VALUE1 + VALUE2}", "DawnNewDay.Hint_Format_Addition".Translate() },
+            { "{VALUE1 - VALUE2}", "DawnNewDay.Hint_Format_Subtraction".Translate() },
+            { "{VALUE1 * VALUE2}", "DawnNewDay.Hint_Format_Multiplication".Translate() },
+            { "{VALUE1 / VALUE2}", "DawnNewDay.Hint_Format_Division".Translate() },
         };
 
         public static Dictionary<string, string> Hints_RichText => new()
