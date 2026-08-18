@@ -60,19 +60,22 @@
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>文本格式...</DawnNewDay.Section_LabelFormat>
 	
-	<DawnNewDay.Label_UpperTextFormat>上方 文本格式</DawnNewDay.Label_UpperTextFormat>
-	<DawnNewDay.Label_BottomTextFormat>下方 文本格式</DawnNewDay.Label_BottomTextFormat>
-	<DawnNewDay.Label_SubtitleTextFormat>子标题 文本格式</DawnNewDay.Label_SubtitleTextFormat>
+	<DawnNewDay.Label_UpperTextFormat>上方文本</DawnNewDay.Label_UpperTextFormat>
+	<DawnNewDay.Label_BottomTextFormat>下方文本</DawnNewDay.Label_BottomTextFormat>
+	<DawnNewDay.Label_SubtitleTextFormat>子标题文本</DawnNewDay.Label_SubtitleTextFormat>
 
-	<DawnNewDay.Label_LabelFormatPresets>现成标签格式预设</DawnNewDay.Label_LabelFormatPresets>
-	<DawnNewDay.Label_LabelFormatHints>标签格式 提示</DawnNewDay.Label_LabelFormatHints>
-	<DawnNewDay.Label_RichTextHints>富文本格式 提示</DawnNewDay.Label_RichTextHints>
+	<DawnNewDay.Label_LabelFormatPresets>查看标签格式预设...</DawnNewDay.Label_LabelFormatPresets>
+	<DawnNewDay.Label_LabelFormatHints>标签格式 提示...</DawnNewDay.Label_LabelFormatHints>
+	<DawnNewDay.Label_RichTextHints>富文本格式 提示...</DawnNewDay.Label_RichTextHints>
 
 	<DawnNewDay.Hint_Preset_DayAndHour>天数和时间 [DAY 5 06:00]</DawnNewDay.Hint_Preset_DayAndHour>
 	<DawnNewDay.Hint_Preset_Date>日期 [2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
 	<DawnNewDay.Hint_Preset_TemperatureWithColor>温度属性，并进行着色。 [如：-10C -> 冷着色, 50C -> 暖着色]</DawnNewDay.Hint_Preset_TemperatureWithColor>
 	<DawnNewDay.Hint_Preset_SomewherePlace>地点预设 [Tilpaia Y5521, somwhere on is 沙漠]</DawnNewDay.Hint_Preset_SomewherePlace>
-
+	<DawnNewDay.Hint_Preset_UpperFormatDefault>初始字段（上方文本）</DawnNewDay.Hint_Preset_UpperFormatDefault>
+	<DawnNewDay.Hint_Preset_BottomFormatDefault>初始字段（下方文本）</DawnNewDay.Hint_Preset_BottomFormatDefault>
+	<DawnNewDay.Hint_Preset_SubtitleFormatDefault>初始字段（子标题文本）</DawnNewDay.Hint_Preset_SubtitleFormatDefault>
+	
 	<DawnNewDay.Hint_Format_Addition>格式/数值加法运算符 [例：{DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>格式/数值减法运算符 [例：{YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
 	<DawnNewDay.Hint_Format_Multiplication>格式/数值乘法运算符 [例：{2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
