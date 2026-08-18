@@ -158,21 +158,25 @@ namespace DawnNewDay
 
                 #region Cached Rects
 
+                const float cTextPaddingFactor = 1.2f;
                 float scaledSubtitleGap = !m_CachedSubtitleText.NullOrEmpty() ? settings.SubtitleGap * settings.Scale : 0f;
                 float scaledLinePadding = settings.LinePadding * settings.Scale;
 
-                Vector2 upperTextSize = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
-                Vector2 bottomTextSize = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
-                Vector2 subtitleTextSize = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
+                m_CachedUpperRect.size = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
+                m_CachedBottomRect.size = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
+                m_CachedSubtitleRect.size = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
 
-                float textWidth = Mathf.Max(upperTextSize.x, bottomTextSize.x, subtitleTextSize.x) * 1.2f;
+                m_CachedUpperRect.height *= cTextPaddingFactor;
+                m_CachedBottomRect.height *= cTextPaddingFactor;
+                m_CachedSubtitleRect.height *= cTextPaddingFactor;
 
-                m_CachedUpperRect.size = new Vector2(textWidth, upperTextSize.y);
-                m_CachedBottomRect.size = new Vector2(textWidth, bottomTextSize.y);
-                m_CachedSubtitleRect.size = new Vector2(textWidth, subtitleTextSize.y);
-
+                float textWidth = Mathf.Max(m_CachedUpperRect.width, m_CachedBottomRect.width, m_CachedSubtitleRect.width) * cTextPaddingFactor;
+                m_CachedUpperRect.width = textWidth;
+                m_CachedBottomRect.width = textWidth;
+                m_CachedSubtitleRect.width = textWidth;
+                
                 m_CachedOverlayRect.width = textWidth;
-                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + m_CachedSubtitleRect.height + settings.LineThickness + (scaledLinePadding * 2f) + scaledSubtitleGap;
+                m_CachedOverlayRect.height = m_CachedUpperRect.height + m_CachedBottomRect.height + m_CachedSubtitleRect.height + settings.LineThickness + (scaledLinePadding * 3f) + scaledSubtitleGap;
                 m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
                 m_CachedUpperRect.x = CenteredX(m_CachedUpperRect, m_CachedOverlayRect);

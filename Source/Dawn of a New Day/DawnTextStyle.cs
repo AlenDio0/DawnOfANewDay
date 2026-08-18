@@ -50,13 +50,7 @@ namespace DawnNewDay
             try
             {
                 if (listing.ButtonText($"{DawnTranslation.Label_FontFamily} ({FontFamilyName.Fallback(DawnTranslation.Label_DefaultFont)})"))
-                {
-                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(font =>
-                    {
-                        FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "";
-                        UpdateFontFamily();
-                    }, FontFamilyName));
-                }
+                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(font => FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "", FontFamilyName));
 
                 FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
                 OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnTranslation.Label_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 3f, 0.35f), 0.25f);
