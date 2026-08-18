@@ -17,10 +17,10 @@ namespace DawnNewDay.Dialogs
                 {
                     try
                     {
-                        m_CachedSoundNames = DefDatabase<SoundDef>.AllDefsListForReading
+                        m_CachedSoundNames = [.. DefDatabase<SoundDef>.AllDefsListForReading
                             .Where(soundDef => !soundDef.sustain)
                             .Where(soundDef => !soundDef.subSounds.NullOrEmpty() && soundDef.subSounds.All(subSoundDef => !subSoundDef.sustainLoop))
-                            .ToList().ConvertAll(soundDef => soundDef.defName);
+                            .Select(soundDef => soundDef.defName)];
                     }
                     finally
                     {
@@ -32,7 +32,7 @@ namespace DawnNewDay.Dialogs
             }
         }
 
-        public override List<string> InitialValues => [.. SoundNames];
+        public override List<string> InitialValues => SoundNames;
 
         public override string HeaderLabel => DawnTranslation.Label_Sound;
 

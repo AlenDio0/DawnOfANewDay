@@ -8,8 +8,8 @@ namespace DawnNewDay.Dialogs
 {
     public class Dialog_ChooseFontFamily(Action<string> onChoose, string current = null) : Dialog_ChooseInterface(onChoose, current)
     {
-        private static string[] m_CachedOSFontNames;
-        private static string[] OSFontNames
+        private static List<string> m_CachedOSFontNames;
+        private static List<string> OSFontNames
         {
             get
             {
@@ -17,7 +17,7 @@ namespace DawnNewDay.Dialogs
                 {
                     try
                     {
-                        m_CachedOSFontNames = Font.GetOSInstalledFontNames();
+                        m_CachedOSFontNames = [.. Font.GetOSInstalledFontNames()];
                     }
                     finally
                     {
