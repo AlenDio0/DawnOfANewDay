@@ -44,3 +44,6 @@ v1.5.0
 - Added Subtitle Text.
 - Added endline format.
 - Added default format presets.
+
+v1.5.1
+- Updated Chinese translation (by hotaru-hoshizora).

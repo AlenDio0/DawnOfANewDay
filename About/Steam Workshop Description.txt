@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.5.0[/i]
+[i][b]Mod Version:[/b] v1.5.1[/i]
 [spoiler]Showcase video is outdated :\[/spoiler]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -79,6 +79,10 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [*]Added endline format.
 [*]Added default format presets.
 [/list]
+[b]v1.5.1[/b]
+[list]
+[*]Updated Chinese translation (by hotaru-hoshizora).
+[/list]
 
 [h1]COMPATIBILITY[/h1]
 [list]
@@ -91,7 +95,11 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [list]
 [*][b]English:[/b] Made by myself.
 [*][b]Italian:[/b] Made by myself.
-[*][b]Chinese Simplified:[/b] Made by [url=https://github.com/ylc395]ylc395[/url].
+[*][b]Chinese Simplified:[/b] 
+[list]
+[*]Made by [url=https://github.com/hotaru-hoshizora]hotaru-hoshizora[/url] (from v1.5.1).
+[*]Made by [url=https://github.com/ylc395]ylc395[/url] (before v1.5.0).
+[/list]
 [/list]
 
 [b]If you want to integrate a translation for the mod, follow these steps:[/b]

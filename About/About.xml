@@ -74,5 +74,5 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 		</li>
 	</modDependencies>
-	<modVersion IgnoreIfNoMatchingField="True">1.5.0</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">1.5.1</modVersion>
 </ModMetaData>
