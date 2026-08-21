@@ -94,7 +94,7 @@
 	<DawnNewDay.Hint_Format_WEATHER>Weather [eg. Clear]</DawnNewDay.Hint_Format_WEATHER>
 
 	<DawnNewDay.Hint_Format_TEMPERATURE>Temperature [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
-	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Intended use for Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Use Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
 
 	<DawnNewDay.Hint_Format_WORLD>World Name [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
 	<DawnNewDay.Hint_Format_BIOME>Biome Type [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
@@ -117,11 +117,22 @@
 	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>General Font Size of Subtitle Text</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
 
 	<DawnNewDay.Hint_MN_REMINDER_TITLE>Reminder - Title [eg. Doomsday]</DawnNewDay.Hint_MN_REMINDER_TITLE>
+	<DawnNewDay.Hint_MN_REMINDER_MESSAGE>Reminder - Message</DawnNewDay.Hint_MN_REMINDER_MESSAGE>
 	<DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>Reminder - Day relative to the year [eg. 14, 48]</DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>
+	<DawnNewDay.Hint_MN_REMINDER_COLOR>Reminder - Severity Color Hex [eg. #RRGGBB] - Use Color Rich Text</DawnNewDay.Hint_MN_REMINDER_COLOR>
 	
 	<DawnNewDay.Hint_MN_REMINDER_REMAINING>Reminder - Dynamic time remaining [eg. 72h, 4 days, 1 year]</DawnNewDay.Hint_MN_REMINDER_REMAINING>
 	<DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>Reminder - Time remaining in days [eg. 1, 24, 19]</DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>
 	<DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>Reminder - Time remaining in hours [eg. 16, 24]</DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>
+	
+	<DawnNewDay.Hint_MN_OCCASION_CATEGORY>Occasion - Category [eg. Milestone, Birthday]</DawnNewDay.Hint_MN_OCCASION_CATEGORY>
+	<DawnNewDay.Hint_MN_OCCASION_LABEL>Occasion - Label</DawnNewDay.Hint_MN_OCCASION_LABEL>
+	<DawnNewDay.Hint_MN_OCCASION_DETAIL>Occasion - Detail</DawnNewDay.Hint_MN_OCCASION_DETAIL>
+	<DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>Occasion - Day relative to the year [eg. 14, 48]</DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>
+	
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING>Occasion - Dynamic time remaining [eg. 72h, 4 days, 1 year]</DawnNewDay.Hint_MN_OCCASION_REMAINING>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>Occasion - Time remaining in days [eg. 1, 24, 19]</DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>Occasion - Time remaining in hours [eg. 16, 24]</DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>
 	
 	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>

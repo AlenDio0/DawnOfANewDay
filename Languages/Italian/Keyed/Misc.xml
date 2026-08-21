@@ -116,13 +116,6 @@
 	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>Grandezza del carattere generale del Testo Inferiore</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
 	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>Grandezza del carattere generale del Testo Sottotitolo</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
 
-	<DawnNewDay.Hint_MN_REMINDER_TITLE>Promemoria - Titolo [eg. Apocalisse]</DawnNewDay.Hint_MN_REMINDER_TITLE>
-	<DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>Promemoria - Giorno relativo all'anno [eg. 14, 48]</DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>
-
-	<DawnNewDay.Hint_MN_REMINDER_REMAINING>Promemoria - Tempo rimanente dinamico [eg. 72h, 4 giorni, 1 anno]</DawnNewDay.Hint_MN_REMINDER_REMAINING>
-	<DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>Promemoria - Tempo rimanente in giorni [eg. 1, 24, 19]</DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>
-	<DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>Promemoria - Tempo rimanente in ore [eg. 16, 24]</DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>
-
 	<DawnNewDay.Hint_Format_Addition>Addizione per formati/valori [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>Sottrazione per formati/valori [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
 	<DawnNewDay.Hint_Format_Multiplication>Moltiplicazione per formati/valori [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>

@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 
+using MNUtility = DawnNewDay.Compatibility.ModernNotificationUtility;
+
 namespace DawnNewDay
 {
     public enum DayRelative
@@ -136,17 +138,17 @@ namespace DawnNewDay
 
         #region Modern Notifications
 
-        public readonly ModernNotificationUtility.Reminder NextReminder
+        public readonly MNUtility.Reminder NextReminder
         {
             get
             {
                 if (!ModernNotifications.Present)
                     return new();
 
-                var reminders = ModernNotificationUtility.GetReminders();
+                var reminders = MNUtility.GetReminders();
 
-                ModernNotificationUtility.Reminder nextReminder = new();
-                foreach (ModernNotificationUtility.Reminder reminder in reminders)
+                MNUtility.Reminder nextReminder = new();
+                foreach (MNUtility.Reminder reminder in reminders)
                 {
                     if (!reminder.IsValid || reminder.Fired)
                         continue;
@@ -157,9 +159,7 @@ namespace DawnNewDay
                         continue;
                     }
 
-                    if (nextReminder.Year > reminder.Year)
-                        nextReminder = reminder;
-                    else if (nextReminder.DayOfYear > reminder.DayOfYear)
+                    if (IsTargetTimeNearest(nextReminder.Time, reminder.Time))
                         nextReminder = reminder;
                 }
 
@@ -167,41 +167,110 @@ namespace DawnNewDay
             }
         }
 
-        public readonly string ReminderRemaining
+        public readonly string NextReminderHex
         {
             get
             {
-                const int cToleranceHour = 72;
+                static string ColorToHex(Color color) => "#" + ColorUtility.ToHtmlStringRGB(color);
 
-                int remainingHour = ReminderRemainingHour;
-                int remainingTicks = remainingHour * GenDate.TicksPerHour;
+                return NextReminder.Severity switch
+                {
+                    0 => ColorToHex(Color.white),
+                    1 => ColorToHex(Color.blue),
+                    2 => ColorToHex(Color.yellow),
+                    3 => ColorToHex(Color.red),
 
-                return remainingHour > cToleranceHour ? remainingTicks.ToStringTicksToPeriod(true, false, false) : $"{remainingHour}h";
+                    _ => ColorToHex(Color.gray),
+                };
             }
         }
-        public readonly float ReminderRemainingDay(int remainingHour)
+
+        public readonly MNUtility.Occasion NextOccasion
+        {
+            get
+            {
+                if (!ModernNotifications.Present)
+                    return new();
+
+                var occasions = MNUtility.GetOccasions().Select(occasion =>
+                {
+                    if (occasion.Time.Year == 0)
+                        occasion.Time.Year = ModernNotifications.Year();
+                    return occasion;
+                });
+
+                MNUtility.Occasion nextOccasion = new();
+                foreach (MNUtility.Occasion occasion in occasions)
+                {
+                    if (!occasion.IsValid)
+                        continue;
+
+                    if (!nextOccasion.IsValid)
+                    {
+                        nextOccasion = occasion;
+                        continue;
+                    }
+
+                    if (IsTargetTimeNearest(nextOccasion.Time, occasion.Time))
+                        nextOccasion = occasion;
+                }
+
+                return nextOccasion;
+            }
+        }
+
+        private readonly bool IsTargetTimeNearest(MNUtility.Time currentTime, MNUtility.Time targetTime)
+        {
+            int realDayOfYear = ModernNotifications.Today();
+            int realYear = ModernNotifications.Year();
+
+            if (currentTime.Year < realYear)
+                return true;
+            if (currentTime.Year == realYear && currentTime.DayOfYear <= realDayOfYear)
+                return true;
+
+            if (targetTime.Year < realYear)
+                return false;
+            if (targetTime.Year == realYear && targetTime.DayOfYear <= realDayOfYear)
+                return false;
+
+            if (currentTime.Year > targetTime.Year)
+                return true;
+            if (currentTime.DayOfYear > targetTime.DayOfYear)
+                return true;
+            
+            return false;
+        }
+
+        public readonly string TimeRemaining(int remainingHour)
+        {
+            const int cToleranceHour = 72;
+
+            int remainingTicks = remainingHour * GenDate.TicksPerHour;
+            return remainingHour > cToleranceHour ? remainingTicks.ToStringTicksToPeriod(true, false, false) : $"{remainingHour}h";
+        }
+        public readonly float TimeRemainingDay(int remainingHour)
         {
             float remainingDay = remainingHour / 24f;
             return remainingDay >= 2f ? Mathf.Ceil(remainingDay) : SettingsHelper.SnapToStep(remainingDay, 0.1f);
         }
-        public readonly int ReminderRemainingHour
+        public readonly int TimeRemainingHour(MNUtility.Time targetTime)
         {
-            get
-            {
-                const int cYearLengthDay = 60;
-                const int cDayLengthHour = 24;
+            const int cYearLengthDay = 60;
+            const int cDayLengthHour = 24;
 
-                var reminder = NextReminder;
-                int currentDayOfYear = ModernNotifications.Today();
-                int currentYear = ModernNotifications.Year();
-                int currentHour = GenHour();
+            int realDayOfYear = ModernNotifications.Today();
+            int realYear = ModernNotifications.Year();
+            int realHour = GenHour();
 
-                int yearsInDays = (reminder.Year - currentYear) * cYearLengthDay;
-                int remainingHours = (reminder.DayOfYear - currentDayOfYear + yearsInDays) * cDayLengthHour - currentHour;
+            int yearsInDays = (targetTime.Year - realYear) * cYearLengthDay;
+            int remainingHours = (targetTime.DayOfYear - realDayOfYear + yearsInDays) * cDayLengthHour - realHour;
 
-                return Mathf.Max(remainingHours, 0);
-            }
+            return Mathf.Max(remainingHours, 0);
         }
+
+        public readonly int NextReminderTimeRemainingHour => TimeRemainingHour(NextReminder.Time);
+        public readonly int NextOccasionTimeRemainingHour => TimeRemainingHour(NextOccasion.Time);
 
         #endregion
 
@@ -282,11 +351,22 @@ namespace DawnNewDay
         private static readonly Dictionary<string, Func<FormatContext, string>> MN_FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
             { "MN_REMINDER_TITLE", context => context.NextReminder.Title },
-            { "MN_REMINDER_DAY_YEAR", context => context.NextReminder.DayOfYear.ToString() },
+            { "MN_REMINDER_MESSAGE", context => context.NextReminder.Message },
+            { "MN_REMINDER_DAY_YEAR", context => context.NextReminder.Time.DayOfYear.ToString() },
+            { "MN_REMINDER_COLOR", context => context.NextReminderHex },
 
-            { "MN_REMINDER_REMAINING", context => context.ReminderRemaining.ToString() },
-            { "MN_REMINDER_REMAINING_DAY", context => context.ReminderRemainingDay(context.ReminderRemainingHour).ToString() },
-            { "MN_REMINDER_REMAINING_HOUR", context => context.ReminderRemainingHour.ToString() },
+            { "MN_REMINDER_REMAINING", context => context.TimeRemaining(context.NextReminderTimeRemainingHour) },
+            { "MN_REMINDER_REMAINING_DAY", context => context.TimeRemainingDay(context.NextReminderTimeRemainingHour).ToString() },
+            { "MN_REMINDER_REMAINING_HOUR", context => context.NextReminderTimeRemainingHour.ToString() },
+         
+            { "MN_OCCASION_CATEGORY", context => context.NextOccasion.Category },
+            { "MN_OCCASION_LABEL", context => context.NextOccasion.Label },
+            { "MN_OCCASION_DETAIL", context => context.NextOccasion.Detail },
+            { "MN_OCCASION_DAY_YEAR", context => context.NextOccasion.Time.DayOfYear.ToString() },
+
+            { "MN_OCCASION_REMAINING", context => context.TimeRemaining(context.NextOccasionTimeRemainingHour) },
+            { "MN_OCCASION_REMAINING_DAY", context => context.TimeRemainingDay(context.NextOccasionTimeRemainingHour).ToString() },
+            { "MN_OCCASION_REMAINING_HOUR", context => context.NextOccasionTimeRemainingHour.ToString() },
         };
 
         #endregion

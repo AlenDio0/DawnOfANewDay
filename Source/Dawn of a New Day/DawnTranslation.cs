@@ -160,15 +160,26 @@ namespace DawnNewDay
         #region Modern Notifications
 
         public static readonly string MN_ModName = "Modern Notifications";
-
+        public static string MN_HintTranslate(string key) => $"[{MN_ModName}] {key.Translate()}";
         public static Dictionary<string, string> Hints_MN_LabelFormat => new()
         {
-            { "{MN_REMINDER_TITLE}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_TITLE".Translate()}" },
-            { "{MN_REMINDER_DAY_YEAR}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_DAY_YEAR".Translate()}" },
+            { "{MN_REMINDER_TITLE}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_TITLE") },
+            { "{MN_REMINDER_MESSAGE}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_MESSAGE") },
+            { "{MN_REMINDER_DAY_YEAR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_DAY_YEAR") },
+            { "{MN_REMINDER_COLOR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_COLOR") },
 
-            { "{MN_REMINDER_REMAINING}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING".Translate()}" },
-            { "{MN_REMINDER_REMAINING_DAY}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY".Translate()}" },
-            { "{MN_REMINDER_REMAINING_HOUR}", $"[{MN_ModName}] {"DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR".Translate()}" },
+            { "{MN_REMINDER_REMAINING}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING") },
+            { "{MN_REMINDER_REMAINING_DAY}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY") },
+            { "{MN_REMINDER_REMAINING_HOUR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR") },
+
+            { "{MN_OCCASION_CATEGORY}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_CATEGORY") },
+            { "{MN_OCCASION_LABEL}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_LABEL") },
+            { "{MN_OCCASION_DETAIL}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_DETAIL") },
+            { "{MN_OCCASION_DAY_YEAR}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_DAY_YEAR") },
+
+            { "{MN_OCCASION_REMAINING}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING") },
+            { "{MN_OCCASION_REMAINING_DAY}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY") },
+            { "{MN_OCCASION_REMAINING_HOUR}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR") },
         };
 
         #endregion 

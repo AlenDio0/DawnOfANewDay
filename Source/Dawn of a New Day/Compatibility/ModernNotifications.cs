@@ -27,6 +27,8 @@ namespace DawnNewDay.Compatibility
 
     public static class ModernNotificationUtility
     {
+        public record struct Time(int DayOfYear, int Year);
+
         public struct Reminder
         {
             public enum RawReminderIndex
@@ -45,8 +47,7 @@ namespace DawnNewDay.Compatibility
 
             public bool IsValid = false;
 
-            public int Year;
-            public int DayOfYear;
+            public Time Time;
             public string Title;
             public string Message;
             public int Severity;
@@ -62,8 +63,8 @@ namespace DawnNewDay.Compatibility
                     return;
                 IsValid = true;
 
-                Year = Retrieve<int>(rawReminder, RawReminderIndex.Year);
-                DayOfYear = Retrieve<int>(rawReminder, RawReminderIndex.DayOfYear);
+                Time.Year = Retrieve<int>(rawReminder, RawReminderIndex.Year);
+                Time.DayOfYear = Retrieve<int>(rawReminder, RawReminderIndex.DayOfYear);
                 Title = Retrieve<string>(rawReminder, RawReminderIndex.Title);
                 Message = Retrieve<string>(rawReminder, RawReminderIndex.Message);
                 Severity = Retrieve<int>(rawReminder, RawReminderIndex.Severity);
@@ -95,8 +96,7 @@ namespace DawnNewDay.Compatibility
             public string Category;
             public string Label;
             public string Detail;
-            public int DayOfYear;
-            public int Year;
+            public Time Time;
             public bool OneShot;
             public bool Celebratory;
 
@@ -111,8 +111,8 @@ namespace DawnNewDay.Compatibility
                 Category = Retrieve<string>(rawOccasion, RawOccasionIndex.Category);
                 Label = Retrieve<string>(rawOccasion, RawOccasionIndex.Label);
                 Detail = Retrieve<string>(rawOccasion, RawOccasionIndex.Detail);
-                DayOfYear = Retrieve<int>(rawOccasion, RawOccasionIndex.DayOfYear);
-                Year = Retrieve<int>(rawOccasion, RawOccasionIndex.Year);
+                Time.DayOfYear = Retrieve<int>(rawOccasion, RawOccasionIndex.DayOfYear);
+                Time.Year = Retrieve<int>(rawOccasion, RawOccasionIndex.Year);
                 OneShot = Retrieve<bool>(rawOccasion, RawOccasionIndex.OneShot);
                 Celebratory = Retrieve<bool>(rawOccasion, RawOccasionIndex.Celebratory);
             }
