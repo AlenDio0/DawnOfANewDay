@@ -136,5 +136,15 @@ namespace DawnNewDay.Utils
 
             return listing;
         }
+
+        public static void WithGUIColor(Color color, Action action)
+        {
+            Color defaultColor = GUI.color;
+
+            GUI.color = color;
+            action?.Invoke();
+
+            GUI.color = defaultColor;
+        }
     }
 }

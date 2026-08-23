@@ -87,6 +87,8 @@ namespace DawnNewDay
 
         public static string Section_LabelFormat => "DawnNewDay.Section_LabelFormat".Translate();
 
+        public static string Label_TextFormat => "DawnNewDay.Label_TextFormat".Translate();
+
         public static string Label_UpperTextFormat => "DawnNewDay.Label_UpperTextFormat".Translate();
         public static string Label_BottomTextFormat => "DawnNewDay.Label_BottomTextFormat".Translate();
         public static string Label_SubtitleTextFormat => "DawnNewDay.Label_SubtitleTextFormat".Translate();
@@ -159,7 +161,6 @@ namespace DawnNewDay
 
         #region Modern Notifications
 
-        public static readonly string MN_ModName = "Modern Notifications";
         public static string MN_HintTranslate(string key) => $"[{MN_ModName}] {key.Translate()}";
         public static Dictionary<string, string> Hints_MN_LabelFormat => new()
         {
@@ -221,6 +222,24 @@ namespace DawnNewDay
         public static string Label_StartsAtZero => "DawnNewDay.Label_StartsAtZero".Translate();
         public static string Label_ShowEveryXDays => "DawnNewDay.Label_ShowEveryXDays".Translate();
         public static string Label_TriggerHour => "DawnNewDay.Label_TriggerHour".Translate();
+
+        #endregion
+
+        #region Compatibility Section
+
+        public static string Section_Compatibility => "DawnNewDay.Section_Compatibility".Translate();
+
+        #region Modern Notifications Section
+
+        public static readonly string MN_ModName = "Modern Notifications";
+
+        public static string Section_MN_Reminder => "DawnNewDay.Section_MN_Reminder".Translate();
+        public static string Section_MN_Occasion => "DawnNewDay.Section_MN_Occasion".Translate();
+
+        public static string Label_MN_AddText => "DawnNewDay.Label_MN_AddText".Translate();
+        public static string Label_MN_MaximumDays => "DawnNewDay.Label_MN_MaximumDays".Translate();
+
+        #endregion
 
         #endregion
     }

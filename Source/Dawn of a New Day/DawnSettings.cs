@@ -109,6 +109,24 @@ namespace DawnNewDay
 
         #endregion
 
+        #region Compatibility Section
+
+        private bool m_CompatibilitySection = false;
+
+        #region Modern Notifications Section
+
+        private bool m_MN_CompatibilitySection = false;
+
+        private bool m_MN_ReminderTextSection = false;
+        public ModernNotificationsSettings MN_Reminder = DawnDefault.MN_Reminder;
+
+        private bool m_MN_OccasionTextSection = false;
+        public ModernNotificationsSettings MN_Occasion = DawnDefault.MN_Occasion;
+
+        #endregion
+
+        #endregion
+
         #region Buffers
 
         private string m_DisplayDurationBuffer;
@@ -160,6 +178,9 @@ namespace DawnNewDay
 
                 if (listing.SectionButton(DawnTranslation.Section_Extra, ref m_ExtraSection))
                     listing.Indented(() => ShowExtraSection(listing));
+
+                if (listing.SectionButton(DawnTranslation.Section_Compatibility, ref m_CompatibilitySection))
+                    listing.Indented(() => ShowCompatibilitySection(listing), 16f);
 
             }
             catch (Exception exception)
@@ -307,15 +328,46 @@ namespace DawnNewDay
             listing.Gap();
         }
 
+        private void ShowCompatibilitySection(Listing_Standard listing)
+        {
+            if (listing.SectionButton(DawnTranslation.MN_ModName, ref m_MN_CompatibilitySection))
+                listing.Indented(() => ShowMNCompatibilitySection(listing));
+        }
+
+        private void ShowMNCompatibilitySection(Listing_Standard listing)
+        {
+            if (!ModernNotifications.Present)
+            {
+                SettingsHelper.WithGUIColor(Color.grey, () => listing.Label("Mod is not installed or isn't compatibile with the current version!"));
+                return;
+            }
+
+            if (listing.SectionButton(DawnTranslation.Section_MN_Reminder, ref m_MN_ReminderTextSection))
+                listing.Indented(() => MN_Reminder.DoContents(listing, Scale), 32f);
+
+            if (listing.SectionButton(DawnTranslation.Section_MN_Occasion, ref m_MN_OccasionTextSection))
+                listing.Indented(() => MN_Occasion.DoContents(listing, Scale), 32f);
+        }
+
         public void UpdateText()
         {
             UpperTextStyle.UpdateFontFamily();
-            BottomTextStyle.UpdateFontFamily();
-            SubtitleTextStyle.UpdateFontFamily();
-
             UpperTextStyle.ApplyToGUIStyle(Scale);
+         
+            BottomTextStyle.UpdateFontFamily();
             BottomTextStyle.ApplyToGUIStyle(Scale);
+            
+            SubtitleTextStyle.UpdateFontFamily();
             SubtitleTextStyle.ApplyToGUIStyle(Scale);
+
+            if (ModernNotifications.Present)
+            {
+                MN_Reminder.TextStyle.UpdateFontFamily();
+                MN_Reminder.TextStyle.ApplyToGUIStyle(Scale);
+
+                MN_Occasion.TextStyle.UpdateFontFamily();
+                MN_Occasion.TextStyle.ApplyToGUIStyle(Scale);
+            }
         }
 
         public override void ExposeData()
@@ -391,6 +443,26 @@ namespace DawnNewDay
                 Scribe_Values.Look(ref StartsAtZero, "StartsAtZero", DawnDefault.StartsAtZero);
                 Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", DawnDefault.ShowEveryXDays);
                 Scribe_Values.Look(ref TriggerHour, "TriggerHour", DawnDefault.TriggerHour);
+
+                #endregion
+
+                #region Compatibility Section
+
+                #region Modern Notifications Section
+
+                Scribe_Deep.Look(ref MN_Reminder, "MN_Reminder");
+                Scribe_Deep.Look(ref MN_Occasion, "MN_Occasion");
+
+                if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
+                {
+                    MN_Reminder ??= DawnDefault.MN_Reminder;
+                    MN_Reminder.TextStyle ??= DawnDefault.MN_ReminderTextStyle;
+
+                    MN_Occasion ??= DawnDefault.MN_Occasion;
+                    MN_Occasion.TextStyle ??= DawnDefault.MN_OccasionTextStyle;
+                }
+
+                #endregion
 
                 #endregion
             }

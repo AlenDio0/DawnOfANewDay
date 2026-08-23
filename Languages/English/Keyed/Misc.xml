@@ -60,6 +60,8 @@
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>Label Format</DawnNewDay.Section_LabelFormat>
 
+	<DawnNewDay.Label_TextFormat>Text Format</DawnNewDay.Label_TextFormat>
+	
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
 	<DawnNewDay.Label_SubtitleTextFormat>Subtitle Text Format</DawnNewDay.Label_SubtitleTextFormat>
@@ -165,4 +167,14 @@
 	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
 
+	<!-- Compatibility Section -->>
+	<DawnNewDay.Section_Compatibility>Compatibility</DawnNewDay.Section_Compatibility>
+
+	<DawnNewDay.Section_MN_Reminder>Reminder</DawnNewDay.Section_MN_Reminder>
+	<DawnNewDay.Section_MN_Occasion>Occasion</DawnNewDay.Section_MN_Occasion>
+	
+	<DawnNewDay.Label_MN_AddText>Add Text</DawnNewDay.Label_MN_AddText>
+	
+	<DawnNewDay.Label_MN_MaximumDays>Maximum Days</DawnNewDay.Label_MN_MaximumDays>
+	
 </LanguageData>

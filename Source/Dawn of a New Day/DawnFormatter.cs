@@ -132,6 +132,17 @@ namespace DawnNewDay
         public readonly int BottomFontSize => Mathf.CeilToInt(Settings.BottomTextStyle.FontSize * Settings.Scale);
         public readonly int SubtitleFontSize => Mathf.CeilToInt(Settings.SubtitleTextStyle.FontSize * Settings.Scale);
 
+        #region Compatibility
+
+        #region Modern Notifications
+
+        public readonly int MN_ReminderFontSize => Mathf.CeilToInt(Settings.MN_Reminder.TextStyle.FontSize * Settings.Scale);
+        public readonly int MN_OccasionFontSize => Mathf.CeilToInt(Settings.MN_Occasion.TextStyle.FontSize * Settings.Scale);
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region Compatibility
@@ -173,12 +184,12 @@ namespace DawnNewDay
             {
                 static string ColorToHex(Color color) => "#" + ColorUtility.ToHtmlStringRGB(color);
 
-                return NextReminder.Severity switch
+                return NextReminder.SeverityType switch
                 {
-                    0 => ColorToHex(Color.white),
-                    1 => ColorToHex(Color.blue),
-                    2 => ColorToHex(Color.yellow),
-                    3 => ColorToHex(Color.red),
+                    MNUtility.Reminder.Severity.Info => ColorToHex(new Color(0.8f, 0.8f, 0.8f)),
+                    MNUtility.Reminder.Severity.Good => ColorToHex(new Color(0.45f, 0.7f, 0.85f)),
+                    MNUtility.Reminder.Severity.Caution => ColorToHex(new Color(0.9f, 0.55f, 0.1f)),
+                    MNUtility.Reminder.Severity.Urgent => ColorToHex(new Color(0.9f, 0.1f, 0.1f)),
 
                     _ => ColorToHex(Color.gray),
                 };
@@ -192,12 +203,7 @@ namespace DawnNewDay
                 if (!ModernNotifications.Present)
                     return new();
 
-                var occasions = MNUtility.GetOccasions().Select(occasion =>
-                {
-                    if (occasion.Time.Year == 0)
-                        occasion.Time.Year = ModernNotifications.Year();
-                    return occasion;
-                });
+                var occasions = MNUtility.GetOccasions();
 
                 MNUtility.Occasion nextOccasion = new();
                 foreach (MNUtility.Occasion occasion in occasions)
@@ -219,26 +225,32 @@ namespace DawnNewDay
             }
         }
 
-        private readonly bool IsTargetTimeNearest(MNUtility.Time currentTime, MNUtility.Time targetTime)
+        private readonly bool IsTargetTimeNearest(MNUtility.YearTime currentTime, MNUtility.YearTime targetTime)
         {
-            int realDayOfYear = ModernNotifications.Today();
+            int realDayOfYear = ModernNotifications.Today() + 1;
             int realYear = ModernNotifications.Year();
 
-            if (currentTime.Year < realYear)
-                return true;
-            if (currentTime.Year == realYear && currentTime.DayOfYear <= realDayOfYear)
+            int currentResolvedYear = currentTime.Year;
+            if (currentResolvedYear == 0)
+                currentResolvedYear =  realYear + (currentTime.DayOfYear < realDayOfYear ? 1 : 0);
+
+            int targetResolvedYear = targetTime.Year;
+            if (targetResolvedYear == 0)
+                targetResolvedYear = realYear + (targetTime.DayOfYear < realDayOfYear ? 1 : 0);
+
+            bool isCurrentInPast = currentResolvedYear < realYear || (currentResolvedYear == realYear && currentTime.DayOfYear < realDayOfYear);
+            bool isTargetInPast = targetResolvedYear < realYear || (targetResolvedYear == realYear && targetTime.DayOfYear < realDayOfYear);
+
+            if (isTargetInPast)
+                return false;
+            if (isCurrentInPast)
                 return true;
 
-            if (targetTime.Year < realYear)
-                return false;
-            if (targetTime.Year == realYear && targetTime.DayOfYear <= realDayOfYear)
-                return false;
+            if (targetResolvedYear < currentResolvedYear)
+                return true;
+            if (targetResolvedYear == currentResolvedYear && targetTime.DayOfYear < currentTime.DayOfYear)
+                return true;
 
-            if (currentTime.Year > targetTime.Year)
-                return true;
-            if (currentTime.DayOfYear > targetTime.DayOfYear)
-                return true;
-            
             return false;
         }
 
@@ -254,7 +266,7 @@ namespace DawnNewDay
             float remainingDay = remainingHour / 24f;
             return remainingDay >= 2f ? Mathf.Ceil(remainingDay) : SettingsHelper.SnapToStep(remainingDay, 0.1f);
         }
-        public readonly int TimeRemainingHour(MNUtility.Time targetTime)
+        public readonly int TimeRemainingHour(MNUtility.YearTime targetTime)
         {
             const int cYearLengthDay = 60;
             const int cDayLengthHour = 24;
@@ -263,7 +275,11 @@ namespace DawnNewDay
             int realYear = ModernNotifications.Year();
             int realHour = GenHour();
 
-            int yearsInDays = (targetTime.Year - realYear) * cYearLengthDay;
+            int targetResolvedYear = targetTime.Year;
+            if (targetResolvedYear == 0)
+                targetResolvedYear = realYear + (targetTime.DayOfYear < realDayOfYear ? 1 : 0);
+
+            int yearsInDays = (targetResolvedYear - realYear) * cYearLengthDay;
             int remainingHours = (targetTime.DayOfYear - realDayOfYear + yearsInDays) * cDayLengthHour - realHour;
 
             return Mathf.Max(remainingHours, 0);
@@ -367,6 +383,9 @@ namespace DawnNewDay
             { "MN_OCCASION_REMAINING", context => context.TimeRemaining(context.NextOccasionTimeRemainingHour) },
             { "MN_OCCASION_REMAINING_DAY", context => context.TimeRemainingDay(context.NextOccasionTimeRemainingHour).ToString() },
             { "MN_OCCASION_REMAINING_HOUR", context => context.NextOccasionTimeRemainingHour.ToString() },
+
+            { "MN_REMINDER_FONTSIZE", context => context.MN_ReminderFontSize.ToString() },
+            { "MN_OCCASION_FONTSIZE", context => context.MN_OccasionFontSize.ToString() },
         };
 
         #endregion
@@ -409,9 +428,11 @@ namespace DawnNewDay
             public static ParsedOperand Parse(string text, FormatContext context)
             {
                 string format = text.Replace(',', '.');
-
-                if (FormatTokens.TryGetValue(format, out var replacer))
-                    format = replacer?.Invoke(context);
+                
+                {
+                    if (TryReplaceToken(context, format, out string value))
+                        format = value;
+                }
 
                 Match match = OperandValueRegex.Match(format);
                 if (match.Success)
@@ -515,7 +536,6 @@ namespace DawnNewDay
                 return match.Value;
             });
         }
-
 
         public static string FormatText(this FormatContext context, string text)
         {

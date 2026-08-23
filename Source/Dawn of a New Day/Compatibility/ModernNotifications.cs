@@ -27,7 +27,7 @@ namespace DawnNewDay.Compatibility
 
     public static class ModernNotificationUtility
     {
-        public record struct Time(int DayOfYear, int Year);
+        public record struct YearTime(int DayOfYear, int Year);
 
         public struct Reminder
         {
@@ -45,12 +45,20 @@ namespace DawnNewDay.Compatibility
                 Length,
             }
 
+            public enum Severity
+            {
+                Info = 0,
+                Good = 1,
+                Caution = 2,
+                Urgent = 3,
+            }
+
             public bool IsValid = false;
 
-            public Time Time;
+            public YearTime Time;
             public string Title;
             public string Message;
-            public int Severity;
+            public Severity SeverityType;
             public int Recurrence;
             public bool Fired;
             public int IconIndex;
@@ -67,7 +75,7 @@ namespace DawnNewDay.Compatibility
                 Time.DayOfYear = Retrieve<int>(rawReminder, RawReminderIndex.DayOfYear);
                 Title = Retrieve<string>(rawReminder, RawReminderIndex.Title);
                 Message = Retrieve<string>(rawReminder, RawReminderIndex.Message);
-                Severity = Retrieve<int>(rawReminder, RawReminderIndex.Severity);
+                SeverityType = Retrieve<Severity>(rawReminder, RawReminderIndex.Severity);
                 Recurrence = Retrieve<int>(rawReminder, RawReminderIndex.Recurrence);
                 Fired = Retrieve<bool>(rawReminder, RawReminderIndex.Fired);
                 IconIndex = Retrieve<int>(rawReminder, RawReminderIndex.IconIndex);
@@ -96,7 +104,7 @@ namespace DawnNewDay.Compatibility
             public string Category;
             public string Label;
             public string Detail;
-            public Time Time;
+            public YearTime Time;
             public bool OneShot;
             public bool Celebratory;
 
