@@ -209,7 +209,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into DawnComponent.TriggerDawnOverlay()\nException: {exception}");
+                DawnData.Exception(exception);
             }
         }
 

@@ -56,7 +56,7 @@ namespace DawnNewDay.Utils
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into Dialog_ChooseInterface.DoWindowContents(canva: {canva})\nException: {exception}");
+                DawnData.Exception(exception);
             }
             finally
             {

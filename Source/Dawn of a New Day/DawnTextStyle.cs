@@ -65,7 +65,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into DawnTextStyle.DoContents(listing: {listing})\nException: {exception}");
+                DawnData.Exception(exception);
             }
         }
 
@@ -127,7 +127,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"DawnTextStyle.UpdateFontFamily() Failed!\nFontFamilyName: '{FontFamilyName}'\nException: {exception}");
+                DawnData.Exception(exception);
             }
         }
 

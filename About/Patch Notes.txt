@@ -50,3 +50,6 @@ v1.5.1
 
 v1.5.2
 - Fixed text clipping visual bugs.
+
+v1.5.3
+- Fixed NullReferenceException for Faction and Settlement format.

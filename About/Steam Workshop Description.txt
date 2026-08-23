@@ -1,5 +1,5 @@
-[i][b]Mod Version:[/b] v1.5.1[/i]
-[spoiler]Showcase video is outdated :\[/spoiler]
+[i][b]Mod Version:[/b] v1.5.3[/i]
+[i]Showcase video is outdated :\[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
 
@@ -86,6 +86,10 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [b]v1.5.2[/b]
 [list]
 [*]Fixed text clipping visual bugs.
+[/list]
+[b]v1.5.3[/b]
+[list]
+[*]Fixed NullReferenceException for Faction and Settlement format.
 [/list]
 
 [h1]COMPATIBILITY[/h1]

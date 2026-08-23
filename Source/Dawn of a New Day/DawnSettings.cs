@@ -163,7 +163,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into DawnSettings.DoWindowContents(canva: {canva})\nException: {exception}");
+                DawnData.Exception(exception);
             }
             finally
             {
@@ -389,7 +389,7 @@ namespace DawnNewDay
             }
             catch (Exception exception)
             {
-                DawnData.Error($"Exception catched into DawnSettings.ExposeData()\nException: {exception}");
+                DawnData.Exception(exception);
             }
         }
     }

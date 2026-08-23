@@ -26,7 +26,9 @@ namespace DawnNewDay
 
         public World World;
         public Map Map;
-        public Vector2 Location;
+        public List<Map> AllMaps;
+
+        public readonly Vector2 Location => World.grid?.LongLatOf(Map.Tile) ?? Vector2.zero;
 
         public readonly int GenDay(DayRelative dayRelative)
         {
@@ -46,7 +48,7 @@ namespace DawnNewDay
         public readonly string GenSeason() => GenDate.Season(AbsTicks, Location).LabelCap();
         public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
-        public readonly float Temperature => Map.mapTemperature.OutdoorTemp;
+        public readonly float Temperature => Map.mapTemperature?.OutdoorTemp ?? 0f;
         public readonly string CalcTemperatureHex()
         {
             Color coldColor = new(0.2f, 0.7f, 1f);
@@ -60,15 +62,52 @@ namespace DawnNewDay
 
         public readonly Tile Tile => World.grid[Map.Tile];
 
-        public readonly string Terrain => Tile.hilliness.GetLabel();
-        public readonly float Elevation => Tile.elevation;
-        public readonly float Pollution => Tile.pollution;
+        public readonly string Terrain => Tile?.hilliness.GetLabel() ?? "";
+        public readonly float Elevation => Tile?.elevation ?? 0f;
+        public readonly float Pollution => Tile?.pollution ?? 0f;
 
-        public readonly GameCondition ActiveCondition => Map.GameConditionManager.ActiveConditions.FirstOrFallback(null);
+        public readonly GameCondition ActiveCondition => Map.GameConditionManager?.ActiveConditions?.FirstOrFallback(null) ?? null;
 
-        public readonly string FactionName => Map.ParentFaction.Name;
-        public readonly string SettlementName => Map.Parent is Settlement settlement ? settlement.Name : FactionName;
-    }
+        public readonly string FactionName
+        {
+            get
+            {
+                if (Map.ParentFaction != null)
+                    return Map.ParentFaction.Name;
+
+                Faction firstFaction = AllMaps.FirstOrFallback(map => map.ParentFaction != null)?.ParentFaction;
+                if (firstFaction != null)
+                    return firstFaction.Name;
+
+                return "Faction";
+            }
+        }
+        public readonly string SettlementName
+        {
+            get
+            {
+                if (Map.Parent is Settlement settlement)
+                    return settlement.Name;
+
+#if RW_15
+#else
+                if (Map.Parent is Camp camp)
+                    return camp.LabelCap;
+#endif
+
+                if (AllMaps.FirstOrFallback(map => map.Parent is Settlement settlement && !settlement.Name.NullOrEmpty())?.Parent is Settlement firstSettlement)
+                    return firstSettlement.Name;
+
+#if RW_15
+#else
+                if (AllMaps.FirstOrFallback(map => map.Parent is Camp camp && !camp.LabelCap.NullOrEmpty())?.Parent is Camp firstCamp)
+                    return firstCamp.LabelCap;
+#endif
+
+                return "Settlement";
+            }
+        }
+}
 
     public class DawnFormatter(Game game)
     {
@@ -78,16 +117,13 @@ namespace DawnNewDay
 
         public FormatContext CreateFormatContext(bool startsAtZero)
         {
-            if (Game.CurrentMap == null)
-                return new FormatContext();
-
             return new FormatContext
             {
                 AbsTicks = Game.tickManager.TicksAbs,
 
                 World = Game.World,
                 Map = Game.CurrentMap,
-                Location = CurrentLocation,
+                AllMaps = Game.Maps,
 
                 StartAtZero = startsAtZero,
             };
@@ -273,8 +309,18 @@ namespace DawnNewDay
             if (text.NullOrEmpty())
                 return text;
 
-            string format = TokenFormatText(context, text);
-            return ExtraRichTextTagText(format);
+            string format = "";
+            try
+            {
+                format = TokenFormatText(context, text);
+                format = ExtraRichTextTagText(format);
+                return format;
+            }
+            catch (Exception exception)
+            {
+                DawnData.Exception(exception);
+                return format;
+            }
         }
     }
 }
