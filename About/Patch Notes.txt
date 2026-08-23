@@ -52,4 +52,4 @@ v1.5.2
 - Fixed text clipping visual bugs.
 
 v1.5.3
-- Fixed NullReferenceException for Faction and Settlement format.
+- Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).

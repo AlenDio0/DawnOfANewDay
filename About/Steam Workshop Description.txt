@@ -89,7 +89,7 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [/list]
 [b]v1.5.3[/b]
 [list]
-[*]Fixed NullReferenceException for Faction and Settlement format.
+[*]Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
 [/list]
 
 [h1]COMPATIBILITY[/h1]

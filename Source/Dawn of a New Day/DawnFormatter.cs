@@ -66,7 +66,8 @@ namespace DawnNewDay
         public readonly float Elevation => Tile?.elevation ?? 0f;
         public readonly float Pollution => Tile?.pollution ?? 0f;
 
-        public readonly GameCondition ActiveCondition => Map.GameConditionManager?.ActiveConditions?.FirstOrFallback(null) ?? null;
+        public readonly List<GameCondition> ActiveConditions => Map.GameConditionManager?.ActiveConditions ?? [];
+        public readonly GameCondition ActiveCondition => ActiveConditions.FirstOrFallback(null);
 
         public readonly string FactionName
         {
@@ -168,6 +169,7 @@ namespace DawnNewDay
             { "POLLUTION", context => context.Pollution.ToStringPercent() },
 
             { "CONDITION", context => context.ActiveCondition?.LabelCap },
+            { "CONDITIONS", context => string.Join(", ", context.ActiveConditions.Select(condition => condition.LabelCap)) },
 
             { "FACTION", context => context.FactionName },
             { "SETTLEMENT", context => context.SettlementName },
