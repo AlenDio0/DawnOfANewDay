@@ -1,4 +1,5 @@
 ﻿using DawnNewDay.Compatibility;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -74,6 +75,11 @@ namespace DawnNewDay
         #region Compatibility Section
 
         #region Modern Notifications Section
+
+        public readonly static Dictionary<string, bool> MN_ExcludeOccasionCategory = new()
+        {
+            { "Reminder", true },
+        };
 
         public readonly static string MN_ReminderTextFormat =
             "<color={MN_REMINDER_COLOR}><size={MN_REMINDER_FONTSIZE / 1.5}>{MN_REMINDER_TITLE}</size>{ENDLINE}-{MN_REMINDER_REMAINING} Remain-</color>";

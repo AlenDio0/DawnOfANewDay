@@ -133,5 +133,28 @@ namespace DawnNewDay.Compatibility
 
         public static IEnumerable<Occasion> GetOccasions() => ModernNotifications.AllOccasions()
             .Cast<object[]>().Select(rawOccasion => new Occasion(rawOccasion));
+
+        private static List<string> m_CachedOccasionCategories = null;
+        public static List<string> OccasionCategories
+        {
+            get
+            {
+                if (m_CachedOccasionCategories == null)
+                {
+                    try
+                    {
+                        Type categoryEnum = AccessTools.TypeByName("ModernNotifications.OccasionCat");
+                        if (categoryEnum != null)
+                            m_CachedOccasionCategories = [.. Enum.GetNames(categoryEnum)];
+                    }
+                    finally
+                    {
+                        m_CachedOccasionCategories ??= [];
+                    }
+                }
+
+                return m_CachedOccasionCategories;
+            }
+        }
     }
 }

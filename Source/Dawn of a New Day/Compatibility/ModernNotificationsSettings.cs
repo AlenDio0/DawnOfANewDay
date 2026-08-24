@@ -13,7 +13,7 @@ namespace DawnNewDay.Compatibility
 
         private string MaximumTimeBuffer;
 
-        public ModernNotificationsSettings() {}
+        public ModernNotificationsSettings() { }
 
         public ModernNotificationsSettings(bool addText, int maximumDays, string textFormat, DawnTextStyle textStyle)
         {

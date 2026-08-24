@@ -211,11 +211,9 @@ namespace DawnNewDay
                     if (!occasion.IsValid)
                         continue;
 
-                    if (!nextOccasion.IsValid)
-                    {
-                        nextOccasion = occasion;
+                    bool isCategoryExcluded = Settings.MN_ExcludeOccasionCategory?.Any(excludeCategory => excludeCategory.Value && occasion.Category == excludeCategory.Key) ?? false;
+                    if (isCategoryExcluded)
                         continue;
-                    }
 
                     if (IsTargetTimeNearest(nextOccasion.Time, occasion.Time))
                         nextOccasion = occasion;

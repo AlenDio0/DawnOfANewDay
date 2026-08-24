@@ -233,6 +233,8 @@ namespace DawnNewDay
 
         public static readonly string MN_ModName = "Modern Notifications";
 
+        public static string Label_MN_ExcludeOccasions => "DawnNewDay.Label_MN_ExcludeOccasions".Translate();
+
         public static string Section_MN_Reminder => "DawnNewDay.Section_MN_Reminder".Translate();
         public static string Section_MN_Occasion => "DawnNewDay.Section_MN_Occasion".Translate();
 

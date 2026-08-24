@@ -3,6 +3,7 @@ using DawnNewDay.Dialogs;
 using DawnNewDay.Utils;
 using RimWorld;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -117,6 +118,10 @@ namespace DawnNewDay
 
         private bool m_MN_CompatibilitySection = false;
 
+        private bool m_MN_ExcludeOccasionSection = false;
+
+        public Dictionary<string, bool> MN_ExcludeOccasionCategory = DawnDefault.MN_ExcludeOccasionCategory;
+
         private bool m_MN_ReminderTextSection = false;
         public ModernNotificationsSettings MN_Reminder = DawnDefault.MN_Reminder;
 
@@ -146,14 +151,17 @@ namespace DawnNewDay
             canva = canva.MiddlePart(1f, 0.95f);
 
             Listing_Standard listing = new() { maxOneColumn = true };
-            listing.Begin(canva);
-
             try
             {
+                listing.Begin(canva);
+
                 ShowHeader(listing);
-                float headerHeight = listing.CurHeight;
+
+                listing.GapLine();
 
                 listing.End();
+
+                float headerHeight = listing.CurHeight;
 
                 Rect outRect = new(canva.x, canva.y + headerHeight, canva.width, canva.height - headerHeight);
                 Rect viewRect = new(0f, 0f, outRect.width - 32f, Mathf.Max(outRect.height, m_CachedScrollViewHeight));
@@ -161,7 +169,7 @@ namespace DawnNewDay
 
                 listing.Begin(viewRect);
 
-                if (listing.SectionButton(DawnTranslation.Section_Appearance, ref m_AppearanceSection))
+                if (listing.SectionButton(DawnTranslation.Section_Appearance, ref m_AppearanceSection, false))
                     listing.Indented(() => ShowAppearanceSection(listing));
 
                 if (listing.SectionButton(DawnTranslation.Section_Duration, ref m_DurationSection))
@@ -180,8 +188,9 @@ namespace DawnNewDay
                     listing.Indented(() => ShowExtraSection(listing));
 
                 if (listing.SectionButton(DawnTranslation.Section_Compatibility, ref m_CompatibilitySection))
-                    listing.Indented(() => ShowCompatibilitySection(listing), 16f);
+                    listing.Indented(() => ShowCompatibilitySection(listing));
 
+                listing.GapLine();
             }
             catch (Exception exception)
             {
@@ -189,7 +198,7 @@ namespace DawnNewDay
             }
             finally
             {
-                m_CachedScrollViewHeight = listing.CurHeight;
+                m_CachedScrollViewHeight = listing.CurHeight + (canva.height * 0.2f);
 
                 listing.End();
 
@@ -209,8 +218,6 @@ namespace DawnNewDay
                 Messages.Message(DawnTranslation.Message_ShowExample, MessageTypeDefOf.PositiveEvent, false);
                 m_ShowExample = true;
             }
-
-            listing.Gap();
         }
 
         private void ShowAppearanceSection(Listing_Standard listing)
@@ -256,14 +263,14 @@ namespace DawnNewDay
 
         private void ShowTextSection(Listing_Standard listing)
         {
-            if (listing.SectionButton(DawnTranslation.Section_UpperText, ref m_UpperTextSection))
-                listing.Indented(() => UpperTextStyle.DoContents(listing, Scale), 32f);
+            if (listing.SectionButton(DawnTranslation.Section_UpperText, ref m_UpperTextSection, false))
+                listing.Indented(() => UpperTextStyle.DoContents(listing, Scale));
 
             if (listing.SectionButton(DawnTranslation.Section_BottomText, ref m_BottomTextSection))
-                listing.Indented(() => BottomTextStyle.DoContents(listing, Scale), 32f);
+                listing.Indented(() => BottomTextStyle.DoContents(listing, Scale));
 
             if (listing.SectionButton(DawnTranslation.Section_SubtitleText, ref m_SubtitleTextSection))
-                listing.Indented(() => SubtitleTextStyle.DoContents(listing, Scale), 32f);
+                listing.Indented(() => SubtitleTextStyle.DoContents(listing, Scale));
         }
 
         private void ShowLabelFormatSection(Listing_Standard listing)
@@ -330,7 +337,7 @@ namespace DawnNewDay
 
         private void ShowCompatibilitySection(Listing_Standard listing)
         {
-            if (listing.SectionButton(DawnTranslation.MN_ModName, ref m_MN_CompatibilitySection))
+            if (listing.SectionButton(DawnTranslation.MN_ModName, ref m_MN_CompatibilitySection, false))
                 listing.Indented(() => ShowMNCompatibilitySection(listing));
         }
 
@@ -342,21 +349,26 @@ namespace DawnNewDay
                 return;
             }
 
+            if (listing.SectionButton(DawnTranslation.Label_MN_ExcludeOccasions, ref m_MN_ExcludeOccasionSection, false))
+                listing.Indented(() => listing.LabeledCheckboxTable(ModernNotificationUtility.OccasionCategories, ref MN_ExcludeOccasionCategory));
+
+            listing.Gap();
+
             if (listing.SectionButton(DawnTranslation.Section_MN_Reminder, ref m_MN_ReminderTextSection))
-                listing.Indented(() => MN_Reminder.DoContents(listing, Scale), 32f);
+                listing.Indented(() => MN_Reminder.DoContents(listing, Scale));
 
             if (listing.SectionButton(DawnTranslation.Section_MN_Occasion, ref m_MN_OccasionTextSection))
-                listing.Indented(() => MN_Occasion.DoContents(listing, Scale), 32f);
+                listing.Indented(() => MN_Occasion.DoContents(listing, Scale));
         }
 
         public void UpdateText()
         {
             UpperTextStyle.UpdateFontFamily();
             UpperTextStyle.ApplyToGUIStyle(Scale);
-         
+
             BottomTextStyle.UpdateFontFamily();
             BottomTextStyle.ApplyToGUIStyle(Scale);
-            
+
             SubtitleTextStyle.UpdateFontFamily();
             SubtitleTextStyle.ApplyToGUIStyle(Scale);
 
@@ -450,11 +462,15 @@ namespace DawnNewDay
 
                 #region Modern Notifications Section
 
+                Scribe_Collections.Look(ref MN_ExcludeOccasionCategory, "MN_ExcludeOccasionCategory");
+
                 Scribe_Deep.Look(ref MN_Reminder, "MN_Reminder");
                 Scribe_Deep.Look(ref MN_Occasion, "MN_Occasion");
 
                 if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
                 {
+                    MN_ExcludeOccasionCategory ??= DawnDefault.MN_ExcludeOccasionCategory;
+
                     MN_Reminder ??= DawnDefault.MN_Reminder;
                     MN_Reminder.TextStyle ??= DawnDefault.MN_ReminderTextStyle;
 

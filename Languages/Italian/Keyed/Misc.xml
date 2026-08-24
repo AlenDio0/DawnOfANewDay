@@ -149,9 +149,13 @@
 	<DawnNewDay.Label_ShowEveryXDays>Mostra ogni X giorni</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Orario di Attivazione</DawnNewDay.Label_TriggerHour>
 
-	<!-- Compatibility Section -->>
+	<!-- Compatibility Section -->
 	<DawnNewDay.Section_Compatibility>Compatibilità</DawnNewDay.Section_Compatibility>
 
+	<!-- Compatibility - Modern Notifications Section-->
+
+	<DawnNewDay.Label_MN_ExcludeOccasions>Escludi dalle Occasioni</DawnNewDay.Label_MN_ExcludeOccasions>
+	
 	<DawnNewDay.Section_MN_Reminder>Promemoria</DawnNewDay.Section_MN_Reminder>
 	<DawnNewDay.Section_MN_Occasion>Occasione</DawnNewDay.Section_MN_Occasion>
 

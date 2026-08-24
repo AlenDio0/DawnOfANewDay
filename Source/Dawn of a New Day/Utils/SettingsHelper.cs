@@ -84,9 +84,34 @@ namespace DawnNewDay.Utils
             return rowRect.RightPart(1f - labelWidthPct).MiddlePart(middleWidthPct, 1f);
         }
 
-        public static bool SectionButton(this Listing_Standard listing, string label, ref bool open)
+        public static void LabeledCheckboxTable(this Listing_Standard listing, List<string> labels, ref Dictionary<string, bool> table, int columns = 3)
         {
-            listing.GapLine();
+            Rect currentRow = Rect.zero;
+            int rowCount = 0;
+
+            foreach (string category in labels)
+            {
+                if (rowCount == 0)
+                    currentRow = listing.GetRect(30f);
+
+                float width = currentRow.width / columns;
+                Rect column = new(currentRow.x + (width * rowCount), currentRow.y, width, currentRow.height);
+
+                bool selected = table.TryGetValue(category, false);
+                Widgets.CheckboxLabeled(column.MiddlePart(0.8f, 1f), category, ref selected);
+                table[category] = selected;
+
+                rowCount++;
+                if (rowCount >= columns)
+                    rowCount = 0;
+            }
+        }
+
+        public static bool SectionButton(this Listing_Standard listing, string label, ref bool open, bool gapLine = true)
+        {
+            if (gapLine)
+                listing.GapLine(4f);
+
             Rect headerRect = listing.GetRect(30f);
 
             const float cIconSize = 20f;
@@ -109,7 +134,7 @@ namespace DawnNewDay.Utils
                 open = !open;
 
             if (open)
-                listing.Gap();
+                listing.Gap(4f);
 
             return open;
         }
@@ -126,7 +151,7 @@ namespace DawnNewDay.Utils
             listing.ColumnWidth += gap;
         }
 
-        public static Listing_Standard Indented(this Listing_Standard listing, Action action, float gap = 48f)
+        public static Listing_Standard Indented(this Listing_Standard listing, Action action, float gap = 32f)
         {
             BeginIndentation(listing, gap);
 
