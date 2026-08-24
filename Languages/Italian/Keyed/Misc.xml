@@ -152,6 +152,8 @@
 	<!-- Compatibility Section -->
 	<DawnNewDay.Section_Compatibility>Compatibilità</DawnNewDay.Section_Compatibility>
 
+	<DawnNewDay.Label_ModIncompatibility>Questa mod non è attualmente attiva oppure è incompatibile con questa versione di RimWorld o della Mod...</DawnNewDay.Label_ModIncompatibility>
+
 	<!-- Compatibility - Modern Notifications Section-->
 
 	<DawnNewDay.Label_MN_ExcludeOccasions>Escludi dalle Occasioni</DawnNewDay.Label_MN_ExcludeOccasions>

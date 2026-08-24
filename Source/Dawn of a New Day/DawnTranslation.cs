@@ -97,7 +97,7 @@ namespace DawnNewDay
         public static string Label_LabelFormatHints => "DawnNewDay.Label_LabelFormatHints".Translate();
         public static string Label_RichTextHints => "DawnNewDay.Label_RichTextHints".Translate();
 
-        public static Dictionary<string, string> Hints_LabelFormatPreset => new()
+        public static Dictionary<string, string> Hints_LabelFormatPresets => new()
         {
             { "DAY {DAY_SETTLE} <size=30>{HOUR_D2}:00</size>", "DawnNewDay.Hint_Preset_DayAndHour".Translate() },
             { "{DAY_QUADRUM_ORDINAL} of {QUADRUM}, {YEAR}", "DawnNewDay.Hint_Preset_Date".Translate() },
@@ -157,36 +157,6 @@ namespace DawnNewDay
             { "{VALUE1 / VALUE2}", "DawnNewDay.Hint_Format_Division".Translate() },
         };
 
-        #region Compatibility
-
-        #region Modern Notifications
-
-        public static string MN_HintTranslate(string key) => $"[{MN_ModName}] {key.Translate()}";
-        public static Dictionary<string, string> Hints_MN_LabelFormat => new()
-        {
-            { "{MN_REMINDER_TITLE}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_TITLE") },
-            { "{MN_REMINDER_MESSAGE}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_MESSAGE") },
-            { "{MN_REMINDER_DAY_YEAR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_DAY_YEAR") },
-            { "{MN_REMINDER_COLOR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_COLOR") },
-
-            { "{MN_REMINDER_REMAINING}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING") },
-            { "{MN_REMINDER_REMAINING_DAY}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY") },
-            { "{MN_REMINDER_REMAINING_HOUR}", MN_HintTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR") },
-
-            { "{MN_OCCASION_CATEGORY}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_CATEGORY") },
-            { "{MN_OCCASION_LABEL}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_LABEL") },
-            { "{MN_OCCASION_DETAIL}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_DETAIL") },
-            { "{MN_OCCASION_DAY_YEAR}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_DAY_YEAR") },
-
-            { "{MN_OCCASION_REMAINING}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING") },
-            { "{MN_OCCASION_REMAINING_DAY}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY") },
-            { "{MN_OCCASION_REMAINING_HOUR}", MN_HintTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR") },
-        };
-
-        #endregion 
-
-        #endregion
-
         public static Dictionary<string, string> Hints_RichText => new()
         {
             { "<color=COLOR_HERE>TEXT_HERE</color>", "DawnNewDay.Hint_RichText_Color".Translate() },
@@ -229,11 +199,54 @@ namespace DawnNewDay
 
         public static string Section_Compatibility => "DawnNewDay.Section_Compatibility".Translate();
 
+        public static string Label_ModIncompatibility => "DawnNewDay.Label_ModIncompatibility".Translate();
+
         #region Modern Notifications Section
 
         public static readonly string MN_ModName = "Modern Notifications";
+        public static string MN_TagTranslate(string key) => $"[{MN_ModName}] {key.Translate()}";
 
         public static string Label_MN_ExcludeOccasions => "DawnNewDay.Label_MN_ExcludeOccasions".Translate();
+
+        public static string Label_MN_LabelFormatPresets = MN_TagTranslate("DawnNewDay.Label_LabelFormatPresets");
+        public static Dictionary<string, string> Hints_MN_LabelFormatPresets => new()
+        {
+            { "<color={MN_REMINDER_COLOR}>-{MN_REMINDER_REMAINING} Remain-</color>", MN_TagTranslate("DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor") },
+            { "<color={MN_REMINDER_SEVERITY_COLOR}>-{MN_REMINDER_REMAINING} Remain-</color>", MN_TagTranslate("DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor") },
+            { "<color={MN_OCCASION_REMAINING_COLOR}>-{MN_OCCASION_REMAINING} Remain-</color>", MN_TagTranslate("DawnNewDay.Hint_MN_Preset_OccasionRemainWithTimeColor") },
+            { DawnDefault.MN_ReminderTextFormat, MN_TagTranslate("DawnNewDay.Hint_MN_Preset_ReminderTextFormat") },
+            { DawnDefault.MN_OccasionTextFormat, MN_TagTranslate("DawnNewDay.Hint_MN_Preset_OccasionTextFormat") },
+        };
+
+        public static string Label_MN_LabelFormatHints = MN_TagTranslate("DawnNewDay.Label_LabelFormatHints");
+        public static Dictionary<string, string> Hints_MN_LabelFormat => new()
+        {
+            { "{MN_REMINDER_TITLE}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_TITLE") },
+            { "{MN_REMINDER_MESSAGE}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_MESSAGE") },
+            { "{MN_REMINDER_DAY_YEAR}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_DAY_YEAR") },
+
+            { "{MN_REMINDER_SEVERITY_COLOR}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_SEVERITY_COLOR") },
+
+            { "{MN_REMINDER_REMAINING}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING") },
+            { "{MN_REMINDER_REMAINING_DAY}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY") },
+            { "{MN_REMINDER_REMAINING_HOUR}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR") },
+
+            { "{MN_REMINDER_REMAINING_COLOR}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_REMAINING_COLOR") },
+
+            { "{MN_OCCASION_CATEGORY}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_CATEGORY") },
+            { "{MN_OCCASION_LABEL}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_LABEL") },
+            { "{MN_OCCASION_DETAIL}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_DETAIL") },
+            { "{MN_OCCASION_DAY_YEAR}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_DAY_YEAR") },
+
+            { "{MN_OCCASION_REMAINING}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING") },
+            { "{MN_OCCASION_REMAINING_DAY}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY") },
+            { "{MN_OCCASION_REMAINING_HOUR}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR") },
+
+            { "{MN_OCCASION_REMAINING_COLOR}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR") },
+
+            { "{MN_REMINDER_FONTSIZE}", MN_TagTranslate("DawnNewDay.Hint_MN_REMINDER_FONTSIZE") },
+            { "{MN_OCCASION_FONTSIZE}", MN_TagTranslate("DawnNewDay.Hint_MN_OCCASION_FONTSIZE") },
+        };
 
         public static string Section_MN_Reminder => "DawnNewDay.Section_MN_Reminder".Translate();
         public static string Section_MN_Occasion => "DawnNewDay.Section_MN_Occasion".Translate();

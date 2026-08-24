@@ -34,6 +34,13 @@ namespace DawnNewDay
 
         public readonly Vector2 Location => World.grid?.LongLatOf(Map.Tile) ?? Vector2.zero;
 
+        public static string LerpHex(Color fromColor, Color toColor, float value, float min, float max)
+        {
+            float progress = Mathf.InverseLerp(min, max, value);
+            Color color = Color.Lerp(fromColor, toColor, progress);
+            return "#" + ColorUtility.ToHtmlStringRGB(color);
+        }
+
         #region Date
 
         public readonly int GenDay(DayRelative dayRelative)
@@ -59,19 +66,7 @@ namespace DawnNewDay
         #region Tile Info
 
         public readonly float Temperature => Map.mapTemperature?.OutdoorTemp ?? 0f;
-        public readonly string TemperatureHex
-        {
-            get
-            {
-                Color coldColor = new(0.2f, 0.7f, 1f);
-                Color hotColor = new(1f, 0.3f, 0f);
-
-                float t = Mathf.InverseLerp(-10f, 50f, Temperature);
-                Color temperatureColor = Color.Lerp(coldColor, hotColor, t);
-
-                return "#" + ColorUtility.ToHtmlStringRGB(temperatureColor);
-            }
-        }
+        public readonly string TemperatureHex => LerpHex(new(0.2f, 0.7f, 1f), new(1f, 0.3f, 0f), Temperature, -10f, 50f);
 
         public readonly Tile Tile => World.grid[Map.Tile];
 
@@ -178,24 +173,6 @@ namespace DawnNewDay
             }
         }
 
-        public readonly string NextReminderHex
-        {
-            get
-            {
-                static string ColorToHex(Color color) => "#" + ColorUtility.ToHtmlStringRGB(color);
-
-                return NextReminder.SeverityType switch
-                {
-                    MNUtility.Reminder.Severity.Info => ColorToHex(new Color(0.8f, 0.8f, 0.8f)),
-                    MNUtility.Reminder.Severity.Good => ColorToHex(new Color(0.45f, 0.7f, 0.85f)),
-                    MNUtility.Reminder.Severity.Caution => ColorToHex(new Color(0.9f, 0.55f, 0.1f)),
-                    MNUtility.Reminder.Severity.Urgent => ColorToHex(new Color(0.9f, 0.1f, 0.1f)),
-
-                    _ => ColorToHex(Color.gray),
-                };
-            }
-        }
-
         public readonly MNUtility.Occasion NextOccasion
         {
             get
@@ -223,6 +200,24 @@ namespace DawnNewDay
             }
         }
 
+        public readonly string NextReminderSeverityHex
+        {
+            get
+            {
+                static string ColorToHex(Color color) => "#" + ColorUtility.ToHtmlStringRGB(color);
+
+                return NextReminder.SeverityType switch
+                {
+                    MNUtility.Reminder.Severity.Info => ColorToHex(new Color(0.8f, 0.8f, 0.8f)),
+                    MNUtility.Reminder.Severity.Good => ColorToHex(new Color(0.45f, 0.7f, 0.85f)),
+                    MNUtility.Reminder.Severity.Caution => ColorToHex(new Color(0.9f, 0.55f, 0.1f)),
+                    MNUtility.Reminder.Severity.Urgent => ColorToHex(new Color(0.9f, 0.1f, 0.1f)),
+
+                    _ => ColorToHex(Color.white),
+                };
+            }
+        }
+
         private readonly bool IsTargetTimeNearest(MNUtility.YearTime currentTime, MNUtility.YearTime targetTime)
         {
             int realDayOfYear = ModernNotifications.Today() + 1;
@@ -230,7 +225,7 @@ namespace DawnNewDay
 
             int currentResolvedYear = currentTime.Year;
             if (currentResolvedYear == 0)
-                currentResolvedYear =  realYear + (currentTime.DayOfYear < realDayOfYear ? 1 : 0);
+                currentResolvedYear = realYear + (currentTime.DayOfYear < realDayOfYear ? 1 : 0);
 
             int targetResolvedYear = targetTime.Year;
             if (targetResolvedYear == 0)
@@ -280,11 +275,15 @@ namespace DawnNewDay
             int yearsInDays = (targetResolvedYear - realYear) * cYearLengthDay;
             int remainingHours = (targetTime.DayOfYear - realDayOfYear + yearsInDays) * cDayLengthHour - realHour;
 
-            return Mathf.Max(remainingHours, 0);
+            return Mathf.Max(remainingHours + 6, 0);
         }
 
         public readonly int NextReminderTimeRemainingHour => TimeRemainingHour(NextReminder.Time);
         public readonly int NextOccasionTimeRemainingHour => TimeRemainingHour(NextOccasion.Time);
+
+        public static string TimeRemainingLerpHex(int remainingHour) => LerpHex(Color.white, new Color(0.9f, 0.1f, 0.1f), remainingHour, 96f, 0f);
+        public readonly string NextReminderRemainingHex => TimeRemainingLerpHex(NextReminderTimeRemainingHour);
+        public readonly string NextOccasionRemainingHex => TimeRemainingLerpHex(NextOccasionTimeRemainingHour);
 
         #endregion
 
@@ -367,12 +366,15 @@ namespace DawnNewDay
             { "MN_REMINDER_TITLE", context => context.NextReminder.Title },
             { "MN_REMINDER_MESSAGE", context => context.NextReminder.Message },
             { "MN_REMINDER_DAY_YEAR", context => context.NextReminder.Time.DayOfYear.ToString() },
-            { "MN_REMINDER_COLOR", context => context.NextReminderHex },
+
+            { "MN_REMINDER_SEVERITY_COLOR", context => context.NextReminderSeverityHex },
 
             { "MN_REMINDER_REMAINING", context => context.TimeRemaining(context.NextReminderTimeRemainingHour) },
             { "MN_REMINDER_REMAINING_DAY", context => context.TimeRemainingDay(context.NextReminderTimeRemainingHour).ToString() },
             { "MN_REMINDER_REMAINING_HOUR", context => context.NextReminderTimeRemainingHour.ToString() },
-         
+
+            { "MN_REMINDER_REMAINING_COLOR", context => context.NextReminderRemainingHex },
+
             { "MN_OCCASION_CATEGORY", context => context.NextOccasion.Category },
             { "MN_OCCASION_LABEL", context => context.NextOccasion.Label },
             { "MN_OCCASION_DETAIL", context => context.NextOccasion.Detail },
@@ -381,6 +383,8 @@ namespace DawnNewDay
             { "MN_OCCASION_REMAINING", context => context.TimeRemaining(context.NextOccasionTimeRemainingHour) },
             { "MN_OCCASION_REMAINING_DAY", context => context.TimeRemainingDay(context.NextOccasionTimeRemainingHour).ToString() },
             { "MN_OCCASION_REMAINING_HOUR", context => context.NextOccasionTimeRemainingHour.ToString() },
+
+            { "MN_OCCASION_REMAINING_COLOR", context => context.NextOccasionRemainingHex },
 
             { "MN_REMINDER_FONTSIZE", context => context.MN_ReminderFontSize.ToString() },
             { "MN_OCCASION_FONTSIZE", context => context.MN_OccasionFontSize.ToString() },
@@ -426,7 +430,7 @@ namespace DawnNewDay
             public static ParsedOperand Parse(string text, FormatContext context)
             {
                 string format = text.Replace(',', '.');
-                
+
                 {
                     if (TryReplaceToken(context, format, out string value))
                         format = value;

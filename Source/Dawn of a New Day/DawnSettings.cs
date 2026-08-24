@@ -291,7 +291,13 @@ namespace DawnNewDay
             listing.Gap();
 
             if (listing.ButtonText(DawnTranslation.Label_LabelFormatPresets))
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, DawnTranslation.Hints_LabelFormatPreset));
+            {
+                var presets = DawnTranslation.Hints_LabelFormatPresets;
+                if (ModernNotifications.Present)
+                    presets.AddRange(DawnTranslation.Hints_MN_LabelFormatPresets);
+
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, presets));
+            }
 
             listing.Gap();
 
@@ -345,7 +351,7 @@ namespace DawnNewDay
         {
             if (!ModernNotifications.Present)
             {
-                SettingsHelper.WithGUIColor(Color.grey, () => listing.Label("Mod is not installed or isn't compatibile with the current version!"));
+                SettingsHelper.WithGUIColor(Color.grey, () => listing.Label(DawnTranslation.Label_ModIncompatibility));
                 return;
             }
 
@@ -359,6 +365,17 @@ namespace DawnNewDay
 
             if (listing.SectionButton(DawnTranslation.Section_MN_Occasion, ref m_MN_OccasionTextSection))
                 listing.Indented(() => MN_Occasion.DoContents(listing, Scale));
+
+            listing.Gap();
+
+            Rect rowRect = listing.GetRect(30f);
+
+            if (Widgets.ButtonText(rowRect.LeftHalf(), DawnTranslation.Label_MN_LabelFormatPresets))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_MN_LabelFormatPresets, DawnTranslation.Hints_MN_LabelFormatPresets));
+
+            if (Widgets.ButtonText(rowRect.RightHalf(), DawnTranslation.Label_MN_LabelFormatHints))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, DawnTranslation.Hints_MN_LabelFormat));
+
         }
 
         public void UpdateText()

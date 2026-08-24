@@ -82,16 +82,18 @@ namespace DawnNewDay
         };
 
         public readonly static string MN_ReminderTextFormat =
-            "<color={MN_REMINDER_COLOR}><size={MN_REMINDER_FONTSIZE / 1.5}>{MN_REMINDER_TITLE}</size>{ENDLINE}-{MN_REMINDER_REMAINING} Remain-</color>";
+            "<color={MN_REMINDER_SEVERITY_COLOR}><size={MN_REMINDER_FONTSIZE / 1.25}>{MN_REMINDER_TITLE}</size></color>{ENDLINE}" +
+            "<color={MN_REMINDER_REMAINING_COLOR}>-{MN_REMINDER_REMAINING} Remain-</color>";
         public static DawnTextStyle MN_ReminderTextStyle => new(18, true, false, 0.25f);
 
         public static ModernNotificationsSettings MN_Reminder => new(true, 15, MN_ReminderTextFormat, MN_ReminderTextStyle);
 
         public readonly static string MN_OccasionTextFormat =
-            "<size={MN_OCCASION_FONTSIZE / 1.5}>[{MN_OCCASION_CATEGORY}] {MN_OCCASION_LABEL}</size>{ENDLINE}-{MN_OCCASION_REMAINING} Remain-";
+            "<size={MN_OCCASION_FONTSIZE / 1.25}>[{MN_OCCASION_CATEGORY}] {MN_OCCASION_LABEL}</size>{ENDLINE}" +
+            "<color={MN_OCCASION_REMAINING_COLOR}>-{MN_OCCASION_REMAINING} Remain-</color>";
         public static DawnTextStyle MN_OccasionTextStyle => new(16, true, false, 0.25f);
 
-        public static ModernNotificationsSettings MN_Occasion => new(false, 15, MN_OccasionTextFormat, MN_OccasionTextStyle);
+        public static ModernNotificationsSettings MN_Occasion => new(true, 15, MN_OccasionTextFormat, MN_OccasionTextStyle);
 
         #endregion
 

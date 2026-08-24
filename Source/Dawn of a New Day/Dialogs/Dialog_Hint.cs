@@ -92,7 +92,7 @@ namespace DawnNewDay.Dialogs
 
                 string displayFormat = format.Replace("<", "<\u200B");
 
-                const int cMaxLengthTrim = 72;
+                const int cMaxLengthTrim = 64;
                 if (displayFormat.Length > cMaxLengthTrim)
                     displayFormat = $"{displayFormat.TrimmedToLength(cMaxLengthTrim)}...";
 
