@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<!-- General Settings -->
+	<!-- 基本设置 -->
 	<DawnNewDay.Label_Enabled>启用功能</DawnNewDay.Label_Enabled>
 	<DawnNewDay.Label_ScreenshotMode>截图模式时隐藏</DawnNewDay.Label_ScreenshotMode>
 	
 	<DawnNewDay.Label_ShowExample>弹出示例</DawnNewDay.Label_ShowExample>
 	<DawnNewDay.Message_ShowExample>解除暂停后的下一帧开始显示示例。({0})</DawnNewDay.Message_ShowExample>
 
-	<!-- Appearance Section -->
+	<!-- 外观分类 -->
 	<DawnNewDay.Section_Appearance>外观...</DawnNewDay.Section_Appearance>
 	
 	<DawnNewDay.Label_ShowHighlight>高亮背景</DawnNewDay.Label_ShowHighlight>
@@ -33,14 +33,14 @@
 	<DawnNewDay.Label_LinePadding>划分线内边距</DawnNewDay.Label_LinePadding>
 	<DawnNewDay.Label_LineColor>划分线颜色</DawnNewDay.Label_LineColor>
 
-	<!-- Duration Section -->
+	<!-- 动画分类 -->
 	<DawnNewDay.Section_Duration>持续时间...</DawnNewDay.Section_Duration>
 	
 	<DawnNewDay.Label_DisplayDuration>总计时长</DawnNewDay.Label_DisplayDuration>
 	<DawnNewDay.Label_FadeInDuration>淡入动画时长</DawnNewDay.Label_FadeInDuration>
 	<DawnNewDay.Label_FadeOutDuration>淡出动画时长</DawnNewDay.Label_FadeOutDuration>
 
-	<!-- Text Section -->
+	<!-- 文本分类 -->
 	<DawnNewDay.Section_Text>文本...</DawnNewDay.Section_Text>
 	
 	<DawnNewDay.Section_UpperText>顶部 文本属性</DawnNewDay.Section_UpperText>
@@ -57,7 +57,7 @@
 	<DawnNewDay.Label_OutlineColor>外描边颜色</DawnNewDay.Label_OutlineColor>
 	<DawnNewDay.Label_Search>搜索：</DawnNewDay.Label_Search>
 
-	<!-- Label Format Section -->
+	<!-- 文本格式分类 -->
 	<DawnNewDay.Section_LabelFormat>文本格式...</DawnNewDay.Section_LabelFormat>
 	
 	<DawnNewDay.Label_UpperTextFormat>上方文本</DawnNewDay.Label_UpperTextFormat>
@@ -99,7 +99,7 @@
 	<DawnNewDay.Hint_Format_WEATHER>天气 [如：晴]</DawnNewDay.Hint_Format_WEATHER>
 
 	<DawnNewDay.Hint_Format_TEMPERATURE>温度 [如：23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
-	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>温度 HEX色号 [如：#RRGGBB] -  用于富文本颜色标签</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>温度 HEX色号 [如：#RRGGBB] -  富文本颜色标签</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
 
 	<DawnNewDay.Hint_Format_WORLD>世界名称 [如：Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
 	<DawnNewDay.Hint_Format_BIOME>生物群落类型 [如：冻土苔原]</DawnNewDay.Hint_Format_BIOME>
@@ -131,18 +131,65 @@
 	<DawnNewDay.Hint_RichText_Upper>强制所有文本大写 [如：Aprimay -> APRIMAY]</DawnNewDay.Hint_RichText_Upper>
 	<DawnNewDay.Hint_RichText_Lower>强制所有文本小写 [如：Spring -> spring]</DawnNewDay.Hint_RichText_Lower>
 
-	<!-- Sound Section -->
+	<!-- 音乐分类 -->
 	<DawnNewDay.Section_Sound>声音...</DawnNewDay.Section_Sound>
 	
 	<DawnNewDay.Label_Sound>选择音效</DawnNewDay.Label_Sound>
 	<DawnNewDay.Label_SoundVolume>音效音量</DawnNewDay.Label_SoundVolume>
 	<DawnNewDay.Label_SoundPitch>音调偏移</DawnNewDay.Label_SoundPitch>
 	
-	<!-- Extra Section -->
+	<!-- 额外分类 -->
 	<DawnNewDay.Section_Extra>额外...</DawnNewDay.Section_Extra>
 	
 	<DawnNewDay.Label_StartsAtZero>从0计数</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>显示间隔(天)</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>触发时间</DawnNewDay.Label_TriggerHour>
+
+	<!-- 兼容性分类 -->
+	<DawnNewDay.Section_Compatibility>mod兼容...</DawnNewDay.Section_Compatibility>
+
+	<DawnNewDay.Label_ModIncompatibility>此mod当前未启用，或者该mod当前版本与rimworld版本/本mod版本不对应。</DawnNewDay.Label_ModIncompatibility>
+	
+	<!-- 兼容mod：Modern Notifications（现代通知栏）-->
+
+	<DawnNewDay.Label_MN_ExcludeOccasions>排除事件...</DawnNewDay.Label_MN_ExcludeOccasions>
+
+	<DawnNewDay.Section_MN_Reminder>提醒</DawnNewDay.Section_MN_Reminder>
+	<DawnNewDay.Section_MN_Occasion>事件</DawnNewDay.Section_MN_Occasion>
+
+	<DawnNewDay.Label_MN_AddText>新增对应文本行</DawnNewDay.Label_MN_AddText>
+
+	<DawnNewDay.Label_MN_MaximumDays>天数上限</DawnNewDay.Label_MN_MaximumDays>
+
+	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>提醒-基于严重性颜色的Majora's Mask格式</DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>
+	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>提醒-基于时间颜色的Majora's Mask格式</DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>
+	<DawnNewDay.Hint_MN_Preset_OccasionRemainWithTimeColor>事件-基于时间颜色的Majora's Mask格式</DawnNewDay.Hint_MN_Preset_OccasionRemainWithTimeColor>
+	<DawnNewDay.Hint_MN_Preset_ReminderTextFormat>（初始字段）提醒文本格式</DawnNewDay.Hint_MN_Preset_ReminderTextFormat>
+	<DawnNewDay.Hint_MN_Preset_OccasionTextFormat>（初始字段）事件文本格式</DawnNewDay.Hint_MN_Preset_OccasionTextFormat>
+	
+	<DawnNewDay.Hint_MN_REMINDER_TITLE>提醒 - 标题 [如: Doomsday]</DawnNewDay.Hint_MN_REMINDER_TITLE>
+	<DawnNewDay.Hint_MN_REMINDER_MESSAGE>提醒 - 信息</DawnNewDay.Hint_MN_REMINDER_MESSAGE>
+	<DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>提醒 - 相对于年份的日期 [如： 14, 48]</DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>
+
+	<DawnNewDay.Hint_MN_REMINDER_SEVERITY_COLOR>提醒 - 严重程度  HEX色号 [如：#RRGGBB] -  富文本颜色标签</DawnNewDay.Hint_MN_REMINDER_SEVERITY_COLOR>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING>提醒 - 动态时间剩余 [如: 72小时, 4天, 1年]</DawnNewDay.Hint_MN_REMINDER_REMAINING>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>提醒 - 动态时间剩余（固定天数单位） [如: 1, 24, 19]</DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>提醒 - 动态时间剩余（固定小时单位） [如: 16, 24]</DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>
+
+	<DawnNewDay.Hint_MN_OCCASION_CATEGORY>事件 - 类型 [如: 里程碑，殖民者生日]</DawnNewDay.Hint_MN_OCCASION_CATEGORY>
+	<DawnNewDay.Hint_MN_OCCASION_LABEL>事件 - 标签</DawnNewDay.Hint_MN_OCCASION_LABEL>
+	<DawnNewDay.Hint_MN_OCCASION_DETAIL>事件 - 细节</DawnNewDay.Hint_MN_OCCASION_DETAIL>
+	<DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>事件 - 相对于年份的日期 [如: 14, 48]</DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>
+
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_COLOR>提醒 - 剩余时间 HEX色号 [如：#RRGGBB] -  富文本颜色标签</DawnNewDay.Hint_MN_REMINDER_REMAINING_COLOR>
+
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING>事件 -动态时间剩余 [如: 72小时， 4天, 1年]</DawnNewDay.Hint_MN_OCCASION_REMAINING>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>事件 - 动态时间剩余（固定天数单位） [如: 1, 24, 19]</DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>事件 - 动态时间剩余（固定小时单位） [如: 16, 24]</DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>
+
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>事件 - 动态时间剩余 HEX色号 [如：#RRGGBB] -  富文本颜色标签</DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>
+
+	<DawnNewDay.Hint_MN_REMINDER_FONTSIZE>设置提醒文本的通用字体大小</DawnNewDay.Hint_MN_REMINDER_FONTSIZE>
+	<DawnNewDay.Hint_MN_OCCASION_FONTSIZE>设置事件文本的通用字体大小</DawnNewDay.Hint_MN_OCCASION_FONTSIZE>
 
 </LanguageData>
