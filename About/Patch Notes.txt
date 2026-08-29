@@ -58,3 +58,6 @@ v1.6.0
 - Added Modern Notifications mod compatibility.
 - Added Modern Notifications formats and texts for Reminders and Occasions.
 - Updated Mod Options ui look.
+
+v1.6.1
+- Updated Chinese translation (by hotaru-hoshizora).

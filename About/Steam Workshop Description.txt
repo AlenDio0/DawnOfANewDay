@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.6.0[/i]
+[i][b]Mod Version:[/b] v1.6.1[/i]
 [i]Showcase video is outdated :\[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -45,6 +45,10 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [*]Added Modern Notifications formats and texts for Reminders and Occasions.
 [*]Updated Mod Options ui look.
 [/list]
+[b]v1.6.1[/b]
+[list]
+[*]Updated Chinese translation (by hotaru-hoshizora).
+[/list]
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
@@ -70,6 +74,7 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [h1]TODO LIST[/h1]
 [list]
 [*]Add compatibility with Explicit Timing.
+[*]Update label format settings to be more flexible (ordering and adding new texts).
 [*]Add renaming day section in mod options.
 [/list]
 
