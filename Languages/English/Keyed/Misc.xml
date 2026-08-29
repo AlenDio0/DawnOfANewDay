@@ -60,6 +60,8 @@
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>Label Format</DawnNewDay.Section_LabelFormat>
 
+	<DawnNewDay.Label_TextFormat>Text Format</DawnNewDay.Label_TextFormat>
+	
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
 	<DawnNewDay.Label_SubtitleTextFormat>Subtitle Text Format</DawnNewDay.Label_SubtitleTextFormat>
@@ -94,7 +96,7 @@
 	<DawnNewDay.Hint_Format_WEATHER>Weather [eg. Clear]</DawnNewDay.Hint_Format_WEATHER>
 
 	<DawnNewDay.Hint_Format_TEMPERATURE>Temperature [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
-	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Intended use for Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
 
 	<DawnNewDay.Hint_Format_WORLD>World Name [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
 	<DawnNewDay.Hint_Format_BIOME>Biome Type [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
@@ -146,5 +148,52 @@
 	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
+
+	<!-- Compatibility Section -->
+	<DawnNewDay.Section_Compatibility>Compatibility</DawnNewDay.Section_Compatibility>
+
+	<DawnNewDay.Label_ModIncompatibility>This mod isn't currently active or it's incompatible with this RimWorld version or Mod version...</DawnNewDay.Label_ModIncompatibility>
+	
+	<!-- Compatibility - Modern Notifications Section-->
+
+	<DawnNewDay.Label_MN_ExcludeOccasions>Exclude from Occasions</DawnNewDay.Label_MN_ExcludeOccasions>
+	
+	<DawnNewDay.Section_MN_Reminder>Reminder</DawnNewDay.Section_MN_Reminder>
+	<DawnNewDay.Section_MN_Occasion>Occasion</DawnNewDay.Section_MN_Occasion>
+
+	<DawnNewDay.Label_MN_AddText>Add Text</DawnNewDay.Label_MN_AddText>
+
+	<DawnNewDay.Label_MN_MaximumDays>Maximum Days</DawnNewDay.Label_MN_MaximumDays>
+
+	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>Reminder - Majora's Mask format with severity color</DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>
+	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>Reminder - Majora's Mask format with time color</DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>
+	<DawnNewDay.Hint_MN_Preset_OccasionRemainWithTimeColor>Occasion - Majora's Mask format with time color</DawnNewDay.Hint_MN_Preset_OccasionRemainWithTimeColor>
+	<DawnNewDay.Hint_MN_Preset_ReminderTextFormat>Reminder Text Format Default</DawnNewDay.Hint_MN_Preset_ReminderTextFormat>
+	<DawnNewDay.Hint_MN_Preset_OccasionTextFormat>Occasion Text Format Default</DawnNewDay.Hint_MN_Preset_OccasionTextFormat>
+	
+	<DawnNewDay.Hint_MN_REMINDER_TITLE>Reminder - Title [eg. Doomsday]</DawnNewDay.Hint_MN_REMINDER_TITLE>
+	<DawnNewDay.Hint_MN_REMINDER_MESSAGE>Reminder - Message</DawnNewDay.Hint_MN_REMINDER_MESSAGE>
+	<DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>Reminder - Day relative to the year [eg. 14, 48]</DawnNewDay.Hint_MN_REMINDER_DAY_YEAR>
+	
+	<DawnNewDay.Hint_MN_REMINDER_SEVERITY_COLOR>Reminder - Severity Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_MN_REMINDER_SEVERITY_COLOR>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING>Reminder - Dynamic time remaining [eg. 72h, 4 days, 1 year]</DawnNewDay.Hint_MN_REMINDER_REMAINING>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>Reminder - Time remaining in days [eg. 1, 24, 19]</DawnNewDay.Hint_MN_REMINDER_REMAINING_DAY>
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>Reminder - Time remaining in hours [eg. 16, 24]</DawnNewDay.Hint_MN_REMINDER_REMAINING_HOUR>
+
+	<DawnNewDay.Hint_MN_OCCASION_CATEGORY>Occasion - Category [eg. Milestone, Birthday]</DawnNewDay.Hint_MN_OCCASION_CATEGORY>
+	<DawnNewDay.Hint_MN_OCCASION_LABEL>Occasion - Label</DawnNewDay.Hint_MN_OCCASION_LABEL>
+	<DawnNewDay.Hint_MN_OCCASION_DETAIL>Occasion - Detail</DawnNewDay.Hint_MN_OCCASION_DETAIL>
+	<DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>Occasion - Day relative to the year [eg. 14, 48]</DawnNewDay.Hint_MN_OCCASION_DAY_YEAR>
+
+	<DawnNewDay.Hint_MN_REMINDER_REMAINING_COLOR>Reminder - Time remaining Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_MN_REMINDER_REMAINING_COLOR>
+
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING>Occasion - Dynamic time remaining [eg. 72h, 4 days, 1 year]</DawnNewDay.Hint_MN_OCCASION_REMAINING>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>Occasion - Time remaining in days [eg. 1, 24, 19]</DawnNewDay.Hint_MN_OCCASION_REMAINING_DAY>
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>Occasion - Time remaining in hours [eg. 16, 24]</DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>
+
+	<DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>Occasion - Time remaining Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>
+
+	<DawnNewDay.Hint_MN_REMINDER_FONTSIZE>General Font Size of Reminder Text</DawnNewDay.Hint_MN_REMINDER_FONTSIZE>
+	<DawnNewDay.Hint_MN_OCCASION_FONTSIZE>General Font Size of Occasion Text</DawnNewDay.Hint_MN_OCCASION_FONTSIZE>
 
 </LanguageData>

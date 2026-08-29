@@ -44,3 +44,17 @@ v1.5.0
 - Added Subtitle Text.
 - Added endline format.
 - Added default format presets.
+
+v1.5.1
+- Updated Chinese translation (by hotaru-hoshizora).
+
+v1.5.2
+- Fixed text clipping visual bugs.
+
+v1.5.3
+- Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
+
+v1.6.0
+- Added Modern Notifications mod compatibility.
+- Added Modern Notifications formats and texts for Reminders and Occasions.
+- Updated Mod Options ui look.

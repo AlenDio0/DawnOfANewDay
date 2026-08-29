@@ -1,64 +1,19 @@
-[i][b]Mod Version:[/b] v1.5.0[/i]
-[spoiler]Showcase video is outdated :\[/spoiler]
+[i][b]Mod Version:[/b] v1.6.0[/i]
+[i]Showcase video is outdated :\[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
 
-[h1]FEATURES[/h1]
-Go to: Options > Mod options > "Dawn of a New Day";
-[h3]Header/General[/h3]
+[h1]SETTINGS[/h1]
+Go to: Options > Mod options > "Dawn of a New Day".
+
+[h1]COMPATIBILITY[/h1]
 [list]
-[*][b]Enabled:[/b] You can toggle the overlay anytime without restarting.
-[*][b]Screenshot Mode:[/b] When in Screenshot Mode (F11), if enabled the overlay won't be displayed.
-[*][b]Show Example:[/b] Shows your current overlay configuration in the next tick to ease and familarize with the settings.
-[/list]
-[h3]Appearance[/h3]
-[list]
-[*][b]Show Highlight:[/b] Adds a low-opacity light background behind the overlay.
-[*][b]Scale:[/b] Scales the whole overlay to your like.
-[*][b]Offset Presets:[/b] Helps you to choose an offset of your liking without trial and error.
-[*][b]Offset (px):[/b] Choose offsets on X and Y axis at pixel-precision.
-[*][b]Subtitle Gap (px):[/b] Choose the gap value between Bottom and Subtitle.
-[*][b]Line Width (%):[/b] Choose the width in percentage of the line that divides the Upper from Bottom.
-[*][b]Line Thickness (px):[/b] Choose the thickness in pixels of the line that divides the Upper from Bottom.
-[*][b]Line Padding (px):[/b] Choose the padding in pixels that divides the line from the Upper and Bottom.
-[/list]
-[h3]Duration[/h3]
-[list]
-[*][b]Total Display Duration:[/b] Choose the total duration of the overlay in seconds.
-[*][b]Fade In Duration:[/b] Choose the duration of the overlay fading-in in seconds.
-[*][b]Fade Out Duration:[/b] Choose the duration of the overlay fading-out in seconds.
-[/list]
-[h3]Text[/h3]
-[list]
-[*][b]Choose Font Family:[/b] Choose an custom OS font to replace the default game font of the text.
-[*][b]Font Size:[/b] Choose the character size of the text.
-[*][b]Outline Thickness:[/b] Choose the thickness of the outline of the text.
-[*][b]Bold:[/b] Enable to add bold style to the text.
-[*][b]Italic:[/b] Enable to add italic style to the text.
-[*][b]Text Color:[/b] Choose from the color presets the color of the text.
-[*][b]Outline Color:[/b] Choose from the color presets the color of the outline of the text.
-[/list]
-[h3]Label Format[/h3]
-[list]
-[*][b]Upper Text Format:[/b] Choose the format of the Upper text.
-[*][b]Bottom Text Format:[/b] Choose the format of the Bottom text.
-[*][b]Subtitle Text Format:[/b] Choose the format of the Subtitle text.
-[*][b]Label Format Presets:[/b] Copy a format preset to paste into any Format Text.
-[*][b]Label Format Hints:[/b] Copy any format available that you can paste into any Format Text.
-[*][b]Rich Text Hints:[/b] Copy any rich text body that you can paste into any Format Text and edit it to your liking.
-[/list]
-[h3]Sound[/h3]
-[list]
-[*][b]Enabled:[/b] Toggle the sound that starts with the overlay.
-[*][b]Choose Sound:[/b] Choose a custom sound from the catalogue.
-[*][b]Sound Volume:[/b] Choose the volume of the sound.
-[*][b]Pitch Volume:[/b] Choose the pitch of the sound.
-[/list]
-[h3]Extra[/h3]
-[list]
-[*][b]Starts at Zero:[/b] Enable to start the count of the days from 0 instead of 1.
-[*][b]Show Every X Days:[/b] Choose how often the overlay displays [eg. X=10: DAY 10, DAY 20, ...].
-[*][b]Trigger Hour:[/b] Choose at what hour of the day the overlay displays.
+[*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time since it doesn't affect the game in any way.
+[*][b]Mods Conflicts:[/b] No known conflicts.
+[*][b]Mods:[/b]
+	[list]
+	[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3752932665]Modern Notifications[/url]: Added formats and texts for Reminders and Occasions.
+	[/list]
 [/list]
 
 [h1]PATCH NOTES[/h1]
@@ -66,32 +21,40 @@ Go to: Options > Mod options > "Dawn of a New Day";
 [i]Go into About\Patch Notes.txt to see every patch note.[/i]
 [spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
 [h3]...[/h3]
-[h3]v1.4.0[/h3]
-[list]
-[*]Re-hauled Label Format Section.
-[*]Added new formats.
-[*]Added rich text.
-[*]Removed Day Relative (replaced directly with the formats).
-[/list]
 [h3]v1.5.0[/h3]
 [list]
 [*]Added Subtitle Text.
 [*]Added endline format.
 [*]Added default format presets.
 [/list]
-
-[h1]COMPATIBILITY[/h1]
+[b]v1.5.1[/b]
 [list]
-[*][b]Saves:[/b] Can be safely added to or removed from existing save games at any time since it doesn't affect the game in any way.
-[*][b]Mods Conflicts:[/b] No known conflicts.
-[*][b]Mods:[/b] No compatibility yet added.
+[*]Updated Chinese translation (by hotaru-hoshizora).
+[/list]
+[b]v1.5.2[/b]
+[list]
+[*]Fixed text clipping visual bugs.
+[/list]
+[b]v1.5.3[/b]
+[list]
+[*]Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
+[/list]
+[h3]v1.6.0[/h3]
+[list]
+[*]Added Modern Notifications mod compatibility.
+[*]Added Modern Notifications formats and texts for Reminders and Occasions.
+[*]Updated Mod Options ui look.
 [/list]
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
 [*][b]English:[/b] Made by myself.
 [*][b]Italian:[/b] Made by myself.
-[*][b]Chinese Simplified:[/b] Made by [url=https://github.com/ylc395]ylc395[/url].
+[*][b]Chinese Simplified:[/b] 
+	[list]
+	[*]Made by [url=https://github.com/hotaru-hoshizora]hotaru-hoshizora[/url] (from v1.5.1).
+	[*]Made by [url=https://github.com/ylc395]ylc395[/url] (before v1.5.1).
+	[/list]
 [/list]
 
 [b]If you want to integrate a translation for the mod, follow these steps:[/b]
@@ -106,7 +69,6 @@ Go to: Options > Mod options > "Dawn of a New Day";
 
 [h1]TODO LIST[/h1]
 [list]
-[*]Add compatibility with Modern Notifications.
 [*]Add compatibility with Explicit Timing.
 [*]Add renaming day section in mod options.
 [/list]

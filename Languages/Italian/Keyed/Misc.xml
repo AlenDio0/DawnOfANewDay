@@ -60,6 +60,8 @@
 	<!-- Label Format Section -->
 	<DawnNewDay.Section_LabelFormat>Formattazione</DawnNewDay.Section_LabelFormat>
 
+	<DawnNewDay.Label_TextFormat>Formattazione Testo</DawnNewDay.Label_TextFormat>
+
 	<DawnNewDay.Label_UpperTextFormat>Formattazione Testo Superiore</DawnNewDay.Label_UpperTextFormat>
 	<DawnNewDay.Label_BottomTextFormat>Formattazione Testo Inferiore</DawnNewDay.Label_BottomTextFormat>
 	<DawnNewDay.Label_SubtitleTextFormat>Formattazione Testo Sottotitolo</DawnNewDay.Label_SubtitleTextFormat>
@@ -94,7 +96,7 @@
 	<DawnNewDay.Hint_Format_WEATHER>Meteo [eg. Sereno]</DawnNewDay.Hint_Format_WEATHER>
 
 	<DawnNewDay.Hint_Format_TEMPERATURE>Temperatura [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
-	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Colore della temperatura in HEX [eg. #RRGGBB] - Inteso per essere usato con Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Colore della temperatura in HEX [eg. #RRGGBB] - Da usare con Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
 
 	<DawnNewDay.Hint_Format_WORLD>Nome del pianeta [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
 	<DawnNewDay.Hint_Format_BIOME>Bioma [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
@@ -146,5 +148,21 @@
 	<DawnNewDay.Label_StartsAtZero>Inizia a Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Mostra ogni X giorni</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Orario di Attivazione</DawnNewDay.Label_TriggerHour>
+
+	<!-- Compatibility Section -->
+	<DawnNewDay.Section_Compatibility>Compatibilità</DawnNewDay.Section_Compatibility>
+
+	<DawnNewDay.Label_ModIncompatibility>Questa mod non è attualmente attiva oppure è incompatibile con questa versione di RimWorld o della Mod...</DawnNewDay.Label_ModIncompatibility>
+
+	<!-- Compatibility - Modern Notifications Section-->
+
+	<DawnNewDay.Label_MN_ExcludeOccasions>Escludi dalle Occasioni</DawnNewDay.Label_MN_ExcludeOccasions>
+	
+	<DawnNewDay.Section_MN_Reminder>Promemoria</DawnNewDay.Section_MN_Reminder>
+	<DawnNewDay.Section_MN_Occasion>Occasione</DawnNewDay.Section_MN_Occasion>
+
+	<DawnNewDay.Label_MN_AddText>Aggiungi Testo</DawnNewDay.Label_MN_AddText>
+
+	<DawnNewDay.Label_MN_MaximumDays>Giorni Massimi</DawnNewDay.Label_MN_MaximumDays>
 
 </LanguageData>
