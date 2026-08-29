@@ -251,6 +251,9 @@ namespace DawnNewDay
             LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineWidthPercentage} ({LineWidthPercentage}%)", LineWidthPercentage, 0f, 100f, 0.25f));
             LineThickness = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineThickness} ({LineThickness} px)", LineThickness, 0f, 100f, 0.25f));
             LinePadding = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LinePadding} ({LinePadding} px)", LinePadding, 0f, 100f, 0.25f));
+
+            listing.Gap();
+
             listing.LabeledRadioColorPresets(ref LineColor, DawnTranslation.Label_LineColor);
         }
 
