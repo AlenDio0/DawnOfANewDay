@@ -253,8 +253,22 @@ namespace DawnNewDay
                 RetrieveTextRect(Text.MN_Occasion).size = CalcTextSize(settings.MN_Occasion.TextStyle, m_MN_CachedOccasionText);
             }
 
-            float textWidth = Mathf.Max([.. m_CachedTextRects.Select(rect => rect.width)]) * cTextPaddingFactor;
-
+            float maxTextWidth;
+            if (ModernNotifications.Present) 
+            {
+                maxTextWidth = Mathf.Max([.. this.m_CachedTextRects.Select(rect => rect.width)]);
+            }
+            else 
+            {
+                maxTextWidth = Mathf.Max(
+                    RetrieveTextRect(Text.Upper).width,
+                    RetrieveTextRect(Text.Bottom).width,
+                    RetrieveTextRect(Text.Subtitle).width
+                );
+            }
+            
+            float textWidth = maxTextWidth * cTextPaddingFactor;
+            
             float totalTextHeight = 0f;
             for (int i = 0; i < m_CachedTextRects.Length; i++)
             {
