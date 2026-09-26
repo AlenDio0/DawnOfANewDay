@@ -27,10 +27,10 @@ namespace DawnNewDay
 
         private enum Text
         {
-            Upper = 0, 
-            Bottom, 
-            Subtitle, 
-            MN_Reminder, 
+            Upper = 0,
+            Bottom,
+            Subtitle,
+            MN_Reminder,
             MN_Occasion,
 
             Length,
@@ -210,11 +210,10 @@ namespace DawnNewDay
             m_CachedBottomText = context.FormatText(settings.BottomTextFormat);
             m_CachedSubtitleText = context.FormatText(settings.SubtitleTextFormat);
 
+            m_MN_CachedReminderText = "";
+            m_MN_CachedOccasionText = "";
             if (ModernNotifications.Present)
             {
-                m_MN_CachedReminderText = "";
-                m_MN_CachedOccasionText = "";
-                
                 int GetTimeRemainingDay(ModernNotificationUtility.YearTime time) => Mathf.CeilToInt(context.TimeRemainingDay(context.TimeRemainingHour(time)));
 
                 if (settings.MN_Reminder.AddText)
@@ -251,6 +250,11 @@ namespace DawnNewDay
             {
                 RetrieveTextRect(Text.MN_Reminder).size = CalcTextSize(settings.MN_Reminder.TextStyle, m_MN_CachedReminderText);
                 RetrieveTextRect(Text.MN_Occasion).size = CalcTextSize(settings.MN_Occasion.TextStyle, m_MN_CachedOccasionText);
+            }
+            else
+            {
+                RetrieveTextRect(Text.MN_Reminder).size = Vector2.zero;
+                RetrieveTextRect(Text.MN_Occasion).size = Vector2.zero;
             }
 
             float textWidth = Mathf.Max([.. m_CachedTextRects.Select(rect => rect.width)]) * cTextPaddingFactor;
