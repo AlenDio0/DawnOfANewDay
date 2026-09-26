@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.6.1[/i]
+[i][b]Mod Version:[/b] v1.6.2[/i]
 [i]Showcase video is outdated :\[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -49,6 +49,12 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [list]
 [*]Updated Chinese translation (by hotaru-hoshizora).
 [/list]
+[b]v1.6.2[/b]
+[list]
+[*]Added conditionals rich text formats: ifempty, ifnotempty.
+[*]Fixed UI Bug width increases every day (co-authored by relay955).
+[*]Added Russian translation (by dzirtikk).
+[/list]
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
@@ -59,6 +65,7 @@ Go to: Options > Mod options > "Dawn of a New Day".
 	[*]Made by [url=https://github.com/hotaru-hoshizora]hotaru-hoshizora[/url] (from v1.5.1).
 	[*]Made by [url=https://github.com/ylc395]ylc395[/url] (before v1.5.1).
 	[/list]
+[*][b]Russian: Made by [url=https://github.com/dzirtikk]dzirtikk[/url][/b]
 [/list]
 
 [b]If you want to integrate a translation for the mod, follow these steps:[/b]

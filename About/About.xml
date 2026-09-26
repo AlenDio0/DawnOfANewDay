@@ -20,6 +20,11 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 # v1.6.1
 - Updated Chinese translation (by hotaru-hoshizora).
 
+# v1.6.2
+- Added conditionals rich text formats: ifempty, ifnotempty.
+- Fixed UI Bug width increases every day (co-authored by relay955).
+- Added Russian translation (by dzirtikk).
+
 &lt;i&gt;Can be safely added or removed from existing saves at any time.&lt;/i&gt;
 	</description>
 	<supportedVersions>
@@ -33,5 +38,5 @@ Go to: &lt;b&gt;Options > Mod options > "Dawn of a New Day"&lt;/b&gt;
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 		</li>
 	</modDependencies>
-	<modVersion IgnoreIfNoMatchingField="True">1.6.1</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">1.6.2</modVersion>
 </ModMetaData>
