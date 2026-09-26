@@ -27,10 +27,10 @@ namespace DawnNewDay
 
         private enum Text
         {
-            Upper = 0, 
-            Bottom, 
-            Subtitle, 
-            MN_Reminder, 
+            Upper = 0,
+            Bottom,
+            Subtitle,
+            MN_Reminder,
             MN_Occasion,
 
             Length,
@@ -257,22 +257,8 @@ namespace DawnNewDay
                 RetrieveTextRect(Text.MN_Occasion).size = Vector2.zero;
             }
 
-            float maxTextWidth;
-            if (ModernNotifications.Present) 
-            {
-                maxTextWidth = Mathf.Max([.. this.m_CachedTextRects.Select(rect => rect.width)]);
-            }
-            else 
-            {
-                maxTextWidth = Mathf.Max(
-                    RetrieveTextRect(Text.Upper).width,
-                    RetrieveTextRect(Text.Bottom).width,
-                    RetrieveTextRect(Text.Subtitle).width
-                );
-            }
-            
-            float textWidth = maxTextWidth * cTextPaddingFactor;
-            
+            float textWidth = Mathf.Max([.. m_CachedTextRects.Select(rect => rect.width)]) * cTextPaddingFactor;
+
             float totalTextHeight = 0f;
             for (int i = 0; i < m_CachedTextRects.Length; i++)
             {
