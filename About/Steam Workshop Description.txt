@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v1.6.2[/i]
+[i][b]Mod Version:[/b] v1.7.0[/i]
 [i]Showcase video is outdated :\[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -21,24 +21,6 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [i]Go into About\Patch Notes.txt to see every patch note.[/i]
 [spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
 [h3]...[/h3]
-[h3]v1.5.0[/h3]
-[list]
-[*]Added Subtitle Text.
-[*]Added endline format.
-[*]Added default format presets.
-[/list]
-[b]v1.5.1[/b]
-[list]
-[*]Updated Chinese translation (by hotaru-hoshizora).
-[/list]
-[b]v1.5.2[/b]
-[list]
-[*]Fixed text clipping visual bugs.
-[/list]
-[b]v1.5.3[/b]
-[list]
-[*]Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
-[/list]
 [h3]v1.6.0[/h3]
 [list]
 [*]Added Modern Notifications mod compatibility.
@@ -54,6 +36,10 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [*]Added conditionals rich text formats: ifempty, ifnotempty.
 [*]Fixed UI Bug width increases every day (co-authored by relay955).
 [*]Added Russian translation (by dzirtikk).
+[/list]
+[b]v1.7.0[/b]
+[list]
+[*]Added compatibility for RimWorld 1.7.
 [/list]
 
 [h1]INTEGRATED TRANSLATION[/h1]

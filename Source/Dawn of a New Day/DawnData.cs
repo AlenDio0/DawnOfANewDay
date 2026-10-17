@@ -15,9 +15,9 @@ namespace DawnNewDay
         public static void Warn(string message) => Log.Warning(FormatLog(message));
         public static void Info(string message) => Log.Message(FormatLog(message));
         public static void Error(string message) => Log.Error(FormatLog(message));
-        public static void Exception(Exception exception, [CallerMemberName] string functionName = "") => 
-            Log.Error(FormatLog($"Exception catched into {functionName}() - {exception}"));
-        
+        public static void Exception(Exception exception, [CallerMemberName] string functionName = "") =>
+            Error($"Exception catched into {functionName}() - {exception}");
+
         #endregion
 
         #region Settings

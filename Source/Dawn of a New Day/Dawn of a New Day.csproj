@@ -4,6 +4,8 @@
 		<TargetFramework>net472</TargetFramework>
 		<OutputType>Library</OutputType>
 		<LangVersion>latest</LangVersion>
+
+		<DebugType>embedded</DebugType>
 		
 		<AssemblyName>DawnOfANewDay</AssemblyName>
 		<RootNamespace>DawnNewDay</RootNamespace>
@@ -11,13 +13,20 @@
 		
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
 
-		<Configurations>1.6;1.5</Configurations>
+		<Configurations>1.7;1.6;1.5</Configurations>
 		
-		<RWVersion Condition="'$(RWVersion)' == ''">1.6</RWVersion>
+		<RWVersion Condition="'$(RWVersion)' == ''">1.7</RWVersion>
+		<RWVersion Condition="'$(Configuration)' == '1.6'">1.6</RWVersion>
 		<RWVersion Condition="'$(Configuration)' == '1.5'">1.5</RWVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(RWVersion)' == '1.7'">
+		<TargetFramework>net10.0</TargetFramework>
+		<OutputPath>..\..\1.7\Assemblies\</OutputPath>
+		<DefineConstants>RW_17</DefineConstants>
+	</PropertyGroup>
 	<PropertyGroup Condition="'$(RWVersion)' == '1.6'">
 		<OutputPath>..\..\1.6\Assemblies\</OutputPath>
 		<DefineConstants>RW_16</DefineConstants>
@@ -27,13 +36,24 @@
 		<DefineConstants>RW_15</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='1.6'">
-		<DebugType>none</DebugType>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)'=='1.5'">
-		<DebugType>none</DebugType>
-	</PropertyGroup>
-	
+	<ItemGroup Condition="'$(RWVersion)' == '1.7'">
+		<Reference Include ="Assembly-CSharp">
+			<HintPath></HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include ="Assembly-CSharp">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Assembly-CSharp.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include ="UnityStubs">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\UnityStubs.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include ="Waylith">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Waylith.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
 	<ItemGroup Condition="'$(RWVersion)' == '1.6'">
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.*" PrivateAssets="All" />
 	</ItemGroup>
@@ -42,7 +62,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Lib.Harmony" Version="2.4.2" ExcludeAssets="runtime" />
+		<PackageReference Include="Lib.Harmony" Version="2.4.3" ExcludeAssets="runtime" />
 	</ItemGroup>
 	
 	<Target Name="PrintVersionMessage" BeforeTargets="Build">

@@ -49,9 +49,15 @@ namespace DawnNewDay
         {
             try
             {
+#if RW_17
+                Color defaultColor = GUI.contentColor;
+                GUI.contentColor = Color.gray;
+                listing.Label("Fonts are temporarily not available for RimWorld 1.7!");
+                GUI.contentColor = defaultColor;
+#else
                 if (listing.ButtonText($"{DawnTranslation.Label_FontFamily} ({FontFamilyName.Fallback(DawnTranslation.Label_DefaultFont)})"))
                     Find.WindowStack.Add(new Dialog_ChooseFontFamily(font => FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "", FontFamilyName));
-
+#endif
                 FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
                 OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnTranslation.Label_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 3f, 0.35f), 0.25f);
 
@@ -74,15 +80,20 @@ namespace DawnNewDay
             if (OutlineThickness > 0f)
                 DrawOutline(rect, text, scale);
 
-            TextGUIStyle.normal.textColor = TextColor;
+            Color defaultColor = GUI.contentColor;
+            GUI.contentColor = TextColor;
+
             GUI.Label(rect, text, TextGUIStyle);
+
+            GUI.contentColor = defaultColor;
         }
 
         private void DrawOutline(Rect rect, string text, float scale)
         {
             float scaledOutlineThickness = OutlineThickness * scale;
 
-            TextGUIStyle.normal.textColor = OutlineColor;
+            Color defaultColor = GUI.contentColor;
+            GUI.contentColor = OutlineColor;
 
             string outlineText = WholeColorTagRegex.Replace(text, "");
 
@@ -95,6 +106,8 @@ namespace DawnNewDay
                     GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
                 }
             }
+
+            GUI.contentColor = defaultColor;
         }
 
         public void ApplyToGUIStyle(float scale)
@@ -109,6 +122,7 @@ namespace DawnNewDay
 
         public void UpdateFontFamily()
         {
+#if !RW_17
             if (TextGUIStyle == null)
                 return;
 
@@ -129,6 +143,7 @@ namespace DawnNewDay
             {
                 DawnData.Exception(exception);
             }
+#endif
         }
 
         public void ExposeData()

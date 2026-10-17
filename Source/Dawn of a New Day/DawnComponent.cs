@@ -294,7 +294,7 @@ namespace DawnNewDay
 
         private ref Rect RetrieveTextRect(Text text) => ref m_CachedTextRects[(int)text];
 
-        private Vector2 CalcTextSize(DawnTextStyle style, string text)
+        private static Vector2 CalcTextSize(DawnTextStyle style, string text)
         {
             if (text.NullOrEmpty())
                 return Vector2.zero;

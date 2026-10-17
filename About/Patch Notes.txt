@@ -66,3 +66,6 @@ v1.6.2
 - Added conditionals rich text formats: ifempty, ifnotempty.
 - Fixed UI Bug width increases every day (co-authored by relay955).
 - Added Russian translation (by dzirtikk).
+
+v1.7.0
+- Added compatibility for RimWorld 1.7.

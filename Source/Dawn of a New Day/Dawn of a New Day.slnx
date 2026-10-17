@@ -1,5 +1,6 @@
 <Solution>
   <Configurations>
+    <BuildType Name="1.7" />
     <BuildType Name="1.6" />
     <BuildType Name="1.5" />
   </Configurations>
