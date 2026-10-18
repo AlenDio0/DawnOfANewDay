@@ -20,16 +20,9 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [i]Only last two major patches will be showed to avoid wall text.[/i]
 [i]Go into About\Patch Notes.txt to see every patch note.[/i]
 [spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
-[h3]...[/h3]
-[h3]v1.6.0[/h3]
+[h3]v1.7.0[/h3]
 [list]
-[*]Added Modern Notifications mod compatibility.
-[*]Added Modern Notifications formats and texts for Reminders and Occasions.
-[*]Updated Mod Options ui look.
-[/list]
-[b]v1.6.1[/b]
-[list]
-[*]Updated Chinese translation (by hotaru-hoshizora).
+[*]Added compatibility for RimWorld 1.7.
 [/list]
 [b]v1.6.2[/b]
 [list]
@@ -37,10 +30,17 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [*]Fixed UI Bug width increases every day (co-authored by relay955).
 [*]Added Russian translation (by dzirtikk).
 [/list]
-[b]v1.7.0[/b]
+[b]v1.6.1[/b]
 [list]
-[*]Added compatibility for RimWorld 1.7.
+[*]Updated Chinese translation (by hotaru-hoshizora).
 [/list]
+[h3]v1.6.0[/h3]
+[list]
+[*]Added Modern Notifications mod compatibility.
+[*]Added Modern Notifications formats and texts for Reminders and Occasions.
+[*]Updated Mod Options ui look.
+[/list]
+[h3]...[/h3]
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
