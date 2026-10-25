@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+	<!-- Misc -->
+	<DawnNewDay.Label_Search>Search</DawnNewDay.Label_Search>
+
 	<!-- Header -->
 	<DawnNewDay.Label_Enabled>Enabled</DawnNewDay.Label_Enabled>
 	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
@@ -25,14 +28,7 @@
 	<DawnNewDay.Offset_RightTop>(Right, Top) ↗</DawnNewDay.Offset_RightTop>
 	<DawnNewDay.Offset_LeftBottom>(Left, Bottom) ↙</DawnNewDay.Offset_LeftBottom>
 	<DawnNewDay.Offset_RightBottom>(Right, Bottom) ↘</DawnNewDay.Offset_RightBottom>
-
-	<DawnNewDay.Label_SubtitleGap>Subtitle Gap</DawnNewDay.Label_SubtitleGap>
 	
-	<DawnNewDay.Label_LineWidthPercentage>Line Width</DawnNewDay.Label_LineWidthPercentage>
-	<DawnNewDay.Label_LineThickness>Line Thickness</DawnNewDay.Label_LineThickness>
-	<DawnNewDay.Label_LinePadding>Line Padding</DawnNewDay.Label_LinePadding>
-	<DawnNewDay.Label_LineColor>Line Color</DawnNewDay.Label_LineColor>
-
 	<!-- Duration Section -->
 	<DawnNewDay.Section_Duration>Duration</DawnNewDay.Section_Duration>
 
@@ -40,13 +36,18 @@
 	<DawnNewDay.Label_FadeInDuration>Fade In Duration</DawnNewDay.Label_FadeInDuration>
 	<DawnNewDay.Label_FadeOutDuration>Fade Out Duration</DawnNewDay.Label_FadeOutDuration>
 
-	<!-- Text Section -->
-	<DawnNewDay.Section_Text>Text</DawnNewDay.Section_Text>
+	<!-- Overlay Widget Section -->
+	<DawnNewDay.Section_OverlayWidget>Overlay Widget</DawnNewDay.Section_OverlayWidget>
 
-	<DawnNewDay.Section_UpperText>Upper Text</DawnNewDay.Section_UpperText>
-	<DawnNewDay.Section_BottomText>Bottom Text</DawnNewDay.Section_BottomText>
-	<DawnNewDay.Section_SubtitleText>Subtitle Text</DawnNewDay.Section_SubtitleText>
+	<DawnNewDay.Label_Text>Text</DawnNewDay.Label_Text>
+	<DawnNewDay.Label_Separator>Separator</DawnNewDay.Label_Separator>
 
+	<DawnNewDay.Message_ResetWarning>This will reset every widget to default.\n\nAre you sure?</DawnNewDay.Message_ResetWarning>
+	<DawnNewDay.Message_DeleteWarning>You will delete</DawnNewDay.Message_DeleteWarning>
+	
+	<DawnNewDay.Label_BackupFormats>Backup Formats</DawnNewDay.Label_BackupFormats>
+	<DawnNewDay.Description_BackupFormat>Removed Text Format {} (Will be deleted after restart...)</DawnNewDay.Description_BackupFormat>
+	
 	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
 	<DawnNewDay.Label_FontSize>Font Size</DawnNewDay.Label_FontSize>
@@ -55,11 +56,13 @@
 	<DawnNewDay.Label_TextColor>Text Color</DawnNewDay.Label_TextColor>
 	<DawnNewDay.Label_OutlineThickness>Outline Thickness</DawnNewDay.Label_OutlineThickness>
 	<DawnNewDay.Label_OutlineColor>Outline Color</DawnNewDay.Label_OutlineColor>
-	<DawnNewDay.Label_Search>Search</DawnNewDay.Label_Search>
+
+	<DawnNewDay.Label_WidthPercentage>Width</DawnNewDay.Label_WidthPercentage>
+	<DawnNewDay.Label_Thickness>Thickness</DawnNewDay.Label_Thickness>
+	<DawnNewDay.Label_Padding>Padding</DawnNewDay.Label_Padding>
+	<DawnNewDay.Label_Color>Color</DawnNewDay.Label_Color>
 
 	<!-- Label Format Section -->
-	<DawnNewDay.Section_LabelFormat>Label Format</DawnNewDay.Section_LabelFormat>
-
 	<DawnNewDay.Label_TextFormat>Text Format</DawnNewDay.Label_TextFormat>
 	
 	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
@@ -114,9 +117,7 @@
 
 	<DawnNewDay.Hint_Format_ENDLINE>Ends the text line and starts a new one [eg. Line 1{ENDLINE}Line 2]</DawnNewDay.Hint_Format_ENDLINE>
 
-	<DawnNewDay.Hint_Format_UPPER_FONTSIZE>General Font Size of Upper Text</DawnNewDay.Hint_Format_UPPER_FONTSIZE>
-	<DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>General Font Size of Bottom Text</DawnNewDay.Hint_Format_BOTTOM_FONTSIZE>
-	<DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>General Font Size of Subtitle Text</DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE>
+	<DawnNewDay.Hint_Format_FONTSIZE>Font size of the current text</DawnNewDay.Hint_Format_FONTSIZE>
 
 	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>

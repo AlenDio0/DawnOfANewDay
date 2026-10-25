@@ -1,6 +1,7 @@
 ﻿using DawnNewDay.Compatibility;
 using RimWorld;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace DawnNewDay
     public class DawnComponent : GameComponent
     {
         private readonly Game m_Game;
-        private readonly DawnFormatter m_FormatManager;
+        private readonly DawnFormatter m_Formatter;
 
         private int m_LastTriggeredYear = -1;
         private int m_LastTriggeredDay = -1;
@@ -21,35 +22,10 @@ namespace DawnNewDay
         private float m_DisplayTimer = 0f;
         private float m_CurrentAlpha = 1f;
 
-        private string m_CachedUpperText;
-        private string m_CachedBottomText;
-        private string m_CachedSubtitleText;
+        private readonly Dictionary<DawnText, string> m_CachedLabels = [];
 
-        private enum Text
-        {
-            Upper = 0,
-            Bottom,
-            Subtitle,
-            MN_Reminder,
-            MN_Occasion,
-
-            Length,
-        }
-
+        private readonly List<Rect> m_CachedRects = [];
         private Rect m_CachedOverlayRect = Rect.zero;
-        private Rect m_CachedLineRect = Rect.zero;
-        private readonly Rect[] m_CachedTextRects = new Rect[(int)Text.Length];
-
-        #region Compatibility Section
-
-        #region Modern Notifications Section
-
-        private string m_MN_CachedReminderText = "";
-        private string m_MN_CachedOccasionText = "";
-
-        #endregion
-
-        #endregion
 
         private static readonly Regex FirstColorTagRegex = new(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -57,7 +33,7 @@ namespace DawnNewDay
             : base()
         {
             m_Game = game;
-            m_FormatManager = new DawnFormatter(m_Game);
+            m_Formatter = new DawnFormatter(m_Game);
         }
 
         public override void GameComponentTick()
@@ -146,25 +122,35 @@ namespace DawnNewDay
 
             GUI.BeginGroup(m_CachedOverlayRect);
 
-            string upperText = WithAlphaToRichText(m_CachedUpperText);
-            settings.UpperTextStyle.Draw(RetrieveTextRect(Text.Upper), upperText, settings.Scale);
-
-            Widgets.DrawBoxSolid(m_CachedLineRect, settings.LineColor.WithAlpha(m_CurrentAlpha));
-
-            string bottomText = WithAlphaToRichText(m_CachedBottomText);
-            settings.BottomTextStyle.Draw(RetrieveTextRect(Text.Bottom), bottomText, settings.Scale);
-
-            string subtitleText = WithAlphaToRichText(m_CachedSubtitleText);
-            settings.SubtitleTextStyle.Draw(RetrieveTextRect(Text.Subtitle), subtitleText, settings.Scale);
-
-            if (ModernNotifications.Present)
+            for (int i = 0; i < settings.OverlayWidgets.Count; i++)
             {
-                string reminderText = WithAlphaToRichText(m_MN_CachedReminderText);
-                settings.MN_Reminder.TextStyle.Draw(RetrieveTextRect(Text.MN_Reminder), reminderText, settings.Scale);
+                IDawnWidget widget = settings.OverlayWidgets.ElementAt(i);
+                Rect cachedRect = m_CachedRects.ElementAtOrDefault(i);
 
-                string occasionText = WithAlphaToRichText(m_MN_CachedOccasionText);
-                settings.MN_Occasion.TextStyle.Draw(RetrieveTextRect(Text.MN_Occasion), occasionText, settings.Scale);
+                switch (widget)
+                {
+                    case DawnText text:
+                        string cachedLabel = m_CachedLabels.TryGetValue(text, "");
+                        text.Draw(cachedRect, FinalizeLabel(cachedLabel), settings.Scale);
+                        break;
+                    case DawnSeparator separator:
+                        separator.Draw(separator.CalcDrawRect(cachedRect, settings.Scale), m_CurrentAlpha);
+                        break;
+
+                    default:
+                        break;
+                }
             }
+
+            // TODO: ModernNotification Compatibility
+            //if (ModernNotifications.Present)
+            //{
+            //    string reminderText = WithAlphaToRichText(m_MN_CachedReminderText);
+            //    settings.MN_Reminder.TextStyle.Draw(RetrieveTextRect(Text.MN_Reminder), reminderText, settings.Scale);
+
+            //    string occasionText = WithAlphaToRichText(m_MN_CachedOccasionText);
+            //    settings.MN_Occasion.TextStyle.Draw(RetrieveTextRect(Text.MN_Occasion), occasionText, settings.Scale);
+            //}
 
             GUI.EndGroup();
 
@@ -180,8 +166,8 @@ namespace DawnNewDay
             {
                 var settings = DawnMod.Settings;
 
-                UpdateCachedTextFormat();
-                UpdateCachedTextRect();
+                UpdateCachedLabels();
+                UpdateCachedRects();
 
                 if (settings.SoundEnabled && settings.Sound != null)
                 {
@@ -201,106 +187,135 @@ namespace DawnNewDay
             }
         }
 
-        private void UpdateCachedTextFormat()
+        private void UpdateCachedLabels()
         {
             var settings = DawnMod.Settings;
 
-            FormatContext context = m_FormatManager.CreateFormatContext(settings.StartsAtZero);
-            m_CachedUpperText = context.FormatText(settings.UpperTextFormat);
-            m_CachedBottomText = context.FormatText(settings.BottomTextFormat);
-            m_CachedSubtitleText = context.FormatText(settings.SubtitleTextFormat);
+            FormatContext context = m_Formatter.CreateFormatContext(settings.StartsAtZero);
 
-            m_MN_CachedReminderText = "";
-            m_MN_CachedOccasionText = "";
-            if (ModernNotifications.Present)
+            m_CachedLabels.Clear();
+            for (int i = 0; i < settings.OverlayWidgets.Count; i++)
             {
-                int GetTimeRemainingDay(ModernNotificationUtility.YearTime time) => Mathf.CeilToInt(context.TimeRemainingDay(context.TimeRemainingHour(time)));
-
-                if (settings.MN_Reminder.AddText)
+                var widget = settings.OverlayWidgets[i];
+                if (widget is DawnText text)
                 {
-                    var reminder = context.NextReminder;
-                    if (reminder.IsValid && GetTimeRemainingDay(reminder.Time) <= settings.MN_Reminder.MaximumDays)
-                        m_MN_CachedReminderText = context.FormatText(settings.MN_Reminder.TextFormat);
-                }
-                if (settings.MN_Occasion.AddText)
-                {
-                    var occasion = context.NextOccasion;
-                    if (occasion.IsValid && GetTimeRemainingDay(occasion.Time) <= settings.MN_Occasion.MaximumDays)
-                        m_MN_CachedOccasionText = context.FormatText(settings.MN_Occasion.TextFormat);
-
+                    string format = text.Format;
+                    m_CachedLabels.Add(text, context.FormatText(format, i, settings.Scale));
                 }
             }
 
             settings.UpdateText();
+
+            //m_MN_CachedReminderText = "";
+            //m_MN_CachedOccasionText = "";
+            //if (ModernNotifications.Present)
+            //{
+            //    int GetTimeRemainingDay(ModernNotificationUtility.YearTime time) => Mathf.CeilToInt(context.TimeRemainingDay(context.TimeRemainingHour(time)));
+
+            //    if (settings.MN_Reminder.AddText)
+            //    {
+            //        var reminder = context.NextReminder;
+            //        if (reminder.IsValid && GetTimeRemainingDay(reminder.Time) <= settings.MN_Reminder.MaximumDays)
+            //            m_MN_CachedReminderText = context.FormatText(settings.MN_Reminder.TextFormat);
+            //    }
+            //    if (settings.MN_Occasion.AddText)
+            //    {
+            //        var occasion = context.NextOccasion;
+            //        if (occasion.IsValid && GetTimeRemainingDay(occasion.Time) <= settings.MN_Occasion.MaximumDays)
+            //            m_MN_CachedOccasionText = context.FormatText(settings.MN_Occasion.TextFormat);
+
+            //    }
+            //}
         }
 
-        private void UpdateCachedTextRect()
+        private void UpdateCachedRects()
         {
             var settings = DawnMod.Settings;
 
-            const float cTextPaddingFactor = 1.2f;
-            float scaledSubtitleGap = !m_CachedSubtitleText.NullOrEmpty() ? settings.SubtitleGap * settings.Scale : 0f;
-            float scaledLinePadding = settings.LinePadding * settings.Scale;
-
-            RetrieveTextRect(Text.Upper).size = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
-            RetrieveTextRect(Text.Bottom).size = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
-            RetrieveTextRect(Text.Subtitle).size = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
-
-            if (ModernNotifications.Present)
+            List<(Rect rect, bool isText)> tempCachedRects = [];
+            for (int i = 0; i < settings.OverlayWidgets.Count; i++)
             {
-                RetrieveTextRect(Text.MN_Reminder).size = CalcTextSize(settings.MN_Reminder.TextStyle, m_MN_CachedReminderText);
-                RetrieveTextRect(Text.MN_Occasion).size = CalcTextSize(settings.MN_Occasion.TextStyle, m_MN_CachedOccasionText);
-            }
-            else
-            {
-                RetrieveTextRect(Text.MN_Reminder).size = Vector2.zero;
-                RetrieveTextRect(Text.MN_Occasion).size = Vector2.zero;
-            }
+                Rect lastRect = i > 0 ? tempCachedRects[i - 1].rect : Rect.zero;
+                Vector2 topLeft = new(0f, lastRect.yMax);
 
-            float textWidth = Mathf.Max([.. m_CachedTextRects.Select(rect => rect.width)]) * cTextPaddingFactor;
+                IDawnWidget widget = settings.OverlayWidgets[i];
+                switch (widget)
+                {
+                    case DawnText text:
+                        string cachedLabel = m_CachedLabels.TryGetValue(text, "");
 
-            float totalTextHeight = 0f;
-            for (int i = 0; i < m_CachedTextRects.Length; i++)
-            {
-                ref Rect rect = ref m_CachedTextRects[i];
+                        Rect textRect = new(topLeft, CalcTextSize(text, cachedLabel));
+                        tempCachedRects.Add(new(textRect, true));
+                        break;
+                    case DawnSeparator separator:
+                        tempCachedRects.Add(new(separator.CalcFullRect(topLeft.y, 0f, settings.Scale), false));
+                        break;
 
-                rect.height *= cTextPaddingFactor;
-                rect.width = textWidth;
-
-                totalTextHeight += rect.height;
+                    default:
+                        break;
+                }
             }
 
-            m_CachedOverlayRect.width = textWidth;
-            m_CachedOverlayRect.height = totalTextHeight + settings.LineThickness + (scaledLinePadding * 3f) + scaledSubtitleGap;
+            float maxWidth = Mathf.Max([.. tempCachedRects.Select(cached => cached.rect.width)]) * 1.2f;
+            float totalHeight = tempCachedRects.Sum(cached => cached.rect.height);
+
+            m_CachedOverlayRect.size = new(maxWidth, totalHeight);
             m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
-            RetrieveTextRect(Text.Upper).y = 0f;
-
-            m_CachedLineRect.width = m_CachedOverlayRect.width * (settings.LineWidthPercentage / 100f);
-            m_CachedLineRect.height = settings.LineThickness;
-
-            m_CachedLineRect.x = (m_CachedOverlayRect.width - m_CachedLineRect.width) / 2f;
-            m_CachedLineRect.y = RetrieveTextRect(Text.Upper).yMax + scaledLinePadding;
-
-            RetrieveTextRect(Text.Bottom).y = m_CachedLineRect.yMax + scaledLinePadding;
-            RetrieveTextRect(Text.Subtitle).y = RetrieveTextRect(Text.Bottom).yMax + scaledSubtitleGap;
-
-            if (ModernNotifications.Present)
+            for (int i = 0; i < tempCachedRects.Count; i++)
             {
-                RetrieveTextRect(Text.MN_Reminder).y = RetrieveTextRect(Text.Subtitle).yMax;
-                RetrieveTextRect(Text.MN_Occasion).y = RetrieveTextRect(Text.MN_Reminder).yMax;
+                Rect lastRect = i > 0 ? tempCachedRects[i - 1].rect : Rect.zero;
+
+                if (settings.OverlayWidgets[i] is DawnSeparator separator)
+                    tempCachedRects[i] = new(separator.CalcFullRect(lastRect.yMax, maxWidth, settings.Scale), false);
             }
+
+            m_CachedRects.Clear();
+            foreach (var (rect, isText) in tempCachedRects)
+            {
+                Rect finalRect = rect;
+                if (isText)
+                    finalRect = new(rect.position, new(maxWidth, rect.height));
+
+                m_CachedRects.Add(finalRect);
+            }
+
+            //RetrieveTextRect(Text.Upper).size = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
+            //RetrieveTextRect(Text.Bottom).size = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
+            //RetrieveTextRect(Text.Subtitle).size = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
+
+            //if (ModernNotifications.Present)
+            //{
+            //    RetrieveTextRect(Text.MN_Reminder).size = CalcTextSize(settings.MN_Reminder.TextStyle, m_MN_CachedReminderText);
+            //    RetrieveTextRect(Text.MN_Occasion).size = CalcTextSize(settings.MN_Occasion.TextStyle, m_MN_CachedOccasionText);
+            //}
+            //else
+            //{
+            //    RetrieveTextRect(Text.MN_Reminder).size = Vector2.zero;
+            //    RetrieveTextRect(Text.MN_Occasion).size = Vector2.zero;
+            //}
+
+            //RetrieveTextRect(Text.Upper).y = 0f;
+
+            //RetrieveTextRect(Text.Bottom).y = m_CachedLineRect.yMax + scaledLinePadding;
+            //RetrieveTextRect(Text.Subtitle).y = RetrieveTextRect(Text.Bottom).yMax + scaledSubtitleGap;
+
+            //if (ModernNotifications.Present)
+            //{
+            //    RetrieveTextRect(Text.MN_Reminder).y = RetrieveTextRect(Text.Subtitle).yMax;
+            //    RetrieveTextRect(Text.MN_Occasion).y = RetrieveTextRect(Text.MN_Reminder).yMax;
+            //}
         }
 
-        private ref Rect RetrieveTextRect(Text text) => ref m_CachedTextRects[(int)text];
-
-        private static Vector2 CalcTextSize(DawnTextStyle style, string text)
+        private static Vector2 CalcTextSize(DawnText style, string text)
         {
             if (text.NullOrEmpty())
                 return Vector2.zero;
 
             return style.TextGUIStyle.CalcSize(new GUIContent(text));
         }
+
+        private string FinalizeLabel(string label) => WithAlphaToRichText(label);
 
         private string WithAlphaToRichText(string text)
         {

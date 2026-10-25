@@ -1,17 +1,22 @@
-﻿using DawnNewDay.Dialogs;
+﻿using DawnNewDay.Compatibility;
+using DawnNewDay.Dialogs;
 using DawnNewDay.Utils;
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
+using System.Linq;
 
 namespace DawnNewDay
 {
-    public class DawnTextStyle : IExposable
+    public class DawnText : IDawnWidget, IExposable
     {
         public GUIStyle TextGUIStyle = new(Text.CurFontStyle);
 
+        public string Format = "";
+
         public string FontFamilyName = "";
+        public TextAnchor Anchor = TextAnchor.MiddleCenter;
         public int FontSize = 20;
         public Color TextColor = Color.white;
 
@@ -23,21 +28,18 @@ namespace DawnNewDay
 
         private static readonly Regex WholeColorTagRegex = new(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public DawnTextStyle()
+        public DawnText()
         {
-            TextGUIStyle.alignment = TextAnchor.MiddleCenter;
             TextGUIStyle.font = null;
-
             TextGUIStyle.richText = true;
         }
 
-        public DawnTextStyle(int fontSize, bool bold, bool italic, float outlineThickness = 1f)
+        public DawnText(string format, int fontSize, bool bold, bool italic, float outlineThickness = 1f)
         {
-            TextGUIStyle.alignment = TextAnchor.MiddleCenter;
             TextGUIStyle.font = null;
-
             TextGUIStyle.richText = true;
 
+            Format = format;
             FontSize = fontSize;
             Bold = bold;
             Italic = italic;
@@ -49,6 +51,11 @@ namespace DawnNewDay
         {
             try
             {
+                listing.Label(DawnTranslation.Label_TextFormat);
+                Format = listing.TextEntry(Format, 3);
+
+                listing.Gap();
+
 #if RW_17
                 Color defaultColor = GUI.contentColor;
                 GUI.contentColor = Color.gray;
@@ -58,6 +65,13 @@ namespace DawnNewDay
                 if (listing.ButtonText($"{DawnTranslation.Label_FontFamily} ({FontFamilyName.Fallback(DawnTranslation.Label_DefaultFont)})"))
                     Find.WindowStack.Add(new Dialog_ChooseFontFamily(font => FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "", FontFamilyName));
 #endif
+                if (listing.ButtonText(Anchor.ToString()))
+                {
+                    var anchorModes = SettingsHelper.CreateFloatMenu(Enum.GetValues(typeof(TextAnchor)).Cast<TextAnchor>(),
+                        anchor => new(anchor.ToString(), () => Anchor = anchor));
+                    Find.WindowStack.Add(anchorModes);
+                }
+
                 FontSize = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_FontSize} ({FontSize})", FontSize, 0f, 256f, 0.35f));
                 OutlineThickness = SettingsHelper.SnapToStep(listing.SliderLabeled($"{DawnTranslation.Label_OutlineThickness} ({OutlineThickness})", OutlineThickness, 0f, 3f, 0.35f), 0.25f);
 
@@ -68,6 +82,31 @@ namespace DawnNewDay
                 listing.LabeledRadioColorPresets(ref OutlineColor, DawnTranslation.Label_OutlineColor);
 
                 ApplyToGUIStyle(scale);
+
+                listing.Gap();
+
+                if (listing.ButtonText(DawnTranslation.Label_LabelFormatPresets))
+                {
+                    var presets = DawnTranslation.Hints_LabelFormatPresets;
+                    if (ModernNotifications.Present)
+                        presets.AddRange(DawnTranslation.Hints_MN_LabelFormatPresets);
+
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, presets));
+                }
+
+                Rect hintsRect = listing.GetRect(30f);
+
+                if (Widgets.ButtonText(hintsRect.LeftHalf(), DawnTranslation.Label_LabelFormatHints))
+                {
+                    var hints = DawnTranslation.Hints_LabelFormat;
+                    if (ModernNotifications.Present)
+                        hints.AddRange(DawnTranslation.Hints_MN_LabelFormat);
+
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
+                }
+
+                if (Widgets.ButtonText(hintsRect.RightHalf(), DawnTranslation.Label_RichTextHints))
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
             }
             catch (Exception exception)
             {
@@ -115,6 +154,7 @@ namespace DawnNewDay
             if (TextGUIStyle == null)
                 return;
 
+            TextGUIStyle.alignment = Anchor;
             TextGUIStyle.fontSize = Mathf.CeilToInt(FontSize * scale);
             TextGUIStyle.normal.textColor = TextColor;
             TextGUIStyle.fontStyle = SettingsHelper.MapFontStyle(Bold, Italic);
@@ -150,7 +190,10 @@ namespace DawnNewDay
         {
             TextGUIStyle ??= new GUIStyle(Text.CurFontStyle);
 
+            Scribe_Values.Look(ref Format, "Format", "");
+
             Scribe_Values.Look(ref FontFamilyName, "FontFamilyName", "");
+            Scribe_Values.Look(ref Anchor, "Anchor", TextAnchor.MiddleCenter);
             Scribe_Values.Look(ref FontSize, "FontSize", 20);
             Scribe_Values.Look(ref TextColor, "TextColor", Color.white);
 

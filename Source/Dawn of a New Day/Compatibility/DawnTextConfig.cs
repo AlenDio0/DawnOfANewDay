@@ -9,13 +9,13 @@ namespace DawnNewDay.Compatibility
 
         public int MaximumDays = 15;
         public string TextFormat = "";
-        public DawnTextStyle TextStyle = null;
+        public DawnText TextStyle = null;
 
         private string MaximumTimeBuffer;
 
         public DawnTextConfig() { }
 
-        public DawnTextConfig(bool addText, int maximumDays, string textFormat, DawnTextStyle textStyle)
+        public DawnTextConfig(bool addText, int maximumDays, string textFormat, DawnText textStyle)
         {
             AddText = addText;
             MaximumDays = maximumDays;

@@ -4,6 +4,7 @@ using DawnNewDay.Utils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -41,13 +42,6 @@ namespace DawnNewDay
         public float Scale = DawnDefault.Scale;
         public Vector2 Offset = DawnDefault.Offset;
 
-        public float SubtitleGap = DawnDefault.SubtitleGap;
-
-        public float LineWidthPercentage = DawnDefault.LineWidthPercentage;
-        public float LineThickness = DawnDefault.LineThickness;
-        public float LinePadding = DawnDefault.LinePadding;
-        public Color LineColor = DawnDefault.LineColor;
-
         #endregion
 
         #region Duration Section
@@ -60,28 +54,22 @@ namespace DawnNewDay
 
         #endregion
 
-        #region Text Section
+        #region Overlay Widget Section
 
         private bool m_TextSection = false;
 
-        private bool m_UpperTextSection = false;
-        public DawnTextStyle UpperTextStyle = DawnDefault.UpperTextStyle;
+        private int m_TextReorderableGroupID = -1;
+        public List<IDawnWidget> OverlayWidgets = DawnDefault.OverlayWidgets;
 
-        private bool m_BottomTextSection = false;
-        public DawnTextStyle BottomTextStyle = DawnDefault.BottomTextStyle;
+        private readonly List<string> m_RemovedFormatTexts = [];
 
-        private bool m_SubtitleTextSection = false;
-        public DawnTextStyle SubtitleTextStyle = DawnDefault.SubtitleTextStyle;
+        #region Obsolete
+
+        public string Obsolete_UpperTextFormat = DawnDefault.UpperTextFormat;
+        public string Obsolete_BottomTextFormat = DawnDefault.BottomTextFormat;
+        public string Obsolete_SubtitleTextFormat = DawnDefault.SubtitleTextFormat;
 
         #endregion
-
-        #region Label Format Section
-
-        private bool m_LabelFormatSection = false;
-
-        public string UpperTextFormat = DawnDefault.UpperTextFormat;
-        public string BottomTextFormat = DawnDefault.BottomTextFormat;
-        public string SubtitleTextFormat = DawnDefault.SubtitleTextFormat;
 
         #endregion
 
@@ -147,7 +135,6 @@ namespace DawnNewDay
 
         public void DoWindowContents(Rect canva)
         {
-            canva = canva.LeftPart(0.95f);
             canva = canva.MiddlePart(1f, 0.95f);
 
             Listing_Standard listing = new() { maxOneColumn = true };
@@ -175,11 +162,8 @@ namespace DawnNewDay
                 if (listing.SectionButton(DawnTranslation.Section_Duration, ref m_DurationSection))
                     listing.Indented(() => ShowDurationSection(listing));
 
-                if (listing.SectionButton(DawnTranslation.Section_Text, ref m_TextSection))
-                    listing.Indented(() => ShowTextSection(listing));
-
-                if (listing.SectionButton(DawnTranslation.Section_LabelFormat, ref m_LabelFormatSection))
-                    listing.Indented(() => ShowLabelFormatSection(listing));
+                if (listing.SectionButton(DawnTranslation.Section_OverlayWidget, ref m_TextSection))
+                    listing.Indented(() => ShowOverlayWidgetSection(listing));
 
                 if (listing.SectionButton(DawnTranslation.Section_Sound, ref m_SoundSection))
                     listing.Indented(() => ShowSoundSection(listing));
@@ -228,33 +212,19 @@ namespace DawnNewDay
 
             if (listing.ButtonText($"{DawnTranslation.Label_Scale}: {Scale}x"))
             {
-                var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScalePresets, scale => new FloatMenuOption($"{scale}x", () => Scale = scale));
+                var scaleModes = SettingsHelper.CreateFloatMenu(DawnData.ScalePresets, scale => new($"{scale}x", () => Scale = scale));
                 Find.WindowStack.Add(scaleModes);
             }
 
             if (listing.ButtonText(DawnTranslation.Label_OffsetPresets))
             {
-                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnTranslation.OffsetPresets, item => new FloatMenuOption(item.Name, () =>
+                var offsetPresets = SettingsHelper.CreateFloatMenu(DawnTranslation.OffsetPresets, item => new(item.Name, () =>
                     Offset = new Vector2(UI.screenWidth, UI.screenHeight) * item.Preset));
                 Find.WindowStack.Add(offsetPresets);
             }
 
             Offset.x = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_Offset} X ({Offset.x} px)", Offset.x, 0f, UI.screenWidth, 0.25f));
             Offset.y = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_Offset} Y ({Offset.y} px)", Offset.y, 0f, UI.screenHeight, 0.25f));
-
-            listing.Gap();
-
-            SubtitleGap = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_SubtitleGap} ({SubtitleGap} px)", SubtitleGap, 0f, 100f, 0.25f));
-
-            listing.Gap();
-
-            LineWidthPercentage = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineWidthPercentage} ({LineWidthPercentage}%)", LineWidthPercentage, 0f, 100f, 0.25f));
-            LineThickness = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LineThickness} ({LineThickness} px)", LineThickness, 0f, 100f, 0.25f));
-            LinePadding = Mathf.Ceil(listing.SliderLabeled($"{DawnTranslation.Label_LinePadding} ({LinePadding} px)", LinePadding, 0f, 100f, 0.25f));
-
-            listing.Gap();
-
-            listing.LabeledRadioColorPresets(ref LineColor, DawnTranslation.Label_LineColor);
         }
 
         private void ShowDurationSection(Listing_Standard listing)
@@ -264,59 +234,143 @@ namespace DawnNewDay
             listing.LabeledTextFieldNumeric($"{DawnTranslation.Label_FadeOutDuration} (seconds)", ref FadeOutDurationSeconds, ref m_FadeOutDurationBuffer, 0f, DisplayDurationSeconds);
         }
 
-        private void ShowTextSection(Listing_Standard listing)
+        private void ShowOverlayWidgetSection(Listing_Standard listing)
         {
-            if (listing.SectionButton(DawnTranslation.Section_UpperText, ref m_UpperTextSection, false))
-                listing.Indented(() => UpperTextStyle.DoContents(listing, Scale));
+            const float cRowHeight = 30f;
 
-            if (listing.SectionButton(DawnTranslation.Section_BottomText, ref m_BottomTextSection))
-                listing.Indented(() => BottomTextStyle.DoContents(listing, Scale));
+            Rect listRect = listing.GetRect(cRowHeight * OverlayWidgets.Count);
 
-            if (listing.SectionButton(DawnTranslation.Section_SubtitleText, ref m_SubtitleTextSection))
-                listing.Indented(() => SubtitleTextStyle.DoContents(listing, Scale));
+            if (Event.current.type == EventType.Repaint)
+            {
+                m_TextReorderableGroupID = ReorderableWidget.NewGroup((fromIndex, toIndex) =>
+                    {
+                        var item = OverlayWidgets[fromIndex];
+                        OverlayWidgets.Insert(toIndex, item);
+                        OverlayWidgets.RemoveAt((fromIndex < toIndex) ? fromIndex : (fromIndex + 1));
+                    }, ReorderableDirection.Vertical, listRect);
+            }
+
+            for (int i = 0; i < OverlayWidgets.Count; i++)
+                ShowOverlayWidgetEntry(listRect, OverlayWidgets[i], i, cRowHeight);
+
+            listing.Gap();
+
+            Rect rowRect = listing.GetRect(cRowHeight);
+
+            Rect addRect = new(rowRect.position, new(cRowHeight, cRowHeight));
+            if (Widgets.ButtonImage(addRect.ExpandedBy(4f), TexButton.Add))
+            {
+                var addMenu = new FloatMenu([
+                    new(DawnTranslation.Label_Text, () => OverlayWidgets.Add(new DawnText())),
+                    new(DawnTranslation.Label_Separator, () => OverlayWidgets.Add(new DawnSeparator()))
+                    ]);
+                Find.WindowStack.Add(addMenu);
+            }
+
+            Rect resetRect = new(rowRect.xMax - cRowHeight, rowRect.y, cRowHeight, cRowHeight);
+            if (Widgets.ButtonImage(resetRect.ContractedBy(4f), TexButton.HotReloadDefs))
+            {
+                Find.WindowStack.Add(new Dialog_Confirm(DawnTranslation.Message_ResetWarning, delegate
+                    {
+                        static IEnumerable<string> SelectTextFormat(List<IDawnWidget> list) =>
+                            list.Where(widget => widget is DawnText).Select(widget => ((DawnText)widget).Format)
+                            .Where(format => !format.NullOrEmpty());
+
+                        m_RemovedFormatTexts.AddRange(SelectTextFormat(OverlayWidgets)
+                            .Where(text => !SelectTextFormat(DawnDefault.OverlayWidgets).Contains(text)));
+
+                        OverlayWidgets = DawnDefault.OverlayWidgets;
+                    }));
+            }
+
+            Rect backupRect = new(resetRect.x - cRowHeight, rowRect.y, cRowHeight, cRowHeight);
+            if (Widgets.ButtonImage(backupRect.ContractedBy(4f), TexButton.Save))
+            {
+                Dictionary<string, string> backupFormats = new()
+                {
+                    { Obsolete_UpperTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_UpperTextFormat}" },
+                    { Obsolete_BottomTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_BottomTextFormat}" },
+                    { Obsolete_SubtitleTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_SubtitleTextFormat}" }
+                };
+                for (int i = 0; i < m_RemovedFormatTexts.Count; i++)
+                    backupFormats.TryAdd(m_RemovedFormatTexts[i], DawnTranslation.Description_BackupFormat($"{i + 1:D2}"));
+
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_BackupFormats, backupFormats));
+            }
         }
 
-        private void ShowLabelFormatSection(Listing_Standard listing)
+        private void ShowOverlayWidgetEntry(Rect listRect, IDawnWidget widget, int index, float rowHeight)
         {
-            listing.Label(DawnTranslation.Label_UpperTextFormat);
-            UpperTextFormat = listing.TextEntry(UpperTextFormat, 2);
-
-            listing.Gap();
-
-            listing.Label(DawnTranslation.Label_BottomTextFormat);
-            BottomTextFormat = listing.TextEntry(BottomTextFormat, 2);
-
-            listing.Gap();
-
-            listing.Label(DawnTranslation.Label_SubtitleTextFormat);
-            SubtitleTextFormat = listing.TextEntry(SubtitleTextFormat, 2);
-
-            listing.Gap();
-
-            if (listing.ButtonText(DawnTranslation.Label_LabelFormatPresets))
+            if (widget == null)
             {
-                var presets = DawnTranslation.Hints_LabelFormatPresets;
-                if (ModernNotifications.Present)
-                    presets.AddRange(DawnTranslation.Hints_MN_LabelFormatPresets);
-
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, presets));
+                OverlayWidgets.Remove(widget);
+                return;
             }
 
-            listing.Gap();
+            Rect rowRect = new(listRect.x, listRect.y + (index * rowHeight), listRect.width, rowHeight);
 
-            Rect hintsRect = listing.GetRect(30f);
+            Rect dragRect = new(rowRect.position, new(rowHeight, rowHeight));
+            if (Event.current.type != EventType.MouseDown || Mouse.IsOver(dragRect))
+                ReorderableWidget.Reorderable(m_TextReorderableGroupID, rowRect);
+            Widgets.ButtonImage(dragRect, TexButton.DragHash);
 
-            if (Widgets.ButtonText(hintsRect.LeftHalf(), DawnTranslation.Label_LabelFormatHints))
+            Rect deleteRect = new(rowRect.xMax - rowHeight, rowRect.y, rowHeight, rowHeight);
+            void ShowDeleteButton(Action onPressed)
             {
-                var hints = DawnTranslation.Hints_LabelFormat;
-                if (ModernNotifications.Present)
-                    hints.AddRange(DawnTranslation.Hints_MN_LabelFormat);
-
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
+                if (Widgets.ButtonImage(deleteRect, TexButton.Delete))
+                    onPressed();
             }
 
-            if (Widgets.ButtonText(hintsRect.RightHalf(), DawnTranslation.Label_RichTextHints))
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
+            Rect editRect = new(deleteRect.x - rowHeight - 10f, rowRect.y, rowHeight, rowHeight);
+            void ShowEditButton(Action onPressed)
+            {
+                if (Widgets.ButtonImage(editRect, TexButton.Rename))
+                    onPressed();
+            }
+
+            Rect previewRect = new(dragRect.xMax, rowRect.y, editRect.x - dragRect.xMax, rowHeight);
+
+            switch (widget)
+            {
+                case DawnText text:
+                    FormatContext context = new DawnFormatter(Current.Game).CreateFormatContext(StartsAtZero);
+
+                    float textScale = text.FontSize <= rowHeight ? 1f : rowHeight / text.FontSize;
+                    text.ApplyToGUIStyle(textScale);
+
+                    string label = context.FormatText(text.Format, index, textScale);
+                    text.Draw(previewRect, label, textScale);
+
+                    text.ApplyToGUIStyle(Scale);
+
+                    ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditText(text, index, Scale, context)));
+                    ShowDeleteButton(delegate
+                    {
+                        string message = $"{DawnTranslation.Message_DeleteWarning}: {DawnTranslation.Label_Text}\n\n(N° {index + 1}) ~ {label.StripTags()}";
+                        Find.WindowStack.Add(new Dialog_Confirm(message, delegate
+                            {
+                                if (!text.Format.NullOrEmpty() && !DawnDefault.OverlayWidgets.Contains(text))
+                                    m_RemovedFormatTexts.Add(text.Format);
+
+                                OverlayWidgets.Remove(text);
+                            }));
+                    });
+                    break;
+                case DawnSeparator separator:
+                    Rect drawRect = separator.CalcDrawRect(separator.CalcFullRect(previewRect.y, previewRect.width, 0f), 0f);
+                    separator.Draw(new(previewRect.x + drawRect.x, drawRect.y + previewRect.height / 3f, drawRect.width, drawRect.height));
+
+                    ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditSeparator(separator)));
+                    ShowDeleteButton(delegate
+                    {
+                        string message = $"{DawnTranslation.Message_DeleteWarning}: {DawnTranslation.Label_Separator}\n\n(N° {index + 1})";
+                        Find.WindowStack.Add(new Dialog_Confirm(message, () => OverlayWidgets.Remove(separator)));
+                    });
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void ShowSoundSection(Listing_Standard listing)
@@ -383,14 +437,11 @@ namespace DawnNewDay
 
         public void UpdateText()
         {
-            UpperTextStyle.UpdateFontFamily();
-            UpperTextStyle.ApplyToGUIStyle(Scale);
-
-            BottomTextStyle.UpdateFontFamily();
-            BottomTextStyle.ApplyToGUIStyle(Scale);
-
-            SubtitleTextStyle.UpdateFontFamily();
-            SubtitleTextStyle.ApplyToGUIStyle(Scale);
+            foreach (DawnText text in OverlayWidgets.Where(widget => widget is DawnText).Cast<DawnText>())
+            {
+                text.UpdateFontFamily();
+                text.ApplyToGUIStyle(Scale);
+            }
 
             if (ModernNotifications.Present)
             {
@@ -419,13 +470,8 @@ namespace DawnNewDay
 
                 Scribe_Values.Look(ref ShowHighlight, "ShowHighlight", DawnDefault.ShowHighlight);
 
-                Scribe_Values.Look(ref Scale, "Scale", DawnDefault.Scale);
+                Scribe_Values.Look(ref Scale, "TextScale", DawnDefault.Scale);
                 Scribe_Values.Look(ref Offset, "Offset", DawnDefault.Offset);
-
-                Scribe_Values.Look(ref LineThickness, "LineThickness", DawnDefault.LineThickness);
-                Scribe_Values.Look(ref LineWidthPercentage, "LineWidthPercentage100", DawnDefault.LineWidthPercentage);
-                Scribe_Values.Look(ref LinePadding, "LinePadding", DawnDefault.LinePadding);
-                Scribe_Values.Look(ref LineColor, "LineColor", DawnDefault.LineColor);
 
                 #endregion
 
@@ -437,26 +483,16 @@ namespace DawnNewDay
 
                 #endregion
 
-                #region Text Section
+                #region Overlay Widget Section
 
-                Scribe_Deep.Look(ref UpperTextStyle, "UpperTextStyle");
-                Scribe_Deep.Look(ref BottomTextStyle, "BottomTextStyle");
-                Scribe_Deep.Look(ref SubtitleTextStyle, "SubtitleTextStyle");
+                Scribe_Values.Look(ref Obsolete_UpperTextFormat, "UpperTextFormat1", DawnDefault.UpperTextFormat);
+                Scribe_Values.Look(ref Obsolete_BottomTextFormat, "BottomTextFormat1", DawnDefault.BottomTextFormat);
+                Scribe_Values.Look(ref Obsolete_SubtitleTextFormat, "SubtitleTextFormat", DawnDefault.SubtitleTextFormat);
+
+                Scribe_Collections.Look(ref OverlayWidgets, "OverlayWidgets", LookMode.Deep);
 
                 if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
-                {
-                    UpperTextStyle ??= DawnDefault.UpperTextStyle;
-                    BottomTextStyle ??= DawnDefault.BottomTextStyle;
-                    SubtitleTextStyle ??= DawnDefault.SubtitleTextStyle;
-                }
-
-                #endregion
-
-                #region Label Format Section
-
-                Scribe_Values.Look(ref UpperTextFormat, "UpperTextFormat1", DawnDefault.UpperTextFormat);
-                Scribe_Values.Look(ref BottomTextFormat, "BottomTextFormat1", DawnDefault.BottomTextFormat);
-                Scribe_Values.Look(ref SubtitleTextFormat, "SubtitleTextFormat", DawnDefault.SubtitleTextFormat);
+                    OverlayWidgets ??= DawnDefault.OverlayWidgets;
 
                 #endregion
 

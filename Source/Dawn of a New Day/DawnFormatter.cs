@@ -32,7 +32,10 @@ namespace DawnNewDay
         public Map Map;
         public List<Map> AllMaps;
 
-        public readonly Vector2 Location => World.grid?.LongLatOf(Map.Tile) ?? Vector2.zero;
+        public int TextIndex;
+        public float TextScale;
+
+        public readonly Vector2 Location => World?.grid?.LongLatOf(Map.Tile) ?? Vector2.zero;
 
         public static string LerpHex(Color fromColor, Color toColor, float value, float min, float max)
         {
@@ -48,7 +51,7 @@ namespace DawnNewDay
             int startsAtZero = (StartAtZero ? 0 : 1);
             return dayRelative switch
             {
-                DayRelative.Settle => GenDate.DaysPassed + (GenDate.HourOfDay(AbsTicks, Location.x) >= 6 ? 0 : 1) + startsAtZero,
+                DayRelative.Settle => (Current.Game?.tickManager != null ? GenDate.DaysPassed + (GenHour() >= 6 ? 0 : 1) : 0) + startsAtZero,
                 DayRelative.Quadrum => GenDate.DayOfQuadrum(AbsTicks, Location.x) + 1,
                 DayRelative.Season => GenDate.DayOfSeason(AbsTicks, Location.x) + startsAtZero,
                 DayRelative.Year => GenDate.DayOfYear(AbsTicks, Location.x) + startsAtZero,
@@ -58,33 +61,33 @@ namespace DawnNewDay
         }
         public readonly int GenYear() => GenDate.Year(AbsTicks, Location.x);
         public readonly string GenQuadrum() => GenDate.Quadrum(AbsTicks, Location.x).Label();
-        public readonly string GenSeason() => GenDate.Season(AbsTicks, Location).LabelCap();
+        public readonly string GenSeason() => Find.World != null ? GenDate.Season(AbsTicks, Location).LabelCap() : Season.Spring.LabelCap();
         public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
         #endregion
 
         #region Tile Info
 
-        public readonly float Temperature => Map.mapTemperature?.OutdoorTemp ?? 0f;
+        public readonly float Temperature => Map?.mapTemperature?.OutdoorTemp ?? 0f;
         public readonly string TemperatureHex => LerpHex(new(0.2f, 0.7f, 1f), new(1f, 0.3f, 0f), Temperature, -10f, 50f);
 
-        public readonly Tile Tile => World.grid[Map.Tile];
+        public readonly Tile Tile => World?.grid[Map.Tile];
 
         public readonly string Terrain => Tile?.hilliness.GetLabel() ?? "";
         public readonly float Elevation => Tile?.elevation ?? 0f;
         public readonly float Pollution => Tile?.pollution ?? 0f;
 
-        public readonly List<GameCondition> ActiveConditions => Map.GameConditionManager?.ActiveConditions ?? [];
+        public readonly List<GameCondition> ActiveConditions => Map?.GameConditionManager?.ActiveConditions ?? [];
         public readonly GameCondition ActiveCondition => ActiveConditions.FirstOrFallback(null);
 
         public readonly string FactionName
         {
             get
             {
-                if (Map.ParentFaction != null)
+                if (Map?.ParentFaction != null)
                     return Map.ParentFaction.Name;
 
-                Faction firstFaction = AllMaps.FirstOrFallback(map => map.ParentFaction != null)?.ParentFaction;
+                Faction firstFaction = AllMaps?.FirstOrFallback(map => map.ParentFaction != null)?.ParentFaction;
                 if (firstFaction != null)
                     return firstFaction.Name;
 
@@ -95,21 +98,21 @@ namespace DawnNewDay
         {
             get
             {
-                if (Map.Parent is Settlement settlement)
+                if (Map?.Parent is Settlement settlement)
                     return settlement.Name;
 
 #if RW_15
 #else
-                if (Map.Parent is Camp camp)
+                if (Map?.Parent is Camp camp)
                     return camp.LabelCap;
 #endif
 
-                if (AllMaps.FirstOrFallback(map => map.Parent is Settlement settlement && !settlement.Name.NullOrEmpty())?.Parent is Settlement firstSettlement)
+                if (AllMaps?.FirstOrFallback(map => map.Parent is Settlement settlement && !settlement.Name.NullOrEmpty())?.Parent is Settlement firstSettlement)
                     return firstSettlement.Name;
 
 #if RW_15
 #else
-                if (AllMaps.FirstOrFallback(map => map.Parent is Camp camp && !camp.LabelCap.NullOrEmpty())?.Parent is Camp firstCamp)
+                if (AllMaps?.FirstOrFallback(map => map.Parent is Camp camp && !camp.LabelCap.NullOrEmpty())?.Parent is Camp firstCamp)
                     return firstCamp.LabelCap;
 #endif
 
@@ -121,22 +124,17 @@ namespace DawnNewDay
 
         #region Settings
 
-        public readonly DawnSettings Settings => DawnMod.Settings;
+        public static DawnSettings Settings => DawnMod.Settings;
+        public readonly int FontSize
+        {
+            get
+            {
+                if (Settings.OverlayWidgets[TextIndex] is DawnText text)
+                    return Mathf.CeilToInt(text.FontSize * TextScale);
 
-        public readonly int UpperFontSize => Mathf.CeilToInt(Settings.UpperTextStyle.FontSize * Settings.Scale);
-        public readonly int BottomFontSize => Mathf.CeilToInt(Settings.BottomTextStyle.FontSize * Settings.Scale);
-        public readonly int SubtitleFontSize => Mathf.CeilToInt(Settings.SubtitleTextStyle.FontSize * Settings.Scale);
-
-        #region Compatibility
-
-        #region Modern Notifications
-
-        public readonly int MN_ReminderFontSize => Mathf.CeilToInt(Settings.MN_Reminder.TextStyle.FontSize * Settings.Scale);
-        public readonly int MN_OccasionFontSize => Mathf.CeilToInt(Settings.MN_Occasion.TextStyle.FontSize * Settings.Scale);
-
-        #endregion
-
-        #endregion
+                return 0;
+            }
+        }
 
         #endregion
 
@@ -295,13 +293,15 @@ namespace DawnNewDay
         {
             return new FormatContext
             {
-                AbsTicks = Game.tickManager.TicksAbs,
+                AbsTicks = Game?.tickManager?.TicksAbs ?? 0,
 
-                World = Game.World,
-                Map = Game.CurrentMap,
-                AllMaps = Game.Maps,
+                World = Game?.World,
+                Map = Game?.CurrentMap,
+                AllMaps = Game?.Maps,
 
                 StartAtZero = startsAtZero,
+                TextIndex = 0,
+                TextScale = 1f,
             };
         }
     }
@@ -349,9 +349,7 @@ namespace DawnNewDay
 
             { "ENDLINE", _ => "\n" },
 
-            { "UPPER_FONTSIZE", context => context.UpperFontSize.ToString() },
-            { "BOTTOM_FONTSIZE", context => context.BottomFontSize.ToString() },
-            { "SUBTITLE_FONTSIZE", context => context.SubtitleFontSize.ToString() },
+            { "FONTSIZE", context => context.FontSize.ToString() },
         };
 
         #region Compatibility
@@ -382,9 +380,6 @@ namespace DawnNewDay
             { "MN_OCCASION_REMAINING_HOUR", context => context.NextOccasionTimeRemainingHour.ToString() },
 
             { "MN_OCCASION_REMAINING_COLOR", context => context.NextOccasionRemainingHex },
-
-            { "MN_REMINDER_FONTSIZE", context => context.MN_ReminderFontSize.ToString() },
-            { "MN_OCCASION_FONTSIZE", context => context.MN_OccasionFontSize.ToString() },
         };
 
         #endregion
@@ -540,10 +535,13 @@ namespace DawnNewDay
             });
         }
 
-        public static string FormatText(this FormatContext context, string text)
+        public static string FormatText(this FormatContext context, string text, int index, float scale)
         {
             if (text.NullOrEmpty())
                 return text;
+
+            context.TextIndex = index;
+            context.TextScale = scale;
 
             string format = "";
             try

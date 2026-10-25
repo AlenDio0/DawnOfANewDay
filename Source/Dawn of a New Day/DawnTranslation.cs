@@ -8,6 +8,12 @@ namespace DawnNewDay
     [StaticConstructorOnStartup]
     public static class DawnTranslation
     {
+        #region Misc
+
+        public static string Label_Search => "DawnNewDay.Label_Search".Translate();
+
+        #endregion
+
         #region Header
 
         public static string Label_Enabled => "DawnNewDay.Label_Enabled".Translate();
@@ -42,13 +48,6 @@ namespace DawnNewDay
             ("DawnNewDay.Offset_RightBottom".Translate(), new Vector2(0.8f, 0.8f)),
         ];
 
-        public static string Label_SubtitleGap => "DawnNewDay.Label_SubtitleGap".Translate();
-
-        public static string Label_LineWidthPercentage => "DawnNewDay.Label_LineWidthPercentage".Translate();
-        public static string Label_LineThickness => "DawnNewDay.Label_LineThickness".Translate();
-        public static string Label_LinePadding => "DawnNewDay.Label_LinePadding".Translate();
-        public static string Label_LineColor => "DawnNewDay.Label_LineColor".Translate();
-
         #endregion
 
         #region Duration Section
@@ -61,16 +60,20 @@ namespace DawnNewDay
 
         #endregion
 
-        #region Text Section
+        #region Overlay Widget Section
 
-        public static string Section_Text => "DawnNewDay.Section_Text".Translate();
+        public static string Section_OverlayWidget => "DawnNewDay.Section_OverlayWidget".Translate();
 
-        public static string Section_UpperText => "DawnNewDay.Section_UpperText".Translate();
-        public static string Section_BottomText => "DawnNewDay.Section_BottomText".Translate();
-        public static string Section_SubtitleText => "DawnNewDay.Section_SubtitleText".Translate();
+        public static string Label_Text => "DawnNewDay.Label_Text".Translate();
+        public static string Label_Separator => "DawnNewDay.Label_Separator".Translate();
+
+        public static string Message_ResetWarning => "DawnNewDay.Message_ResetWarning".Translate();
+        public static string Message_DeleteWarning => "DawnNewDay.Message_DeleteWarning".Translate();
+
+        public static string Label_BackupFormats => "DawnNewDay.Label_BackupFormats".Translate();
+        public static string Description_BackupFormat(string index) => "DawnNewDay.Description_BackupFormat".Translate(index);
 
         public static string Label_DefaultFont => "DawnNewDay.Label_DefaultFont".Translate();
-
         public static string Label_FontFamily => "DawnNewDay.Label_FontFamily".Translate();
         public static string Label_FontSize => "DawnNewDay.Label_FontSize".Translate();
         public static string Label_Bold => "DawnNewDay.Label_Bold".Translate();
@@ -79,13 +82,14 @@ namespace DawnNewDay
         public static string Label_OutlineThickness => "DawnNewDay.Label_OutlineThickness".Translate();
         public static string Label_OutlineColor => "DawnNewDay.Label_OutlineColor".Translate();
 
-        public static string Label_Search => "DawnNewDay.Label_Search".Translate();
+        public static string Label_WidthPercentage => "DawnNewDay.Label_WidthPercentage".Translate();
+        public static string Label_Thickness => "DawnNewDay.Label_Thickness".Translate();
+        public static string Label_Padding => "DawnNewDay.Label_Padding".Translate();
+        public static string Label_Color => "DawnNewDay.Label_Color".Translate();
 
         #endregion
 
         #region Label Format Section
-
-        public static string Section_LabelFormat => "DawnNewDay.Section_LabelFormat".Translate();
 
         public static string Label_TextFormat => "DawnNewDay.Label_TextFormat".Translate();
 
@@ -147,9 +151,7 @@ namespace DawnNewDay
 
             { "{ENDLINE}", "DawnNewDay.Hint_Format_ENDLINE".Translate() },
 
-            { "{UPPER_FONTSIZE}", "DawnNewDay.Hint_Format_UPPER_FONTSIZE".Translate() },
-            { "{BOTTOM_FONTSIZE}", "DawnNewDay.Hint_Format_BOTTOM_FONTSIZE".Translate() },
-            { "{SUBTITLE_FONTSIZE}", "DawnNewDay.Hint_Format_SUBTITLE_FONTSIZE".Translate() },
+            { "{FONTSIZE}", "DawnNewDay.Hint_Format_FONTSIZE".Translate() },
 
             { "{VALUE1 + VALUE2}", "DawnNewDay.Hint_Format_Addition".Translate() },
             { "{VALUE1 - VALUE2}", "DawnNewDay.Hint_Format_Subtraction".Translate() },
