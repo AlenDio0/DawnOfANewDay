@@ -3,6 +3,7 @@
 
 	<!-- Misc -->
 	<DawnNewDay.Label_Search>Search</DawnNewDay.Label_Search>
+	<DawnNewDay.Label_Legacy>Legacy</DawnNewDay.Label_Legacy>
 
 	<!-- Header -->
 	<DawnNewDay.Label_Enabled>Enabled</DawnNewDay.Label_Enabled>
@@ -42,11 +43,11 @@
 	<DawnNewDay.Label_Text>Text</DawnNewDay.Label_Text>
 	<DawnNewDay.Label_Separator>Separator</DawnNewDay.Label_Separator>
 
-	<DawnNewDay.Message_ResetWarning>This will reset every widget to default.\n\nAre you sure?</DawnNewDay.Message_ResetWarning>
-	<DawnNewDay.Message_DeleteWarning>You will delete</DawnNewDay.Message_DeleteWarning>
+	<DawnNewDay.Message_ResetWarning>Confirm to reset every widget to default.</DawnNewDay.Message_ResetWarning>
+	<DawnNewDay.Message_DeleteWarning>Confirm to delete</DawnNewDay.Message_DeleteWarning>
 	
 	<DawnNewDay.Label_BackupFormats>Backup Formats</DawnNewDay.Label_BackupFormats>
-	<DawnNewDay.Description_BackupFormat>Removed Text Format {} (Will be deleted after restart...)</DawnNewDay.Description_BackupFormat>
+	<DawnNewDay.Description_BackupFormat>Removed Text Format {0} (Will be deleted after restart...)</DawnNewDay.Description_BackupFormat>
 	
 	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>

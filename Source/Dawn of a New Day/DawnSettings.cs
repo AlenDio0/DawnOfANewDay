@@ -63,11 +63,11 @@ namespace DawnNewDay
 
         private readonly List<string> m_RemovedFormatTexts = [];
 
-        #region Obsolete
+        #region Legacy
 
-        public string Obsolete_UpperTextFormat = DawnDefault.UpperTextFormat;
-        public string Obsolete_BottomTextFormat = DawnDefault.BottomTextFormat;
-        public string Obsolete_SubtitleTextFormat = DawnDefault.SubtitleTextFormat;
+        public string Legacy_UpperTextFormat = null;
+        public string Legacy_BottomTextFormat = null;
+        public string Legacy_SubtitleTextFormat = null;
 
         #endregion
 
@@ -286,14 +286,20 @@ namespace DawnNewDay
             Rect backupRect = new(resetRect.x - cRowHeight, rowRect.y, cRowHeight, cRowHeight);
             if (Widgets.ButtonImage(backupRect.ContractedBy(4f), TexButton.Save))
             {
-                Dictionary<string, string> backupFormats = new()
+                Dictionary<string, string> backupFormats = [];
+
+                void TryAddBackup(string format, string label, bool legacy)
                 {
-                    { Obsolete_UpperTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_UpperTextFormat}" },
-                    { Obsolete_BottomTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_BottomTextFormat}" },
-                    { Obsolete_SubtitleTextFormat, $"(pre-v1.8.0) ~ {DawnTranslation.Label_SubtitleTextFormat}" }
-                };
+                    string legacyStr = legacy ? $"({DawnTranslation.Label_Legacy}) " : string.Empty;
+                    if (!format.NullOrEmpty())
+                        backupFormats.TryAdd(format, $"{legacyStr} {label}");
+                }
+                TryAddBackup(Legacy_UpperTextFormat, DawnTranslation.Label_UpperTextFormat, true);
+                TryAddBackup(Legacy_BottomTextFormat, DawnTranslation.Label_BottomTextFormat, true);
+                TryAddBackup(Legacy_SubtitleTextFormat, DawnTranslation.Label_SubtitleTextFormat, true);
+
                 for (int i = 0; i < m_RemovedFormatTexts.Count; i++)
-                    backupFormats.TryAdd(m_RemovedFormatTexts[i], DawnTranslation.Description_BackupFormat($"{i + 1:D2}"));
+                    TryAddBackup(m_RemovedFormatTexts[i], DawnTranslation.Description_BackupFormat($"{i + 1:D2}"), false);
 
                 Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_BackupFormats, backupFormats));
             }
@@ -485,9 +491,9 @@ namespace DawnNewDay
 
                 #region Overlay Widget Section
 
-                Scribe_Values.Look(ref Obsolete_UpperTextFormat, "UpperTextFormat1", DawnDefault.UpperTextFormat);
-                Scribe_Values.Look(ref Obsolete_BottomTextFormat, "BottomTextFormat1", DawnDefault.BottomTextFormat);
-                Scribe_Values.Look(ref Obsolete_SubtitleTextFormat, "SubtitleTextFormat", DawnDefault.SubtitleTextFormat);
+                Scribe_Values.Look(ref Legacy_UpperTextFormat, "UpperTextFormat1", null);
+                Scribe_Values.Look(ref Legacy_BottomTextFormat, "BottomTextFormat1", null);
+                Scribe_Values.Look(ref Legacy_SubtitleTextFormat, "SubtitleTextFormat", null);
 
                 Scribe_Collections.Look(ref OverlayWidgets, "OverlayWidgets", LookMode.Deep);
 

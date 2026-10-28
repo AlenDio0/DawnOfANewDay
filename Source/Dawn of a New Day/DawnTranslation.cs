@@ -12,6 +12,8 @@ namespace DawnNewDay
 
         public static string Label_Search => "DawnNewDay.Label_Search".Translate();
 
+        public static string Label_Legacy => "DawnNewDay.Label_Legacy".Translate();
+
         #endregion
 
         #region Header
