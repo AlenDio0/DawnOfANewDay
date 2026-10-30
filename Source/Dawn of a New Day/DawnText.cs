@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace DawnNewDay
 {
@@ -26,7 +27,7 @@ namespace DawnNewDay
         public float OutlineThickness = 1f;
         public Color OutlineColor = Color.black;
 
-        private static readonly Regex WholeColorTagRegex = new(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex m_WholeColorTagRegex = new(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public DawnText()
         {
@@ -56,15 +57,47 @@ namespace DawnNewDay
 
                 listing.Gap();
 
-#if RW_17
-                Color defaultColor = GUI.contentColor;
-                GUI.contentColor = Color.gray;
-                listing.Label("Fonts are temporarily not available for RimWorld 1.7!");
-                GUI.contentColor = defaultColor;
-#else
+                Vector2 iconSize = new(30f, 30f);
+                Rect hintsRect = listing.GetRect(iconSize.y);
+
+                Rect formatHintsRect = new(new(hintsRect.x, hintsRect.y), iconSize);
+                if (Widgets.ButtonImage(formatHintsRect.ContractedBy(4f), DawnData.CurlyBrackets))
+                {
+                    var hints = DawnTranslation.Hints_LabelFormat;
+                    if (ModernNotifications.Present)
+                        hints.AddRange(DawnTranslation.Hints_MN_LabelFormat);
+
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
+                }
+
+                Rect richHintsRect = new(new(formatHintsRect.xMax * 1.5f, hintsRect.y), iconSize);
+                if (Widgets.ButtonImage(richHintsRect.ContractedBy(4f), DawnData.AngleBrackets))
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
+
+                Rect presetsRect = new(richHintsRect.xMax * 2f, hintsRect.y, hintsRect.width / 3f, hintsRect.height);
+                if (Widgets.ButtonText(presetsRect, DawnTranslation.Label_LabelFormatPresets))
+                {
+                    var presets = DawnTranslation.Hints_LabelFormatPresets;
+                    if (ModernNotifications.Present)
+                        presets.AddRange(DawnTranslation.Hints_MN_LabelFormatPresets);
+
+                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, presets));
+                }
+
+                listing.Gap(24f);
+
                 if (listing.ButtonText($"{DawnTranslation.Label_FontFamily} ({FontFamilyName.Fallback(DawnTranslation.Label_DefaultFont)})"))
-                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(font => FontFamilyName = font != DawnTranslation.Label_DefaultFont ? font : "", FontFamilyName));
-#endif
+                {
+                    Find.WindowStack.Add(new Dialog_ChooseFontFamily(fontName =>
+                    {
+                        if (FontFamilyName == fontName)
+                            return;
+
+                        FontFamilyName = fontName != DawnTranslation.Label_DefaultFont ? fontName : "";
+                        UpdateFontFamily();
+                    }, FontFamilyName));
+                }
+
                 if (listing.ButtonText(Anchor.ToString()))
                 {
                     var anchorModes = SettingsHelper.CreateFloatMenu(Enum.GetValues(typeof(TextAnchor)).Cast<TextAnchor>(),
@@ -82,31 +115,6 @@ namespace DawnNewDay
                 listing.LabeledRadioColorPresets(ref OutlineColor, DawnTranslation.Label_OutlineColor);
 
                 ApplyToGUIStyle(scale);
-
-                listing.Gap();
-
-                if (listing.ButtonText(DawnTranslation.Label_LabelFormatPresets))
-                {
-                    var presets = DawnTranslation.Hints_LabelFormatPresets;
-                    if (ModernNotifications.Present)
-                        presets.AddRange(DawnTranslation.Hints_MN_LabelFormatPresets);
-
-                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatPresets, presets));
-                }
-
-                Rect hintsRect = listing.GetRect(30f);
-
-                if (Widgets.ButtonText(hintsRect.LeftHalf(), DawnTranslation.Label_LabelFormatHints))
-                {
-                    var hints = DawnTranslation.Hints_LabelFormat;
-                    if (ModernNotifications.Present)
-                        hints.AddRange(DawnTranslation.Hints_MN_LabelFormat);
-
-                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
-                }
-
-                if (Widgets.ButtonText(hintsRect.RightHalf(), DawnTranslation.Label_RichTextHints))
-                    Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
             }
             catch (Exception exception)
             {
@@ -134,7 +142,7 @@ namespace DawnNewDay
             Color defaultColor = GUI.contentColor;
             GUI.contentColor = OutlineColor;
 
-            string outlineText = WholeColorTagRegex.Replace(text, "");
+            string outlineText = m_WholeColorTagRegex.Replace(text, "");
 
             float step = scaledOutlineThickness / 5f;
             for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
@@ -162,7 +170,6 @@ namespace DawnNewDay
 
         public void UpdateFontFamily()
         {
-#if !RW_17
             if (TextGUIStyle == null)
                 return;
 
@@ -183,7 +190,14 @@ namespace DawnNewDay
             {
                 DawnData.Exception(exception);
             }
-#endif
+        }
+
+        public Vector2 CalcSize(string text)
+        {
+            if (text.NullOrEmpty())
+                return Vector2.zero;
+
+            return TextGUIStyle.CalcSize(new GUIContent(text));
         }
 
         public void ExposeData()

@@ -8,6 +8,7 @@ namespace DawnNewDay
     [StaticConstructorOnStartup]
     public static class DawnTranslation
     {
+        private static TaggedString DawnTranslate(string key) => $"DawnNewDay.{key}".Translate();
         private static TaggedString DawnTranslate(string key, params NamedArgument[] args) => $"DawnNewDay.{key}".Translate(args);
 
         #region Misc

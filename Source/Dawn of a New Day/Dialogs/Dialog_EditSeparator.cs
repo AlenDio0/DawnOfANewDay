@@ -12,6 +12,7 @@ namespace DawnNewDay.Dialogs
 
         public Dialog_EditSeparator(DawnSeparator separator)
         {
+            doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
             absorbInputAroundWindow = true;

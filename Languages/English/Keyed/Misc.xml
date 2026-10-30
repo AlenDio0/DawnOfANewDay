@@ -123,7 +123,7 @@
 	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
 	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
 	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
-	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {UPPER_FONTSIZE / BOTTOM_FONTSIZE}]</DawnNewDay.Hint_Format_Division>
+	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {FONTSIZE / 2}]</DawnNewDay.Hint_Format_Division>
 
 	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
@@ -196,8 +196,5 @@
 	<DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>Occasion - Time remaining in hours [eg. 16, 24]</DawnNewDay.Hint_MN_OCCASION_REMAINING_HOUR>
 
 	<DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>Occasion - Time remaining Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>
-
-	<DawnNewDay.Hint_MN_REMINDER_FONTSIZE>General Font Size of Reminder Text</DawnNewDay.Hint_MN_REMINDER_FONTSIZE>
-	<DawnNewDay.Hint_MN_OCCASION_FONTSIZE>General Font Size of Occasion Text</DawnNewDay.Hint_MN_OCCASION_FONTSIZE>
 
 </LanguageData>

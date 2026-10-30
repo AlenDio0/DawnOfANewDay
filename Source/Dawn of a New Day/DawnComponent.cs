@@ -27,7 +27,7 @@ namespace DawnNewDay
         private readonly List<Rect> m_CachedRects = [];
         private Rect m_CachedOverlayRect = Rect.zero;
 
-        private static readonly Regex FirstColorTagRegex = new(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex m_ColorTagRegex = new(@"<color=(?<color>[^<>]+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public DawnComponent(Game game)
             : base()
@@ -164,27 +164,32 @@ namespace DawnNewDay
 
             try
             {
-                var settings = DawnMod.Settings;
-
                 UpdateCachedLabels();
                 UpdateCachedRects();
 
-                if (settings.SoundEnabled && settings.Sound != null)
-                {
-                    SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo());
-                    soundInfo.volumeFactor = settings.SoundVolume;
-                    soundInfo.pitchFactor = settings.SoundPitch;
-                    soundInfo.forcedPlayOnCamera = true;
-                    settings.Sound.PlayOneShot(soundInfo);
-                }
+                StartSound();
 
-                m_DisplayTimer = settings.DisplayDurationSeconds;
+                m_DisplayTimer = DawnMod.Settings.DisplayDurationSeconds;
                 m_DisplayActive = true;
             }
             catch (Exception exception)
             {
                 DawnData.Exception(exception);
             }
+        }
+
+        private static void StartSound()
+        {
+            var settings = DawnMod.Settings;
+
+            if (settings.Sound == null)
+                return;
+
+            SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo());
+            soundInfo.volumeFactor = settings.SoundVolume;
+            soundInfo.pitchFactor = settings.SoundPitch;
+            soundInfo.forcedPlayOnCamera = true;
+            settings.Sound.PlayOneShot(soundInfo);
         }
 
         private void UpdateCachedLabels()
@@ -244,7 +249,7 @@ namespace DawnNewDay
                     case DawnText text:
                         string cachedLabel = m_CachedLabels.TryGetValue(text, "");
 
-                        Rect textRect = new(topLeft, CalcTextSize(text, cachedLabel));
+                        Rect textRect = new(topLeft, text.CalcSize(cachedLabel));
                         tempCachedRects.Add(new(textRect, true));
                         break;
                     case DawnSeparator separator:
@@ -280,10 +285,6 @@ namespace DawnNewDay
                 m_CachedRects.Add(finalRect);
             }
 
-            //RetrieveTextRect(Text.Upper).size = CalcTextSize(settings.UpperTextStyle, m_CachedUpperText);
-            //RetrieveTextRect(Text.Bottom).size = CalcTextSize(settings.BottomTextStyle, m_CachedBottomText);
-            //RetrieveTextRect(Text.Subtitle).size = CalcTextSize(settings.SubtitleTextStyle, m_CachedSubtitleText);
-
             //if (ModernNotifications.Present)
             //{
             //    RetrieveTextRect(Text.MN_Reminder).size = CalcTextSize(settings.MN_Reminder.TextStyle, m_MN_CachedReminderText);
@@ -307,14 +308,6 @@ namespace DawnNewDay
             //}
         }
 
-        private static Vector2 CalcTextSize(DawnText style, string text)
-        {
-            if (text.NullOrEmpty())
-                return Vector2.zero;
-
-            return style.TextGUIStyle.CalcSize(new GUIContent(text));
-        }
-
         private string FinalizeLabel(string label) => WithAlphaToRichText(label);
 
         private string WithAlphaToRichText(string text)
@@ -322,7 +315,7 @@ namespace DawnNewDay
             if (text.NullOrEmpty())
                 return text;
 
-            return FirstColorTagRegex.Replace(text, match =>
+            return m_ColorTagRegex.Replace(text, match =>
             {
                 string colorString = match.Groups["color"].Value.Trim();
 

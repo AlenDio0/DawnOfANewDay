@@ -11,10 +11,11 @@ namespace DawnNewDay.Dialogs
         public float Scale { get; }
         public FormatContext Context { get; }
 
-        public override Vector2 InitialSize => new(800f, 600f);
+        public override Vector2 InitialSize => new(900f, 600f);
 
         public Dialog_EditText(DawnText textStyle, int textIndex, float scale, FormatContext context)
         {
+            doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
             absorbInputAroundWindow = true;

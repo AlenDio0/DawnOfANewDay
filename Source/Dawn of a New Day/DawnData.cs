@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using Verse;
 
 namespace DawnNewDay
@@ -17,6 +18,13 @@ namespace DawnNewDay
         public static void Error(string message) => Log.Error(FormatLog(message));
         public static void Exception(Exception exception, [CallerMemberName] string functionName = "") =>
             Error($"Exception catched into {functionName}() - {exception}");
+
+        #endregion
+
+        #region Texture
+
+        public static Texture2D CurlyBrackets = ContentFinder<Texture2D>.Get("Curly Brackets");
+        public static Texture2D AngleBrackets = ContentFinder<Texture2D>.Get("Angle Brackets");
 
         #endregion
 

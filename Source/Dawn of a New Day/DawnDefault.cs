@@ -75,14 +75,14 @@ namespace DawnNewDay
         };
 
         public readonly static string MN_ReminderTextFormat =
-            "<color={MN_REMINDER_SEVERITY_COLOR}><size={MN_REMINDER_FONTSIZE / 1.25}>{MN_REMINDER_TITLE}</size></color>{ENDLINE}" +
+            "<color={MN_REMINDER_SEVERITY_COLOR}><size={FONTSIZE / 1.25}>{MN_REMINDER_TITLE}</size></color>{ENDLINE}" +
             "<color={MN_REMINDER_REMAINING_COLOR}>-{MN_REMINDER_REMAINING} Remain-</color>";
         public static DawnText MN_ReminderTextStyle => new(MN_OccasionTextFormat, 18, true, false, 0.25f);
 
         public static DawnTextConfig MN_Reminder => new(true, 15, MN_ReminderTextFormat, MN_ReminderTextStyle);
 
         public readonly static string MN_OccasionTextFormat =
-            "<size={MN_OCCASION_FONTSIZE / 1.25}>[{MN_OCCASION_CATEGORY}] {MN_OCCASION_LABEL}</size>{ENDLINE}" +
+            "<size={FONTSIZE / 1.25}>[{MN_OCCASION_CATEGORY}] {MN_OCCASION_LABEL}</size>{ENDLINE}" +
             "<color={MN_OCCASION_REMAINING_COLOR}>-{MN_OCCASION_REMAINING} Remain-</color>";
         public static DawnText MN_OccasionTextStyle => new(MN_OccasionTextFormat, 16, true, false, 0.25f);
 

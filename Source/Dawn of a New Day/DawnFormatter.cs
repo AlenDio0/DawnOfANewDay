@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
-
 using MNUtility = DawnNewDay.Compatibility.ModernNotificationUtility;
 
 namespace DawnNewDay
@@ -22,21 +21,32 @@ namespace DawnNewDay
         Year,
     }
 
+    [StaticConstructorOnStartup]
+    public static class GeneratedDefault
+    {
+        private static string GenerateName() => NameGenerator.GenerateName(RulePackDefOf.NamerWorld) ?? "Undefined";
+
+        public static readonly string WorldName = GenerateName();
+        public static readonly string SettlementName = string.Concat(GenerateName().Where(char.IsLetter)).Trim();
+    }
+
     public struct FormatContext
     {
+        public FormatContext() { }
+
         public int AbsTicks;
 
         public bool StartAtZero;
 
-        public World World;
-        public Map Map;
+        public World CurrentWorld;
+        public Map CurrentMap;
         public List<Map> AllMaps;
 
         public int TextIndex;
         public float TextScale;
 
-        public readonly Vector2 Location => World?.grid?.LongLatOf(Map.Tile) ?? Vector2.zero;
-
+        public readonly Vector2 Location => CurrentMap != null && CurrentWorld?.grid != null ?
+            CurrentWorld.grid.LongLatOf(CurrentMap.Tile) : Vector2.zero;
         public static string LerpHex(Color fromColor, Color toColor, float value, float min, float max)
         {
             float progress = Mathf.InverseLerp(min, max, value);
@@ -56,7 +66,7 @@ namespace DawnNewDay
                 DayRelative.Season => GenDate.DayOfSeason(AbsTicks, Location.x) + startsAtZero,
                 DayRelative.Year => GenDate.DayOfYear(AbsTicks, Location.x) + startsAtZero,
 
-                _ => -1,
+                _ => default,
             };
         }
         public readonly int GenYear() => GenDate.Year(AbsTicks, Location.x);
@@ -68,55 +78,59 @@ namespace DawnNewDay
 
         #region Tile Info
 
-        public readonly float Temperature => Map?.mapTemperature?.OutdoorTemp ?? 0f;
+        public readonly string WeatherLabel => (CurrentMap?.weatherManager?.curWeather ?? WeatherDefOf.Clear).LabelCap;
+
+        public readonly float Temperature => CurrentMap?.mapTemperature?.OutdoorTemp ?? default;
         public readonly string TemperatureHex => LerpHex(new(0.2f, 0.7f, 1f), new(1f, 0.3f, 0f), Temperature, -10f, 50f);
 
-        public readonly Tile Tile => World?.grid[Map.Tile];
+        public readonly string WorldName => CurrentWorld?.info?.name ?? GeneratedDefault.WorldName;
+        public readonly string BiomeLabel => (CurrentMap?.Biome ?? BiomeDefOf.TemperateForest).LabelCap;
 
-        public readonly string Terrain => Tile?.hilliness.GetLabel() ?? "";
-        public readonly float Elevation => Tile?.elevation ?? 0f;
-        public readonly float Pollution => Tile?.pollution ?? 0f;
+        public readonly Tile CurrentTile => CurrentWorld?.grid[CurrentMap.Tile];
 
-        public readonly List<GameCondition> ActiveConditions => Map?.GameConditionManager?.ActiveConditions ?? [];
-        public readonly GameCondition ActiveCondition => ActiveConditions.FirstOrFallback(null);
+        public readonly string Terrain => CurrentTile?.hilliness.GetLabel() ?? Hilliness.Flat.GetLabel();
+        public readonly float Elevation => CurrentTile?.elevation ?? default;
+        public readonly float Pollution => CurrentTile?.pollution ?? default;
+
+        public readonly IEnumerable<string> ActiveConditionLabels => CurrentMap?.GameConditionManager?.ActiveConditions
+            .Select(condition => condition.LabelCap) ?? [GameConditionDefOf.Aurora.LabelCap];
+        public readonly string ActiveConditionLabel => ActiveConditionLabels.FirstOrFallback("");
 
         public readonly string FactionName
         {
             get
             {
-                if (Map?.ParentFaction != null)
-                    return Map.ParentFaction.Name;
+                if (CurrentMap?.ParentFaction != null)
+                    return CurrentMap.ParentFaction.Name;
 
                 Faction firstFaction = AllMaps?.FirstOrFallback(map => map.ParentFaction != null)?.ParentFaction;
                 if (firstFaction != null)
                     return firstFaction.Name;
 
-                return "Faction";
+                return FactionDefOf.PlayerColony.LabelCap;
             }
         }
         public readonly string SettlementName
         {
             get
             {
-                if (Map?.Parent is Settlement settlement)
+                if (CurrentMap?.Parent is Settlement settlement)
                     return settlement.Name;
 
-#if RW_15
-#else
-                if (Map?.Parent is Camp camp)
+#if !RW_15
+                if (CurrentMap?.Parent is Camp camp)
                     return camp.LabelCap;
 #endif
 
                 if (AllMaps?.FirstOrFallback(map => map.Parent is Settlement settlement && !settlement.Name.NullOrEmpty())?.Parent is Settlement firstSettlement)
                     return firstSettlement.Name;
 
-#if RW_15
-#else
+#if !RW_15
                 if (AllMaps?.FirstOrFallback(map => map.Parent is Camp camp && !camp.LabelCap.NullOrEmpty())?.Parent is Camp firstCamp)
                     return firstCamp.LabelCap;
 #endif
 
-                return "Settlement";
+                return GeneratedDefault.SettlementName;
             }
         }
 
@@ -125,16 +139,7 @@ namespace DawnNewDay
         #region Settings
 
         public static DawnSettings Settings => DawnMod.Settings;
-        public readonly int FontSize
-        {
-            get
-            {
-                if (Settings.OverlayWidgets[TextIndex] is DawnText text)
-                    return Mathf.CeilToInt(text.FontSize * TextScale);
-
-                return 0;
-            }
-        }
+        public readonly int FontSize => Settings.OverlayWidgets[TextIndex] is DawnText text ? Mathf.CeilToInt(text.FontSize * TextScale) : default;
 
         #endregion
 
@@ -147,7 +152,7 @@ namespace DawnNewDay
             get
             {
                 if (!ModernNotifications.Present)
-                    return new();
+                    return default;
 
                 var reminders = MNUtility.GetReminders();
 
@@ -186,7 +191,7 @@ namespace DawnNewDay
                     if (!occasion.IsValid)
                         continue;
 
-                    bool isCategoryExcluded = Settings.MN_ExcludeOccasionCategory?.Any(excludeCategory => excludeCategory.Value && occasion.Category == excludeCategory.Key) ?? false;
+                    bool isCategoryExcluded = Settings.MN_ExcludeOccasionCategory.TryGetValue(occasion.Category, false);
                     if (isCategoryExcluded)
                         continue;
 
@@ -295,8 +300,8 @@ namespace DawnNewDay
             {
                 AbsTicks = Game?.tickManager?.TicksAbs ?? 0,
 
-                World = Game?.World,
-                Map = Game?.CurrentMap,
+                CurrentWorld = Game?.World,
+                CurrentMap = Game?.CurrentMap,
                 AllMaps = Game?.Maps,
 
                 StartAtZero = startsAtZero,
@@ -308,7 +313,7 @@ namespace DawnNewDay
 
     public static class DawnFormatterUtility
     {
-        private static readonly Regex TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex m_TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
             { "DAY",  context => context.GenDay(DayRelative.Settle).ToString() },
@@ -327,13 +332,13 @@ namespace DawnNewDay
             { "HOUR", context => context.GenHour().ToString() },
             { "HOUR_D2", context => context.GenHour().ToString("D2") },
 
-            { "WEATHER", context => context.Map.weatherManager.curWeather.LabelCap },
+            { "WEATHER", context => context.WeatherLabel },
 
             { "TEMPERATURE", context => context.Temperature.ToStringTemperature() },
             { "TEMPERATURE_COLOR", context => context.TemperatureHex },
 
-            { "WORLD", context => context.World.info.name },
-            { "BIOME", context => context.Map.Biome.LabelCap },
+            { "WORLD", context => context.WorldName },
+            { "BIOME", context => context.BiomeLabel },
             { "TERRAIN", context => context.Terrain },
 
             { "ELEVATION", context => $"{Mathf.CeilToInt(context.Elevation)}m" },
@@ -341,8 +346,8 @@ namespace DawnNewDay
 
             { "POLLUTION", context => context.Pollution.ToStringPercent() },
 
-            { "CONDITION", context => context.ActiveCondition?.LabelCap },
-            { "CONDITIONS", context => string.Join(", ", context.ActiveConditions.Select(condition => condition.LabelCap)) },
+            { "CONDITION", context => context.ActiveConditionLabel },
+            { "CONDITIONS", context => string.Join(", ", context.ActiveConditionLabels) },
 
             { "FACTION", context => context.FactionName },
             { "SETTLEMENT", context => context.SettlementName },
@@ -386,7 +391,7 @@ namespace DawnNewDay
 
         #endregion
 
-        private static readonly Regex ExtraRichTextTagRegex = new(@"<(?<tag>\w+)=?(?<content>.*?)?>(?<text>.*?)<\/\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex m_ExtraRichTextTagRegex = new(@"<(?<tag>\w+)=?(?<content>.*?)?>(?<text>.*?)<\/\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Dictionary<string, Func<string, string, string>> ExtraRichTextTags = new(StringComparer.OrdinalIgnoreCase)
         {
             { "title", (text, _) => Find.ActiveLanguageWorker.ToTitleCase(text.ToLower())},
@@ -404,7 +409,7 @@ namespace DawnNewDay
             public string Suffix { get; }
             public bool IsValid { get; }
 
-            private static readonly Regex OperandValueRegex = new(@"[-+]?\d+(?:[.,]\d+)?", RegexOptions.Compiled);
+            private static readonly Regex m_OperandValueRegex = new(@"[-+]?\d+(?:[.,]\d+)?", RegexOptions.Compiled);
 
             private ParsedOperand(bool isValid)
             {
@@ -431,7 +436,7 @@ namespace DawnNewDay
                         format = value;
                 }
 
-                Match match = OperandValueRegex.Match(format);
+                Match match = m_OperandValueRegex.Match(format);
                 if (match.Success)
                 {
                     string number = match.Value.Trim();
@@ -451,9 +456,31 @@ namespace DawnNewDay
             public string Format(float newValue) => $"{Prefix}{Mathf.RoundToInt(newValue)}{Suffix}";
         }
 
+        public static string FormatText(this FormatContext context, string text, int index, float scale)
+        {
+            if (text.NullOrEmpty())
+                return text;
+
+            context.TextIndex = index;
+            context.TextScale = scale;
+
+            string format = "";
+            try
+            {
+                format = TokenFormatText(context, text);
+                format = ExtraRichTextTagText(format);
+                return format;
+            }
+            catch (Exception exception)
+            {
+                DawnData.Exception(exception);
+                return format;
+            }
+        }
+
         private static string TokenFormatText(FormatContext context, string text)
         {
-            return TokenFormatRegex.Replace(text, match =>
+            return m_TokenFormatRegex.Replace(text, match =>
             {
                 string token = match.Groups["token"].Value.Trim();
 
@@ -492,21 +519,35 @@ namespace DawnNewDay
             });
         }
 
-        private static bool TryReplaceToken(FormatContext context, string token, out string value)
+        private static bool TryReplaceToken(FormatContext context, string token, out string format)
         {
-            if (FormatTokens.TryGetValue(token, out var replacer))
-            {
-                value = replacer?.Invoke(context);
+            if (TryReplaceTokenFrom(context, token, FormatTokens, out format))
                 return true;
+
+            if (ModernNotifications.Present && TryReplaceTokenFrom(context, token, MN_FormatTokens, out format))
+                return true;
+
+            return false;
+        }
+
+        private static bool TryReplaceTokenFrom(FormatContext context, string token, Dictionary<string, Func<FormatContext, string>> tokens, out string format)
+        {
+            format = "";
+
+            if (tokens.TryGetValue(token, out var replacer))
+            {
+                try
+                {
+                    format = replacer.Invoke(context);
+                    return true;
+                }
+                catch (NullReferenceException)
+                {
+                    // TODO: Silent error.
+                    return true;
+                }
             }
 
-            if (ModernNotifications.Present && MN_FormatTokens.TryGetValue(token, out var mnReplacer))
-            {
-                value = mnReplacer?.Invoke(context);
-                return true;
-            }
-
-            value = "";
             return false;
         }
 
@@ -522,7 +563,7 @@ namespace DawnNewDay
 
         private static string ExtraRichTextTagText(string text)
         {
-            return ExtraRichTextTagRegex.Replace(text, match =>
+            return m_ExtraRichTextTagRegex.Replace(text, match =>
             {
                 string tag = match.Groups["tag"].Value;
                 string content = match.Groups["content"].Value;
@@ -533,28 +574,6 @@ namespace DawnNewDay
 
                 return match.Value;
             });
-        }
-
-        public static string FormatText(this FormatContext context, string text, int index, float scale)
-        {
-            if (text.NullOrEmpty())
-                return text;
-
-            context.TextIndex = index;
-            context.TextScale = scale;
-
-            string format = "";
-            try
-            {
-                format = TokenFormatText(context, text);
-                format = ExtraRichTextTagText(format);
-                return format;
-            }
-            catch (Exception exception)
-            {
-                DawnData.Exception(exception);
-                return format;
-            }
         }
     }
 }

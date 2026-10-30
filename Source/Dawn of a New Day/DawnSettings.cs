@@ -63,6 +63,8 @@ namespace DawnNewDay
 
         private readonly List<string> m_RemovedFormatTexts = [];
 
+        private FormatContext m_FormatContext;
+
         #region Legacy
 
         public string Legacy_UpperTextFormat = null;
@@ -132,6 +134,16 @@ namespace DawnNewDay
 
         private Vector2 m_ScrollPosition = Vector2.zero;
         private float m_CachedScrollViewHeight = 0f;
+
+        public void OnceOpen()
+        {
+            UpdateText();
+        }
+
+        public void EveryOpen()
+        {
+            m_FormatContext = new DawnFormatter(Current.Game).CreateFormatContext(StartsAtZero);
+        }
 
         public void DoWindowContents(Rect canva)
         {
@@ -339,17 +351,15 @@ namespace DawnNewDay
             switch (widget)
             {
                 case DawnText text:
-                    FormatContext context = new DawnFormatter(Current.Game).CreateFormatContext(StartsAtZero);
-
                     float textScale = text.FontSize <= rowHeight ? 1f : rowHeight / text.FontSize;
                     text.ApplyToGUIStyle(textScale);
 
-                    string label = context.FormatText(text.Format, index, textScale);
+                    string label = m_FormatContext.FormatText(text.Format, index, textScale);
                     text.Draw(previewRect, label, textScale);
 
                     text.ApplyToGUIStyle(Scale);
 
-                    ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditText(text, index, Scale, context)));
+                    ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditText(text, index, Scale, m_FormatContext)));
                     ShowDeleteButton(delegate
                     {
                         string message = $"{DawnTranslation.Message_DeleteWarning}: {DawnTranslation.Label_Text}\n\n(N° {index + 1}) ~ {label.StripTags()}";
