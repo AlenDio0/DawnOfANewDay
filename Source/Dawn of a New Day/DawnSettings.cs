@@ -58,12 +58,17 @@ namespace DawnNewDay
 
         private bool m_TextSection = false;
 
-        private int m_TextReorderableGroupID = -1;
+        private int m_OverlayWidgetsReorderableID = -1;
         public List<IDawnWidget> OverlayWidgets = DawnDefault.OverlayWidgets;
+        public IEnumerable<T> TWidgets<T>() => OverlayWidgets.Where(widget => widget is T).Cast<T>();
 
-        private readonly List<string> m_RemovedFormatTexts = [];
+        private const float m_OverlayWidgetsRowHeight = DawnData.MediumRowHeight;
 
         private FormatContext m_FormatContext;
+        private readonly Dictionary<DawnText, (string Label, float Scale)> m_CachedLabels = [];
+
+        private readonly Dictionary<string, string> m_BackupFormatTexts = [];
+        private readonly List<string> m_RemovedFormatTexts = [];
 
         #region Legacy
 
@@ -112,12 +117,6 @@ namespace DawnNewDay
 
         public Dictionary<string, bool> MN_ExcludeOccasionCategory = DawnDefault.MN_ExcludeOccasionCategory;
 
-        private bool m_MN_ReminderTextSection = false;
-        public DawnTextConfig MN_Reminder = DawnDefault.MN_Reminder;
-
-        private bool m_MN_OccasionTextSection = false;
-        public DawnTextConfig MN_Occasion = DawnDefault.MN_Occasion;
-
         #endregion
 
         #endregion
@@ -138,11 +137,12 @@ namespace DawnNewDay
         public void OnceOpen()
         {
             UpdateText();
+            UpdateBackups();
         }
 
         public void EveryOpen()
         {
-            m_FormatContext = new DawnFormatter(Current.Game).CreateFormatContext(StartsAtZero);
+            UpdateTextPreviewLabels();
         }
 
         public void DoWindowContents(Rect canva)
@@ -248,13 +248,11 @@ namespace DawnNewDay
 
         private void ShowOverlayWidgetSection(Listing_Standard listing)
         {
-            const float cRowHeight = 30f;
-
-            Rect listRect = listing.GetRect(cRowHeight * OverlayWidgets.Count);
+            Rect listRect = listing.GetRect(m_OverlayWidgetsRowHeight * OverlayWidgets.Count);
 
             if (Event.current.type == EventType.Repaint)
             {
-                m_TextReorderableGroupID = ReorderableWidget.NewGroup((fromIndex, toIndex) =>
+                m_OverlayWidgetsReorderableID = ReorderableWidget.NewGroup((fromIndex, toIndex) =>
                     {
                         var item = OverlayWidgets[fromIndex];
                         OverlayWidgets.Insert(toIndex, item);
@@ -263,23 +261,28 @@ namespace DawnNewDay
             }
 
             for (int i = 0; i < OverlayWidgets.Count; i++)
-                ShowOverlayWidgetEntry(listRect, OverlayWidgets[i], i, cRowHeight);
+                ShowOverlayWidgetEntry(listRect, OverlayWidgets[i], i, m_OverlayWidgetsRowHeight);
 
             listing.Gap();
 
-            Rect rowRect = listing.GetRect(cRowHeight);
+            Rect rowRect = listing.GetRect(DawnData.TinyRowHeight);
+            float iconSize = rowRect.height;
 
-            Rect addRect = new(rowRect.position, new(cRowHeight, cRowHeight));
+            Rect addRect = new(rowRect.position, new(iconSize, iconSize));
             if (Widgets.ButtonImage(addRect.ExpandedBy(4f), TexButton.Add))
             {
                 var addMenu = new FloatMenu([
-                    new(DawnTranslation.Label_Text, () => OverlayWidgets.Add(new DawnText())),
+                    new(DawnTranslation.Label_Text, delegate
+                    {
+                        OverlayWidgets.Add(new DawnText());
+                        UpdateTextPreviewLabels();
+                    }),
                     new(DawnTranslation.Label_Separator, () => OverlayWidgets.Add(new DawnSeparator()))
                     ]);
                 Find.WindowStack.Add(addMenu);
             }
 
-            Rect resetRect = new(rowRect.xMax - cRowHeight, rowRect.y, cRowHeight, cRowHeight);
+            Rect resetRect = new(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
             if (Widgets.ButtonImage(resetRect.ContractedBy(4f), TexButton.HotReloadDefs))
             {
                 Find.WindowStack.Add(new Dialog_Confirm(DawnTranslation.Message_ResetWarning, delegate
@@ -292,28 +295,31 @@ namespace DawnNewDay
                             .Where(text => !SelectTextFormat(DawnDefault.OverlayWidgets).Contains(text)));
 
                         OverlayWidgets = DawnDefault.OverlayWidgets;
+
+                        UpdateTextPreviewLabels();
+                        UpdateBackups();
                     }));
             }
 
-            Rect backupRect = new(resetRect.x - cRowHeight, rowRect.y, cRowHeight, cRowHeight);
-            if (Widgets.ButtonImage(backupRect.ContractedBy(4f), TexButton.Save))
+            Rect backupRect = new(resetRect.x - iconSize, rowRect.y, iconSize, iconSize);
+            if (Widgets.ButtonImage(backupRect.ContractedBy(4f), TexButton.Save, true, DawnTranslation.Label_BackupFormats))
             {
-                Dictionary<string, string> backupFormats = [];
+                UpdateBackups();
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_BackupFormats, m_BackupFormatTexts));
+            }
 
-                void TryAddBackup(string format, string label, bool legacy)
-                {
-                    string legacyStr = legacy ? $"({DawnTranslation.Label_Legacy}) " : string.Empty;
-                    if (!format.NullOrEmpty())
-                        backupFormats.TryAdd(format, $"{legacyStr} {label}");
-                }
-                TryAddBackup(Legacy_UpperTextFormat, DawnTranslation.Label_UpperTextFormat, true);
-                TryAddBackup(Legacy_BottomTextFormat, DawnTranslation.Label_BottomTextFormat, true);
-                TryAddBackup(Legacy_SubtitleTextFormat, DawnTranslation.Label_SubtitleTextFormat, true);
+            if (!m_BackupFormatTexts.NullOrEmpty())
+            {
+                Color defaultColor = GUI.color;
+                FontStyle defaultStyle = Text.CurFontStyle.fontStyle;
 
-                for (int i = 0; i < m_RemovedFormatTexts.Count; i++)
-                    TryAddBackup(m_RemovedFormatTexts[i], DawnTranslation.Description_BackupFormat($"{i + 1:D2}"), false);
+                GUI.contentColor = Color.gray;
+                Text.CurFontStyle.fontStyle = FontStyle.Italic;
 
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_BackupFormats, backupFormats));
+                listing.Label(DawnTranslation.Label_BackupWarning(m_BackupFormatTexts.Count));
+
+                Text.CurFontStyle.fontStyle = defaultStyle;
+                GUI.contentColor = defaultColor;
             }
         }
 
@@ -329,46 +335,58 @@ namespace DawnNewDay
 
             Rect dragRect = new(rowRect.position, new(rowHeight, rowHeight));
             if (Event.current.type != EventType.MouseDown || Mouse.IsOver(dragRect))
-                ReorderableWidget.Reorderable(m_TextReorderableGroupID, rowRect);
-            Widgets.ButtonImage(dragRect, TexButton.DragHash);
+                ReorderableWidget.Reorderable(m_OverlayWidgetsReorderableID, rowRect);
+            Widgets.ButtonImage(dragRect.ContractedBy(4f), TexButton.DragHash);
+
+            Rect indexRect = new(dragRect.xMax, rowRect.y, rowHeight, rowHeight);
+            {
+                TextAnchor defaultAnchor = Text.Anchor;
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Widgets.Label(indexRect, index.ToString());
+                Text.Anchor = defaultAnchor;
+            }
 
             Rect deleteRect = new(rowRect.xMax - rowHeight, rowRect.y, rowHeight, rowHeight);
             void ShowDeleteButton(Action onPressed)
             {
-                if (Widgets.ButtonImage(deleteRect, TexButton.Delete))
+                if (Widgets.ButtonImage(deleteRect.ContractedBy(4f), TexButton.Delete))
                     onPressed();
             }
 
             Rect editRect = new(deleteRect.x - rowHeight - 10f, rowRect.y, rowHeight, rowHeight);
             void ShowEditButton(Action onPressed)
             {
-                if (Widgets.ButtonImage(editRect, TexButton.Rename))
+                if (Widgets.ButtonImage(editRect.ContractedBy(4f), TexButton.Rename))
                     onPressed();
             }
 
-            Rect previewRect = new(dragRect.xMax, rowRect.y, editRect.x - dragRect.xMax, rowHeight);
+            Rect previewRect = new(indexRect.xMax, rowRect.y, editRect.x - indexRect.xMax, rowHeight);
+
+            string FormatDeleteMessage(string label, int index) => $"{DawnTranslation.Message_DeleteWarning}: {label}\n\n(N° {index:D2})";
 
             switch (widget)
             {
                 case DawnText text:
-                    float textScale = text.FontSize <= rowHeight ? 1f : rowHeight / text.FontSize;
-                    text.ApplyToGUIStyle(textScale);
+                    (string label, float scale) = m_CachedLabels.TryGetValue(text, new("", 1f));
 
-                    string label = m_FormatContext.FormatText(text.Format, index, textScale);
-                    text.Draw(previewRect, label, textScale);
+                    text.ApplyToGUIStyle(scale);
+
+                    text.Draw(previewRect, label, scale);
 
                     text.ApplyToGUIStyle(Scale);
 
                     ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditText(text, index, Scale, m_FormatContext)));
                     ShowDeleteButton(delegate
                     {
-                        string message = $"{DawnTranslation.Message_DeleteWarning}: {DawnTranslation.Label_Text}\n\n(N° {index + 1}) ~ {label.StripTags()}";
+                        string message = $"{FormatDeleteMessage(DawnTranslation.Label_Text, index)} ~ {label.StripTags()}";
                         Find.WindowStack.Add(new Dialog_Confirm(message, delegate
                             {
                                 if (!text.Format.NullOrEmpty() && !DawnDefault.OverlayWidgets.Contains(text))
                                     m_RemovedFormatTexts.Add(text.Format);
 
                                 OverlayWidgets.Remove(text);
+                                UpdateTextPreviewLabels();
+                                UpdateBackups();
                             }));
                     });
                     break;
@@ -379,7 +397,7 @@ namespace DawnNewDay
                     ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditSeparator(separator)));
                     ShowDeleteButton(delegate
                     {
-                        string message = $"{DawnTranslation.Message_DeleteWarning}: {DawnTranslation.Label_Separator}\n\n(N° {index + 1})";
+                        string message = FormatDeleteMessage(DawnTranslation.Label_Separator, index);
                         Find.WindowStack.Add(new Dialog_Confirm(message, () => OverlayWidgets.Remove(separator)));
                     });
                     break;
@@ -428,45 +446,87 @@ namespace DawnNewDay
                 return;
             }
 
-            if (listing.SectionButton(DawnTranslation.Label_MN_ExcludeOccasions, ref m_MN_ExcludeOccasionSection, false))
-                listing.Indented(() => listing.LabeledCheckboxTable(ModernNotificationUtility.OccasionCategories, ref MN_ExcludeOccasionCategory));
+            Rect addRect = listing.GetRect(DawnData.TinyRowHeight);
+
+            void AddTextWidget(string format)
+            {
+                OverlayWidgets.Add(new DawnText(format, 20, false, false));
+                UpdateTextPreviewLabels();
+                Messages.Message(DawnTranslation.Message_AddedText, MessageTypeDefOf.PositiveEvent, false);
+            }
+
+            Rect reminderRect = addRect.LeftPart(0.475f);
+            if (Widgets.ButtonText(reminderRect, DawnTranslation.Label_MN_AddReminderText))
+                AddTextWidget(DawnDefault.MN_ReminderTextFormat);
+
+            Rect occasionRect = addRect.RightPart(0.475f);
+            if (Widgets.ButtonText(occasionRect, DawnTranslation.Label_MN_AddOccasionText))
+                AddTextWidget(DawnDefault.MN_OccasionTextFormat);
 
             listing.Gap();
 
-            if (listing.SectionButton(DawnTranslation.Section_MN_Reminder, ref m_MN_ReminderTextSection))
-                listing.Indented(() => MN_Reminder.DoContents(listing, Scale));
+            Rect hintsRect = listing.GetRect(DawnData.TinyRowHeight);
+            float iconSize = hintsRect.height;
 
-            if (listing.SectionButton(DawnTranslation.Section_MN_Occasion, ref m_MN_OccasionTextSection))
-                listing.Indented(() => MN_Occasion.DoContents(listing, Scale));
-
-            listing.Gap();
-
-            Rect rowRect = listing.GetRect(30f);
-
-            if (Widgets.ButtonText(rowRect.LeftHalf(), DawnTranslation.Label_MN_LabelFormatPresets))
-                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_MN_LabelFormatPresets, DawnTranslation.Hints_MN_LabelFormatPresets));
-
-            if (Widgets.ButtonText(rowRect.RightHalf(), DawnTranslation.Label_MN_LabelFormatHints))
+            Rect formatHintsRect = new(hintsRect.position, new(iconSize, iconSize));
+            if (Widgets.ButtonImage(formatHintsRect.ContractedBy(2f), DawnData.CurlyBracketsMN))
                 Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, DawnTranslation.Hints_MN_LabelFormat));
 
+            Rect presetsRect = new(formatHintsRect.xMax + iconSize / 2f, hintsRect.y, iconSize, iconSize);
+            if (Widgets.ButtonImage(presetsRect.ContractedBy(2f), DawnData.SquareBracketsMN))
+                Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_MN_LabelFormatPresets, DawnTranslation.Hints_MN_LabelFormatPresets));
+
+            listing.Gap();
+
+            if (listing.SectionButton(DawnTranslation.Label_MN_ExcludeOccasions, ref m_MN_ExcludeOccasionSection, false))
+                listing.Indented(() => listing.LabeledCheckboxTable(ModernNotificationUtility.OccasionCategories, ref MN_ExcludeOccasionCategory));
+        }
+
+        public void UpdateTextPreviewLabels()
+        {
+            m_FormatContext = new DawnFormatter(Current.Game).CreateFormatContext(StartsAtZero);
+            m_CachedLabels.Clear();
+            for (int i = 0; i < OverlayWidgets.Count; i++)
+            {
+                if (OverlayWidgets.ElementAt(i) is not DawnText text)
+                    continue;
+
+                string label = m_FormatContext.FormatText(text.Format, i, 1f);
+
+                float textHeight = m_OverlayWidgetsRowHeight * (label.Count(c => c.Equals('\n')) + 1);
+                float textScale = textHeight <= m_OverlayWidgetsRowHeight ? 1f : m_OverlayWidgetsRowHeight / textHeight;
+
+                label = m_FormatContext.FormatText(text.Format, i, textScale);
+                m_CachedLabels.Add(text, new(label, textScale));
+            }
         }
 
         public void UpdateText()
         {
-            foreach (DawnText text in OverlayWidgets.Where(widget => widget is DawnText).Cast<DawnText>())
+            foreach (DawnText text in TWidgets<DawnText>())
             {
                 text.UpdateFontFamily();
                 text.ApplyToGUIStyle(Scale);
             }
+        }
 
-            if (ModernNotifications.Present)
+        private void UpdateBackups()
+        {
+            m_BackupFormatTexts.Clear();
+            void TryAddBackup(string format, string label, bool legacy)
             {
-                MN_Reminder.TextStyle.UpdateFontFamily();
-                MN_Reminder.TextStyle.ApplyToGUIStyle(Scale);
-
-                MN_Occasion.TextStyle.UpdateFontFamily();
-                MN_Occasion.TextStyle.ApplyToGUIStyle(Scale);
+                string legacyStr = legacy ? $"({DawnTranslation.Label_Legacy}) " : string.Empty;
+                if (!format.NullOrEmpty())
+                    m_BackupFormatTexts.TryAdd(format, $"{legacyStr} {label}");
             }
+
+            TryAddBackup(Legacy_UpperTextFormat, DawnTranslation.Label_UpperTextFormat, true);
+            TryAddBackup(Legacy_BottomTextFormat, DawnTranslation.Label_BottomTextFormat, true);
+            TryAddBackup(Legacy_SubtitleTextFormat, DawnTranslation.Label_SubtitleTextFormat, true);
+
+            for (int i = 0; i < m_RemovedFormatTexts.Count; i++)
+                TryAddBackup(m_RemovedFormatTexts[i], DawnTranslation.Description_BackupFormat(i), false);
+
         }
 
         public override void ExposeData()
@@ -535,20 +595,6 @@ namespace DawnNewDay
                 #region Modern Notifications Section
 
                 Scribe_Collections.Look(ref MN_ExcludeOccasionCategory, "MN_ExcludeOccasionCategory");
-
-                Scribe_Deep.Look(ref MN_Reminder, "MN_Reminder");
-                Scribe_Deep.Look(ref MN_Occasion, "MN_Occasion");
-
-                if (Scribe.mode == LoadSaveMode.PostLoadInit || Scribe.mode == LoadSaveMode.LoadingVars)
-                {
-                    MN_ExcludeOccasionCategory ??= DawnDefault.MN_ExcludeOccasionCategory;
-
-                    MN_Reminder ??= DawnDefault.MN_Reminder;
-                    MN_Reminder.TextStyle ??= DawnDefault.MN_ReminderTextStyle;
-
-                    MN_Occasion ??= DawnDefault.MN_Occasion;
-                    MN_Occasion.TextStyle ??= DawnDefault.MN_OccasionTextStyle;
-                }
 
                 #endregion
 

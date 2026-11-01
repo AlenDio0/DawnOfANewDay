@@ -17,15 +17,13 @@ namespace DawnNewDay.Dialogs
         public Dialog_Hint(string header, Dictionary<string, string> hints)
         {
             doCloseX = true;
-            closeOnClickedOutside = true;
-            absorbInputAroundWindow = true;
             draggable = true;
 
             HeaderLabel = header;
             Hints = hints;
         }
 
-        public override Vector2 InitialSize => new(700f, 600f);
+        public override Vector2 InitialSize => new(800f, 500f);
 
         public override void DoWindowContents(Rect canva)
         {
@@ -79,12 +77,9 @@ namespace DawnNewDay.Dialogs
             foreach ((string format, string description) in Hints)
             {
                 listing.GapLine();
-                Rect rowRect = listing.GetRect(40f);
 
+                Rect rowRect = listing.GetRect(DawnData.MediumRowHeight);
                 float iconSize = rowRect.height;
-
-                Rect copyRect = new(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
-                Rect hintRect = new(rowRect.x, rowRect.y, rowRect.xMax - iconSize, rowRect.height);
 
                 TextAnchor defaultAnchor = Text.Anchor;
                 Text.Anchor = TextAnchor.MiddleLeft;
@@ -95,11 +90,13 @@ namespace DawnNewDay.Dialogs
                 if (displayFormat.Length > cMaxLengthTrim)
                     displayFormat = $"{displayFormat.TrimmedToLength(cMaxLengthTrim)}...";
 
+                Rect hintRect = new(rowRect.x, rowRect.y, rowRect.xMax - iconSize, iconSize);
                 Widgets.Label(hintRect, $"<b>{displayFormat}</b>\n~ {description}");
 
                 Text.Anchor = defaultAnchor;
 
-                GUI.DrawTexture(copyRect, TexButton.Copy);
+                Rect copyRect = new(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
+                GUI.DrawTexture(copyRect.ContractedBy(4f), TexButton.Copy);
 
                 if (Mouse.IsOver(rowRect))
                     Widgets.DrawHighlight(rowRect);

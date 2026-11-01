@@ -32,7 +32,7 @@ namespace DawnNewDay.Utils
 
         public static Color LabeledRadioColorPresets(this Listing_Standard listing, ref Color currentColor, string label, float labelWidthPct = 0.25f)
         {
-            Rect rowRect = listing.GetRect(30f);
+            Rect rowRect = listing.GetRect(DawnData.TinyRowHeight);
 
             Rect labelRect = rowRect.LeftPart(labelWidthPct).CenteredOnYIn(rowRect);
 
@@ -41,16 +41,16 @@ namespace DawnNewDay.Utils
             Widgets.Label(labelRect, label);
             Text.Anchor = defaultAnchor;
 
-            const float cBoxSize = 24f;
+            float boxSize = rowRect.height;
             for (int i = 0; i < ColorPresets.Length; i++)
             {
                 Color color = ColorPresets[i];
 
-                Rect boxRect = new(labelRect.xMax + (i * (cBoxSize * 1.5f)), rowRect.y, cBoxSize, cBoxSize);
-                Widgets.DrawBoxSolid(boxRect, color);
+                Rect boxRect = new(labelRect.xMax + (i * (boxSize * 1.5f)), rowRect.y, boxSize, boxSize);
+                Widgets.DrawBoxSolid(boxRect.ContractedBy(4f), color);
 
                 if (currentColor == color)
-                    Widgets.DrawBox(boxRect, -2);
+                    Widgets.DrawBox(boxRect.ContractedBy(2f), -2);
 
                 if (Widgets.ButtonInvisible(boxRect))
                     currentColor = color;
@@ -59,19 +59,19 @@ namespace DawnNewDay.Utils
             return currentColor;
         }
 
-        public static void LabeledTextFieldNumeric<T>(this Listing_Standard listing, string label, ref T value, ref string buffer, float min, float max, float labelWidthPct = 0.9f, float middleWidthPct = 1f, float height = 30f) where T : struct
+        public static void LabeledTextFieldNumeric<T>(this Listing_Standard listing, string label, ref T value, ref string buffer, float min, float max, float labelWidthPct = 0.9f, float middleWidthPct = 1f, float height = DawnData.TinyRowHeight) where T : struct
         {
             Rect entryRect = listing.LabelWithWidget(label, labelWidthPct, middleWidthPct, height);
             Widgets.TextFieldNumeric(entryRect, ref value, ref buffer, min, max);
         }
 
-        public static void LabeledTextEntry(this Listing_Standard listing, string label, ref string value, float labelWidthPct = 0.75f, float middleWidthPct = 1f, float height = 30f)
+        public static void LabeledTextEntry(this Listing_Standard listing, string label, ref string value, float labelWidthPct = 0.75f, float middleWidthPct = 1f, float height = DawnData.TinyRowHeight)
         {
             Rect entryRect = listing.LabelWithWidget(label, labelWidthPct, middleWidthPct, height);
             value = Widgets.TextField(entryRect, value);
         }
 
-        public static Rect LabelWithWidget(this Listing_Standard listing, string label, float labelWidthPct, float middleWidthPct, float height = 30f)
+        public static Rect LabelWithWidget(this Listing_Standard listing, string label, float labelWidthPct, float middleWidthPct, float height = DawnData.TinyRowHeight)
         {
             Rect rowRect = listing.GetRect(height);
             Rect labelRect = rowRect.LeftPart(labelWidthPct).CenteredOnYIn(rowRect);
@@ -92,7 +92,7 @@ namespace DawnNewDay.Utils
             foreach (string category in labels)
             {
                 if (rowCount == 0)
-                    currentRow = listing.GetRect(30f);
+                    currentRow = listing.GetRect(DawnData.TinyRowHeight);
 
                 float width = currentRow.width / columns;
                 Rect column = new(currentRow.x + (width * rowCount), currentRow.y, width, currentRow.height);
@@ -112,17 +112,16 @@ namespace DawnNewDay.Utils
             if (gapLine)
                 listing.GapLine(4f);
 
-            Rect headerRect = listing.GetRect(30f);
+            Rect headerRect = listing.GetRect(DawnData.TinyRowHeight);
+            float iconSize = headerRect.height;
 
-            const float cIconSize = 20f;
-            const float cSpaceX = 15f;
-
-            Rect iconRect = new(headerRect.x, headerRect.y + (headerRect.height - cIconSize) / 2f, cIconSize, cIconSize);
-            GUI.DrawTexture(iconRect, open ? TexButton.Minus : TexButton.Plus);
+            Rect iconRect = new(headerRect.x, headerRect.y + (headerRect.height - iconSize) / 2f, iconSize, iconSize);
+            GUI.DrawTexture(iconRect.ContractedBy(4f), open ? TexButton.Minus : TexButton.Plus);
 
             TextAnchor defaultAnchor = Text.Anchor;
             Text.Anchor = TextAnchor.MiddleLeft;
 
+            const float cSpaceX = 15f;
             Widgets.Label(new Rect(iconRect.xMax + cSpaceX, headerRect.y, headerRect.width - iconRect.width, headerRect.height), label);
 
             Text.Anchor = defaultAnchor;

@@ -2,7 +2,6 @@
 <LanguageData>
 
 	<!-- Misc -->
-	<DawnNewDay.Label_Search>Search</DawnNewDay.Label_Search>
 	<DawnNewDay.Label_Legacy>Legacy</DawnNewDay.Label_Legacy>
 
 	<!-- Header -->
@@ -43,11 +42,15 @@
 	<DawnNewDay.Label_Text>Text</DawnNewDay.Label_Text>
 	<DawnNewDay.Label_Separator>Separator</DawnNewDay.Label_Separator>
 
+	<DawnNewDay.Message_AddedText>Successfully added the text into Overlay Widgets.</DawnNewDay.Message_AddedText>
+
 	<DawnNewDay.Message_ResetWarning>Confirm to reset every widget to default.</DawnNewDay.Message_ResetWarning>
 	<DawnNewDay.Message_DeleteWarning>Confirm to delete</DawnNewDay.Message_DeleteWarning>
 	
 	<DawnNewDay.Label_BackupFormats>Backup Formats</DawnNewDay.Label_BackupFormats>
 	<DawnNewDay.Description_BackupFormat>Removed Text Format {0} (Will be deleted after restart...)</DawnNewDay.Description_BackupFormat>
+
+	<DawnNewDay.Label_BackupWarning>Attention: There are format text backup(s) present that could be restored. ({0} found)</DawnNewDay.Label_BackupWarning>
 	
 	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
 	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
@@ -125,6 +128,11 @@
 	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
 	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {FONTSIZE / 2}]</DawnNewDay.Hint_Format_Division>
 
+	<DawnNewDay.Hint_Format_Greater>Greater comparation for formats/values [eg. {DAY_QUADRUM ] 15}]</DawnNewDay.Hint_Format_Greater>
+	<DawnNewDay.Hint_Format_Lesser>Lesser comparation for format/values [eg. {TEMPERATURE [ 5}]</DawnNewDay.Hint_Format_Lesser>
+	<DawnNewDay.Hint_Format_Equal>Equal comparation for format/values [eg. {YEAR_D2 = 50}]</DawnNewDay.Hint_Format_Equal>
+	<DawnNewDay.Hint_Format_NotEqual>Not Equal comparation for format/values [eg. {POLLUTION ! 0}]</DawnNewDay.Hint_Format_NotEqual>
+
 	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
 	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
 	<DawnNewDay.Hint_RichText_ColorRGBA>Changes the text color {RRGGBBAA_HERE: [eg. FF00FFA0, a0a0a0ff]}</DawnNewDay.Hint_RichText_ColorRGBA>
@@ -139,6 +147,8 @@
 
 	<DawnNewDay.Hint_RichText_IfNotEmpty>If the content IS NOT empty, it will show the text - Formats</DawnNewDay.Hint_RichText_IfNotEmpty>
 	<DawnNewDay.Hint_RichText_IfEmpty>If the content IS empty, it will show the text - Formats</DawnNewDay.Hint_RichText_IfEmpty>
+	
+	<DawnNewDay.Hint_RichText_If>If the content doesn't contain False or it's not empty, it will show the text - Formats</DawnNewDay.Hint_RichText_If>
 	
 	<!-- Sound Section -->
 	<DawnNewDay.Section_Sound>Sound</DawnNewDay.Section_Sound>
@@ -159,15 +169,10 @@
 
 	<DawnNewDay.Label_ModIncompatibility>This mod isn't currently active or it's incompatible with this RimWorld version or Mod version...</DawnNewDay.Label_ModIncompatibility>
 
-	<DawnNewDay.Label_AddText>Add Text</DawnNewDay.Label_AddText>
-	<DawnNewDay.Label_MaximumDays>Maximum Days</DawnNewDay.Label_MaximumDays>
-
 	<!-- Compatibility - Modern Notifications Section-->
 
-	<DawnNewDay.Label_MN_ExcludeOccasions>Exclude from Occasions</DawnNewDay.Label_MN_ExcludeOccasions>
-	
-	<DawnNewDay.Section_MN_Reminder>Reminder</DawnNewDay.Section_MN_Reminder>
-	<DawnNewDay.Section_MN_Occasion>Occasion</DawnNewDay.Section_MN_Occasion>
+	<DawnNewDay.Label_MN_AddReminderText>Add Reminder Overlay Text</DawnNewDay.Label_MN_AddReminderText>
+	<DawnNewDay.Label_MN_AddOccasionText>Add Occasion Overlay Text</DawnNewDay.Label_MN_AddOccasionText>
 
 	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>Reminder - Majora's Mask format with severity color</DawnNewDay.Hint_MN_Preset_ReminderRemainWithSeverityColor>
 	<DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>Reminder - Majora's Mask format with time color</DawnNewDay.Hint_MN_Preset_ReminderRemainWithTimeColor>
@@ -197,4 +202,6 @@
 
 	<DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>Occasion - Time remaining Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_MN_OCCASION_REMAINING_COLOR>
 
+	<DawnNewDay.Label_MN_ExcludeOccasions>Exclude from Occasions</DawnNewDay.Label_MN_ExcludeOccasions>
+	
 </LanguageData>

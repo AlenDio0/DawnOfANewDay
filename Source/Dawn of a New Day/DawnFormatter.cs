@@ -154,9 +154,19 @@ namespace DawnNewDay
                 if (!ModernNotifications.Present)
                     return default;
 
+                if (CurrentWorld == null)
+                {
+                    return new()
+                    {
+                        Time = new(0, 0),
+                        Title = "Reminder",
+                        Message = "Message",
+                    };
+                }
+
                 var reminders = MNUtility.GetReminders();
 
-                MNUtility.Reminder nextReminder = new();
+                MNUtility.Reminder nextReminder = default;
                 foreach (MNUtility.Reminder reminder in reminders)
                 {
                     if (!reminder.IsValid || reminder.Fired)
@@ -181,11 +191,21 @@ namespace DawnNewDay
             get
             {
                 if (!ModernNotifications.Present)
-                    return new();
+                    return default;
+
+                if (CurrentWorld == null)
+                {
+                    return new()
+                    {
+                        Time = new(0, 0),
+                        Category = "Occasion",
+                        Label = "Label",
+                    };
+                }
 
                 var occasions = MNUtility.GetOccasions();
 
-                MNUtility.Occasion nextOccasion = new();
+                MNUtility.Occasion nextOccasion = default;
                 foreach (MNUtility.Occasion occasion in occasions)
                 {
                     if (!occasion.IsValid)
@@ -221,7 +241,7 @@ namespace DawnNewDay
             }
         }
 
-        private readonly bool IsTargetTimeNearest(MNUtility.YearTime currentTime, MNUtility.YearTime targetTime)
+        private static bool IsTargetTimeNearest(MNUtility.YearTime currentTime, MNUtility.YearTime targetTime)
         {
             int realDayOfYear = ModernNotifications.Today() + 1;
             int realYear = ModernNotifications.Year();
@@ -250,14 +270,14 @@ namespace DawnNewDay
             return false;
         }
 
-        public readonly string TimeRemaining(int remainingHour)
+        public static string TimeRemaining(int remainingHour)
         {
             const int cToleranceHour = 72;
 
             int remainingTicks = remainingHour * GenDate.TicksPerHour;
             return remainingHour > cToleranceHour ? remainingTicks.ToStringTicksToPeriod(true, false, false) : $"{remainingHour}h";
         }
-        public readonly float TimeRemainingDay(int remainingHour)
+        public static float TimeRemainingDay(int remainingHour)
         {
             float remainingDay = remainingHour / 24f;
             return remainingDay >= 2f ? Mathf.Ceil(remainingDay) : SettingsHelper.SnapToStep(remainingDay, 0.1f);
@@ -281,7 +301,7 @@ namespace DawnNewDay
         public readonly int NextReminderTimeRemainingHour => TimeRemainingHour(NextReminder.Time);
         public readonly int NextOccasionTimeRemainingHour => TimeRemainingHour(NextOccasion.Time);
 
-        public static string TimeRemainingLerpHex(int remainingHour) => LerpHex(Color.white, new Color(0.9f, 0.1f, 0.1f), remainingHour, 96f, 0f);
+        public static string TimeRemainingLerpHex(int remainingHour) => LerpHex(Color.white, new Color(0.9f, 0.1f, 0.1f), remainingHour, 96f, 24f);
         public readonly string NextReminderRemainingHex => TimeRemainingLerpHex(NextReminderTimeRemainingHour);
         public readonly string NextOccasionRemainingHex => TimeRemainingLerpHex(NextOccasionTimeRemainingHour);
 
@@ -311,10 +331,10 @@ namespace DawnNewDay
         }
     }
 
-    public static class DawnFormatterUtility
+    public static class DawnFormatterRegex
     {
-        private static readonly Regex m_TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new(StringComparer.OrdinalIgnoreCase)
+        public static readonly Regex TokenFormatRegex = new(@"\{(?<token>[^{}]+)\}", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        public static readonly Dictionary<string, Func<FormatContext, string>> FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
             { "DAY",  context => context.GenDay(DayRelative.Settle).ToString() },
             { "DAY_SETTLE",  context => context.GenDay(DayRelative.Settle).ToString() },
@@ -357,11 +377,24 @@ namespace DawnNewDay
             { "FONTSIZE", context => context.FontSize.ToString() },
         };
 
+        public static readonly Regex ExtraRichTextTagRegex = new(@"(?s)<(?<tag>\w+)(?:=(?<content>[^>]*))?>(?<text>.*?)<\/\k<tag>>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        public static readonly Dictionary<string, Func<string, string, string>> ExtraRichTextTags = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { "title", (text, _) => Find.ActiveLanguageWorker.ToTitleCase(text.ToLower())},
+            { "upper", (text, _) => text.ToUpper() },
+            { "lower", (text, _) => text.ToLower() },
+
+            { "ifnotempty", (text, content) => !content.NullOrEmpty() ? text : "" },
+            { "ifempty", (text, content) => content.NullOrEmpty() ? text : "" },
+
+            { "if", (text, content) => !content.NullOrEmpty() && !content.ToUpper().Contains(bool.FalseString.ToUpper()) ? text : "" },
+        };
+
         #region Compatibility
 
         #region Modern Notifications
 
-        private static readonly Dictionary<string, Func<FormatContext, string>> MN_FormatTokens = new(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, Func<FormatContext, string>> MN_FormatTokens = new(StringComparer.OrdinalIgnoreCase)
         {
             { "MN_REMINDER_TITLE", context => context.NextReminder.Title },
             { "MN_REMINDER_MESSAGE", context => context.NextReminder.Message },
@@ -369,8 +402,8 @@ namespace DawnNewDay
 
             { "MN_REMINDER_SEVERITY_COLOR", context => context.NextReminderSeverityHex },
 
-            { "MN_REMINDER_REMAINING", context => context.TimeRemaining(context.NextReminderTimeRemainingHour) },
-            { "MN_REMINDER_REMAINING_DAY", context => context.TimeRemainingDay(context.NextReminderTimeRemainingHour).ToString() },
+            { "MN_REMINDER_REMAINING", context => FormatContext.TimeRemaining(context.NextReminderTimeRemainingHour) },
+            { "MN_REMINDER_REMAINING_DAY", context => FormatContext.TimeRemainingDay(context.NextReminderTimeRemainingHour).ToString() },
             { "MN_REMINDER_REMAINING_HOUR", context => context.NextReminderTimeRemainingHour.ToString() },
 
             { "MN_REMINDER_REMAINING_COLOR", context => context.NextReminderRemainingHex },
@@ -380,8 +413,8 @@ namespace DawnNewDay
             { "MN_OCCASION_DETAIL", context => context.NextOccasion.Detail },
             { "MN_OCCASION_DAY_YEAR", context => context.NextOccasion.Time.DayOfYear.ToString() },
 
-            { "MN_OCCASION_REMAINING", context => context.TimeRemaining(context.NextOccasionTimeRemainingHour) },
-            { "MN_OCCASION_REMAINING_DAY", context => context.TimeRemainingDay(context.NextOccasionTimeRemainingHour).ToString() },
+            { "MN_OCCASION_REMAINING", context => FormatContext.TimeRemaining(context.NextOccasionTimeRemainingHour) },
+            { "MN_OCCASION_REMAINING_DAY", context => FormatContext.TimeRemainingDay(context.NextOccasionTimeRemainingHour).ToString() },
             { "MN_OCCASION_REMAINING_HOUR", context => context.NextOccasionTimeRemainingHour.ToString() },
 
             { "MN_OCCASION_REMAINING_COLOR", context => context.NextOccasionRemainingHex },
@@ -390,18 +423,10 @@ namespace DawnNewDay
         #endregion
 
         #endregion
+    }
 
-        private static readonly Regex m_ExtraRichTextTagRegex = new(@"<(?<tag>\w+)=?(?<content>.*?)?>(?<text>.*?)<\/\1>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Dictionary<string, Func<string, string, string>> ExtraRichTextTags = new(StringComparer.OrdinalIgnoreCase)
-        {
-            { "title", (text, _) => Find.ActiveLanguageWorker.ToTitleCase(text.ToLower())},
-            { "upper", (text, _) => text.ToUpper() },
-            { "lower", (text, _) => text.ToLower() },
-
-            { "ifnotempty", (text, content) => !content.NullOrEmpty() ? text : "" },
-            { "ifempty", (text, content) => content.NullOrEmpty() ? text : "" },
-        };
-
+    public static class DawnFormatterUtility
+    {
         private readonly struct ParsedOperand
         {
             public float Value { get; }
@@ -453,7 +478,7 @@ namespace DawnNewDay
                 return new ParsedOperand(false);
             }
 
-            public string Format(float newValue) => $"{Prefix}{Mathf.RoundToInt(newValue)}{Suffix}";
+            public string Format(string value) => $"{Prefix}{value}{Suffix}";
         }
 
         public static string FormatText(this FormatContext context, string text, int index, float scale)
@@ -480,11 +505,11 @@ namespace DawnNewDay
 
         private static string TokenFormatText(FormatContext context, string text)
         {
-            return m_TokenFormatRegex.Replace(text, match =>
+            return DawnFormatterRegex.TokenFormatRegex.Replace(text, match =>
             {
                 string token = match.Groups["token"].Value.Trim();
 
-                int operatorIndex = token.IndexOfAny(['+', '-', '*', '/']);
+                int operatorIndex = token.IndexOfAny(['+', '-', '*', '/', ']', '[', '=', '!']);
                 bool isOperation = operatorIndex >= 0;
 
                 if (!isOperation)
@@ -504,7 +529,7 @@ namespace DawnNewDay
 
                 if (leftOperand.IsValid && rightOperand.IsValid)
                 {
-                    float result = CalcStringMath(leftOperand.Value, rightOperand.Value, operation);
+                    string result = CalcStringOperation(leftOperand.Value, rightOperand.Value, operation);
 
                     var targetOperand = (!leftOperand.Prefix.NullOrEmpty() || !leftOperand.Suffix.NullOrEmpty()) ? leftOperand : rightOperand;
                     return targetOperand.Format(result);
@@ -521,10 +546,10 @@ namespace DawnNewDay
 
         private static bool TryReplaceToken(FormatContext context, string token, out string format)
         {
-            if (TryReplaceTokenFrom(context, token, FormatTokens, out format))
+            if (TryReplaceTokenFrom(context, token, DawnFormatterRegex.FormatTokens, out format))
                 return true;
 
-            if (ModernNotifications.Present && TryReplaceTokenFrom(context, token, MN_FormatTokens, out format))
+            if (ModernNotifications.Present && TryReplaceTokenFrom(context, token, DawnFormatterRegex.MN_FormatTokens, out format))
                 return true;
 
             return false;
@@ -551,29 +576,45 @@ namespace DawnNewDay
             return false;
         }
 
-        private static float CalcStringMath(float left, float right, char operation) => operation switch
-        {
-            '+' => left + right,
-            '-' => left - right,
-            '*' => left * right,
-            '/' => right != 0f ? left / right : 0f,
+        private static string MathToString(float value) => Mathf.RoundToInt(value).ToString();
+        private static string BoolToString(bool value) => value.ToString();
 
-            _ => 0,
+        private static string CalcStringOperation(float left, float right, char operation) => operation switch
+        {
+            '+' => MathToString(left + right),
+            '-' => MathToString(left - right),
+            '*' => MathToString(left * right),
+            '/' => MathToString(right != 0f ? left / right : 0f),
+
+            ']' => BoolToString(left > right),
+            '[' => BoolToString(left < right),
+            '=' => BoolToString(left == right),
+            '!' => BoolToString(left != right),
+
+            _ => "",
         };
 
         private static string ExtraRichTextTagText(string text)
         {
-            return m_ExtraRichTextTagRegex.Replace(text, match =>
+            string compareText;
+            do
             {
-                string tag = match.Groups["tag"].Value;
-                string content = match.Groups["content"].Value;
-                string text = match.Groups["text"].Value;
+                compareText = text;
 
-                if (ExtraRichTextTags.TryGetValue(tag, out var replacer))
-                    return replacer?.Invoke(text, content);
+                text = DawnFormatterRegex.ExtraRichTextTagRegex.Replace(text, match =>
+                {
+                    string tag = match.Groups["tag"].Value;
+                    string content = match.Groups["content"].Value;
+                    string innerText = match.Groups["text"].Value;
 
-                return match.Value;
-            });
+                    if (DawnFormatterRegex.ExtraRichTextTags.TryGetValue(tag, out var replacer))
+                        return replacer?.Invoke(innerText, content);
+
+                    return match.Value;
+                });
+            } while (!text.Equals(compareText));
+
+            return text;
         }
     }
 }

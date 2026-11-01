@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
 
@@ -80,7 +81,14 @@ namespace DawnNewDay.Utils
                 Text.Font = defaultFont;
             }
 
-            listing.LabeledTextEntry(DawnTranslation.Label_Search, ref m_SearchBuffer, 0.1f, 0.9f);
+            Rect searchRect = listing.GetRect(DawnData.TinyRowHeight);
+            float iconSize = searchRect.height;
+
+            Rect iconRect = new(searchRect.position, new(iconSize, iconSize));
+            GUI.DrawTexture(iconRect.ContractedBy(4f), TexButton.Search);
+
+            Rect fieldRect = new(iconRect.xMax, searchRect.y, searchRect.width - iconSize, searchRect.height);
+            m_SearchBuffer = Widgets.TextField(fieldRect.MiddlePart(0.9f, 1f), m_SearchBuffer);
 
             if (DefaultValue != null)
             {
@@ -100,7 +108,7 @@ namespace DawnNewDay.Utils
             foreach (string value in showableValues)
             {
                 listing.GapLine();
-                Rect rowRect = listing.GetRect(30f);
+                Rect rowRect = listing.GetRect(DawnData.TinyRowHeight);
 
                 TextAnchor defaultAnchor = Text.Anchor;
                 Text.Anchor = TextAnchor.MiddleLeft;

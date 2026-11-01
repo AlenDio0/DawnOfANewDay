@@ -23,12 +23,38 @@ namespace DawnNewDay
 
         #region Texture
 
-        public static Texture2D CurlyBrackets = ContentFinder<Texture2D>.Get("Curly Brackets");
-        public static Texture2D AngleBrackets = ContentFinder<Texture2D>.Get("Angle Brackets");
+        #region Cached Texture
+
+        private static Texture2D GetCachedTexture(ref Texture2D cachedTexture, string fileName)
+        {
+            if (cachedTexture == null)
+                cachedTexture = ContentFinder<Texture2D>.Get(fileName);
+            return cachedTexture;
+        }
+
+        private static Texture2D m_CachedCurlyBrackets;
+        private static Texture2D m_CachedAngleBrackets;
+        private static Texture2D m_CachedSquareBrackets;
+
+        private static Texture2D m_CachedCurlyBracketsMN;
+        private static Texture2D m_CachedSquareBracketsMN;
+
+        #endregion
+
+        public static Texture2D CurlyBrackets => GetCachedTexture(ref m_CachedCurlyBrackets, "Curly Brackets");
+        public static Texture2D AngleBrackets => GetCachedTexture(ref m_CachedAngleBrackets, "Angle Brackets");
+        public static Texture2D SquareBrackets => GetCachedTexture(ref m_CachedSquareBrackets, "Square Brackets");
+
+        public static Texture2D CurlyBracketsMN => GetCachedTexture(ref m_CachedCurlyBracketsMN, "Curly Brackets MN");
+        public static Texture2D SquareBracketsMN => GetCachedTexture(ref m_CachedSquareBracketsMN, "Square Brackets MN");
 
         #endregion
 
         #region Settings
+
+        public const float TinyRowHeight = 30f;
+        public const float MediumRowHeight = 40f;
+        public const float BigRowHeight = 50f;
 
         #region Appearance Section
 

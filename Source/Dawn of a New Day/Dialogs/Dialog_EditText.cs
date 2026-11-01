@@ -34,10 +34,9 @@ namespace DawnNewDay.Dialogs
 
             try
             {
-                const float cRowHeight = 50f;
-                Rect previewRect = listing.GetRect(cRowHeight);
+                Rect previewRect = listing.GetRect(DawnData.BigRowHeight);
 
-                float textScale = TextStyle.FontSize <= cRowHeight ? 1f : cRowHeight / TextStyle.FontSize;
+                float textScale = TextStyle.FontSize <= previewRect.height ? 1f : previewRect.height / TextStyle.FontSize;
                 string label = Context.FormatText(TextStyle.Format, Index, textScale);
 
                 TextStyle.ApplyToGUIStyle(textScale);
@@ -57,6 +56,11 @@ namespace DawnNewDay.Dialogs
             {
                 listing.End();
             }
+        }
+
+        public override void PostClose()
+        {
+            DawnMod.Settings.UpdateTextPreviewLabels();
         }
     }
 }

@@ -237,10 +237,10 @@ namespace DawnNewDay
         {
             var settings = DawnMod.Settings;
 
-            List<(Rect rect, bool isText)> tempCachedRects = [];
+            List<(Rect Rect, bool IsText)> tempCachedRects = [];
             for (int i = 0; i < settings.OverlayWidgets.Count; i++)
             {
-                Rect lastRect = i > 0 ? tempCachedRects[i - 1].rect : Rect.zero;
+                Rect lastRect = i > 0 ? tempCachedRects[i - 1].Rect : Rect.zero;
                 Vector2 topLeft = new(0f, lastRect.yMax);
 
                 IDawnWidget widget = settings.OverlayWidgets[i];
@@ -261,15 +261,15 @@ namespace DawnNewDay
                 }
             }
 
-            float maxWidth = Mathf.Max([.. tempCachedRects.Select(cached => cached.rect.width)]) * 1.2f;
-            float totalHeight = tempCachedRects.Sum(cached => cached.rect.height);
+            float maxWidth = Mathf.Max([.. tempCachedRects.Select(cached => cached.Rect.width)]) * 1.2f;
+            float totalHeight = tempCachedRects.Sum(cached => cached.Rect.height);
 
             m_CachedOverlayRect.size = new(maxWidth, totalHeight);
             m_CachedOverlayRect.position = settings.Offset - (m_CachedOverlayRect.size / 2f);
 
             for (int i = 0; i < tempCachedRects.Count; i++)
             {
-                Rect lastRect = i > 0 ? tempCachedRects[i - 1].rect : Rect.zero;
+                Rect lastRect = i > 0 ? tempCachedRects[i - 1].Rect : Rect.zero;
 
                 if (settings.OverlayWidgets[i] is DawnSeparator separator)
                     tempCachedRects[i] = new(separator.CalcFullRect(lastRect.yMax, maxWidth, settings.Scale), false);
@@ -284,28 +284,6 @@ namespace DawnNewDay
 
                 m_CachedRects.Add(finalRect);
             }
-
-            //if (ModernNotifications.Present)
-            //{
-            //    RetrieveTextRect(Text.MN_Reminder).size = CalcTextSize(settings.MN_Reminder.TextStyle, m_MN_CachedReminderText);
-            //    RetrieveTextRect(Text.MN_Occasion).size = CalcTextSize(settings.MN_Occasion.TextStyle, m_MN_CachedOccasionText);
-            //}
-            //else
-            //{
-            //    RetrieveTextRect(Text.MN_Reminder).size = Vector2.zero;
-            //    RetrieveTextRect(Text.MN_Occasion).size = Vector2.zero;
-            //}
-
-            //RetrieveTextRect(Text.Upper).y = 0f;
-
-            //RetrieveTextRect(Text.Bottom).y = m_CachedLineRect.yMax + scaledLinePadding;
-            //RetrieveTextRect(Text.Subtitle).y = RetrieveTextRect(Text.Bottom).yMax + scaledSubtitleGap;
-
-            //if (ModernNotifications.Present)
-            //{
-            //    RetrieveTextRect(Text.MN_Reminder).y = RetrieveTextRect(Text.Subtitle).yMax;
-            //    RetrieveTextRect(Text.MN_Occasion).y = RetrieveTextRect(Text.MN_Reminder).yMax;
-            //}
         }
 
         private string FinalizeLabel(string label) => WithAlphaToRichText(label);

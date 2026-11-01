@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace DawnNewDay
 {
@@ -57,10 +56,10 @@ namespace DawnNewDay
 
                 listing.Gap();
 
-                Vector2 iconSize = new(30f, 30f);
-                Rect hintsRect = listing.GetRect(iconSize.y);
+                Rect hintsRect = listing.GetRect(DawnData.TinyRowHeight);
+                float iconSize = hintsRect.height;
 
-                Rect formatHintsRect = new(new(hintsRect.x, hintsRect.y), iconSize);
+                Rect formatHintsRect = new(hintsRect.position, new(iconSize, iconSize));
                 if (Widgets.ButtonImage(formatHintsRect.ContractedBy(4f), DawnData.CurlyBrackets))
                 {
                     var hints = DawnTranslation.Hints_LabelFormat;
@@ -70,12 +69,12 @@ namespace DawnNewDay
                     Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_LabelFormatHints, hints));
                 }
 
-                Rect richHintsRect = new(new(formatHintsRect.xMax * 1.5f, hintsRect.y), iconSize);
+                Rect richHintsRect = new(formatHintsRect.xMax + (iconSize / 2f), hintsRect.y, iconSize, iconSize);
                 if (Widgets.ButtonImage(richHintsRect.ContractedBy(4f), DawnData.AngleBrackets))
                     Find.WindowStack.Add(new Dialog_Hint(DawnTranslation.Label_RichTextHints, DawnTranslation.Hints_RichText));
 
-                Rect presetsRect = new(richHintsRect.xMax * 2f, hintsRect.y, hintsRect.width / 3f, hintsRect.height);
-                if (Widgets.ButtonText(presetsRect, DawnTranslation.Label_LabelFormatPresets))
+                Rect presetsRect = new(richHintsRect.xMax + (iconSize / 2f), hintsRect.y, iconSize, iconSize);
+                if (Widgets.ButtonImage(presetsRect.ContractedBy(4f), DawnData.SquareBrackets))
                 {
                     var presets = DawnTranslation.Hints_LabelFormatPresets;
                     if (ModernNotifications.Present)

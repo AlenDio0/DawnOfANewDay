@@ -13,8 +13,6 @@ namespace DawnNewDay
 
         #region Misc
 
-        public static string Label_Search => DawnTranslate("Label_Search");
-
         public static string Label_Legacy => DawnTranslate("Label_Legacy");
 
         #endregion
@@ -72,11 +70,15 @@ namespace DawnNewDay
         public static string Label_Text => DawnTranslate("Label_Text");
         public static string Label_Separator => DawnTranslate("Label_Separator");
 
+        public static string Message_AddedText => DawnTranslate("Message_AddedText");
+
         public static string Message_ResetWarning => DawnTranslate("Message_ResetWarning");
         public static string Message_DeleteWarning => DawnTranslate("Message_DeleteWarning");
 
         public static string Label_BackupFormats => DawnTranslate("Label_BackupFormats");
-        public static string Description_BackupFormat(string index) => DawnTranslate("Description_BackupFormat", index);
+        public static string Description_BackupFormat(int index) => DawnTranslate("Description_BackupFormat", index);
+
+        public static string Label_BackupWarning(int count) => DawnTranslate("Label_BackupWarning", count);
 
         public static string Label_DefaultFont => DawnTranslate("Label_DefaultFont");
         public static string Label_FontFamily => DawnTranslate("Label_FontFamily");
@@ -162,6 +164,11 @@ namespace DawnNewDay
             { "{VALUE1 - VALUE2}", DawnTranslate("Hint_Format_Subtraction") },
             { "{VALUE1 * VALUE2}", DawnTranslate("Hint_Format_Multiplication") },
             { "{VALUE1 / VALUE2}", DawnTranslate("Hint_Format_Division") },
+
+            { "{VALUE1 ] VALUE2}", DawnTranslate("Hint_Format_Greater") },
+            { "{VALUE1 [ VALUE2}", DawnTranslate("Hint_Format_Lesser") },
+            { "{VALUE1 = VALUE2}", DawnTranslate("Hint_Format_Equal") },
+            { "{VALUE1 ! VALUE2}", DawnTranslate("Hint_Format_NotEqual") },
         };
 
         public static Dictionary<string, string> Hints_RichText => new()
@@ -180,6 +187,8 @@ namespace DawnNewDay
 
             { "<ifnotempty=CONTENT_HERE>TEXT_HERE</ifnotempty>", DawnTranslate("Hint_RichText_IfNotEmpty") },
             { "<ifempty=CONTENT_HERE>TEXT_HERE</ifempty>", DawnTranslate("Hint_RichText_IfEmpty") },
+
+            { "<if=CONTENT_HERE>TEXT_HERE</ifempty>", DawnTranslate("Hint_RichText_If") },
         };
 
         #endregion
@@ -211,15 +220,13 @@ namespace DawnNewDay
 
         public static string Label_ModIncompatibility => DawnTranslate("Label_ModIncompatibility");
 
-        public static string Label_AddText => DawnTranslate("Label_AddText");
-        public static string Label_MaximumDays => DawnTranslate("Label_MaximumDays");
-
         #region Modern Notifications Section
 
         public static readonly string MN_ModName = "Modern Notifications";
         private static string MN_DawnTranslate(string key) => $"[{MN_ModName}] {DawnTranslate(key)}";
 
-        public static string Label_MN_ExcludeOccasions => DawnTranslate("Label_MN_ExcludeOccasions");
+        public static string Label_MN_AddReminderText => DawnTranslate("Label_MN_AddReminderText");
+        public static string Label_MN_AddOccasionText => DawnTranslate("Label_MN_AddOccasionText");
 
         public static string Label_MN_LabelFormatPresets => MN_DawnTranslate("Label_LabelFormatPresets");
         public static Dictionary<string, string> Hints_MN_LabelFormatPresets => new()
@@ -231,7 +238,6 @@ namespace DawnNewDay
             { DawnDefault.MN_OccasionTextFormat, MN_DawnTranslate("Hint_MN_Preset_OccasionTextFormat") },
         };
 
-        public static string Label_MN_LabelFormatHints => MN_DawnTranslate("Label_LabelFormatHints");
         public static Dictionary<string, string> Hints_MN_LabelFormat => new()
         {
             { "{MN_REMINDER_TITLE}", MN_DawnTranslate("Hint_MN_REMINDER_TITLE") },
@@ -256,13 +262,9 @@ namespace DawnNewDay
             { "{MN_OCCASION_REMAINING_HOUR}", MN_DawnTranslate("Hint_MN_OCCASION_REMAINING_HOUR") },
 
             { "{MN_OCCASION_REMAINING_COLOR}", MN_DawnTranslate("Hint_MN_OCCASION_REMAINING_COLOR") },
-
-            { "{MN_REMINDER_FONTSIZE}", MN_DawnTranslate("Hint_MN_REMINDER_FONTSIZE") },
-            { "{MN_OCCASION_FONTSIZE}", MN_DawnTranslate("Hint_MN_OCCASION_FONTSIZE") },
         };
 
-        public static string Section_MN_Reminder => DawnTranslate("Section_MN_Reminder");
-        public static string Section_MN_Occasion => DawnTranslate("Section_MN_Occasion");
+        public static string Label_MN_ExcludeOccasions => DawnTranslate("Label_MN_ExcludeOccasions");
 
         #endregion
 
