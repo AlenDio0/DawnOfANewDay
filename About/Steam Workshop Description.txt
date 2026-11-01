@@ -1,10 +1,16 @@
-[i][b]Mod Version:[/b] v1.7.0[/i]
-[i]Showcase video is outdated :\[/i]
+[i][b]Mod Version:[/b] v2.0.0[/i]
+[i]Showcase video is outdated[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
 
+[h1]HOW IT WORKS[/h1]
+Every day*, in a certain hour of the game*, it will show an overlay* that contains Texts* and Separators*, for a certain duration*, and will start a sound*.
+
+* Configurable in settings.
+
 [h1]SETTINGS[/h1]
-Go to: Options > Mod options > "Dawn of a New Day".
+To configure the mod, go to: Options > Mod options > "Dawn of a New Day".
+Everything you can think of can be configured, and if it isn't[spoiler], just ask me to implement it ;)[/spoiler]
 
 [h1]COMPATIBILITY[/h1]
 [list]
@@ -20,25 +26,21 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [i]Only last two major patches will be showed to avoid wall text.[/i]
 [i]Go into About\Patch Notes.txt to see every patch note.[/i]
 [spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
+[h3]v2.0.0[/h3]
+[list]
+[*]Joined Text, Label Format and Separator into one Overlay Widget Section.
+[*]Added a preview of the overlay in the settings.
+[*]Added a way to recover legacy format and backups.
+[*]Fixed custom fonts for RimWorld 1.7.
+[*]Fixed possible NullReferenceException(s) for formats.
+[*]Added <if=content>text</if> rich text tag (see in the mod).
+[*]Added comparation operations for formats and values (useful for 'if' tag).
+[*]Added Silent Format Error (if enabled, when a token format has error will just return an empty string, instead of showing the token).
+[*]Added 12-hour meridiem format token.
+[/list]
 [h3]v1.7.0[/h3]
 [list]
 [*]Added compatibility for RimWorld 1.7.
-[/list]
-[b]v1.6.2[/b]
-[list]
-[*]Added conditionals rich text formats: ifempty, ifnotempty.
-[*]Fixed UI Bug width increases every day (co-authored by relay955).
-[*]Added Russian translation (by dzirtikk).
-[/list]
-[b]v1.6.1[/b]
-[list]
-[*]Updated Chinese translation (by hotaru-hoshizora).
-[/list]
-[h3]v1.6.0[/h3]
-[list]
-[*]Added Modern Notifications mod compatibility.
-[*]Added Modern Notifications formats and texts for Reminders and Occasions.
-[*]Updated Mod Options ui look.
 [/list]
 [h3]...[/h3]
 
@@ -60,14 +62,13 @@ Go to: Options > Mod options > "Dawn of a New Day".
 [*]Clone the repository in your device.
 [*]Look for "Languages" folder.
 [*]Copy the path from "English" and rename it into your language.
-[*]Go into "<YourLanguage>\Keyed\Misc.xml" and translate the file in your own language.
-[*]Finally, commit your changes and create a Pull Request into the main branch of the repository.
+[*]Go into "<YourLanguage>\Keyed" and translate the files in the chosen language.
+[*]Finally, commit your changes and create a [b]Pull Request[/b] into the main branch of the repository.
 [/olist]
 
 [h1]TODO LIST[/h1]
 [list]
 [*]Add compatibility with Explicit Timing.
-[*]Update label format settings to be more flexible (ordering and adding new texts).
 [*]Add renaming day section in mod options.
 [/list]
 

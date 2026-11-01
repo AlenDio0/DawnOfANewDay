@@ -1,38 +1,40 @@
-v1.1.0
-- Re-haul of the Mod options.
-- Added Text font family customization.
-- Added Hour Trigger.
-- Fixed mod conflict with Readable Numbers.
+# Patch Notes
 
-v1.1.1
-- Added Translation compatibility.
-- Fixed Label Format defaults.
-- Fixed Quadrum and Season Label auto-translation.
+v2.0.0
+- Joined Text, Label Format and Separator into one Overlay Widget Section.
+- Added a preview of the overlay in the settings.
+- Added a way to recover legacy format and backups.
+- Fixed custom fonts for RimWorld 1.7.
+- Fixed possible NullReferenceException(s) for formats.
+- Added <if=content>text</if> rich text tag (see in the mod).
+- Added comparation operations for formats and values (useful for 'if' tag).
+- Added Silent Format Error (if enabled, when a token format has error will just return an empty string, instead of showing the token).
+- Added 12-hour meridiem format token.
 
-v1.2.0
-- Added Sound (Majora's Mask sound effect as default obviously).
-- Turned some text fields into sliders for users comfort.
-- Added Italian Translation.
-- Removed duplicate fonts in the dialog (variants for Bold and Italic, because it's already in the mod options and I don't like the redundancy).
+v1.7.0
+- Added compatibility for RimWorld 1.7.
 
-v1.2.2
-- Added Harmony 2.4.2 dependency (for future compatibilities).
-- Fixed default Font Family bug.
+v1.6.2
+- Added conditionals rich text formats: ifempty, ifnotempty.
+- Fixed UI Bug width increases every day (co-authored by relay955).
+- Added Russian translation (by dzirtikk).
+v1.6.1
+- Updated Chinese translation (by hotaru-hoshizora).
+v1.6.0
+- Added Modern Notifications mod compatibility.
+- Added Modern Notifications formats and texts for Reminders and Occasions.
+- Updated Mod Options ui look.
 
-v1.3.0
-- Updated Translations IDs (any outdated translation needs a fix!).
-- Fixed Full Hour format (by Spagles).
-- Various error prevention fixes (by Spagles).
-- Added integrated Chinese Simplified translation (by ylc395).
-
-v1.3.1
-- Fixed compatibility for RimWorld 1.5 .
-
-v1.3.2
-- Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
-
-v1.3.3
-- Fixed compatibility for Readable Numbers.
+v1.5.3
+- Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
+v1.5.2
+- Fixed text clipping visual bugs.
+v1.5.1
+- Updated Chinese translation (by hotaru-hoshizora).
+v1.5.0
+- Added Subtitle Text.
+- Added endline format.
+- Added default format presets.
 
 v1.4.0
 - Re-hauled Label Format Section.
@@ -40,32 +42,33 @@ v1.4.0
 - Added rich text.
 - Removed Day Relative (replaced directly with the formats).
 
-v1.5.0
-- Added Subtitle Text.
-- Added endline format.
-- Added default format presets.
+v1.3.3
+- Fixed compatibility for Readable Numbers.
+v1.3.2
+- Fixed performance issues during overlay (From ~3ms/frame to ~0.4ms/frame).
+v1.3.1
+- Fixed compatibility for RimWorld 1.5 .
+v1.3.0
+- Updated Translations IDs (any outdated translation needs a fix!).
+- Fixed Full Hour format (by Spagles).
+- Various error prevention fixes (by Spagles).
+- Added integrated Chinese Simplified translation (by ylc395).
 
-v1.5.1
-- Updated Chinese translation (by hotaru-hoshizora).
+v1.2.2
+- Added Harmony 2.4.2 dependency (for future compatibilities).
+- Fixed default Font Family bug.
+v1.2.0
+- Added Sound (Majora's Mask sound effect as default obviously).
+- Turned some text fields into sliders for users comfort.
+- Added Italian Translation.
+- Removed duplicate fonts in the dialog (variants for Bold and Italic, because it's already in the mod options and I don't like the redundancy).
 
-v1.5.2
-- Fixed text clipping visual bugs.
-
-v1.5.3
-- Fixed NullReferenceException for Faction and Settlement format when on a different floor (eg. with MultiFloor Mod).
-
-v1.6.0
-- Added Modern Notifications mod compatibility.
-- Added Modern Notifications formats and texts for Reminders and Occasions.
-- Updated Mod Options ui look.
-
-v1.6.1
-- Updated Chinese translation (by hotaru-hoshizora).
-
-v1.6.2
-- Added conditionals rich text formats: ifempty, ifnotempty.
-- Fixed UI Bug width increases every day (co-authored by relay955).
-- Added Russian translation (by dzirtikk).
-
-v1.7.0
-- Added compatibility for RimWorld 1.7.
+v1.1.1
+- Added Translation compatibility.
+- Fixed Label Format defaults.
+- Fixed Quadrum and Season Label auto-translation.
+v1.1.0
+- Re-haul of the Mod options.
+- Added Text font family customization.
+- Added Hour Trigger.
+- Fixed mod conflict with Readable Numbers.
