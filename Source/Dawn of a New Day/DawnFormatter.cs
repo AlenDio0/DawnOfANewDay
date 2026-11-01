@@ -74,6 +74,8 @@ namespace DawnNewDay
         public readonly string GenSeason() => Find.World != null ? GenDate.Season(AbsTicks, Location).LabelCap() : Season.Spring.LabelCap();
         public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
+        public readonly int GenHour12() => ((GenHour() + 11) % 12) + 1;
+
         #endregion
 
         #region Tile Info
@@ -338,6 +340,10 @@ namespace DawnNewDay
             { "HOUR", context => context.GenHour().ToString() },
             { "HOUR_D2", context => context.GenHour().ToString("D2") },
 
+            { "HOUR_12", context => context.GenHour12().ToString() },
+            { "HOUR_12_D2", context => context.GenHour12().ToString("D2") },
+            { "HOUR_12_MERIDIEM", context => context.GenHour() < 12 ? "AM" : "PM" },
+
             { "WEATHER", context => context.WeatherLabel },
 
             { "TEMPERATURE", context => context.Temperature.ToStringTemperature() },
@@ -491,6 +497,8 @@ namespace DawnNewDay
 
         private static string TokenFormatText(FormatContext context, string text)
         {
+            bool isSilentError = DawnMod.Settings.SilentFormatError;
+
             return DawnFormatterRegex.TokenFormatRegex.Replace(text, match =>
             {
                 string token = match.Groups["token"].Value.Trim();
@@ -500,8 +508,9 @@ namespace DawnNewDay
 
                 if (!isOperation)
                 {
-                    if (TryReplaceToken(context, token, out string value))
+                    if (TryReplaceToken(context, token, out string value) || isSilentError)
                         return value;
+
 
                     return match.Value;
                 }
@@ -521,41 +530,40 @@ namespace DawnNewDay
                     return targetOperand.Format(result);
                 }
 
-                if (TryReplaceToken(context, token, out string leftValue))
+                if (TryReplaceToken(context, token, out string leftValue) || isSilentError)
                     return leftValue;
-                if (TryReplaceToken(context, token, out string rightValue))
+                if (TryReplaceToken(context, token, out string rightValue) || isSilentError)
                     return rightValue;
 
                 return match.Value;
             });
         }
 
-        private static bool TryReplaceToken(FormatContext context, string token, out string format)
+        private static bool TryReplaceToken(FormatContext context, string token, out string value)
         {
-            if (TryReplaceTokenFrom(context, token, DawnFormatterRegex.FormatTokens, out format))
+            if (TryReplaceTokenFrom(context, token, DawnFormatterRegex.FormatTokens, out value))
                 return true;
 
-            if (ModernNotifications.Present && TryReplaceTokenFrom(context, token, DawnFormatterRegex.MN_FormatTokens, out format))
+            if (ModernNotifications.Present && TryReplaceTokenFrom(context, token, DawnFormatterRegex.MN_FormatTokens, out value))
                 return true;
 
             return false;
         }
 
-        private static bool TryReplaceTokenFrom(FormatContext context, string token, Dictionary<string, Func<FormatContext, string>> tokens, out string format)
+        private static bool TryReplaceTokenFrom(FormatContext context, string token, Dictionary<string, Func<FormatContext, string>> tokens, out string value)
         {
-            format = "";
+            value = "";
 
             if (tokens.TryGetValue(token, out var replacer))
             {
                 try
                 {
-                    format = replacer.Invoke(context);
+                    value = replacer.Invoke(context);
                     return true;
                 }
                 catch (NullReferenceException)
                 {
-                    // TODO: Silent error.
-                    return true;
+                    return false;
                 }
             }
 

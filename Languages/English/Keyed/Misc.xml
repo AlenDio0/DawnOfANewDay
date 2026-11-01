@@ -80,6 +80,7 @@
 	<DawnNewDay.Label_RichTextHints>Rich Text Hints</DawnNewDay.Label_RichTextHints>
 
 	<DawnNewDay.Hint_Preset_DayAndHour>Day and Hour [eg. DAY 5 06:00]</DawnNewDay.Hint_Preset_DayAndHour>
+	<DawnNewDay.Hint_Preset_Hour12Meridiem>12-Hour format with meridiem [eg. 08:00 AM]</DawnNewDay.Hint_Preset_Hour12Meridiem>
 	<DawnNewDay.Hint_Preset_Date>Date [eg. 2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
 	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperature with color [eg. -10C -> Ice, 50C -> Orange]</DawnNewDay.Hint_Preset_TemperatureWithColor>
 	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the desert]</DawnNewDay.Hint_Preset_SomewherePlace>
@@ -99,9 +100,13 @@
 	<DawnNewDay.Hint_Format_QUADRUM>Quadrum [eg. Aprimay]</DawnNewDay.Hint_Format_QUADRUM>
 	<DawnNewDay.Hint_Format_SEASON>Season [eg. Spring]</DawnNewDay.Hint_Format_SEASON>
 
-	<DawnNewDay.Hint_Format_HOUR>Hour [eg. 6, 12]</DawnNewDay.Hint_Format_HOUR>
-	<DawnNewDay.Hint_Format_HOUR_D2>2-Digit Hour [eg. 06, 12]</DawnNewDay.Hint_Format_HOUR_D2>
+	<DawnNewDay.Hint_Format_HOUR>Hour [eg. 6, 17]</DawnNewDay.Hint_Format_HOUR>
+	<DawnNewDay.Hint_Format_HOUR_D2>2-Digit Hour [eg. 04, 23]</DawnNewDay.Hint_Format_HOUR_D2>
 
+	<DawnNewDay.Hint_Format_HOUR_12>Hour in 12h format [eg. 3, 12]</DawnNewDay.Hint_Format_HOUR_12>
+	<DawnNewDay.Hint_Format_HOUR_12_D2>2-Digit Hour in 12h format [eg. 03, 11]</DawnNewDay.Hint_Format_HOUR_12_D2>
+	<DawnNewDay.Hint_Format_HOUR_12_MERIDIEM>Meridiem for the 12h format [AM/PM]</DawnNewDay.Hint_Format_HOUR_12_MERIDIEM>
+	
 	<DawnNewDay.Hint_Format_WEATHER>Weather [eg. Clear]</DawnNewDay.Hint_Format_WEATHER>
 
 	<DawnNewDay.Hint_Format_TEMPERATURE>Temperature [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
@@ -165,6 +170,7 @@
 	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
 	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
 	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
+	<DawnNewDay.Label_SilentFormatError>Silent Format Error</DawnNewDay.Label_SilentFormatError>
 
 	<!-- Compatibility Section -->
 	<DawnNewDay.Section_Compatibility>Compatibility</DawnNewDay.Section_Compatibility>

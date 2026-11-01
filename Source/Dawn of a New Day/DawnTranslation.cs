@@ -112,8 +112,9 @@ namespace DawnNewDay
 
         public static Dictionary<string, string> Hints_LabelFormatPresets => new()
         {
-            { "DAY {DAY_SETTLE} <size=30>{HOUR_D2}:00</size>", DawnTranslate("Hint_Preset_DayAndHour") },
+            { "DAY {DAY_SETTLE} <size={FONTSIZE / 2}>{HOUR_D2}:00</size>", DawnTranslate("Hint_Preset_DayAndHour") },
             { "{DAY_QUADRUM_ORDINAL} of {QUADRUM}, {YEAR}", DawnTranslate("Hint_Preset_Date") },
+            { "{HOUR_12_D2}:00 {HOUR_12_MERIDIEM}", DawnTranslate("Hint_Preset_Hour12Meridiem") },
             { "<color={TEMPERATURE_COLOR}>{TEMPERATURE}</color>", DawnTranslate("Hint_Preset_TemperatureWithColor") },
             { "{SETTLEMENT} Y{YEAR}, somewhere in the <lower>{BIOME}</lower>", DawnTranslate("Hint_Preset_SomewherePlace") },
             { DawnDefault.UpperTextFormat, DawnTranslate("Hint_Preset_UpperFormatDefault") },
@@ -139,6 +140,10 @@ namespace DawnNewDay
 
             { "{HOUR}", DawnTranslate("Hint_Format_HOUR") },
             { "{HOUR_D2}", DawnTranslate("Hint_Format_HOUR_D2") },
+
+            { "{HOUR_12}", DawnTranslate("Hint_Format_HOUR_12") },
+            { "{HOUR_12_D2}", DawnTranslate("Hint_Format_HOUR_12_D2") },
+            { "{HOUR_12_MERIDIEM}", DawnTranslate("Hint_Format_HOUR_12_MERIDIEM") },
 
             { "{WEATHER}", DawnTranslate("Hint_Format_WEATHER") },
 
@@ -214,6 +219,7 @@ namespace DawnNewDay
         public static string Label_StartsAtZero => DawnTranslate("Label_StartsAtZero");
         public static string Label_ShowEveryXDays => DawnTranslate("Label_ShowEveryXDays");
         public static string Label_TriggerHour => DawnTranslate("Label_TriggerHour");
+        public static string Label_SilentFormatError => DawnTranslate("Label_SilentFormatError");
 
         #endregion
 

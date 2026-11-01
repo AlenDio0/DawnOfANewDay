@@ -103,6 +103,8 @@ namespace DawnNewDay
         public int ShowEveryXDays = DawnDefault.ShowEveryXDays;
         public int TriggerHour = DawnDefault.TriggerHour;
 
+        public bool SilentFormatError = DawnDefault.SilentFormatError;
+
         #endregion
 
         #region Compatibility Section
@@ -406,7 +408,12 @@ namespace DawnNewDay
 
         private void ShowExtraSection(Listing_Standard listing)
         {
+            bool beforeBuffer;
+
+            beforeBuffer = StartsAtZero;
             listing.CheckboxLabeled(DawnTranslation.Label_StartsAtZero, ref StartsAtZero);
+            if (beforeBuffer != StartsAtZero)
+                UpdateTextPreviewLabels();
 
             listing.Gap();
 
@@ -414,6 +421,10 @@ namespace DawnNewDay
             TriggerHour = Mathf.CeilToInt(listing.SliderLabeled($"{DawnTranslation.Label_TriggerHour} ({TriggerHour:00}h)", TriggerHour, 0f, 23f, 0.35f));
 
             listing.Gap();
+
+            listing.CheckboxLabeled(DawnTranslation.Label_SilentFormatError, ref SilentFormatError);
+            if (beforeBuffer != SilentFormatError)
+                UpdateTextPreviewLabels();
         }
 
         private void ShowCompatibilitySection(Listing_Standard listing)
@@ -586,6 +597,7 @@ namespace DawnNewDay
                 Scribe_Values.Look(ref StartsAtZero, "StartsAtZero", DawnDefault.StartsAtZero);
                 Scribe_Values.Look(ref ShowEveryXDays, "ShowEveryXDays", DawnDefault.ShowEveryXDays);
                 Scribe_Values.Look(ref TriggerHour, "TriggerHour", DawnDefault.TriggerHour);
+                Scribe_Values.Look(ref SilentFormatError, "SilentFormatError", DawnDefault.SilentFormatError);
 
                 #endregion
 
