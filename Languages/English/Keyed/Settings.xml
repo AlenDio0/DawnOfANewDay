@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<!-- Misc -->
+	<DawnNewDay.Label_Legacy>Legacy</DawnNewDay.Label_Legacy>
+
+	<!-- Header -->
+	<DawnNewDay.Label_Enabled>Enabled</DawnNewDay.Label_Enabled>
+	<DawnNewDay.Label_ScreenshotMode>Screenshot Mode</DawnNewDay.Label_ScreenshotMode>
+
+	<DawnNewDay.Label_ShowExample>Show Example</DawnNewDay.Label_ShowExample>
+	<DawnNewDay.Message_ShowExample>'{0}' Example will be triggered in the next possible tick.</DawnNewDay.Message_ShowExample>
+
+	<!-- Appearance Section -->
+	<DawnNewDay.Section_Appearance>Appearance</DawnNewDay.Section_Appearance>
+
+	<DawnNewDay.Label_ShowHighlight>Show Highlight</DawnNewDay.Label_ShowHighlight>
+	<DawnNewDay.Label_Scale>Scale</DawnNewDay.Label_Scale>
+	<DawnNewDay.Label_Offset>Offset</DawnNewDay.Label_Offset>
+	<DawnNewDay.Label_OffsetPresets>Offset Presets</DawnNewDay.Label_OffsetPresets>
+
+	<DawnNewDay.Offset_MiddleTop>(Middle, Top) ↑</DawnNewDay.Offset_MiddleTop>
+	<DawnNewDay.Offset_MiddleBottom>(Middle, Bottom) ↓</DawnNewDay.Offset_MiddleBottom>
+	<DawnNewDay.Offset_MiddleMiddle>(Middle, Middle) ▪</DawnNewDay.Offset_MiddleMiddle>
+	<DawnNewDay.Offset_LeftMiddle>(Left, Middle) ←</DawnNewDay.Offset_LeftMiddle>
+	<DawnNewDay.Offset_RightMiddle>(Right, Middle) →</DawnNewDay.Offset_RightMiddle>
+	<DawnNewDay.Offset_LeftTop>(Left, Top) ↖</DawnNewDay.Offset_LeftTop>
+	<DawnNewDay.Offset_RightTop>(Right, Top) ↗</DawnNewDay.Offset_RightTop>
+	<DawnNewDay.Offset_LeftBottom>(Left, Bottom) ↙</DawnNewDay.Offset_LeftBottom>
+	<DawnNewDay.Offset_RightBottom>(Right, Bottom) ↘</DawnNewDay.Offset_RightBottom>
+	
+	<!-- Duration Section -->
+	<DawnNewDay.Section_Duration>Duration</DawnNewDay.Section_Duration>
+
+	<DawnNewDay.Label_DisplayDuration>Total Display Duration</DawnNewDay.Label_DisplayDuration>
+	<DawnNewDay.Label_FadeInDuration>Fade In Duration</DawnNewDay.Label_FadeInDuration>
+	<DawnNewDay.Label_FadeOutDuration>Fade Out Duration</DawnNewDay.Label_FadeOutDuration>
+
+	<!-- Overlay Widget Section -->
+	<DawnNewDay.Section_OverlayWidget>Overlay Widget</DawnNewDay.Section_OverlayWidget>
+
+	<DawnNewDay.Label_Text>Text</DawnNewDay.Label_Text>
+	<DawnNewDay.Label_Separator>Separator</DawnNewDay.Label_Separator>
+
+	<DawnNewDay.Label_BlankPreviewWarning>Preview is blank because of conditional tags</DawnNewDay.Label_BlankPreviewWarning>
+	
+	<DawnNewDay.Message_AddedText>Successfully added the text into Overlay Widgets.</DawnNewDay.Message_AddedText>
+
+	<DawnNewDay.Message_ResetWarning>Confirm to reset every widget to default.</DawnNewDay.Message_ResetWarning>
+	<DawnNewDay.Message_DeleteWarning>Confirm to delete</DawnNewDay.Message_DeleteWarning>
+	
+	<DawnNewDay.Label_BackupFormats>Backup Formats</DawnNewDay.Label_BackupFormats>
+	<DawnNewDay.Description_BackupFormat>Removed Text Format {0} (Will be deleted after restart...)</DawnNewDay.Description_BackupFormat>
+
+	<DawnNewDay.Label_BackupWarning>Attention: There are format text backup(s) present that could be restored. ({0} found)</DawnNewDay.Label_BackupWarning>
+	
+	<DawnNewDay.Label_DefaultFont>Default Game Font</DawnNewDay.Label_DefaultFont>
+	<DawnNewDay.Label_FontFamily>Choose Font Family</DawnNewDay.Label_FontFamily>
+	<DawnNewDay.Label_FontSize>Font Size</DawnNewDay.Label_FontSize>
+	<DawnNewDay.Label_Bold>Bold</DawnNewDay.Label_Bold>
+	<DawnNewDay.Label_Italic>Italic</DawnNewDay.Label_Italic>
+	<DawnNewDay.Label_TextColor>Text Color</DawnNewDay.Label_TextColor>
+	<DawnNewDay.Label_OutlineThickness>Outline Thickness</DawnNewDay.Label_OutlineThickness>
+	<DawnNewDay.Label_OutlineColor>Outline Color</DawnNewDay.Label_OutlineColor>
+
+	<DawnNewDay.Label_WidthPercentage>Width</DawnNewDay.Label_WidthPercentage>
+	<DawnNewDay.Label_Thickness>Thickness</DawnNewDay.Label_Thickness>
+	<DawnNewDay.Label_Padding>Padding</DawnNewDay.Label_Padding>
+	<DawnNewDay.Label_Color>Color</DawnNewDay.Label_Color>
+
+	<!-- Sound Section -->
+	<DawnNewDay.Section_Sound>Sound</DawnNewDay.Section_Sound>
+
+	<DawnNewDay.Label_Sound>Choose Sound</DawnNewDay.Label_Sound>
+	<DawnNewDay.Label_SoundVolume>Sound Volume</DawnNewDay.Label_SoundVolume>
+	<DawnNewDay.Label_SoundPitch>Sound Pitch</DawnNewDay.Label_SoundPitch>
+
+	<!-- Extra Section -->
+	<DawnNewDay.Section_Extra>Extra</DawnNewDay.Section_Extra>
+
+	<DawnNewDay.Label_StartsAtZero>Starts at Zero</DawnNewDay.Label_StartsAtZero>
+	<DawnNewDay.Label_ShowEveryXDays>Show Every X Days</DawnNewDay.Label_ShowEveryXDays>
+	<DawnNewDay.Label_TriggerHour>Trigger Hour</DawnNewDay.Label_TriggerHour>
+	<DawnNewDay.Label_SilentFormatError>Silent Format Error</DawnNewDay.Label_SilentFormatError>
+
+	<!-- Compatibility Section -->
+	<DawnNewDay.Section_Compatibility>Compatibility</DawnNewDay.Section_Compatibility>
+
+	<DawnNewDay.Label_ModIncompatibility>This mod isn't currently active or it's incompatible with this RimWorld version or Mod version...</DawnNewDay.Label_ModIncompatibility>
+
+</LanguageData>

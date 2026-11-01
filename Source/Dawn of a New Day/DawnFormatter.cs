@@ -71,7 +71,7 @@ namespace DawnNewDay
         }
         public readonly int GenYear() => GenDate.Year(AbsTicks, Location.x);
         public readonly string GenQuadrum() => GenDate.Quadrum(AbsTicks, Location.x).Label();
-        public readonly string GenSeason() => Find.World != null ? GenDate.Season(AbsTicks, Location).LabelCap() : Season.Spring.LabelCap();
+        public readonly string GenSeason() => CurrentWorld != null ? GenDate.Season(AbsTicks, Location).LabelCap() : Season.Spring.LabelCap();
         public readonly int GenHour() => GenDate.HourOfDay(AbsTicks, Location.x);
 
         public readonly int GenHour12() => ((GenHour() + 11) % 12) + 1;

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<!-- Label Format Section -->
+	<DawnNewDay.Label_TextFormat>Text Format</DawnNewDay.Label_TextFormat>
+	
+	<DawnNewDay.Label_UpperTextFormat>Upper Text Format</DawnNewDay.Label_UpperTextFormat>
+	<DawnNewDay.Label_BottomTextFormat>Bottom Text Format</DawnNewDay.Label_BottomTextFormat>
+	<DawnNewDay.Label_SubtitleTextFormat>Subtitle Text Format</DawnNewDay.Label_SubtitleTextFormat>
+
+	<DawnNewDay.Label_LabelFormatPresets>Label Format Presets</DawnNewDay.Label_LabelFormatPresets>
+	<DawnNewDay.Label_LabelFormatHints>Label Format Hints</DawnNewDay.Label_LabelFormatHints>
+	<DawnNewDay.Label_RichTextHints>Rich Text Hints</DawnNewDay.Label_RichTextHints>
+
+	<DawnNewDay.Hint_Preset_DayAndHour>Day and Hour [eg. DAY 5 06:00]</DawnNewDay.Hint_Preset_DayAndHour>
+	<DawnNewDay.Hint_Preset_Hour12Meridiem>12-Hour format with meridiem [eg. 08:00 AM]</DawnNewDay.Hint_Preset_Hour12Meridiem>
+	<DawnNewDay.Hint_Preset_Date>Date [eg. 2st of Jugust, 5500]</DawnNewDay.Hint_Preset_Date>
+	<DawnNewDay.Hint_Preset_TemperatureWithColor>Temperature with color [eg. -10C -> Ice, 50C -> Orange]</DawnNewDay.Hint_Preset_TemperatureWithColor>
+	<DawnNewDay.Hint_Preset_SomewherePlace>Somewhere place [eg. Tilpaia Y5521, somewhere in the desert]</DawnNewDay.Hint_Preset_SomewherePlace>
+	<DawnNewDay.Hint_Preset_UpperFormatDefault>Upper Text Format Default</DawnNewDay.Hint_Preset_UpperFormatDefault>
+	<DawnNewDay.Hint_Preset_BottomFormatDefault>Bottom Text Format Default</DawnNewDay.Hint_Preset_BottomFormatDefault>
+	<DawnNewDay.Hint_Preset_SubtitleFormatDefault>Subtitle Text Format Default</DawnNewDay.Hint_Preset_SubtitleFormatDefault>
+
+	<DawnNewDay.Hint_Format_DAY_SETTLE>Day relative to the day the colonist settled</DawnNewDay.Hint_Format_DAY_SETTLE>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM>Day relative to the quadrum (From DAY 1 to DAY 15)</DawnNewDay.Hint_Format_DAY_QUADRUM>
+	<DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>Day relative to the quadrum (From DAY 1 to DAY 15) [eg. 3rd, 12th]</DawnNewDay.Hint_Format_DAY_QUADRUM_ORDINAL>
+	<DawnNewDay.Hint_Format_DAY_SEASON>Day relative to the season</DawnNewDay.Hint_Format_DAY_SEASON>
+	<DawnNewDay.Hint_Format_DAY_YEAR>Day relative to the year (From DAY 1 to DAY 60)</DawnNewDay.Hint_Format_DAY_YEAR>
+
+	<DawnNewDay.Hint_Format_YEAR>Full Year [eg. 5500]</DawnNewDay.Hint_Format_YEAR>
+	<DawnNewDay.Hint_Format_YEAR_D2>2-Digit Year [eg. 00]</DawnNewDay.Hint_Format_YEAR_D2>
+
+	<DawnNewDay.Hint_Format_QUADRUM>Quadrum [eg. Aprimay]</DawnNewDay.Hint_Format_QUADRUM>
+	<DawnNewDay.Hint_Format_SEASON>Season [eg. Spring]</DawnNewDay.Hint_Format_SEASON>
+
+	<DawnNewDay.Hint_Format_HOUR>Hour [eg. 6, 17]</DawnNewDay.Hint_Format_HOUR>
+	<DawnNewDay.Hint_Format_HOUR_D2>2-Digit Hour [eg. 04, 23]</DawnNewDay.Hint_Format_HOUR_D2>
+
+	<DawnNewDay.Hint_Format_HOUR_12>Hour in 12h format [eg. 3, 12]</DawnNewDay.Hint_Format_HOUR_12>
+	<DawnNewDay.Hint_Format_HOUR_12_D2>2-Digit Hour in 12h format [eg. 03, 11]</DawnNewDay.Hint_Format_HOUR_12_D2>
+	<DawnNewDay.Hint_Format_HOUR_12_MERIDIEM>Meridiem for the 12h format [AM/PM]</DawnNewDay.Hint_Format_HOUR_12_MERIDIEM>
+	
+	<DawnNewDay.Hint_Format_WEATHER>Weather [eg. Clear]</DawnNewDay.Hint_Format_WEATHER>
+
+	<DawnNewDay.Hint_Format_TEMPERATURE>Temperature [eg. 23.3C, 281.1K, 44.7F]</DawnNewDay.Hint_Format_TEMPERATURE>
+	<DawnNewDay.Hint_Format_TEMPERATURE_COLOR>Temperature Color Hex [eg. #RRGGBB] - Color Rich Text</DawnNewDay.Hint_Format_TEMPERATURE_COLOR>
+
+	<DawnNewDay.Hint_Format_WORLD>World Name [eg. Bortze Carzan]</DawnNewDay.Hint_Format_WORLD>
+	<DawnNewDay.Hint_Format_BIOME>Biome Type [eg. Tundra]</DawnNewDay.Hint_Format_BIOME>
+	<DawnNewDay.Hint_Format_TERRAIN>Terrain Type [eg. Small Hills]</DawnNewDay.Hint_Format_TERRAIN>
+
+	<DawnNewDay.Hint_Format_ELEVATION>Terrain Elevation [eg. 467m]</DawnNewDay.Hint_Format_ELEVATION>
+	<DawnNewDay.Hint_Format_ELEVATION_KM>Terrain Elevation in km [eg. 1.21km]</DawnNewDay.Hint_Format_ELEVATION_KM>
+
+	<DawnNewDay.Hint_Format_POLLUTION>Pollution Percentage [eg. 69.1%]</DawnNewDay.Hint_Format_POLLUTION>
+	
+	<DawnNewDay.Hint_Format_CONDITION>Game Condition [eg. Solar Flare, Toxic Fallout]</DawnNewDay.Hint_Format_CONDITION>
+
+	<DawnNewDay.Hint_Format_FACTION>Faction Name [eg. Fordo, Empire]</DawnNewDay.Hint_Format_FACTION>
+	<DawnNewDay.Hint_Format_SETTLEMENT>Settlement Name [eg. Troy, Rome]</DawnNewDay.Hint_Format_SETTLEMENT>
+
+	<DawnNewDay.Hint_Format_ENDLINE>Ends the text line and starts a new one [eg. Line 1{ENDLINE}Line 2]</DawnNewDay.Hint_Format_ENDLINE>
+
+	<DawnNewDay.Hint_Format_FONTSIZE>Font size of the current text</DawnNewDay.Hint_Format_FONTSIZE>
+
+	<DawnNewDay.Hint_Format_Addition>Addition for formats/values [eg. {DAY_SETTLE + OFFSET_HERE}]</DawnNewDay.Hint_Format_Addition>
+	<DawnNewDay.Hint_Format_Subtraction>Subtraction for format/values [eg. {YEAR - OFFSET_HERE}]</DawnNewDay.Hint_Format_Subtraction>
+	<DawnNewDay.Hint_Format_Multiplication>Multiplication for format/values [eg. {2 * ELEVATION}]</DawnNewDay.Hint_Format_Multiplication>
+	<DawnNewDay.Hint_Format_Division>Divison for format/values [eg. {FONTSIZE / 2}]</DawnNewDay.Hint_Format_Division>
+
+	<DawnNewDay.Hint_Format_Greater>Greater comparation for formats/values [eg. {DAY_QUADRUM ] 15}]</DawnNewDay.Hint_Format_Greater>
+	<DawnNewDay.Hint_Format_Lesser>Lesser comparation for format/values [eg. {TEMPERATURE [ 5}]</DawnNewDay.Hint_Format_Lesser>
+	<DawnNewDay.Hint_Format_Equal>Equal comparation for format/values [eg. {YEAR_D2 = 50}]</DawnNewDay.Hint_Format_Equal>
+	<DawnNewDay.Hint_Format_NotEqual>Not Equal comparation for format/values [eg. {POLLUTION ! 0}]</DawnNewDay.Hint_Format_NotEqual>
+
+	<DawnNewDay.Hint_RichText_Color>Changes the text color {COLOR_HERE: [eg. RED, blue]}</DawnNewDay.Hint_RichText_Color>
+	<DawnNewDay.Hint_RichText_ColorRGB>Changes the text color {RRGGBB_HERE: [eg. FF00FF, a0a0a0]}</DawnNewDay.Hint_RichText_ColorRGB>
+	<DawnNewDay.Hint_RichText_ColorRGBA>Changes the text color {RRGGBBAA_HERE: [eg. FF00FFA0, a0a0a0ff]}</DawnNewDay.Hint_RichText_ColorRGBA>
+
+	<DawnNewDay.Hint_RichText_Bold>Adds bold style to the text</DawnNewDay.Hint_RichText_Bold>
+	<DawnNewDay.Hint_RichText_Italic>Adds italic style to the text</DawnNewDay.Hint_RichText_Italic>
+	<DawnNewDay.Hint_RichText_FontSize>Changes the font size of the text</DawnNewDay.Hint_RichText_FontSize>
+
+	<DawnNewDay.Hint_RichText_Title>Capitalizes the first letter of every word [eg. fORt zaNCudo -> Fort Zancudo]</DawnNewDay.Hint_RichText_Title>
+	<DawnNewDay.Hint_RichText_Upper>Converts all text to uppercase [eg. Aprimay -> APRIMAY]</DawnNewDay.Hint_RichText_Upper>
+	<DawnNewDay.Hint_RichText_Lower>Converts all text to lowercase [eg. Spring -> spring]</DawnNewDay.Hint_RichText_Lower>
+
+	<DawnNewDay.Hint_RichText_IfNotEmpty>If the content IS NOT empty, it will show the text - Formats</DawnNewDay.Hint_RichText_IfNotEmpty>
+	<DawnNewDay.Hint_RichText_IfEmpty>If the content IS empty, it will show the text - Formats</DawnNewDay.Hint_RichText_IfEmpty>
+	
+	<DawnNewDay.Hint_RichText_If>If the content doesn't contain False or it's not empty, it will show the text - Formats</DawnNewDay.Hint_RichText_If>
+
+</LanguageData>
