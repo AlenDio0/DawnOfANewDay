@@ -41,8 +41,6 @@ namespace DawnNewDay.Compatibility
                 Recurrence = 5,
                 Fired = 6,
                 IconIndex = 7,
-
-                Length,
             }
 
             public enum Severity
@@ -55,19 +53,19 @@ namespace DawnNewDay.Compatibility
 
             public bool IsValid = false;
 
-            public YearTime Time;
-            public string Title;
-            public string Message;
-            public Severity SeverityType;
-            public int Recurrence;
-            public bool Fired;
-            public int IconIndex;
+            public YearTime Time = default;
+            public string Title = "Reminder";
+            public string Message = "Message";
+            public Severity SeverityType = default;
+            public int Recurrence = default;
+            public bool Fired = false;
+            public int IconIndex = default;
 
             public Reminder() { }
 
             public Reminder(object[] rawReminder)
             {
-                if (rawReminder.Length < (int)RawReminderIndex.Length)
+                if (rawReminder.Length < Enum.GetValues(typeof(RawReminderIndex)).Length)
                     return;
                 IsValid = true;
 
@@ -81,7 +79,7 @@ namespace DawnNewDay.Compatibility
                 IconIndex = Retrieve<int>(rawReminder, RawReminderIndex.IconIndex);
             }
 
-            private readonly T Retrieve<T>(object[] rawReminder, RawReminderIndex index) => (T)rawReminder[(int)index];
+            private static T Retrieve<T>(object[] rawReminder, RawReminderIndex index) => (T)rawReminder[(int)index];
         }
 
         public struct Occasion
@@ -95,24 +93,22 @@ namespace DawnNewDay.Compatibility
                 Year = 4,
                 OneShot = 5,
                 Celebratory = 6,
-
-                Length,
             }
 
             public bool IsValid = false;
 
-            public string Category;
-            public string Label;
-            public string Detail;
-            public YearTime Time;
-            public bool OneShot;
-            public bool Celebratory;
+            public string Category = "Occasion";
+            public string Label = "Label";
+            public string Detail = "Detail";
+            public YearTime Time = default;
+            public bool OneShot = default;
+            public bool Celebratory = default;
 
             public Occasion() { }
 
             public Occasion(object[] rawOccasion)
             {
-                if (rawOccasion.Length < (int)RawOccasionIndex.Length)
+                if (rawOccasion.Length < Enum.GetValues(typeof(RawOccasionIndex)).Length)
                     return;
                 IsValid = true;
 
@@ -125,7 +121,7 @@ namespace DawnNewDay.Compatibility
                 Celebratory = Retrieve<bool>(rawOccasion, RawOccasionIndex.Celebratory);
             }
 
-            private readonly T Retrieve<T>(object[] rawOccasion, RawOccasionIndex index) => (T)rawOccasion[(int)index];
+            private static T Retrieve<T>(object[] rawOccasion, RawOccasionIndex index) => (T)rawOccasion[(int)index];
         }
 
         public static IEnumerable<Reminder> GetReminders() => ModernNotifications.Reminders()

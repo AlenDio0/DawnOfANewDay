@@ -155,14 +155,7 @@ namespace DawnNewDay
                     return default;
 
                 if (CurrentWorld == null)
-                {
-                    return new()
-                    {
-                        Time = new(0, 0),
-                        Title = "Reminder",
-                        Message = "Message",
-                    };
-                }
+                    return default;
 
                 var reminders = MNUtility.GetReminders();
 
@@ -194,14 +187,7 @@ namespace DawnNewDay
                     return default;
 
                 if (CurrentWorld == null)
-                {
-                    return new()
-                    {
-                        Time = new(0, 0),
-                        Category = "Occasion",
-                        Label = "Label",
-                    };
-                }
+                    return default;
 
                 var occasions = MNUtility.GetOccasions();
 

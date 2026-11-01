@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -35,11 +36,7 @@ namespace DawnNewDay.Utils
             Rect rowRect = listing.GetRect(DawnData.TinyRowHeight);
 
             Rect labelRect = rowRect.LeftPart(labelWidthPct).CenteredOnYIn(rowRect);
-
-            TextAnchor defaultAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.Label(labelRect, label);
-            Text.Anchor = defaultAnchor;
+            WithAnchor(TextAnchor.MiddleLeft, () => Widgets.Label(labelRect, label));
 
             float boxSize = rowRect.height;
             for (int i = 0; i < ColorPresets.Length; i++)
@@ -74,12 +71,9 @@ namespace DawnNewDay.Utils
         public static Rect LabelWithWidget(this Listing_Standard listing, string label, float labelWidthPct, float middleWidthPct, float height = DawnData.TinyRowHeight)
         {
             Rect rowRect = listing.GetRect(height);
-            Rect labelRect = rowRect.LeftPart(labelWidthPct).CenteredOnYIn(rowRect);
 
-            TextAnchor defaultAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.Label(labelRect, label);
-            Text.Anchor = defaultAnchor;
+            Rect labelRect = rowRect.LeftPart(labelWidthPct).CenteredOnYIn(rowRect);
+            WithAnchor(TextAnchor.MiddleLeft, () => Widgets.Label(labelRect, label));
 
             return rowRect.RightPart(1f - labelWidthPct).MiddlePart(middleWidthPct, 1f);
         }
@@ -118,13 +112,10 @@ namespace DawnNewDay.Utils
             Rect iconRect = new(headerRect.x, headerRect.y + (headerRect.height - iconSize) / 2f, iconSize, iconSize);
             GUI.DrawTexture(iconRect.ContractedBy(4f), open ? TexButton.Minus : TexButton.Plus);
 
-            TextAnchor defaultAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleLeft;
-
             const float cSpaceX = 15f;
-            Widgets.Label(new Rect(iconRect.xMax + cSpaceX, headerRect.y, headerRect.width - iconRect.width, headerRect.height), label);
 
-            Text.Anchor = defaultAnchor;
+            WithAnchor(TextAnchor.MiddleLeft,
+                () => Widgets.Label(new Rect(iconRect.xMax + cSpaceX, headerRect.y, headerRect.width - iconRect.width, headerRect.height), label));
 
             if (Mouse.IsOver(headerRect))
                 Widgets.DrawHighlight(headerRect);
@@ -161,14 +152,33 @@ namespace DawnNewDay.Utils
             return listing;
         }
 
-        public static void WithGUIColor(Color color, Action action)
+        public static void With<T>(Func<T> getter, Action<T> setter, T value, Action action)
         {
-            Color defaultColor = GUI.color;
+            if (getter == null || setter == null || action == null)
+                return;
 
-            GUI.color = color;
-            action?.Invoke();
+            T originalValue = getter.Invoke();
+            setter.Invoke(value);
 
-            GUI.color = defaultColor;
+            try
+            {
+                action.Invoke();
+            }
+            finally
+            {
+                setter.Invoke(originalValue);
+            }
         }
+
+        public static void WithColor(Color value, Action action) =>
+            With(() => GUI.color, set => GUI.color = set, value, action);
+        public static void WithContentColor(Color value, Action action) =>
+            With(() => GUI.contentColor, set => GUI.contentColor = set, value, action);
+        public static void WithAnchor(TextAnchor value, Action action) =>
+            With(() => Text.Anchor, set => Text.Anchor = set, value, action);
+        public static void WithFont(GameFont value, Action action) =>
+            With(() => Text.Font, set => Text.Font = set, value, action);
+        public static void WithFontStyle(FontStyle value, Action action) =>
+            With(() => Text.CurFontStyle.fontStyle, set => Text.CurFontStyle.fontStyle = set, value, action);
     }
 }

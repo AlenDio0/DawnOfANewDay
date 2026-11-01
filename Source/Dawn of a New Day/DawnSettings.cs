@@ -310,16 +310,10 @@ namespace DawnNewDay
 
             if (!m_BackupFormatTexts.NullOrEmpty())
             {
-                Color defaultColor = GUI.color;
-                FontStyle defaultStyle = Text.CurFontStyle.fontStyle;
+                SettingsHelper.WithColor(Color.yellow, () => Widgets.DrawBox(backupRect));
 
-                GUI.contentColor = Color.gray;
-                Text.CurFontStyle.fontStyle = FontStyle.Italic;
-
-                listing.Label(DawnTranslation.Label_BackupWarning(m_BackupFormatTexts.Count));
-
-                Text.CurFontStyle.fontStyle = defaultStyle;
-                GUI.contentColor = defaultColor;
+                SettingsHelper.WithContentColor(Color.gray, () => SettingsHelper.WithFontStyle(FontStyle.Italic,
+                    () => listing.Label(DawnTranslation.Label_BackupWarning(m_BackupFormatTexts.Count))));
             }
         }
 
@@ -339,12 +333,7 @@ namespace DawnNewDay
             Widgets.ButtonImage(dragRect.ContractedBy(4f), TexButton.DragHash);
 
             Rect indexRect = new(dragRect.xMax, rowRect.y, rowHeight, rowHeight);
-            {
-                TextAnchor defaultAnchor = Text.Anchor;
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(indexRect, index.ToString());
-                Text.Anchor = defaultAnchor;
-            }
+            SettingsHelper.WithAnchor(TextAnchor.MiddleLeft, () => Widgets.Label(indexRect, index.ToString()));
 
             Rect deleteRect = new(rowRect.xMax - rowHeight, rowRect.y, rowHeight, rowHeight);
             void ShowDeleteButton(Action onPressed)
@@ -368,12 +357,7 @@ namespace DawnNewDay
             {
                 case DawnText text:
                     (string label, float scale) = m_CachedLabels.TryGetValue(text, new("", 1f));
-
-                    text.ApplyToGUIStyle(scale);
-
-                    text.Draw(previewRect, label, scale);
-
-                    text.ApplyToGUIStyle(Scale);
+                    DrawPreviewText(previewRect, text, label, scale);
 
                     ShowEditButton(() => Find.WindowStack.Add(new Dialog_EditText(text, index, Scale, m_FormatContext)));
                     ShowDeleteButton(delegate
@@ -442,7 +426,7 @@ namespace DawnNewDay
         {
             if (!ModernNotifications.Present)
             {
-                SettingsHelper.WithGUIColor(Color.grey, () => listing.Label(DawnTranslation.Label_ModIncompatibility));
+                SettingsHelper.WithContentColor(Color.grey, () => listing.Label(DawnTranslation.Label_ModIncompatibility));
                 return;
             }
 
@@ -480,6 +464,23 @@ namespace DawnNewDay
 
             if (listing.SectionButton(DawnTranslation.Label_MN_ExcludeOccasions, ref m_MN_ExcludeOccasionSection, false))
                 listing.Indented(() => listing.LabeledCheckboxTable(ModernNotificationUtility.OccasionCategories, ref MN_ExcludeOccasionCategory));
+        }
+
+        public void DrawPreviewText(Rect previewRect, DawnText text, string label, float scale)
+        {
+            if (label.All(char.IsWhiteSpace) && text.Format.ToLower().Contains("<if"))
+            {
+                SettingsHelper.WithContentColor(Color.grey,
+                    () => SettingsHelper.WithAnchor(TextAnchor.MiddleCenter,
+                    () => SettingsHelper.WithFontStyle(FontStyle.Italic,
+                    () => Widgets.Label(previewRect, $"[{DawnTranslation.Label_BlankPreviewWarning}]"))));
+            }
+            else
+            {
+                text.ApplyToGUIStyle(scale);
+                text.Draw(previewRect, label, scale);
+                text.ApplyToGUIStyle(Scale);
+            }
         }
 
         public void UpdateTextPreviewLabels()
@@ -531,8 +532,6 @@ namespace DawnNewDay
 
         public override void ExposeData()
         {
-            base.ExposeData();
-
             try
             {
                 #region Header

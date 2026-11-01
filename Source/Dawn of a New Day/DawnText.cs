@@ -126,34 +126,27 @@ namespace DawnNewDay
             if (OutlineThickness > 0f)
                 DrawOutline(rect, text, scale);
 
-            Color defaultColor = GUI.contentColor;
-            GUI.contentColor = TextColor;
-
-            GUI.Label(rect, text, TextGUIStyle);
-
-            GUI.contentColor = defaultColor;
+            SettingsHelper.WithContentColor(TextColor, () => GUI.Label(rect, text, TextGUIStyle));
         }
 
         private void DrawOutline(Rect rect, string text, float scale)
         {
-            float scaledOutlineThickness = OutlineThickness * scale;
-
-            Color defaultColor = GUI.contentColor;
-            GUI.contentColor = OutlineColor;
-
             string outlineText = m_WholeColorTagRegex.Replace(text, "");
 
+            float scaledOutlineThickness = OutlineThickness * scale;
             float step = scaledOutlineThickness / 5f;
-            for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
-            {
-                for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
-                {
-                    Vector2 offset = new(x, y);
-                    GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
-                }
-            }
 
-            GUI.contentColor = defaultColor;
+            SettingsHelper.WithContentColor(OutlineColor, delegate
+            {
+                for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
+                {
+                    for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
+                    {
+                        Vector2 offset = new(x, y);
+                        GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
+                    }
+                }
+            });
         }
 
         public void ApplyToGUIStyle(float scale)

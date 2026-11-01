@@ -70,6 +70,8 @@ namespace DawnNewDay
         public static string Label_Text => DawnTranslate("Label_Text");
         public static string Label_Separator => DawnTranslate("Label_Separator");
 
+        public static string Label_BlankPreviewWarning => DawnTranslate("Label_BlankPreviewWarning");
+
         public static string Message_AddedText => DawnTranslate("Message_AddedText");
 
         public static string Message_ResetWarning => DawnTranslate("Message_ResetWarning");
@@ -121,6 +123,7 @@ namespace DawnNewDay
 
         public static Dictionary<string, string> Hints_LabelFormat => new()
         {
+            { "{DAY}", DawnTranslate("Hint_Format_DAY_SETTLE") },
             { "{DAY_SETTLE}", DawnTranslate("Hint_Format_DAY_SETTLE") },
             { "{DAY_QUADRUM}", DawnTranslate("Hint_Format_DAY_QUADRUM") },
             { "{DAY_SEASON}", DawnTranslate("Hint_Format_DAY_SEASON") },

@@ -61,7 +61,6 @@ namespace DawnNewDay
         public readonly static bool StartsAtZero = false;
         public readonly static int ShowEveryXDays = 1;
         public readonly static int TriggerHour = 6;
-        public readonly static DayRelative DayRelativeTo = DayRelative.Settle;
 
         #endregion
 

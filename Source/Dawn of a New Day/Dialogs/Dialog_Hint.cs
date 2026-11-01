@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using DawnNewDay.Utils;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,12 +65,7 @@ namespace DawnNewDay.Dialogs
             if (HeaderLabel == null)
                 return;
 
-            GameFont defaultFont = Text.Font;
-            Text.Font = GameFont.Medium;
-
-            listing.Label(HeaderLabel);
-
-            Text.Font = defaultFont;
+            SettingsHelper.WithFont(GameFont.Medium, () => listing.Label(HeaderLabel));
         }
 
         private void ShowHints(Listing_Standard listing)
@@ -81,9 +77,6 @@ namespace DawnNewDay.Dialogs
                 Rect rowRect = listing.GetRect(DawnData.MediumRowHeight);
                 float iconSize = rowRect.height;
 
-                TextAnchor defaultAnchor = Text.Anchor;
-                Text.Anchor = TextAnchor.MiddleLeft;
-
                 string displayFormat = format.Replace("<", "<\u200B");
 
                 const int cMaxLengthTrim = 64;
@@ -91,9 +84,8 @@ namespace DawnNewDay.Dialogs
                     displayFormat = $"{displayFormat.TrimmedToLength(cMaxLengthTrim)}...";
 
                 Rect hintRect = new(rowRect.x, rowRect.y, rowRect.xMax - iconSize, iconSize);
-                Widgets.Label(hintRect, $"<b>{displayFormat}</b>\n~ {description}");
-
-                Text.Anchor = defaultAnchor;
+                SettingsHelper.WithAnchor(TextAnchor.MiddleLeft,
+                    () => Widgets.Label(hintRect, $"<b>{displayFormat}</b>\n~ {description}"));
 
                 Rect copyRect = new(rowRect.xMax - iconSize, rowRect.y, iconSize, iconSize);
                 GUI.DrawTexture(copyRect.ContractedBy(4f), TexButton.Copy);

@@ -6,7 +6,7 @@ namespace DawnNewDay.Dialogs
 {
     public class Dialog_EditText : Window
     {
-        public DawnText TextStyle { get; }
+        public DawnText Text { get; }
         public int Index { get; }
         public float Scale { get; }
         public FormatContext Context { get; }
@@ -21,7 +21,7 @@ namespace DawnNewDay.Dialogs
             absorbInputAroundWindow = true;
             draggable = true;
 
-            TextStyle = textStyle;
+            Text = textStyle;
             Index = textIndex;
             Scale = scale;
             Context = context;
@@ -36,17 +36,14 @@ namespace DawnNewDay.Dialogs
             {
                 Rect previewRect = listing.GetRect(DawnData.BigRowHeight);
 
-                float textScale = TextStyle.FontSize <= previewRect.height ? 1f : previewRect.height / TextStyle.FontSize;
-                string label = Context.FormatText(TextStyle.Format, Index, textScale);
+                float textScale = Text.FontSize <= previewRect.height ? 1f : previewRect.height / Text.FontSize;
+                string label = Context.FormatText(Text.Format, Index, textScale);
 
-                TextStyle.ApplyToGUIStyle(textScale);
-                TextStyle.Draw(previewRect, label, textScale);
-
-                TextStyle.ApplyToGUIStyle(Scale);
+                DawnMod.Settings.DrawPreviewText(previewRect, Text, label, textScale);
 
                 listing.Gap();
 
-                TextStyle.DoContents(listing, Scale);
+                Text.DoContents(listing, Scale);
             }
             catch (Exception exception)
             {

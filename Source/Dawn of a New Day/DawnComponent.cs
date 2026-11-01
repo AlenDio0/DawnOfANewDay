@@ -1,4 +1,5 @@
 ﻿using DawnNewDay.Compatibility;
+using DawnNewDay.Utils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -114,47 +115,35 @@ namespace DawnNewDay
             if (settings.ScreenshotMode && Find.ScreenshotModeHandler.Active)
                 return;
 
-            Color defaultColor = GUI.color;
-            GUI.color = Color.white.WithAlpha(m_CurrentAlpha);
-
-            if (settings.ShowHighlight)
-                Widgets.DrawHighlight(m_CachedOverlayRect);
-
-            GUI.BeginGroup(m_CachedOverlayRect);
-
-            for (int i = 0; i < settings.OverlayWidgets.Count; i++)
+            SettingsHelper.WithColor(Color.white.WithAlpha(m_CurrentAlpha), delegate
             {
-                IDawnWidget widget = settings.OverlayWidgets.ElementAt(i);
-                Rect cachedRect = m_CachedRects.ElementAtOrDefault(i);
+                if (settings.ShowHighlight)
+                    Widgets.DrawHighlight(m_CachedOverlayRect);
 
-                switch (widget)
+                GUI.BeginGroup(m_CachedOverlayRect);
+
+                for (int i = 0; i < settings.OverlayWidgets.Count; i++)
                 {
-                    case DawnText text:
-                        string cachedLabel = m_CachedLabels.TryGetValue(text, "");
-                        text.Draw(cachedRect, FinalizeLabel(cachedLabel), settings.Scale);
-                        break;
-                    case DawnSeparator separator:
-                        separator.Draw(separator.CalcDrawRect(cachedRect, settings.Scale), m_CurrentAlpha);
-                        break;
+                    IDawnWidget widget = settings.OverlayWidgets.ElementAt(i);
+                    Rect cachedRect = m_CachedRects.ElementAtOrDefault(i);
 
-                    default:
-                        break;
+                    switch (widget)
+                    {
+                        case DawnText text:
+                            string cachedLabel = m_CachedLabels.TryGetValue(text, "");
+                            text.Draw(cachedRect, FinalizeLabel(cachedLabel), settings.Scale);
+                            break;
+                        case DawnSeparator separator:
+                            separator.Draw(separator.CalcDrawRect(cachedRect, settings.Scale), m_CurrentAlpha);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            // TODO: ModernNotification Compatibility
-            //if (ModernNotifications.Present)
-            //{
-            //    string reminderText = WithAlphaToRichText(m_MN_CachedReminderText);
-            //    settings.MN_Reminder.TextStyle.Draw(RetrieveTextRect(Text.MN_Reminder), reminderText, settings.Scale);
-
-            //    string occasionText = WithAlphaToRichText(m_MN_CachedOccasionText);
-            //    settings.MN_Occasion.TextStyle.Draw(RetrieveTextRect(Text.MN_Occasion), occasionText, settings.Scale);
-            //}
-
-            GUI.EndGroup();
-
-            GUI.color = defaultColor;
+                GUI.EndGroup();
+            });
         }
 
         private void TriggerDawnOverlay()

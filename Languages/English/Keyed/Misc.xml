@@ -42,6 +42,8 @@
 	<DawnNewDay.Label_Text>Text</DawnNewDay.Label_Text>
 	<DawnNewDay.Label_Separator>Separator</DawnNewDay.Label_Separator>
 
+	<DawnNewDay.Label_BlankPreviewWarning>Preview is blank because of conditional tags</DawnNewDay.Label_BlankPreviewWarning>
+	
 	<DawnNewDay.Message_AddedText>Successfully added the text into Overlay Widgets.</DawnNewDay.Message_AddedText>
 
 	<DawnNewDay.Message_ResetWarning>Confirm to reset every widget to default.</DawnNewDay.Message_ResetWarning>

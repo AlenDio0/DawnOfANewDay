@@ -73,12 +73,8 @@ namespace DawnNewDay.Utils
         {
             if (HeaderLabel != null)
             {
-                GameFont defaultFont = Text.Font;
-                Text.Font = GameFont.Medium;
-
-                listing.Label($"{HeaderLabel} ({Current.Fallback(DefaultValue)})");
-
-                Text.Font = defaultFont;
+                SettingsHelper.WithFont(GameFont.Medium,
+                    () => listing.Label($"{HeaderLabel} ({Current.Fallback(DefaultValue)})"));
             }
 
             Rect searchRect = listing.GetRect(DawnData.TinyRowHeight);
@@ -110,12 +106,7 @@ namespace DawnNewDay.Utils
                 listing.GapLine();
                 Rect rowRect = listing.GetRect(DawnData.TinyRowHeight);
 
-                TextAnchor defaultAnchor = Text.Anchor;
-                Text.Anchor = TextAnchor.MiddleLeft;
-
-                Widgets.Label(rowRect, value);
-
-                Text.Anchor = defaultAnchor;
+                SettingsHelper.WithAnchor(TextAnchor.MiddleLeft, () => Widgets.Label(rowRect, value));
 
                 if (!Current.NullOrEmpty() && Current == value)
                     Widgets.DrawBoxSolid(rowRect, Color.green.WithAlpha(0.25f));
