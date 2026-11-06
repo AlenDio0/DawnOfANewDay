@@ -46,8 +46,8 @@ Everything you can think of can be configured, and if it isn't[spoiler], just as
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]
-[*][b]English:[/b] Made by myself.
-[*][b]Italian:[/b] Made by myself.
+[*][b]English:[/b] Made by author.
+[*][b]Italian:[/b] Made by author.
 [*][b]Chinese Simplified:[/b] 
 	[list]
 	[*]Made by [url=https://github.com/hotaru-hoshizora]hotaru-hoshizora[/url] (from v1.5.1).
