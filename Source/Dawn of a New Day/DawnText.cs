@@ -2,10 +2,10 @@
 using DawnNewDay.Dialogs;
 using DawnNewDay.Utils;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
-using System.Linq;
 
 namespace DawnNewDay
 {
@@ -27,6 +27,12 @@ namespace DawnNewDay
         public Color OutlineColor = Color.black;
 
         private static readonly Regex m_WholeColorTagRegex = new(@"</?color[^<>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Vector2[] m_OutlineOffsets =
+        [
+            new(-1, -1), new(0, -1), new(1, -1),
+            new(-1, 0), new(1, 0),
+            new(-1, 1), new(0, 1), new(1, 1)
+        ];
 
         public DawnText()
         {
@@ -121,30 +127,24 @@ namespace DawnNewDay
             }
         }
 
-        public void Draw(Rect rect, string text, float scale)
+        public void Draw(Rect rect, (string Text, string Outline) label, float scale)
         {
             if (OutlineThickness > 0f)
-                DrawOutline(rect, text, scale);
+                DrawOutline(rect, label.Outline, scale);
 
-            SettingsHelper.WithContentColor(TextColor, () => GUI.Label(rect, text, TextGUIStyle));
+            SettingsHelper.WithContentColor(TextColor, () => GUI.Label(rect, label.Text, TextGUIStyle));
         }
 
         private void DrawOutline(Rect rect, string text, float scale)
         {
-            string outlineText = m_WholeColorTagRegex.Replace(text, "");
-
-            float scaledOutlineThickness = OutlineThickness * scale;
-            float step = scaledOutlineThickness / 5f;
+            float scaledThickness = OutlineThickness * scale;
 
             SettingsHelper.WithContentColor(OutlineColor, delegate
             {
-                for (float x = -scaledOutlineThickness; x <= scaledOutlineThickness; x += step)
+                foreach (Vector2 direction in m_OutlineOffsets)
                 {
-                    for (float y = -scaledOutlineThickness; y <= scaledOutlineThickness; y += step)
-                    {
-                        Vector2 offset = new(x, y);
-                        GUI.Label(new Rect(rect.position + offset, rect.size), outlineText, TextGUIStyle);
-                    }
+                    Vector2 offset = scaledThickness * direction;
+                    GUI.Label(new Rect(rect.position + offset, rect.size), text, TextGUIStyle);
                 }
             });
         }
@@ -183,6 +183,8 @@ namespace DawnNewDay
                 DawnData.Exception(exception);
             }
         }
+
+        public string LabelTextToOutline(string text) => m_WholeColorTagRegex.Replace(text, "");
 
         public Vector2 CalcSize(string text)
         {

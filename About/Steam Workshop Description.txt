@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v2.0.0[/i]
+[i][b]Mod Version:[/b] v2.0.1[/i]
 [i]Showcase video is outdated[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -22,10 +22,15 @@ Everything you can think of can be configured, and if it isn't[spoiler], just as
 	[/list]
 [/list]
 
-[h1]PATCH NOTES[/h1]
-[i]Only last two major patches will be showed to avoid wall text.[/i]
+[h1]LATEST PATCH NOTES[/h1]
 [i]Go into About\Patch Notes.txt to see every patch note.[/i]
 [spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
+[b]v2.0.1[/b]
+[list]
+[*]Optimized performance during overlay:
+  + 1.6: ~0.4 ms/frame -> ~0.1 ms/frame.
+  + 1.7: ~0.05 ms/frame -> ~0.0067 ms/frame.
+[/list]
 [h3]v2.0.0[/h3]
 [list]
 [*]Joined Text, Label Format and Separator into one Overlay Widget Section.
@@ -37,10 +42,6 @@ Everything you can think of can be configured, and if it isn't[spoiler], just as
 [*]Added comparation operations for formats and values (useful for 'if' tag).
 [*]Added Silent Format Error (if enabled, when a token format has error will just return an empty string, instead of showing the token).
 [*]Added 12-hour meridiem format token.
-[/list]
-[h3]v1.7.0[/h3]
-[list]
-[*]Added compatibility for RimWorld 1.7.
 [/list]
 [h3]...[/h3]
 

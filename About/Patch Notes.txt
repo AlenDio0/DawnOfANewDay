@@ -1,5 +1,10 @@
 # Patch Notes
 
+v2.0.1
+- Optimized performance during overlay:
+  + 1.6: ~0.4 ms/frame -> ~0.1 ms/frame.
+  + 1.7: ~0.05 ms/frame -> ~0.03 ms/frame.
+
 v2.0.0
 - Joined Text, Label Format and Separator into one Overlay Widget Section.
 - Added a preview of the overlay in the settings.
