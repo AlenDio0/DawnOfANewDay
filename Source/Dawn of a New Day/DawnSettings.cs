@@ -489,7 +489,7 @@ namespace DawnNewDay
             else
             {
                 text.ApplyToGUIStyle(scale);
-                text.Draw(previewRect, label, scale);
+                text.Draw(previewRect, (label, text.LabelTextToOutline(label)), scale);
                 text.ApplyToGUIStyle(Scale);
             }
         }

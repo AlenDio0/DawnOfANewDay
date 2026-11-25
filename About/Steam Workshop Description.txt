@@ -1,4 +1,4 @@
-[i][b]Mod Version:[/b] v2.0.0[/i]
+[i][b]Mod Version:[/b] v2.0.1[/i]
 [i]Showcase video is outdated[/i]
 
 Adds a customizable header overlay that displays at the start of the day.
@@ -21,28 +21,6 @@ Everything you can think of can be configured, and if it isn't[spoiler], just as
 	[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3752932665]Modern Notifications[/url]: Added formats and texts for Reminders and Occasions.
 	[/list]
 [/list]
-
-[h1]PATCH NOTES[/h1]
-[i]Only last two major patches will be showed to avoid wall text.[/i]
-[i]Go into About\Patch Notes.txt to see every patch note.[/i]
-[spoiler]You can review every commit and update in details through the GitHub repository.[/spoiler]
-[h3]v2.0.0[/h3]
-[list]
-[*]Joined Text, Label Format and Separator into one Overlay Widget Section.
-[*]Added a preview of the overlay in the settings.
-[*]Added a way to recover legacy format and backups.
-[*]Fixed custom fonts for RimWorld 1.7.
-[*]Fixed possible NullReferenceException(s) for formats.
-[*]Added <if=content>text</if> rich text tag (see in the mod).
-[*]Added comparation operations for formats and values (useful for 'if' tag).
-[*]Added Silent Format Error (if enabled, when a token format has error will just return an empty string, instead of showing the token).
-[*]Added 12-hour meridiem format token.
-[/list]
-[h3]v1.7.0[/h3]
-[list]
-[*]Added compatibility for RimWorld 1.7.
-[/list]
-[h3]...[/h3]
 
 [h1]INTEGRATED TRANSLATION[/h1]
 [list]

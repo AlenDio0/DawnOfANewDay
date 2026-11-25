@@ -19,16 +19,10 @@ NOTE: If you want to contribute, check the mod description from Steam Workshop.
 - Modern Notifications: Added formats and texts for Reminders and Occasions.
 
 &lt;color=orange&gt;&lt;b&gt;Latest Patch&lt;/b&gt;&lt;/color&gt;
-# v2.0.0
-- Joined Text, Label Format and Separator into one Overlay Widget Section.
-- Added a preview of the overlay in the settings.
-- Added a way to recover legacy format and backups.
-- Fixed custom fonts for RimWorld 1.7.
-- Fixed possible NullReferenceException(s) for formats.
-- Added 'if' rich text tag (see in the mod).
-- Added comparation operations for formats and values (useful for 'if' tag).
-- Added Silent Format Error (if enabled, when a token format has error will just return an empty string, instead of showing the token).
-- Added 12-hour meridiem format token.
+# v2.0.1
+- Optimized performance during overlay 
+  + 1.6: ~0.4 ms/frame -> ~0.1 ms/frame.
+  + 1.7: ~0.05 ms/frame -> ~0.03 ms/frame.
 
 &lt;i&gt;Can be safely added or removed from existing saves at any time.&lt;/i&gt;
 	</description>
@@ -44,5 +38,5 @@ NOTE: If you want to contribute, check the mod description from Steam Workshop.
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 		</li>
 	</modDependencies>
-	<modVersion IgnoreIfNoMatchingField="True">2.0.0</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">2.0.1</modVersion>
 </ModMetaData>

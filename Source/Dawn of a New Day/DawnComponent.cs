@@ -1,5 +1,6 @@
 ﻿using DawnNewDay.Compatibility;
 using DawnNewDay.Utils;
+using Microsoft.SqlServer.Server;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace DawnNewDay
         private float m_DisplayTimer = 0f;
         private float m_CurrentAlpha = 1f;
 
-        private readonly Dictionary<DawnText, string> m_CachedLabels = [];
+        private readonly Dictionary<DawnText, (string Text, string Outline)> m_CachedLabels = [];
 
         private readonly List<Rect> m_CachedRects = [];
         private Rect m_CachedOverlayRect = Rect.zero;
@@ -130,8 +131,8 @@ namespace DawnNewDay
                     switch (widget)
                     {
                         case DawnText text:
-                            string cachedLabel = m_CachedLabels.TryGetValue(text, "");
-                            text.Draw(cachedRect, FinalizeLabel(cachedLabel), settings.Scale);
+                            (string Text, string Outline) cachedLabel = m_CachedLabels.TryGetValue(text, ("", ""));
+                            text.Draw(cachedRect, (FinalizeLabel(cachedLabel.Text), FinalizeLabel(cachedLabel.Outline)), settings.Scale);
                             break;
                         case DawnSeparator separator:
                             separator.Draw(separator.CalcDrawRect(cachedRect, settings.Scale), m_CurrentAlpha);
@@ -193,33 +194,12 @@ namespace DawnNewDay
                 var widget = settings.OverlayWidgets[i];
                 if (widget is DawnText text)
                 {
-                    string format = text.Format;
-                    m_CachedLabels.Add(text, context.FormatText(format, i, settings.Scale));
+                    string labelText = context.FormatText(text.Format, i, settings.Scale);
+                    m_CachedLabels.Add(text, (labelText, text.LabelTextToOutline(labelText)));
                 }
             }
 
             settings.UpdateText();
-
-            //m_MN_CachedReminderText = "";
-            //m_MN_CachedOccasionText = "";
-            //if (ModernNotifications.Present)
-            //{
-            //    int GetTimeRemainingDay(ModernNotificationUtility.YearTime time) => Mathf.CeilToInt(context.TimeRemainingDay(context.TimeRemainingHour(time)));
-
-            //    if (settings.MN_Reminder.AddText)
-            //    {
-            //        var reminder = context.NextReminder;
-            //        if (reminder.IsValid && GetTimeRemainingDay(reminder.Time) <= settings.MN_Reminder.MaximumDays)
-            //            m_MN_CachedReminderText = context.FormatText(settings.MN_Reminder.TextFormat);
-            //    }
-            //    if (settings.MN_Occasion.AddText)
-            //    {
-            //        var occasion = context.NextOccasion;
-            //        if (occasion.IsValid && GetTimeRemainingDay(occasion.Time) <= settings.MN_Occasion.MaximumDays)
-            //            m_MN_CachedOccasionText = context.FormatText(settings.MN_Occasion.TextFormat);
-
-            //    }
-            //}
         }
 
         private void UpdateCachedRects()
@@ -236,7 +216,7 @@ namespace DawnNewDay
                 switch (widget)
                 {
                     case DawnText text:
-                        string cachedLabel = m_CachedLabels.TryGetValue(text, "");
+                        string cachedLabel = m_CachedLabels.TryGetValue(text, ("", "")).Item1;
 
                         Rect textRect = new(topLeft, text.CalcSize(cachedLabel));
                         tempCachedRects.Add(new(textRect, true));
@@ -275,14 +255,15 @@ namespace DawnNewDay
             }
         }
 
-        private string FinalizeLabel(string label) => WithAlphaToRichText(label);
-
-        private string WithAlphaToRichText(string text)
+        private string FinalizeLabel(string label)
         {
-            if (text.NullOrEmpty())
-                return text;
+            if (label.NullOrEmpty() || m_CurrentAlpha >= 1f)
+                return label;
 
-            return m_ColorTagRegex.Replace(text, match =>
+            return WithAlphaToRichText(label);
+        }
+        private string WithAlphaToRichText(string text) =>
+            m_ColorTagRegex.Replace(text, match =>
             {
                 string colorString = match.Groups["color"].Value.Trim();
 
@@ -291,6 +272,6 @@ namespace DawnNewDay
 
                 return match.Value;
             });
-        }
+
     }
 }
